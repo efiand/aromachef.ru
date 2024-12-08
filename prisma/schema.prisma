@@ -1,0 +1,49 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tags {
+  id    Int    @id @default(autoincrement())
+  title String @unique @db.VarChar(500)
+
+  recipes recipesTags[]
+}
+
+model recipes {
+  id          Int       @id @default(autoincrement())
+  title       String    @unique @db.VarChar(500)
+  ingredients String    @db.Text
+  cooking     String    @db.Text
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  structureId Int
+
+  structure structures    @relation(fields: [structureId], references: [id])
+  tags      recipesTags[]
+}
+
+model recipesTags {
+  id       Int @id @default(autoincrement())
+  recipeId Int
+  tagId    Int
+
+  tag    tags    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  recipe recipes @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([recipeId, tagId])
+  @@index([tagId])
+  @@index([recipeId])
+}
+
+model structures {
+  id    Int    @id @default(autoincrement())
+  title String @unique @db.VarChar(500)
+
+  recipes recipes[]
+}

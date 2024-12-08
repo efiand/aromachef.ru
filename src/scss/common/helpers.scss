@@ -1,0 +1,9 @@
+@use '../env' as *;
+
+.container {
+	padding-inline: 1.5rem;
+
+	@include desktop {
+		padding-inline: calc(50% - 610px);
+	}
+}

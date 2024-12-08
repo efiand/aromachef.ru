@@ -1,0 +1,96 @@
+@use '../env' as *;
+
+html {
+	--color-black: #333333;
+	--color-eggplant: #332754;
+	--color-green-light: #b2d4b5;
+	--color-green: #27542b;
+	--color-lavender: #c1abfe;
+	--color-white: #ffffff;
+
+	--font-basic: 'Noto Serif', serif;
+	--font-accent: 'Noto Sans', sans-serif;
+	--scroll-behavior: auto;
+	--transition: none;
+
+	--icon-tg: url('../icons/tg.svg');
+
+	font-size: 16px; // rem support
+
+	@include motion {
+		--transition: 0.3s ease-in-out;
+		--scroll-behavior: smooth;
+	}
+
+	@include tablet-desktop {
+		font-size: 20px;
+	}
+}
+
+body {
+	min-width: 320px;
+	margin: 0;
+	line-height: 1.5;
+	font-family: var(--font-basic);
+	font-feature-settings:
+		'tnum' on,
+		'lnum' on;
+	color: var(--color-black);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	-webkit-tap-highlight-color: transparent;
+	overflow-anchor: none;
+}
+
+h1,
+h2 {
+	margin: 0;
+	font-weight: 700;
+	line-height: 1.25;
+	font-family: var(--font-accent);
+	color: var(--color-eggplant);
+}
+
+h1 {
+	font-size: 2em;
+
+	@include tablet-desktop {
+		font-size: 3rem;
+	}
+}
+
+h2 {
+	font-size: 1.5rem;
+
+	@include tablet-desktop {
+		font-size: 2rem;
+	}
+}
+
+a {
+	text-decoration-skip-ink: none;
+	font-family: var(--font-accent);
+	text-decoration: none;
+	color: var(--color-green);
+	transition: var(--transition);
+	transition-property: color;
+
+	@include hover {
+		text-decoration: underline;
+	}
+}
+
+ul,
+ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+img,
+video,
+iframe {
+	max-width: 100%;
+	height: auto;
+}
