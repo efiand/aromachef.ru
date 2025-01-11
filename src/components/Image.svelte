@@ -27,8 +27,6 @@
 <style lang="scss">
 	.image {
 		display: block;
-		color: transparent;
-		background-color: var(--color-green-light);
 		border-radius: 2px;
 	}
 </style>

@@ -23,6 +23,7 @@ model recipes {
   published   Boolean   @default(false)
   publishedAt DateTime?
   structureId Int
+  telegramId  Int?
 
   structure structures    @relation(fields: [structureId], references: [id])
   tags      recipesTags[]

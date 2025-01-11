@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { TG_URL } from '@/lib/constants';
 </script>
 
 <footer class="footer container">
 	<ul class="footer__list">
 		<li class="footer__item">
-			<a class="footer__tg" href="https://t.me/aroma_chef" target="_blank">
-				@aroma_chef
-			</a>
+			<a class="footer__tg" href={TG_URL} target="_blank">@aroma_chef</a>
 		</li>
 		{#if page.route.id !== '/about'}
 			<li class="footer__item">

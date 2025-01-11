@@ -14,6 +14,7 @@ declare global {
 				tags: {
 					tag: Item;
 				}[];
+				telegramId: null | number;
 				title: string;
 			};
 			tags?: Item[];

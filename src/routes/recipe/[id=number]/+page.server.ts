@@ -13,6 +13,7 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 				orderBy: { tag: { title: 'asc' } },
 				select: { tag: true }
 			},
+			telegramId: true,
 			title: true
 		},
 		where: { id: parseInt(params.id, 10), published: true }
