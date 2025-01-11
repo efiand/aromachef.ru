@@ -55,6 +55,10 @@
 	ol,
 	ul,
 	p {
-		margin: 1rem 0 0;
+		margin: 0;
+
+		&:not(:first-child) {
+			margin-top: 1rem;
+		}
 	}
 }

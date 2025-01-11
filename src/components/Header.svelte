@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { page } from '$app/state';
+</script>
+
 <header class="header container">
 	<a class="header__logo-link" href="/" aria-label="На главную">
 		<svg class="header__logo" width="1.5rem" height="1.5rem" role="img">
@@ -9,9 +13,11 @@
 		<li class="header__item">
 			<a href="/structure">Разделы и #теги</a>
 		</li>
-		<li class="header__item">
-			<a href="/important"><strong>Важно!</strong></a>
-		</li>
+		{#if page.route.id !== '/important'}
+			<li class="header__item">
+				<a href="/important"><strong>Важно!</strong></a>
+			</li>
+		{/if}
 	</ul>
 </header>
 

@@ -9,7 +9,7 @@ async function load() {
 			orderBy: { title: 'asc' }
 		})
 	]);
-	return { items, tags };
+	return { items, tags, title: 'Разделы и #теги' };
 }
 
 export { load };

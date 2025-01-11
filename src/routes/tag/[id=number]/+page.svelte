@@ -1,17 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Recipes from '@/components/Recipes.svelte';
 
-	let { entity, items = [] } = $page.data;
-	let title = `#${entity?.title}`;
+	let { entity, items = [] } = $derived(page.data);
 </script>
 
-<svelte:head>
-	<title>АромаШеф : Теги : {title}</title>
-</svelte:head>
-
 <Recipes
-	{title}
+	title="#{entity!.title}"
 	{items}
 	alt="На фото изображено готовое блюдо по этому тегу в миниатюре."
 />

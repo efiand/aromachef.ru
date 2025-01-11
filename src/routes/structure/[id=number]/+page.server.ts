@@ -9,7 +9,8 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 			id: true,
 			recipes: {
 				orderBy: { title: 'asc' },
-				select: { id: true, title: true }
+				select: { id: true, title: true },
+				where: { published: true }
 			},
 			title: true
 		},
@@ -19,12 +20,12 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 	if (!structure) {
 		error(404, `Раздел № ${params.id} не найден.`);
 	}
+
+	const { id, title } = structure;
 	return {
-		entity: {
-			id: structure.id,
-			title: structure.title
-		},
-		items: structure.recipes
+		entity: { id, title },
+		items: structure.recipes,
+		title: `Разделы : ${title}`
 	};
 }
 

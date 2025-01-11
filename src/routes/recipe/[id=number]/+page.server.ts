@@ -15,13 +15,16 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 			},
 			title: true
 		},
-		where: { id: parseInt(params.id, 10) }
+		where: { id: parseInt(params.id, 10), published: true }
 	});
 
 	if (!recipe) {
 		error(404, `Рецепт № ${params.id} не найден.`);
 	}
-	return { recipe };
+	return {
+		recipe,
+		title: `Рецепты : ${recipe.title}`
+	};
 }
 
 export { load };

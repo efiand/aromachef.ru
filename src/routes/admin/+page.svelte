@@ -2,11 +2,10 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	import { enhance } from '$app/forms';
+	import { page } from '$app/state';
 	import Button from '@/components/Button.svelte';
 
 	let { form } = $props();
-
-	const title = 'Панель управления';
 	let disabled = $state(false);
 
 	function createDump(): ReturnType<SubmitFunction> {
@@ -19,12 +18,8 @@
 	}
 </script>
 
-<svelte:head>
-	<title>АромаШеф : {title}</title>
-</svelte:head>
-
 <section class="admin">
-	<h1 class="admin__heading">{title}</h1>
+	<h1 class="admin__heading">{page.data.title}</h1>
 
 	<form method="POST" action="?/dump" use:enhance={createDump}>
 		<Button type="submit" {disabled}>Резервное копирование</Button>

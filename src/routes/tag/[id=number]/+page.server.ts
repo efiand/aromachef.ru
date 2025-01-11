@@ -15,7 +15,8 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 					recipe: {
 						select: { id: true, title: true }
 					}
-				}
+				},
+				where: { recipe: { published: true } }
 			},
 			title: true
 		},
@@ -25,12 +26,12 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 	if (!tag) {
 		error(404, `Тег № ${params.id} не найден.`);
 	}
+
+	const { id, title } = tag;
 	return {
-		entity: {
-			id: tag.id,
-			title: tag.title
-		},
-		items: tag.recipes.map(recipeWrapperToRecipe)
+		entity: { id, title },
+		items: tag.recipes.map(recipeWrapperToRecipe),
+		title: `Теги : #${title}`
 	};
 }
 

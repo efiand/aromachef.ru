@@ -1,7 +1,9 @@
 import type { recipes, recipesTags, structures, tags } from '@prisma/client';
 
+import { dev } from '$app/environment';
 import { upload } from '@/lib/files';
 import { prisma } from '@/lib/prisma';
+import { error } from '@sveltejs/kit';
 
 import type { Actions } from './$types';
 
@@ -63,6 +65,14 @@ function createDump([tableName, rows]: [string, tableRow[]]) {
 	return `INSERT INTO \`${tableName}\` (\`${columns}\`) VALUES\n(${values});`;
 }
 
+function load() {
+	if (!dev) {
+		error(403, 'Доступ запрещён.');
+	}
+
+	return { title: 'Панель управления' };
+}
+
 function stringifyCell(value: tableCell) {
 	if (value === null) {
 		return 'null';
@@ -88,4 +98,4 @@ function stringifyCell(value: tableCell) {
 	return `${value}`;
 }
 
-export { actions };
+export { actions, load };

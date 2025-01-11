@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { PICTURE_URL } from '@/lib/constants';
+
 	let {
 		alt = '',
 		height,
@@ -14,8 +16,8 @@
 
 <img
 	class="image"
-	src="/images/{name}@1x.webp"
-	srcset="/images/{name}@2x.webp 2x"
+	src="{PICTURE_URL}/{name}@1x.webp"
+	srcset="{PICTURE_URL}/{name}@2x.webp 2x"
 	{width}
 	{height}
 	{alt}

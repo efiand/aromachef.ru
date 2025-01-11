@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { page } from '$app/state';
+</script>
+
 <footer class="footer container">
 	<ul class="footer__list">
 		<li class="footer__item">
@@ -5,9 +9,11 @@
 				@aroma_chef
 			</a>
 		</li>
-		<li class="footer__item">
-			<a href="/about">Обо мне</a>
-		</li>
+		{#if page.route.id !== '/about'}
+			<li class="footer__item">
+				<a href="/about">Обо мне</a>
+			</li>
+		{/if}
 		<li class="footer__item footer__item--last">
 			Разработка:
 			<a href="https://efiand.ru" target="_blank" rel="nofollow">efiand</a>

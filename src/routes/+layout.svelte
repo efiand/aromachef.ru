@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import '@/scss/index.scss';
 	import Footer from '@/components/Footer.svelte';
 	import Header from '@/components/Header.svelte';
@@ -9,14 +9,26 @@
 	let { children } = $props();
 	let appElement: HTMLDivElement;
 
+	let title = $derived(
+		['АромаШеф', page.data.title].filter(Boolean).join(' : ')
+	);
+	let url = $derived(page.url.pathname);
+
 	afterNavigate(function () {
 		appElement.scrollTo({ behavior: 'instant', top: 0 });
 	});
 </script>
 
+<svelte:head>
+	<title>{title}</title>
+	<link rel="canonical" href={url} />
+	<meta property="og:title" content={title} />
+	<meta property="og:url" content={url} />
+</svelte:head>
+
 <div class="app" bind:this={appElement}>
 	<Header />
-	{#if $page.route.id === '/'}
+	{#if page.route.id === '/'}
 		<Hero />
 	{/if}
 

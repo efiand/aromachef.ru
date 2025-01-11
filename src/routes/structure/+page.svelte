@@ -1,18 +1,14 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Cards from '@/components/Cards.svelte';
 	import Tags from '@/components/Tags.svelte';
 
-	let { items = [], tags = [] } = $page.data;
+	let { items = [], tags = [] } = $derived(page.data);
 </script>
 
-<svelte:head>
-	<title>АромаШеф : Разделы и #теги</title>
-</svelte:head>
-
-<section class="structures">
+<section class="structure">
 	<div>
-		<h1 class="structures__heading">Разделы</h1>
+		<h1 class="structure__heading">Разделы</h1>
 		<Cards
 			{items}
 			entity="structure"
@@ -21,13 +17,13 @@
 	</div>
 
 	<div>
-		<h2 class="structures__sideheading">Теги</h2>
+		<h2 class="structure__sideheading">Теги</h2>
 		<Tags {tags} column />
 	</div>
 </section>
 
 <style lang="scss">
-	.structures {
+	.structure {
 		display: grid;
 		gap: 2rem;
 
@@ -36,11 +32,11 @@
 		}
 	}
 
-	.structures__heading {
+	.structure__heading {
 		margin-bottom: 2rem;
 	}
 
-	.structures__sideheading {
+	.structure__sideheading {
 		margin: 1rem 0 2rem;
 	}
 </style>

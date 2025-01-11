@@ -17,6 +17,7 @@ declare global {
 				title: string;
 			};
 			tags?: Item[];
+			title: string;
 		}
 	}
 }
