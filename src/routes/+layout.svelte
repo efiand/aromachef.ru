@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import '@/scss/index.scss';
 	import Footer from '@/components/Footer.svelte';
+	import '@/scss/index.scss';
 	import Header from '@/components/Header.svelte';
 	import Hero from '@/components/Hero.svelte';
+	import { hitYM } from '@/lib/ym';
 
 	let { children } = $props();
 	let appElement: HTMLDivElement;
@@ -15,6 +16,7 @@
 	let url = $derived(page.url.pathname);
 
 	afterNavigate(function () {
+		hitYM();
 		appElement.scrollTo({ behavior: 'instant', top: 0 });
 	});
 </script>
