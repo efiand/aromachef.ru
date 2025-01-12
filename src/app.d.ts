@@ -9,6 +9,7 @@ declare global {
 			items?: Item[];
 			recipe?: {
 				cooking: string;
+				description: null | string;
 				ingredients: string;
 				structure: Item;
 				tags: {

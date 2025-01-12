@@ -18,6 +18,7 @@ model tags {
 model recipes {
   id          Int       @id @default(autoincrement())
   title       String    @unique @db.VarChar(500)
+  description String?   @db.Text
   ingredients String    @db.Text
   cooking     String    @db.Text
   published   Boolean   @default(false)

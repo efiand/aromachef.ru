@@ -1,3 +1,5 @@
+import type { PrismaClient as PrismaClientType } from '@prisma/client';
+
 import { createRequire } from 'module';
 
 type PrismaClientSingleton = ReturnType<typeof createClient>;
@@ -15,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 function createClient() {
-	return new PrismaClient();
+	return new (PrismaClient as typeof PrismaClientType)();
 }
 
 export { prisma };

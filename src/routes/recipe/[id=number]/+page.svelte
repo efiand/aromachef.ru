@@ -8,9 +8,15 @@
 	import { TG_URL } from '@/lib/constants';
 
 	let { id } = $derived(page.params);
-	let { cooking, ingredients, structure, tags, telegramId, title } = $derived(
-		page.data.recipe!
-	);
+	let {
+		cooking,
+		description,
+		ingredients,
+		structure,
+		tags,
+		telegramId,
+		title
+	} = $derived(page.data.recipe!);
 
 	function tagWrapperToTag({ tag }: ItemWrapper) {
 		return tag;
@@ -18,6 +24,24 @@
 </script>
 
 <PageSection class="recipe" {title}>
+	{#if description || telegramId}
+		<div class="content">
+			{#if description}
+				{@html description}
+			{/if}
+			{#if telegramId}
+				<!-- prettier-ignore -->
+				<p>
+					Краткая видеоинструкция доступна по
+					<a href="{TG_URL}/{telegramId}" target="_blank" rel="nofollow noopener">
+						ссылке
+					</a>.
+				</p>
+				<!-- prettier-ignore-end -->
+			{/if}
+		</div>
+	{/if}
+
 	<Article
 		title="Состав"
 		imageName="recipe/{id}-ingredients"
@@ -33,16 +57,6 @@
 		reverse
 	>
 		{@html cooking}
-		{#if telegramId}
-			<!-- prettier-ignore -->
-			<p>
-				Краткая видеоинструкция доступна по
-				<a href="{TG_URL}/{telegramId}" target="_blank" rel="nofollow noopener">
-					ссылке
-				</a>.
-			</p>
-			<!-- prettier-ignore-end -->
-		{/if}
 	</Article>
 
 	<div class="recipe__footer">

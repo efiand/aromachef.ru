@@ -7,6 +7,7 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 	const recipe = await prisma.recipes.findUnique({
 		select: {
 			cooking: true,
+			description: true,
 			ingredients: true,
 			structure: true,
 			tags: {
