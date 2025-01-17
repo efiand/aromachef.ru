@@ -14,7 +14,10 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 			},
 			title: true
 		},
-		where: { id: parseInt(params.id, 10) }
+		where: {
+			id: parseInt(params.id, 10),
+			recipes: { some: { published: true } }
+		}
 	});
 
 	if (!structure) {
