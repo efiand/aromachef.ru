@@ -31,7 +31,7 @@
 			{/if}
 			{#if telegramId}
 				<!-- prettier-ignore -->
-				<p>
+				<p class="small">
 					Посмотреть краткую видеоинструкцию или обсудить рецепт можно
 					по <a href="{TG_URL}/{telegramId}" target="_blank" rel="nofollow noopener">ссылке</a>.
 				</p>
