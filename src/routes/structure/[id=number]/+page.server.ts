@@ -26,8 +26,10 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 
 	const { id, title } = structure;
 	return {
+		description: `Страница содержит рецепты с эфирными маслами из раздела «${title}».`,
 		entity: { id, title },
 		items: structure.recipes,
+		ogImage: `structure/${params.id}`,
 		title: `Разделы : ${title}`
 	};
 }

@@ -24,6 +24,10 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 		error(404, `Рецепт № ${params.id} не найден.`);
 	}
 	return {
+		description: recipe.description
+			? recipe.description.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, '')
+			: `Страница содержит описание рецепта «${recipe.title}».`,
+		ogImage: `recipe/${params.id}`,
 		recipe,
 		title: `Рецепты : ${recipe.title}`
 	};

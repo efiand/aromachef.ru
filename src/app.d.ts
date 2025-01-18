@@ -5,8 +5,10 @@ import type { Item } from './types';
 declare global {
 	namespace App {
 		interface PageData {
+			description: string;
 			entity?: Item;
 			items?: Item[];
+			ogImage?: string;
 			recipe?: {
 				cooking: string;
 				description: null | string;

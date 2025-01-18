@@ -8,10 +8,16 @@ async function load() {
 		}),
 		prisma.tags.findMany({
 			orderBy: { title: 'asc' },
-			where: { recipes: { some: { recipe: { published: { equals: true } } } } }
+			where: { recipes: { some: { recipe: { published: true } } } }
 		})
 	]);
-	return { items, tags, title: 'Разделы и #теги' };
+	return {
+		description:
+			'Интересующие Вас рецепты Вы можете найти в соответствующих разделах или воспользоваться тегами.',
+		items,
+		tags,
+		title: 'Разделы и #теги'
+	};
 }
 
 export { load };

@@ -70,7 +70,10 @@ function load() {
 		error(403, 'Доступ запрещён.');
 	}
 
-	return { title: 'Панель управления' };
+	return {
+		description: 'Для служебного пользования!',
+		title: 'Панель управления'
+	};
 }
 
 function stringifyCell(value: tableCell) {

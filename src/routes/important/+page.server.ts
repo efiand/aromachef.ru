@@ -1,7 +1,11 @@
 const prerender = true;
 
 function load() {
-	return { title: 'Важно!' };
+	return {
+		description:
+			'О технике безопасности при приготовлении рецептов с эфирными маслами.',
+		title: 'Важно!'
+	};
 }
 
 export { load, prerender };

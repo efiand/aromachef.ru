@@ -14,6 +14,11 @@
 		['АромаШеф', page.data.title].filter(Boolean).join(' : ')
 	);
 	let url = $derived(page.url.pathname);
+	let ogImage = $derived(
+		page.data.ogImage
+			? `/pictures/${page.data.ogImage}@2x.webp`
+			: '/images/og.webp'
+	);
 
 	afterNavigate(function () {
 		hitYM();
@@ -23,9 +28,12 @@
 
 <svelte:head>
 	<title>{title}</title>
+	<meta name="description" content={page.data.description} />
 	<link rel="canonical" href={url} />
 	<meta property="og:title" content={title} />
+	<meta property="og:description" content={page.data.description} />
 	<meta property="og:url" content={url} />
+	<meta property="og:image" content={ogImage} />
 </svelte:head>
 
 <div class="app" bind:this={appElement}>
