@@ -1,3 +1,3 @@
 User-agent: *
-Host: aromachef.ru
 Disallow: /admin/
+Host: https://aromachef.ru
