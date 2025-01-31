@@ -43,10 +43,14 @@
 			position: absolute;
 			inset: 0;
 			z-index: -1;
-			background-image: url('/images/hero.jpg');
+			background-image: url('/images/hero-mobile.webp');
 			background-position: 50%;
 			background-size: cover;
 			opacity: 0.5;
+
+			@include tablet-desktop {
+				background-image: url('/images/hero.webp');
+			}
 		}
 	}
 

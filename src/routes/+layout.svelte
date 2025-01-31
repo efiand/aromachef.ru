@@ -13,7 +13,7 @@
 	let title = $derived(
 		['АромаШеф', page.data.title].filter(Boolean).join(' : ')
 	);
-	let url = $derived(page.url.pathname);
+	let url = $derived(`${page.url.origin}${page.url.pathname}`);
 	let ogImage = $derived(
 		page.data.ogImage
 			? `/pictures/${page.data.ogImage}@2x.webp`
