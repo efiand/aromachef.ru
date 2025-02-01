@@ -1,7 +1,8 @@
-import { BASE_URL } from '@/lib/constants';
 import { prisma } from '@/lib/prisma';
 
-async function GET() {
+import type { RequestHandler } from './$types';
+
+async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 	const [recipes, tags] = await Promise.all([
 		prisma.recipes.findMany({
 			select: { id: true, structureId: true },
@@ -36,7 +37,7 @@ async function GET() {
 		.map(
 			(page) => `
 	<url>
-		<loc>${BASE_URL}/${page}</loc>
+		<loc>https://${hostname}/${page}</loc>
 	</url>`
 		)
 		.join('')}

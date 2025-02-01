@@ -1,0 +1,12 @@
+@use '../env' as *;
+
+.recipe__footer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1rem;
+
+	@include tablet-desktop {
+		flex-direction: row;
+	}
+}

@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /admin/
-Host: https://aromachef.ru
-Sitemap: https://aromachef.ru/sitemap.xml

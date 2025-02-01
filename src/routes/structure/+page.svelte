@@ -21,26 +21,3 @@
 		<Tags {tags} column />
 	</div>
 </section>
-
-<style lang="scss">
-	.structure {
-		display: grid;
-		gap: 2rem;
-
-		@include tablet-desktop {
-			grid-template-columns: 1fr min-content;
-		}
-	}
-
-	.structure__heading {
-		margin-bottom: 2rem;
-	}
-
-	.structure__sideheading {
-		margin: 1rem 0 2rem;
-	}
-
-	.structure__tags {
-		scroll-margin-top: 2rem;
-	}
-</style>

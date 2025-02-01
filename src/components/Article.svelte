@@ -29,34 +29,3 @@
 		<Image name={imageName} width="384" height="672" alt={imageAlt} />
 	</div>
 </div>
-
-<style lang="scss">
-	.article {
-		display: grid;
-		gap: 2rem;
-
-		@include tablet-desktop {
-			grid-template-columns: 384px 1fr;
-
-			.article__image {
-				order: -1;
-			}
-		}
-
-		&--reverse {
-			@include tablet-desktop {
-				grid-template-columns: 1fr 384px;
-
-				.article__image {
-					order: initial;
-				}
-			}
-		}
-	}
-
-	.article__image {
-		@include tablet-desktop {
-			margin-top: 0.75rem;
-		}
-	}
-</style>

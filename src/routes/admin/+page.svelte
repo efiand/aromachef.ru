@@ -29,13 +29,3 @@
 		<p class="admin__status">Резервное копирование успешно завершено!</p>
 	{/if}
 </section>
-
-<style lang="scss">
-	.admin__heading {
-		margin-bottom: 2rem;
-	}
-
-	.admin__status {
-		margin: 2rem 0 0;
-	}
-</style>

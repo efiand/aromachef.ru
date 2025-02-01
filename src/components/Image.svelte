@@ -23,10 +23,3 @@
 	{alt}
 	loading="lazy"
 />
-
-<style lang="scss">
-	.image {
-		display: block;
-		border-radius: 2px;
-	}
-</style>

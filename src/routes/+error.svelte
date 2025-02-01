@@ -15,9 +15,3 @@
 		</a>
 	</p>
 </div>
-
-<style lang="scss">
-	h1 {
-		margin-bottom: 2rem;
-	}
-</style>

@@ -62,16 +62,3 @@
 		<a href="/structure/{structure.id}">{structure.title}</a>
 	</div>
 </PageSection>
-
-<style lang="scss">
-	.recipe__footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: 1rem;
-
-		@include tablet-desktop {
-			flex-direction: row;
-		}
-	}
-</style>

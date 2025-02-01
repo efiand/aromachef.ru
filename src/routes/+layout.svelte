@@ -2,9 +2,10 @@
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import Footer from '@/components/Footer.svelte';
-	import '@/scss/index.scss';
 	import Header from '@/components/Header.svelte';
+	import '@/scss/index.scss';
 	import Hero from '@/components/Hero.svelte';
+	import { BASE_AMP_URL, BASE_URL } from '@/lib/constants';
 	import { hitYM } from '@/lib/ym';
 
 	let { children } = $props();
@@ -13,7 +14,7 @@
 	let title = $derived(
 		['АромаШеф', page.data.title].filter(Boolean).join(' : ')
 	);
-	let url = $derived(`${page.url.origin}${page.url.pathname}`);
+	let url = $derived(`${BASE_URL}${page.url.pathname}`);
 	let ogImage = $derived(
 		page.data.ogImage
 			? `/pictures/${page.data.ogImage}@2x.webp`
@@ -34,6 +35,10 @@
 	<meta property="og:description" content={page.data.description} />
 	<meta property="og:url" content={url} />
 	<meta property="og:image" content={ogImage} />
+
+	{#if page.url.hostname === 'aromachef.ru'}
+		<link rel="amphtml" href="{BASE_AMP_URL}{page.url.pathname}" />
+	{/if}
 </svelte:head>
 
 <div class="app" bind:this={appElement}>
@@ -48,19 +53,3 @@
 
 	<Footer />
 </div>
-
-<style lang="scss">
-	.app {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		height: 100vh;
-		overflow: hidden scroll;
-		scroll-behavior: var(--scroll-behavior);
-	}
-
-	.app__main {
-		flex-grow: 1;
-		padding-block: 3rem;
-	}
-</style>

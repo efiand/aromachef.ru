@@ -1,0 +1,10 @@
+@use '../env' as *;
+
+.page-section {
+	display: grid;
+	gap: 3rem;
+
+	@include tablet-desktop {
+		gap: 4rem;
+	}
+}

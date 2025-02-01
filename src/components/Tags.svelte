@@ -11,24 +11,3 @@
 		</li>
 	{/each}
 </ul>
-
-<style lang="scss">
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-
-		&--column {
-			flex-direction: column;
-			gap: 0.5rem;
-		}
-	}
-
-	.tags__item {
-		display: contents;
-
-		a {
-			text-transform: lowercase;
-		}
-	}
-</style>
