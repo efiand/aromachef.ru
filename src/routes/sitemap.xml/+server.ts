@@ -31,9 +31,7 @@ async function GET() {
 	const body = `<?xml version="1.0" encoding="UTF-8" ?>
 <urlset
 	xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
-	xmlns:news="https://www.google.com/schemas/sitemap-news/0.9"
 	xmlns:xhtml="https://www.w3.org/1999/xhtml"
-	xmlns:mobile="https://www.google.com/schemas/sitemap-mobile/1.0"
 >${pages
 		.map(
 			(page) => `
@@ -44,9 +42,7 @@ async function GET() {
 		.join('')}
 </urlset>`;
 
-	const response = new Response(body);
-	response.headers.set('Content-Type', 'application/xml');
-	return response;
+	return new Response(body, { headers: { 'Content-Type': 'application/xml' } });
 }
 
 export { GET };

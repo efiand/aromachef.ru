@@ -14,8 +14,9 @@
 			</li>
 		{/if}
 		<li class="footer__item footer__item--last">
-			Разработка:
-			<a href="https://efiand.ru" target="_blank" rel="nofollow">efiand</a>
+			<a href="https://efiand.ru" target="_blank" rel="nofollow">
+				Разработано efiand
+			</a>
 		</li>
 	</ul>
 </footer>
