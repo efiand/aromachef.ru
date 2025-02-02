@@ -5,6 +5,9 @@ function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 Disallow: /admin/
 Host: https://${hostname}
 Sitemap: https://${hostname}/sitemap.xml
+
+User-agent: Googlebot
+Disallow: /turbo.rss
 `;
 
 	if (hostname === 'amp.aromachef.ru') {

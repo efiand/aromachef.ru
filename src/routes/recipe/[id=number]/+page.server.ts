@@ -1,3 +1,4 @@
+import { prepareRecipe } from '@/lib/prepare-data';
 import { prisma } from '@/lib/prisma';
 import { error } from '@sveltejs/kit';
 
@@ -23,13 +24,14 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 	if (!recipe) {
 		error(404, `Рецепт № ${params.id} не найден.`);
 	}
+
+	const preparedRecipe = prepareRecipe(recipe);
+
 	return {
-		description: recipe.description
-			? recipe.description.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, '')
-			: `Страница содержит описание рецепта «${recipe.title}».`,
+		description: preparedRecipe.description,
 		ogImage: `recipe/${params.id}`,
-		recipe,
-		title: `Рецепты : ${recipe.title}`
+		recipe: preparedRecipe,
+		title: `Рецепты : ${preparedRecipe.title}`
 	};
 }
 

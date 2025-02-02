@@ -1,11 +1,9 @@
+import { aboutData } from '@/data/about';
+
 const prerender = true;
 
 function load() {
-	return {
-		description:
-			'АромаШеф рассказывает о себе и приглашает в удивительный мир рецептов с эфирными маслами.',
-		title: 'Обо мне'
-	};
+	return aboutData;
 }
 
 export { load, prerender };

@@ -1,11 +1,9 @@
+import { importantData } from '@/data/important';
+
 const prerender = true;
 
 function load() {
-	return {
-		description:
-			'О технике безопасности при приготовлении рецептов с эфирными маслами.',
-		title: 'Важно!'
-	};
+	return importantData;
 }
 
 export { load, prerender };

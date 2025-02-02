@@ -1,25 +1,16 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { Item } from './types';
+import type { EnrichedRecipe, Item, Recipe } from '@/types';
 
 declare global {
 	namespace App {
 		interface PageData {
+			content?: string;
 			description: string;
 			entity?: Item;
 			items?: Item[];
 			ogImage?: string;
-			recipe?: {
-				cooking: string;
-				description: null | string;
-				ingredients: string;
-				structure: Item;
-				tags: {
-					tag: Item;
-				}[];
-				telegramId: null | number;
-				title: string;
-			};
+			recipe?: EnrichedRecipe<Recipe>;
 			tags?: Item[];
 			title: string;
 		}

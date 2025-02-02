@@ -21,10 +21,10 @@ model recipes {
   description String    @unique @db.VarChar(1000)
   ingredients String    @unique @db.VarChar(3000)
   cooking     String    @unique @db.VarChar(3000)
-  published   Boolean   @default(false)
-  publishedAt DateTime?
   structureId Int
   telegramId  Int?      @unique
+  published   Boolean   @default(false)
+  publishedAt DateTime? @unique
 
   structure structures    @relation(fields: [structureId], references: [id])
   tags      recipesTags[]
