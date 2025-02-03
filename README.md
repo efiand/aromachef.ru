@@ -10,6 +10,8 @@
 - Вывод 12-ти последних рецептов на главной.
 - [Карта сайта](https://aromachef.ru/sitemap.xml).
 - [AMP-страницы](https://amp.aromachef.ru).
+- [Turbo-страницы](https://aromachef.ru/turbo.rss).
+- [Автообновление зависимостей](tools/upgrade.js).
 - Инструмент дампа через админ-панель.
 
 ## Технические особенности
