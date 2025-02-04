@@ -46,14 +46,16 @@ body {
 h1,
 h2 {
 	margin: 0;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 1.25;
 	font-family: var(--font-accent);
+	font-kerning: auto;
 	color: var(--color-eggplant);
 }
 
 h1 {
 	font-size: 2em;
+	letter-spacing: -0.03em;
 
 	@include tablet-desktop {
 		font-size: 3rem;
@@ -62,6 +64,7 @@ h1 {
 
 h2 {
 	font-size: 1.5rem;
+	letter-spacing: -0.01em;
 
 	@include tablet-desktop {
 		font-size: 2rem;

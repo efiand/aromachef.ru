@@ -1,23 +1,15 @@
-@font-face {
-	font-weight: 400;
-	font-style: normal;
-	font-family: 'Noto Sans';
-	font-display: swap;
-	src: url('/fonts/noto-sans-400.woff2') format('woff2');
-}
+$fonts:
+	'Noto Sans' 'noto-sans' 400,
+	'Noto Sans' 'noto-sans' 600,
+	'Noto Serif' 'noto-serif' 400,
+	'Noto Serif' 'noto-serif' 700;
 
-@font-face {
-	font-weight: 400;
-	font-style: normal;
-	font-family: 'Noto Serif';
-	font-display: swap;
-	src: url('/fonts/noto-serif-400.woff2') format('woff2');
-}
-
-@font-face {
-	font-weight: 700;
-	font-style: normal;
-	font-family: 'Noto Serif';
-	font-display: swap;
-	src: url('/fonts/noto-serif-700.woff2') format('woff2');
+@each $family, $filename, $weight in $fonts {
+	@font-face {
+		font-weight: $weight;
+		font-style: normal;
+		font-family: $family;
+		font-display: swap;
+		src: url('/fonts/#{$filename}-#{$weight}.woff2') format('woff2');
+	}
 }

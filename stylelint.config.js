@@ -13,6 +13,7 @@ export default {
 	plugins: [`stylelint-order`],
 	rules: {
 		'alpha-value-notation': 'number',
+		'at-rule-descriptor-value-no-unknown': null,
 		'at-rule-empty-line-before': null,
 		'at-rule-no-unknown': [
 			true,
@@ -174,6 +175,7 @@ export default {
 					'line-height',
 					'font-family',
 					'font-display',
+					'font-kerning',
 					'direction',
 					'text-transform',
 					'text-decoration',
