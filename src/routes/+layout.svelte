@@ -47,7 +47,7 @@
 		<Hero />
 	{/if}
 
-	<main class="app__main container">
+	<main class="app__main _container">
 		{@render children()}
 	</main>
 

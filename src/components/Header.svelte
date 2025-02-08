@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 </script>
 
-<header class="header container">
+<header class="header _container">
 	<a class="header__logo-link" href="/" aria-label="На главную">
 		<svg class="header__logo" width="1.5rem" height="1.5rem" role="img">
 			<use href="/images/aromachef-logo.svg#logo" />

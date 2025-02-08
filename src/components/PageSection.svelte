@@ -13,6 +13,7 @@
 </script>
 
 <section class="page-section {className}">
-	<h1>{@html title}</h1>
+	<h1 class="page-section__title">{@html title}</h1>
+
 	{@render children()}
 </section>

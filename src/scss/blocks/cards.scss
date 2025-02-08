@@ -1,3 +1,5 @@
+@use '../env' as *;
+
 .cards {
 	display: flex;
 	flex-wrap: wrap;
@@ -5,6 +7,12 @@
 
 	&--centered {
 		justify-content: center;
+	}
+
+	&--centered-in-mobile {
+		@include mobile {
+			justify-content: center;
+		}
 	}
 }
 

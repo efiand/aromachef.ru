@@ -1,13 +1,17 @@
 <script lang="ts">
 	import type { Item } from '@/types';
 
-	let { column = false, tags }: { column?: boolean; tags: Item[] } = $props();
+	let {
+		class: className = '',
+		column = false,
+		tags
+	}: { class?: string; column?: boolean; tags: Item[] } = $props();
 </script>
 
-<ul class="tags {column ? 'tags--column' : ''}">
+<ul class="tags {column ? 'tags--column' : ''} {className}">
 	{#each tags as { id, title }}
 		<li class="tags__item">
-			<a href="/tag/{id}">#{title}</a>
+			<a class="tags__link" href="/tag/{id}">#{title}</a>
 		</li>
 	{/each}
 </ul>

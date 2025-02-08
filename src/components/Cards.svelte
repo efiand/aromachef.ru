@@ -6,17 +6,29 @@
 	let {
 		alt = '',
 		centered = false,
+		centeredInMobile = false,
 		entity,
 		items
 	}: {
 		alt?: string;
 		centered?: boolean;
+		centeredInMobile?: boolean;
 		entity: 'recipe' | 'structure';
 		items: Item[];
 	} = $props();
+
+	let modifier = $derived.by(function () {
+		if (centeredInMobile) {
+			return 'cards--centered-in-mobile';
+		}
+		if (centered) {
+			return 'cards--centered';
+		}
+		return '';
+	});
 </script>
 
-<ul class="cards {centered ? 'cards--centered' : ''}">
+<ul class="cards {modifier}">
 	{#each items as { id, title }}
 		{@const href = `/${entity}/${id}`}
 		<li class="cards__item">

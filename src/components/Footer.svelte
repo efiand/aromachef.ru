@@ -3,7 +3,7 @@
 	import { TG_URL } from '@/lib/constants';
 </script>
 
-<footer class="footer container">
+<footer class="footer _container">
 	<ul class="footer__list">
 		<li class="footer__item">
 			<a class="footer__tg" href={TG_URL} target="_blank">@aroma_chef</a>

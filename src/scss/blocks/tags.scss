@@ -1,18 +1,29 @@
+@use '../env' as *;
+
 .tags {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;
-
-	&--column {
-		flex-direction: column;
-		gap: 0.5rem;
-	}
 }
 
-.tags__item {
-	display: contents;
+.tags__link {
+	display: table;
+	text-transform: lowercase;
+}
 
-	a {
-		text-transform: lowercase;
+.tags--column {
+	display: block;
+	width: fit-content;
+
+	@include mobile {
+		column-count: 2;
+		column-gap: 4rem;
+
+		// Компенсация отступа первого элемента второй колонки
+		transform: translateY(-0.25rem);
+	}
+
+	.tags__item:not(:first-child) {
+		margin-top: 0.25rem;
 	}
 }

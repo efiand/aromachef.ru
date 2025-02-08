@@ -21,9 +21,19 @@
 			}
 		}
 	}
+
+	h2 {
+		@include mobile {
+			text-align: center;
+		}
+	}
 }
 
 .article__image {
+	@include mobile {
+		margin-inline: auto;
+	}
+
 	@include tablet-desktop {
 		margin-top: 0.75rem;
 	}

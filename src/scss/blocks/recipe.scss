@@ -2,11 +2,10 @@
 
 .recipe__footer {
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 4rem;
+}
 
-	@include tablet-desktop {
-		flex-direction: row;
-	}
+.recipe__structure-link {
+	text-align: right;
 }

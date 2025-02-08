@@ -10,13 +10,28 @@
 }
 
 .structure__heading {
-	margin-bottom: 2rem;
+	margin-bottom: 4rem;
+
+	@include mobile {
+		text-align: center;
+	}
 }
 
 .structure__sideheading {
-	margin: 1rem 0 2rem;
+	margin: 1rem 0 4rem;
+
+	@include mobile {
+		margin: 2rem 0;
+		text-align: center;
+	}
 }
 
 .structure__tags {
 	scroll-margin-top: 2rem;
+}
+
+.structure__tags-list {
+	@include mobile {
+		margin-inline: auto;
+	}
 }

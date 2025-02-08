@@ -37,6 +37,8 @@
 
 	<div class="recipe__footer">
 		<Tags tags={tags.map(tagWrapperToTag)} />
-		<a href="/structure/{structure.id}">{structure.title}</a>
+		<a class="recipe__structure-link" href="/structure/{structure.id}">
+			{structure.title}
+		</a>
 	</div>
 </PageSection>
