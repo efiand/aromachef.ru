@@ -4,14 +4,17 @@ import { TG_URL } from '@/lib/constants';
 import { html } from '@/lib/make-template';
 import { minifyInternal } from '@/lib/minify';
 
-function prepareRecipe<T = BaseRecipe | Recipe>(recipe: T): EnrichedRecipe<T> {
+function prepareRecipe(recipe: Recipe): EnrichedRecipe {
 	const { description, telegramId, title } = recipe as BaseRecipe;
 	const ensuredDescription = description || '';
 
 	return {
 		...recipe,
 		description: ensuredDescription
-			? ensuredDescription.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, '')
+			? ensuredDescription
+					.replaceAll('</p>', ' ')
+					.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, '')
+					.trim()
 			: `Страница содержит описание рецепта «${title}».`,
 		enrichedDescription: telegramId
 			? minifyInternal(html`
