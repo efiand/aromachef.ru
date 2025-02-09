@@ -1,16 +1,18 @@
+import type { Recipe } from '@/types';
+
 import { aboutData } from '@/data/about';
 import { importantData } from '@/data/important';
+import { getEnrichedRecipe, getSimpleRecipeTemplate } from '@/data/recipe';
 import { BASE_URL, BEGIN_DATE } from '@/lib/constants';
 import { toRFC822 } from '@/lib/date';
 import { html } from '@/lib/make-template';
 import { minifyInternal } from '@/lib/minify';
-import { prepareRecipe } from '@/lib/prepare-data';
 import { prisma } from '@/lib/prisma';
 
 type Page = typeof aboutData;
 
 async function GET() {
-	const recipes = await prisma.recipes.findMany({
+	const recipes = (await prisma.recipes.findMany({
 		select: {
 			cooking: true,
 			description: true,
@@ -21,38 +23,11 @@ async function GET() {
 			title: true
 		},
 		where: { published: true }
-	});
+	})) as Recipe[];
 
-	const pages: Page[] = [
-		aboutData,
-		importantData,
-		...recipes.map(function (recipe) {
-			const {
-				cooking,
-				description,
-				enrichedDescription,
-				id,
-				ingredients,
-				publishedAt,
-				title
-			} = prepareRecipe(recipe);
-			return {
-				content: html`
-					${enrichedDescription}
-					<h2>Состав</h2>
-					${ingredients}
-					<h2>Приготовление</h2>
-					${cooking}
-				`,
-				description,
-				page: `recipe/${id}`,
-				publishedAt: publishedAt || BEGIN_DATE,
-				title
-			};
-		})
-	];
+	const pages: Page[] = [aboutData, importantData];
 
-	function mapPages({ content, page, publishedAt, title }: Page) {
+	function mapPage({ content, page, publishedAt, title }: Page): string {
 		return `
 			<item turbo="true">
 				<turbo:extendedHtml>true</turbo:extendedHtml>
@@ -67,6 +42,19 @@ async function GET() {
 		`;
 	}
 
+	function mapRecipePage(recipe: Recipe): string {
+		const enrichedRecipe = getEnrichedRecipe(recipe);
+		const { description, id, publishedAt, title } = enrichedRecipe;
+
+		return mapPage({
+			content: getSimpleRecipeTemplate(enrichedRecipe),
+			description,
+			page: `recipe/${id}`,
+			publishedAt: publishedAt || BEGIN_DATE,
+			title
+		});
+	}
+
 	const body = minifyInternal(`
 		<?xml version="1.0" encoding="UTF-8" ?>
 		<rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0">
@@ -75,7 +63,8 @@ async function GET() {
 				<link>${BASE_URL}</link>
 				<description>Быстрые, вкусные и полезные рецепты с эфирными маслами.</description>
 				<language>ru</language>
-				${pages.map(mapPages).join('')}
+				${pages.map(mapPage).join('')}
+				${recipes.map(mapRecipePage).join('')}
 			</channel>
 		</rss>
 	`);

@@ -1,4 +1,4 @@
-import { prepareRecipe } from '@/lib/prepare-data';
+import { getEnrichedRecipe } from '@/data/recipe';
 import { prisma } from '@/lib/prisma';
 import { error } from '@sveltejs/kit';
 
@@ -25,13 +25,13 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 		error(404, `Рецепт № ${params.id} не найден.`);
 	}
 
-	const preparedRecipe = prepareRecipe(recipe);
+	const enrichedRecipe = getEnrichedRecipe(recipe);
 
 	return {
-		description: preparedRecipe.description,
+		description: enrichedRecipe.description,
 		ogImage: `recipe/${params.id}`,
-		recipe: preparedRecipe,
-		title: `Рецепты : ${preparedRecipe.title}`
+		recipe: enrichedRecipe,
+		title: `Рецепты : ${enrichedRecipe.title}`
 	};
 }
 
