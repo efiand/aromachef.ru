@@ -1,14 +1,14 @@
 type BaseRecipe = {
 	cooking: string;
-	description: null | string;
+	description: string;
 	id?: number;
 	ingredients: string;
-	publishedAt?: null | string;
+	publishedAt?: Date | null;
 	telegramId: null | number;
 	title: string;
 };
 
-type EnrichedRecipe<T = BaseRecipe | Recipe> = T & {
+type EnrichedRecipe = Recipe & {
 	enrichedDescription: string;
 };
 
