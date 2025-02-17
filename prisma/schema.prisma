@@ -8,13 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tags {
-  id    Int    @id @default(autoincrement())
-  title String @unique @db.VarChar(500)
-
-  recipes recipesTags[]
-}
-
 model recipes {
   id          Int       @id @default(autoincrement())
   title       String    @unique @db.VarChar(500)
@@ -25,9 +18,19 @@ model recipes {
   telegramId  Int?      @unique
   published   Boolean   @default(false)
   publishedAt DateTime? @unique
+  updatedAt   DateTime  @unique
 
   structure structures    @relation(fields: [structureId], references: [id])
   tags      recipesTags[]
+
+  @@index([structureId])
+}
+
+model tags {
+  id    Int    @id @default(autoincrement())
+  title String @unique @db.VarChar(500)
+
+  recipes recipesTags[]
 }
 
 model recipesTags {
@@ -35,8 +38,8 @@ model recipesTags {
   recipeId Int
   tagId    Int
 
-  tag    tags    @relation(fields: [tagId], references: [id], onDelete: Cascade)
   recipe recipes @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  tag    tags    @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([recipeId, tagId])
   @@index([tagId])

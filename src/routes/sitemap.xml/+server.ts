@@ -1,23 +1,24 @@
-import { toW3CDatetime } from '@/lib/date';
+import { daysInMonth, toDays, toW3CDatetime } from '@/lib/date';
 import { minifyInternal } from '@/lib/minify';
 import { prisma } from '@/lib/prisma';
 
 import type { RequestHandler } from './$types';
+
+type Changefreq =
+	| ''
+	| 'always'
+	| 'daily'
+	| 'hourly'
+	| 'monthly'
+	| 'never'
+	| 'weekly'
+	| 'yearly';
 
 type SitemapCache = {
 	[key: number]: SitemapItem & { lastRecipeId: number };
 };
 
 type SitemapItem = {
-	changefreq?:
-		| 'always'
-		| 'daily'
-		| 'hourly'
-		| 'monthly'
-		| 'never'
-		| 'weekly'
-		| 'yearly';
-	lastmod?: string;
 	page: string;
 	priority?:
 		| '0.0'
@@ -31,6 +32,7 @@ type SitemapItem = {
 		| '0.8'
 		| '0.9'
 		| '1.0';
+	updatedAt?: Date;
 };
 
 const BEGIN_TEMPLATE = `<?xml version="1.0" encoding="UTF-8" ?>
@@ -41,23 +43,21 @@ async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 	const tagsCache: SitemapCache = {};
 
 	const recipes = await prisma.recipes.findMany({
-		orderBy: { publishedAt: 'desc' },
+		orderBy: { updatedAt: 'desc' },
 		select: {
 			id: true,
-			publishedAt: true,
 			structureId: true,
-			tags: { select: { tagId: true } }
+			tags: { select: { tagId: true } },
+			updatedAt: true
 		},
 		where: { published: true }
 	});
-	const lastRecipeMod = toW3CDatetime(recipes[0].publishedAt);
 
 	const pages: SitemapItem[] = [
 		{
-			changefreq: 'weekly',
-			lastmod: lastRecipeMod,
 			page: hostname,
-			priority: '0.8'
+			priority: '0.8',
+			updatedAt: recipes[0].updatedAt
 		},
 		{ page: `${hostname}/structure`, priority: '0.8' },
 		{ page: `${hostname}/important` },
@@ -69,9 +69,8 @@ async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 	pages.forEach(function (page) {
 		body += getItemTemplate(page);
 	});
-	recipes.forEach(function ({ id: recipeId, publishedAt, structureId, tags }) {
-		const lastmod = toW3CDatetime(publishedAt);
-		const cache = { lastmod, lastRecipeId: recipeId };
+	recipes.forEach(function ({ id: recipeId, structureId, tags, updatedAt }) {
+		const cache = { lastRecipeId: recipeId, updatedAt };
 
 		// Обновление данных о разделе
 		if (!structuresCache[structureId]) {
@@ -92,10 +91,9 @@ async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 		});
 
 		body += getItemTemplate({
-			changefreq: 'monthly',
-			lastmod,
 			page: `${hostname}/recipe/${recipeId}`,
-			priority: '1.0'
+			priority: '1.0',
+			updatedAt
 		});
 	});
 
@@ -113,12 +111,25 @@ async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 	});
 }
 
-function getItemTemplate({
-	changefreq,
-	lastmod,
-	page,
-	priority = '0.5'
-}: SitemapItem) {
+function getItemTemplate({ page, priority = '0.5', updatedAt }: SitemapItem) {
+	let lastmod = '';
+	let changefreq: Changefreq = '';
+
+	if (updatedAt) {
+		lastmod = toW3CDatetime(updatedAt);
+		const diffInDays = toDays(Date.now() - updatedAt.valueOf());
+
+		if (diffInDays > daysInMonth()) {
+			changefreq = 'yearly';
+		} else if (diffInDays > 7) {
+			changefreq = 'monthly';
+		} else if (diffInDays > 1) {
+			changefreq = 'weekly';
+		} else {
+			changefreq = 'daily';
+		}
+	}
+
 	return `
 		<url>
 			<loc>https://${page}</loc>

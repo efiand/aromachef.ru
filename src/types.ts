@@ -6,6 +6,7 @@ type BaseRecipe = {
 	publishedAt?: Date | null;
 	telegramId: null | number;
 	title: string;
+	updatedAt?: Date;
 };
 
 type EnrichedRecipe = Recipe & {
