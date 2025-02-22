@@ -14,7 +14,8 @@
 	let title = $derived(
 		['АромаШеф', page.data.title].filter(Boolean).join(' : ')
 	);
-	let url = $derived(`${BASE_URL}${page.url.pathname}`);
+	let pathname = $derived(page.url.pathname === '/' ? '' : page.url.pathname);
+	let url = $derived(`${BASE_URL}${pathname}`);
 	let ogImage = $derived(
 		page.data.ogImage
 			? `/pictures/${page.data.ogImage}@2x.webp`
@@ -37,7 +38,7 @@
 	<meta property="og:image" content={ogImage} />
 
 	{#if page.url.hostname === 'aromachef.ru'}
-		<link rel="amphtml" href="{BASE_AMP_URL}{page.url.pathname}" />
+		<link rel="amphtml" href="{BASE_AMP_URL}{pathname}" />
 	{/if}
 </svelte:head>
 

@@ -1,6 +1,7 @@
-import { YADISK_TOKEN } from '$env/static/private';
 import mime from 'mime/lite';
 import path from 'node:path';
+
+const { YADISK_TOKEN = '' } = process.env;
 
 async function download(filename: string) {
 	const url = await getUrl(filename, 'download');

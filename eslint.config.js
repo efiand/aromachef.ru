@@ -68,6 +68,6 @@ export default ts.config(
 		}
 	},
 	{
-		ignores: ['build/', '.svelte-kit/', 'dist/', '*.min.*']
+		ignores: ['build/', '.svelte-kit/', '*.min.*']
 	}
 );

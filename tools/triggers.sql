@@ -1,6 +1,3 @@
-CREATE TRIGGER on_insert_recipe BEFORE INSERT ON `recipes`
-	FOR EACH ROW SET NEW.`updatedAt` = NOW();
-
 CREATE TRIGGER on_update_recipe BEFORE UPDATE ON `recipes`
 	FOR EACH ROW SET NEW.`updatedAt` = NOW();
 
