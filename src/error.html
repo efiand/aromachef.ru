@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>АромаШеф : Ошибка</title>
+		<link href="/fonts/noto-sans-400.woff2" as="font" crossorigin="anonymous" rel="preload" />
+		<link href="/fonts/noto-sans-600.woff2" as="font" crossorigin="anonymous" rel="preload" />
+		<link href="/fonts/noto-serif-400.woff2" as="font" crossorigin="anonymous" rel="preload" />
+		<link href="/base.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="app">
+			<header class="header _container">
+				<a class="header__logo-link" href="/" aria-label="На главную">
+					<svg class="header__logo" width="1.5rem" height="1.5rem" role="img">
+						<use href="/images/aromachef-logo.svg#logo" />
+					</svg>
+				</a>
+				<a href="/structure">Разделы и #теги</a>
+			</header>
+			<main class="app__main _container">
+				<h1>Ошибка %sveltekit.status%</h1>
+				<p>%sveltekit.error.message%</p>
+			</main>
+			<footer class="footer _container">
+				<a class="footer__tg" href="https://t.me/aroma_chef" target="_blank">@aroma_chef</a>
+			</footer>
+		</div>
+	</body>
+</html>

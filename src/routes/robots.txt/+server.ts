@@ -1,23 +1,26 @@
+import { BASE_AMP_DOMAIN, BASE_URL } from '@/lib/constants';
+
 import type { RequestHandler } from './$types';
 
-function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
-	let body = `User-agent: *
+const TEMPLATE = `User-agent: *
 Disallow: /admin/
-Host: https://${hostname}
-Sitemap: https://${hostname}/sitemap.xml
+Host: ${BASE_URL}
+Sitemap: ${BASE_URL}/sitemap.xml
 
 User-agent: Googlebot
 Disallow: /turbo.rss
 `;
 
-	if (hostname === 'amp.aromachef.ru') {
-		body += `
+const AMP_TEMPLATE = `
 User-agent: Yandex
 Disallow: /
 `;
-	}
 
-	return new Response(body, { headers: { 'Content-Type': 'text/plain' } });
+function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
+	return new Response(
+		`${TEMPLATE}${hostname === BASE_AMP_DOMAIN ? AMP_TEMPLATE : ''}`,
+		{ headers: { 'Content-Type': 'text/plain' } }
+	);
 }
 
 export { GET };

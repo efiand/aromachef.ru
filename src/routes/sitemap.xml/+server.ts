@@ -1,6 +1,8 @@
+import { BASE_AMP_DOMAIN, BASE_URL } from '@/lib/constants';
 import { daysInMonth, toDays, toW3CDatetime } from '@/lib/date';
 import { minifyInternal } from '@/lib/minify';
 import { prisma } from '@/lib/prisma';
+import { error } from '@sveltejs/kit';
 
 import type { RequestHandler } from './$types';
 
@@ -39,6 +41,13 @@ const BEGIN_TEMPLATE = `<?xml version="1.0" encoding="UTF-8" ?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="https://www.w3.org/1999/xhtml">`;
 
 async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
+	if (hostname === BASE_AMP_DOMAIN) {
+		error(
+			404,
+			`Карта сайта для канонических страниц находится по адресу: ${BASE_URL}/sitemap.xml.`
+		);
+	}
+
 	const structuresCache: SitemapCache = {};
 	const tagsCache: SitemapCache = {};
 

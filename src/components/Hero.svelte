@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PROJECT_NAME } from '@/lib/constants';
 	import { typewriter } from '@/lib/transitions';
 	import { onMount } from 'svelte';
 
@@ -15,7 +16,7 @@
 			<use href="/images/aromachef-logo.svg#logo" />
 		</svg>
 
-		АромаШеф
+		{PROJECT_NAME}
 	</h1>
 
 	{#if import.meta.env.SSR || showDescription}

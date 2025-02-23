@@ -1,0 +1,182 @@
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'Noto Sans';
+	font-display: swap;
+	src: url('fonts/noto-sans-400.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 600;
+	font-style: normal;
+	font-family: 'Noto Sans';
+	font-display: swap;
+	src: url('fonts/noto-sans-600.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'Noto Serif';
+	font-display: swap;
+	src: url('fonts/noto-serif-400.woff2') format('woff2');
+}
+
+html {
+	--color-black: #333333;
+	--color-eggplant: #332754;
+	--color-green: #27542b;
+	--color-lavender: #c1abfe;
+	--color-white: #ffffff;
+	--font-basic: 'Noto Serif', serif;
+	--font-accent: 'Noto Sans', sans-serif;
+	--transition: none;
+	--icon-tg: url('data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22512%22 height%3D%22512%22 viewBox%3D%220 0 24 24%22%3E  %3Cpath d%3D%22M5.52 19.9h5.32l3.52 3.52a2.04 2.04 0 0 0 1.45.6 2.1 2.1 0 0 0 .52-.07 2.03 2.03 0 0 0 1.45-1.42l6.2-21.1Zm-1.43-1.4L22.57.01 1.47 6.23A2.05 2.05 0 0 0 .6 9.65l3.5 3.5Z%22%2F%3E%3C%2Fsvg%3E');
+	font-size: 16px;
+}
+
+body {
+	min-width: 320px;
+	margin: 0;
+	line-height: 1.5;
+	font-family: var(--font-basic);
+	font-feature-settings:
+		'tnum' on,
+		'lnum' on;
+	color: var(--color-black);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	-webkit-tap-highlight-color: transparent;
+	overflow-anchor: none;
+}
+
+h1 {
+	margin: 0 0 2rem;
+	font-weight: 600;
+	font-size: 2em;
+	line-height: 1.25;
+	font-family: var(--font-accent);
+	font-kerning: auto;
+	letter-spacing: -0.03em;
+	color: var(--color-eggplant);
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	text-decoration-skip-ink: none;
+	font-family: var(--font-accent);
+	text-decoration: none;
+	color: var(--color-green);
+	transition: var(--transition);
+	transition-property: color;
+}
+
+._container {
+	padding-inline: 1.5rem;
+}
+
+.app {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow: hidden scroll;
+}
+
+.app__main {
+	flex-grow: 1;
+	padding-block: 4rem;
+}
+
+.footer {
+	padding-block: 1rem;
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+	font-family: var(--font-accent);
+	color: var(--color-white);
+	background-color: var(--color-black);
+}
+
+.footer__tg {
+	color: var(--color-lavender);
+	position: relative;
+	display: block;
+	width: fit-content;
+	padding-left: 1.5rem;
+}
+
+.footer__tg::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1.2rem;
+	height: 1.2rem;
+	background-color: currentColor;
+	-webkit-mask-image: var(--icon-tg);
+	mask-image: var(--icon-tg);
+	-webkit-mask-size: 1.2rem 1.2rem;
+	mask-size: 1.2rem 1.2rem;
+}
+
+.header {
+	--gap: 1rem;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	display: flex;
+	gap: var(--gap);
+	padding-block: 0.5rem;
+	font-family: var(--font-accent);
+	text-transform: uppercase;
+	background-color: var(--color-white);
+	box-shadow: 0 0 1rem #00000026;
+}
+
+.header__logo-link {
+	color: var(--color-eggplant);
+}
+
+.header__logo {
+	display: block;
+}
+
+@media (hover: hover) {
+	a:hover {
+		text-decoration: underline;
+	}
+
+	.header__logo-link:hover {
+		color: var(--color-green);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		--transition: 0.3s ease-in-out;
+	}
+}
+
+@media (min-width: 888px) {
+	html {
+		font-size: 20px;
+	}
+
+	h1 {
+		font-size: 3rem;
+	}
+
+	.header {
+		--gap: 2rem;
+	}
+}
+
+@media (min-width: 1280px) {
+	._container {
+		padding-inline: calc(50% - 610px);
+	}
+}
