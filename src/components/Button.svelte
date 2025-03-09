@@ -4,7 +4,9 @@
 	let {
 		children,
 		disabled = false,
-		onclick = function () {},
+		onclick = function () {
+			// Do nothing
+		},
 		type = 'button'
 	}: {
 		children: Snippet;

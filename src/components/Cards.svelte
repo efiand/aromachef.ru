@@ -29,7 +29,7 @@
 </script>
 
 <ul class="cards {modifier}">
-	{#each items as { id, title }}
+	{#each items as { id, title } (id)}
 		{@const href = `/${entity}/${id}`}
 		<li class="cards__item">
 			<a {href}>

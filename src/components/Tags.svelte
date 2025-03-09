@@ -9,7 +9,7 @@
 </script>
 
 <ul class="tags {column ? 'tags--column' : ''} {className}">
-	{#each tags as { id, title }}
+	{#each tags as { id, title } (id)}
 		<li class="tags__item">
 			<a class="tags__link" href="/tag/{id}">#{title}</a>
 		</li>
