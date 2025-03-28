@@ -1,5 +1,6 @@
 import type { ItemWrapper } from '@/types';
 
+import { PUBLISHED_QUERY } from '@/lib/constants';
 import { prisma } from '@/lib/prisma';
 import { error } from '@sveltejs/kit';
 
@@ -16,13 +17,13 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 						select: { id: true, title: true }
 					}
 				},
-				where: { recipe: { published: true } }
+				where: { recipe: PUBLISHED_QUERY }
 			},
 			title: true
 		},
 		where: {
 			id: parseInt(params.id, 10),
-			recipes: { some: { recipe: { published: true } } }
+			recipes: { some: { recipe: PUBLISHED_QUERY } }
 		}
 	});
 

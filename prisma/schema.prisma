@@ -17,8 +17,8 @@ model recipes {
   structureId Int
   telegramId  Int?      @unique
   published   Boolean   @default(false)
-  publishedAt DateTime? @unique
-  updatedAt   DateTime  @unique
+  publishedAt DateTime?
+  updatedAt   DateTime  @default(now())
 
   structure structures    @relation(fields: [structureId], references: [id])
   tags      recipesTags[]

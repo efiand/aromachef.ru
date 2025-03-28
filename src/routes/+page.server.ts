@@ -1,3 +1,4 @@
+import { PUBLISHED_QUERY } from '@/lib/constants';
 import { prisma } from '@/lib/prisma';
 
 async function load() {
@@ -5,7 +6,7 @@ async function load() {
 		orderBy: { publishedAt: 'desc' },
 		select: { id: true, title: true },
 		take: 12,
-		where: { published: true }
+		where: PUBLISHED_QUERY
 	});
 	return {
 		description: 'Быстрые, вкусные и полезные рецепты с эфирными маслами.',

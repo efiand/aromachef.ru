@@ -1,3 +1,4 @@
+import { PUBLISHED_QUERY } from '@/lib/constants';
 import { prisma } from '@/lib/prisma';
 import { error } from '@sveltejs/kit';
 
@@ -10,13 +11,13 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 			recipes: {
 				orderBy: { title: 'asc' },
 				select: { id: true, title: true },
-				where: { published: true }
+				where: PUBLISHED_QUERY
 			},
 			title: true
 		},
 		where: {
 			id: parseInt(params.id, 10),
-			recipes: { some: { published: true } }
+			recipes: { some: PUBLISHED_QUERY }
 		}
 	});
 

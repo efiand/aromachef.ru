@@ -1,4 +1,5 @@
 import { getEnrichedRecipe } from '@/data/recipe';
+import { PUBLISHED_QUERY } from '@/lib/constants';
 import { prisma } from '@/lib/prisma';
 import { error } from '@sveltejs/kit';
 
@@ -18,7 +19,7 @@ async function load({ params }: Parameters<PageServerLoad>[0]) {
 			telegramId: true,
 			title: true
 		},
-		where: { id: parseInt(params.id, 10), published: true }
+		where: { id: parseInt(params.id, 10), ...PUBLISHED_QUERY }
 	});
 
 	if (!recipe) {

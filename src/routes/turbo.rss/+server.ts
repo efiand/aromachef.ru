@@ -7,7 +7,8 @@ import {
 	BASE_AMP_DOMAIN,
 	BASE_URL,
 	BEGIN_DATE,
-	PROJECT_NAME
+	PROJECT_NAME,
+	PUBLISHED_QUERY
 } from '@/lib/constants';
 import { toRFC822 } from '@/lib/date';
 import { html } from '@/lib/make-template';
@@ -37,7 +38,7 @@ async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 			telegramId: true,
 			title: true
 		},
-		where: { published: true }
+		where: PUBLISHED_QUERY
 	})) as Recipe[];
 
 	const pages: Page[] = [aboutData, importantData];

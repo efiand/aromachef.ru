@@ -1,4 +1,4 @@
-import { BASE_AMP_DOMAIN, BASE_URL } from '@/lib/constants';
+import { BASE_AMP_DOMAIN, BASE_URL, PUBLISHED_QUERY } from '@/lib/constants';
 import { daysInMonth, toDays, toW3CDatetime } from '@/lib/date';
 import { minifyInternal } from '@/lib/minify';
 import { prisma } from '@/lib/prisma';
@@ -59,7 +59,7 @@ async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 			tags: { select: { tagId: true } },
 			updatedAt: true
 		},
-		where: { published: true }
+		where: PUBLISHED_QUERY
 	});
 
 	const pages: SitemapItem[] = [

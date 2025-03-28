@@ -1,14 +1,15 @@
+import { PUBLISHED_QUERY } from '@/lib/constants';
 import { prisma } from '@/lib/prisma';
 
 async function load() {
 	const [items, tags] = await Promise.all([
 		prisma.structures.findMany({
 			orderBy: { title: 'asc' },
-			where: { recipes: { some: { published: true } } }
+			where: { recipes: { some: PUBLISHED_QUERY } }
 		}),
 		prisma.tags.findMany({
 			orderBy: { title: 'asc' },
-			where: { recipes: { some: { recipe: { published: true } } } }
+			where: { recipes: { some: { recipe: PUBLISHED_QUERY } } }
 		})
 	]);
 	return {
