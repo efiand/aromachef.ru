@@ -31,6 +31,7 @@ export default {
 				]
 			}
 		],
+		'color-function-alias-notation': null,
 		'color-function-notation': 'legacy',
 		'color-hex-length': 'long',
 		'custom-property-empty-line-before': null,

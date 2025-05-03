@@ -1,7 +1,7 @@
 import type { BaseRecipe, EnrichedRecipe, Recipe } from '@/types';
 
 import { TG_URL } from '@/lib/constants';
-import { html } from '@/lib/make-template';
+import { html } from '@/lib/mark-template';
 import { minifyInternal } from '@/lib/minify';
 
 function getEnrichedRecipe(recipe: Recipe): EnrichedRecipe {

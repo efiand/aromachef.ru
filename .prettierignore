@@ -1,4 +1,5 @@
+*.min.*
 build
 node_modules
 package-lock.json
-*.min.*
+tools/*.html

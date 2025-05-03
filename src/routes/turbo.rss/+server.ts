@@ -11,7 +11,7 @@ import {
 	PUBLISHED_QUERY
 } from '@/lib/constants';
 import { toRFC822 } from '@/lib/date';
-import { html } from '@/lib/make-template';
+import { html } from '@/lib/mark-template';
 import { minifyInternal } from '@/lib/minify';
 import { prisma } from '@/lib/prisma';
 import { error } from '@sveltejs/kit';

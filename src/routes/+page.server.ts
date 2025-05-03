@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 
 async function load() {
 	const items = await prisma.recipes.findMany({
-		orderBy: { publishedAt: 'desc' },
+		orderBy: { id: 'desc' },
 		select: { id: true, title: true },
 		take: 12,
 		where: PUBLISHED_QUERY

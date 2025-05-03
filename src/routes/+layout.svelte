@@ -27,8 +27,8 @@
 			: '/images/og.webp'
 	);
 
-	afterNavigate(function () {
-		hitYM();
+	afterNavigate(function ({ from }) {
+		hitYM({ referer: from?.url.toString() || '' });
 		appElement.scrollTo({ behavior: 'instant', top: 0 });
 	});
 </script>

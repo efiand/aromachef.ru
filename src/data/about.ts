@@ -1,5 +1,5 @@
 import { BEGIN_DATE, PICTURE_URL } from '@/lib/constants';
-import { html } from '@/lib/make-template';
+import { html } from '@/lib/mark-template';
 import { minifyInternal } from '@/lib/minify';
 
 const aboutData = {
