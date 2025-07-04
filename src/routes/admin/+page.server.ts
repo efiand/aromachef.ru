@@ -1,6 +1,7 @@
 import { dev } from '$app/environment';
-import { dump } from '@/lib/dump';
 import { error } from '@sveltejs/kit';
+
+import { dump } from '@/lib/dump';
 
 import type { Actions } from './$types';
 

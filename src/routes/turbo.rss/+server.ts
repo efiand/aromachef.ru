@@ -1,3 +1,5 @@
+import { error } from '@sveltejs/kit';
+
 import type { Recipe } from '@/types';
 
 import { aboutData } from '@/data/about';
@@ -14,7 +16,6 @@ import { toRFC822 } from '@/lib/date';
 import { html } from '@/lib/mark-template';
 import { minifyInternal } from '@/lib/minify';
 import { prisma } from '@/lib/prisma';
-import { error } from '@sveltejs/kit';
 
 import type { RequestHandler } from './$types';
 

@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import { PROJECT_NAME } from '@/lib/constants';
 	import { typewriter } from '@/lib/transitions';
-	import { onMount } from 'svelte';
 
 	let showDescription = $state(false);
 

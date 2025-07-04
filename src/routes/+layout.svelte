@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
+
 	import Footer from '@/components/Footer.svelte';
 	import Header from '@/components/Header.svelte';
 	import '@/scss/index.scss';

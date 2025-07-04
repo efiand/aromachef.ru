@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+
 	import Cards from '@/components/Cards.svelte';
 	import Tags from '@/components/Tags.svelte';
 

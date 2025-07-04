@@ -1,3 +1,5 @@
+/* eslint-disable max-params */
+
 type Options = { [key: string]: boolean | number | string };
 type YM =
 	| ((

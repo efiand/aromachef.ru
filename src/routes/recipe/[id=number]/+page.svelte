@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { page } from '$app/state';
+
 	import type { ItemWrapper } from '@/types';
 
-	import { page } from '$app/state';
 	import Article from '@/components/Article.svelte';
 	import PageSection from '@/components/PageSection.svelte';
 	import Tags from '@/components/Tags.svelte';

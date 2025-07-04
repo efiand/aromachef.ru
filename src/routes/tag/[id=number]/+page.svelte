@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+
 	import Recipes from '@/components/Recipes.svelte';
 
 	let { entity, items = [] } = $derived(page.data);

@@ -1,7 +1,8 @@
+import { error } from '@sveltejs/kit';
+
 import { getEnrichedRecipe } from '@/data/recipe';
 import { PUBLISHED_QUERY } from '@/lib/constants';
 import { prisma } from '@/lib/prisma';
-import { error } from '@sveltejs/kit';
 
 import type { PageServerLoad } from './$types';
 

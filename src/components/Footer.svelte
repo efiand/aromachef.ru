@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+
 	import { TG_URL } from '@/lib/constants';
 </script>
 
