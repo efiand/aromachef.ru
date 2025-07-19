@@ -1,5 +1,5 @@
 import { PUBLISHED_QUERY } from '@/lib/constants';
-import { daysInMonth, toDays, toW3CDatetime } from '@/lib/date';
+import { correctZone, daysInMonth, toDays, toW3CDatetime } from '@/lib/date';
 import { minifyInternal } from '@/lib/minify';
 import { prisma } from '@/lib/prisma';
 
@@ -117,8 +117,9 @@ function getItemTemplate({ page, priority = '0.5', updatedAt }: SitemapItem) {
 	let changefreq: Changefreq = '';
 
 	if (updatedAt) {
-		lastmod = toW3CDatetime(updatedAt);
-		const diffInDays = toDays(Date.now() - updatedAt.valueOf());
+		const realUpdatedAt = correctZone(updatedAt);
+		lastmod = toW3CDatetime(realUpdatedAt);
+		const diffInDays = toDays(Date.now() - realUpdatedAt.valueOf());
 
 		if (diffInDays > daysInMonth()) {
 			changefreq = 'yearly';

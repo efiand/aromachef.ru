@@ -12,7 +12,7 @@ import {
 	PROJECT_NAME,
 	PUBLISHED_QUERY
 } from '@/lib/constants';
-import { toRFC822 } from '@/lib/date';
+import { correctZone, toRFC822 } from '@/lib/date';
 import { html } from '@/lib/mark-template';
 import { minifyInternal } from '@/lib/minify';
 import { prisma } from '@/lib/prisma';
@@ -54,7 +54,7 @@ async function GET({ url: { hostname } }: Parameters<RequestHandler>[0]) {
 						<header><h1>${title}</h1></header>
 					`}${content}]]>
 				</turbo:content>
-				<pubDate>${toRFC822(publishedAt)}</pubDate>
+				<pubDate>${toRFC822(correctZone(publishedAt))}</pubDate>
 			</item>
 		`;
 	}
