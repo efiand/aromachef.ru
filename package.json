@@ -6,7 +6,11 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.1.3",
 		"@fastify/pre-commit": "2.2.0",
+		"@html-validate/jest-config": "3.13.0",
+		"@types/jest": "30.0.0",
 		"@types/node": "24.1.0",
+		"html-validate": "9.7.1",
+		"jest": "30.0.5",
 		"nodemon": "3.1.10",
 		"typescript": "5.8.3"
 	},
@@ -16,13 +20,17 @@
 	},
 	"main": "./server/main.js",
 	"name": "aromachef",
-	"pre-commit": "lint-format",
+	"pre-commit": [
+		"lint-format",
+		"test"
+	],
 	"private": true,
 	"scripts": {
 		"dump": "dotenvx run -- node ./tools/dump.js",
 		"dev": "dotenvx run -- nodemon ./server/dev.js",
 		"lint": "npm run type-check && biome check",
 		"lint-format": "npm run type-check && biome check --write",
+		"test": "jest",
 		"type-check": "tsc -p ./jsconfig.json",
 		"upgrade": "node ./tools/upgrade.js"
 	},

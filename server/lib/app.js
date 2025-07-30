@@ -125,7 +125,7 @@ async function next(req, res) {
 	}
 }
 
-/** @type {(middleware?: ServerMiddleware) => void} */
+/** @type {(middleware?: ServerMiddleware) => import("node:http").Server} */
 export function createApp(middleware) {
 	const server = createServer((req, res) => {
 		if (middleware) {
@@ -138,4 +138,6 @@ export function createApp(middleware) {
 	server.listen(port, HOST, () => {
 		console.info(`Сервер запущен по адресу: http://${HOST}:${port}`);
 	});
+
+	return server;
 }

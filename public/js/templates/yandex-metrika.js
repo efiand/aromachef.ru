@@ -30,9 +30,7 @@ export const YANDEX_METRIKA_TEMPLATE = html`
 		});
 	</script>
 	<noscript>
-		<div>
-			<img src="https://mc.yandex.ru/watch/99498629" style="position:absolute; left:-9999px;" alt="">
-		</div>
+		<img class="_visually-hidden" src="https://mc.yandex.ru/watch/99498629" alt="">
 	</noscript>
 	<!-- /Yandex.Metrika counter -->
 `;

@@ -1,11 +1,12 @@
+!.vscode/extensions.json
+!.vscode/settings.json
 *cache*
 *tmp*
 .DS_Store
 .env
+.vscode/*
 Thumbs.db
+coverage
 logs
 node_modules
-
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
+temp

@@ -469,10 +469,15 @@ mark {
 	margin-inline: auto;
 }
 
+._hidden {
+	display: none;
+}
+
 ._separated {
 	margin-top: 4rem;
 }
 
-[hidden] {
-	display: none;
+._visually-hidden {
+	position: fixed;
+	transform: scale(0);
 }

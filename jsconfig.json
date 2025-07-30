@@ -15,5 +15,6 @@
 		"resolveJsonModule": true,
 		"strict": true,
 		"target": "es2022"
-	}
+	},
+	"exclude": ["coverage"]
 }
