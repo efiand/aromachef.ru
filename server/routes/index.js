@@ -1,6 +1,7 @@
 import { aboutRoute } from "#server/routes/about.js";
 import { importantRoute } from "#server/routes/important.js";
 import { mainRoute } from "#server/routes/main.js";
+import { pagesApiRoute } from "#server/routes/pages.js";
 import { recipeIdRoute } from "#server/routes/recipe-id.js";
 import { searchRoute } from "#server/routes/search.js";
 import { sitemapXmlRoute } from "#server/routes/sitemap-xml.js";
@@ -13,6 +14,7 @@ import { turboRssRoute } from "#server/routes/turbo-rss.js";
 export const routes = {
 	"/": mainRoute,
 	"/about": aboutRoute,
+	"/api/pages": pagesApiRoute,
 	"/important": importantRoute,
 	"/recipe/:id": recipeIdRoute,
 	"/search": searchRoute,

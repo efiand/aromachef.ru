@@ -66,10 +66,10 @@ async function next(req, res) {
 	const url = new URL(`http://localhost${req.url}`);
 	const [, routeName = "", rawId] = url.pathname.split("/");
 	const routeKey = `/${routeName}${rawId ? `/:id` : ""}`;
-	const route = routes[routeKey];
+	const route = routes[routeKey] || routes[url.pathname] || routes[routeKey];
 	const id = Number(rawId);
 
-	if (!route || (rawId && Number.isNaN(id))) {
+	if (!route || (!routes[url.pathname] && Number.isNaN(id))) {
 		res.statusCode = 404;
 		sendLayout(res, createErrorPage("Страница не найдена."));
 		return;
