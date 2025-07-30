@@ -1,7 +1,6 @@
 User-agent: *
-Disallow: /
-# Host: https://aromachef.ru
-# Sitemap: https://aromachef.ru/sitemap.xml
+Host: https://aromachef.ru
+Sitemap: https://aromachef.ru/sitemap.xml
 
-# User-agent: Googlebot
-# Disallow: /turbo.rss
+User-agent: Googlebot
+Disallow: /turbo.rss

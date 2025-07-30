@@ -18,7 +18,7 @@ const IMPORTANT_TEMPLATE = html`
 `;
 
 const SEARCH_TEMPLATE = html`
-	<li class="layout__header-item layout__header-item--separated">
+	<li class="layout__header-item layout__header-item--separated" hidden>
 		<a href="/search">Поиск</a>
 	</li>
 `;

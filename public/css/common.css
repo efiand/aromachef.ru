@@ -472,3 +472,7 @@ mark {
 ._separated {
 	margin-top: 4rem;
 }
+
+[hidden] {
+	display: none;
+}
