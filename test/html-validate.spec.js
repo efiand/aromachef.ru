@@ -4,6 +4,7 @@ import { port } from "#server/constants.js";
 import { createApp } from "#server/lib/app.js";
 
 const HOST = `http://localhost:${port}`;
+const timeout = Number(process.env.TEST_TIMEOUT) || 5000;
 
 const htmlvalidate = new HtmlValidate({
 	extends: ["html-validate:recommended"],
@@ -26,7 +27,7 @@ beforeAll(async () => {
 	server = createApp();
 	pages = await fetch(`${HOST}/api/pages`).then((res) => res.json());
 	markups = await Promise.all(pages.map((page) => fetch(`${HOST}${page}`).then((res) => res.text())));
-});
+}, timeout);
 
 describe("Testing markups", () => {
 	test("All pages have valid HTML markup", async () => {

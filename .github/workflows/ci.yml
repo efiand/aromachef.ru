@@ -17,6 +17,16 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
+      - name: Create env file
+        run: |
+          touch .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo TEST_TIMEOUT=${{ secrets.TEST_TIMEOUT }} >> .env
+      - name: Test
+        run: npm test
       - name: Copy to server
         if: ${{ contains(github.event.head_commit.message, '[deploy]') }}
         uses: appleboy/scp-action@master
