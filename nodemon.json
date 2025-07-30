@@ -1,0 +1,7 @@
+{
+	"watch": ["server", "public/js/constants", "public/js/utils", "public/js/templates"],
+	"env": {
+		"DEV": true,
+		"PORT": 3101
+	}
+}

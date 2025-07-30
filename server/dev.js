@@ -1,0 +1,25 @@
+import { createReadStream } from "node:fs";
+import { access } from "node:fs/promises";
+import path from "node:path";
+import { STATIC_MIME_TYPES, staticExtensions } from "#!/constants.js";
+import { createApp } from "#server/lib/app.js";
+
+createApp(async (req, res, next) => {
+	const { pathname } = new URL(`http://localhost${req.url}`);
+	const ext = path.extname(pathname);
+
+	if (!staticExtensions.has(ext)) {
+		next?.(req, res);
+		return;
+	}
+
+	try {
+		const filePath = path.join(process.cwd(), "./public", pathname);
+		await access(filePath);
+		res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
+		createReadStream(filePath).pipe(res);
+	} catch (error) {
+		console.error(error);
+		next?.(req, res);
+	}
+});

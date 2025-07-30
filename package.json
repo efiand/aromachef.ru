@@ -1,55 +1,30 @@
 {
-	"browserslist": [
-		"> 0.2%",
-		"last 6 version"
-	],
-	"devDependencies": {
-		"@dotenvx/dotenvx": "1.48.0",
-		"@fastify/pre-commit": "2.2.0",
-		"@prisma/client": "6.12.0",
-		"@sveltejs/adapter-node": "5.2.13",
-		"@sveltejs/amp": "1.1.4",
-		"@sveltejs/kit": "2.25.1",
-		"@sveltejs/vite-plugin-svelte": "6.1.0",
-		"@types/node": "24.0.15",
-		"cross-env": "7.0.3",
-		"dayjs": "1.11.13",
-		"eslint": "9.31.0",
-		"eslint-config-prettier": "10.1.8",
-		"eslint-plugin-perfectionist": "4.15.0",
-		"eslint-plugin-svelte": "3.11.0",
-		"globals": "16.3.0",
-		"mime": "4.0.7",
-		"postcss-html": "1.8.0",
-		"postcss-scss": "4.0.9",
-		"postcss-sort-media-queries": "5.2.0",
-		"prettier": "3.6.2",
-		"prettier-plugin-svelte": "3.4.0",
-		"prisma": "6.12.0",
-		"sass-embedded": "1.89.2",
-		"stylelint": "16.22.0",
-		"stylelint-config-standard": "38.0.0",
-		"stylelint-order": "7.0.0",
-		"svelte": "5.36.8",
-		"svelte-check": "4.3.0",
-		"typescript": "5.8.3",
-		"typescript-eslint": "8.37.0",
-		"vite": "7.0.5"
+	"dependencies": {
+		"@dotenvx/dotenvx": "1.48.3",
+		"mysql2": "3.14.3"
 	},
-	"pre-commit": [
-		"lint-format"
-	],
+	"devDependencies": {
+		"@biomejs/biome": "2.1.3",
+		"@fastify/pre-commit": "2.2.0",
+		"@types/node": "24.1.0",
+		"nodemon": "3.1.10",
+		"typescript": "5.8.3"
+	},
+	"imports": {
+		"#!/*": "./public/js/*",
+		"#server/*": "./server/*"
+	},
+	"main": "./server/main.js",
+	"name": "aromachef",
+	"pre-commit": "lint-format",
 	"private": true,
 	"scripts": {
-		"build": "npm run check && vite build && cross-env AMP=1 vite build",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"dev": "vite dev",
-		"dump": "dotenvx run -- node --experimental-transform-types tools/dump.ts",
-		"lint": "npm run check && eslint . && stylelint \"**/*.{scss,svelte}\" && prettier --check .",
-		"lint-format": "npm run check && eslint . --fix && stylelint \"**/*.{scss,svelte}\" --fix && prettier --write .",
-		"postinstall": "prisma generate && svelte-kit sync",
-		"preview": "vite preview",
-		"upgrade": "node --experimental-transform-types tools/upgrade.ts"
+		"dump": "dotenvx run -- node ./tools/dump.js",
+		"dev": "dotenvx run -- nodemon ./server/dev.js",
+		"lint": "npm run type-check && biome check",
+		"lint-format": "npm run type-check && biome check --write",
+		"type-check": "tsc -p ./jsconfig.json",
+		"upgrade": "node ./tools/upgrade.js"
 	},
 	"type": "module"
 }

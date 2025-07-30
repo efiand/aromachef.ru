@@ -1,0 +1,33 @@
+.article h2 {
+	text-align: center;
+}
+
+.article__image {
+	margin-inline: auto;
+}
+
+.cards--centered-in-mobile {
+	justify-content: center;
+}
+
+.structure__heading {
+	text-align: center;
+}
+
+.structure__sideheading {
+	margin: 2rem 0;
+	text-align: center;
+}
+
+.structure__tags {
+	scroll-margin-top: 2rem;
+}
+
+.structure__tags-list {
+	margin-inline: auto;
+}
+
+.tags--column {
+	column-count: 2;
+	column-gap: 1.5rem;
+}

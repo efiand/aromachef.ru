@@ -1,0 +1,11 @@
+a:hover {
+	text-decoration: underline;
+}
+
+.button:hover {
+	background-color: var(--color-eggplant);
+}
+
+.layout__logo-link:hover {
+	color: var(--color-green);
+}
