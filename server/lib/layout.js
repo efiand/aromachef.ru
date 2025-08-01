@@ -7,6 +7,12 @@ import { html } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
 import { getCss } from "#server/lib/css.js";
 
+const SEARCH_TEMPLATE = html`
+	<li class="layout__header-item layout__header-item--separated _hidden">
+		<a href="/search">Поиск</a>
+	</li>
+`;
+
 /** @type {(ampPrefix: string) => string} */
 const renderAboutTemplate = (ampPrefix) => html`
 	<li class="layout__footer-item">
@@ -21,21 +27,18 @@ const renderImportantTemplate = (ampPrefix) => html`
 	</li>
 `;
 
-/** @type {(ampPrefix: string) => string} */
-const renderSearchTemplate = (ampPrefix) => html`
-	<li class="layout__header-item layout__header-item--separated _hidden">
-		<a href="${ampPrefix}/search">Поиск</a>
-	</li>
-`;
-
-/** @type {(isAmp?: boolean) => Promise<string>} */
-async function renderAssets(isAmp) {
+/** @type {(isAmp?: boolean, hasForms?: boolean) => Promise<string>} */
+async function renderAssets(isAmp, hasForms) {
 	if (isAmp) {
 		const css = await getCss(ALL_STYLESHEETS);
+		const formScriptTemplate = hasForms
+			? html`<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>`
+			: "";
 
 		return html`
 			<style amp-custom>${css}</style>
 			${APM_ASSETS_TEMPLATE}
+			${formScriptTemplate}
 		`;
 	}
 
@@ -81,7 +84,7 @@ export async function renderLayout({
 }) {
 	const ampPrefix = isAmp ? "/amp" : "";
 	const title = renderDocumentTitle(heading);
-	const assetsTemplate = await renderAssets(isAmp);
+	const assetsTemplate = await renderAssets(isAmp, pageTemplate.includes("<form"));
 
 	const template = html`
 		<!DOCTYPE html>
@@ -136,7 +139,7 @@ export async function renderLayout({
 						</a>
 					</li>
 					${pathname === "/important" ? "" : renderImportantTemplate(ampPrefix)}
-					${pathname === "/search" ? "" : renderSearchTemplate(ampPrefix)}
+					${pathname === "/search" ? "" : SEARCH_TEMPLATE}
 				</ul>
 			</header>
 
@@ -159,5 +162,5 @@ export async function renderLayout({
 		</html>
 	`;
 
-	return isAmp ? template.replace(/="\/(structure|recipe|tag)/g, '="/amp/$1') : template;
+	return isAmp ? template.replace(/="\/(recipe|search|structure|tag)/g, '="/amp/$1') : template;
 }
