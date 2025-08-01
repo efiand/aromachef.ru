@@ -33,8 +33,8 @@ declare global {
 	};
 
 	type CardsData = CardAdditionals & {
-		centered?: boolean;
 		cards?: DbItem[];
+		centered?: boolean;
 	};
 
 	type Changefreq = "daily" | "weekly" | "monthly" | "yearly" | undefined;
@@ -43,8 +43,8 @@ declare global {
 
 	type LayoutData = {
 		description: string;
-		heading?: string;
 		headTemplate?: string;
+		heading?: string;
 		ogImage?: string;
 		pageTemplate?: string;
 		pathname?: string;
@@ -57,16 +57,14 @@ declare global {
 		title: string;
 	};
 
-	type Render<Data = object> = (data: Data) => string;
-
 	type Recipe = {
 		cooking: string;
 		description: string;
 		ingredients: string;
-		title: string;
 		structureId: number;
 		structureTitle: string;
 		telegramId?: number | null;
+		title: string;
 	};
 
 	type Route = {
@@ -74,8 +72,7 @@ declare global {
 	};
 
 	type RouteData = {
-		json?: object;
-		xml?: string;
+		contentType?: string;
 		page?: LayoutData;
 		template?: string;
 	};
@@ -103,9 +100,9 @@ declare global {
 	};
 
 	type StaticPageData = {
-		heading: string;
-		description: string;
 		content: string;
+		description: string;
+		heading: string;
 	};
 
 	type TagTemplateData = {

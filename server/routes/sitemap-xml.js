@@ -70,7 +70,7 @@ function getChangefreq(lastmod) {
 	return undefined;
 }
 
-/** @type {Render<SitemapPage>} */
+/** @type {(data: SitemapPage) => string} */
 function renderPage({ lastmod, loc, priority }) {
 	const changefreq = getChangefreq(lastmod);
 
@@ -96,7 +96,8 @@ export const sitemapXmlRoute = {
 		pages.push({ priority: "0.8", lastmod, loc: BASE_URL }, { priority: "0.8", lastmod, loc: `${BASE_URL}/structure` });
 
 		return {
-			xml: xml`
+			contentType: "application/xml",
+			template: xml`
 				<?xml version="1.0" encoding="UTF-8" ?>
 				<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="https://www.w3.org/1999/xhtml">
 					${pages.map(renderPage).join("")}

@@ -1,9 +1,8 @@
 import { info } from "node:console";
 import { HtmlValidate } from "html-validate";
-import { port } from "#server/constants.js";
+import { host } from "#server/constants.js";
 import { createApp } from "#server/lib/app.js";
 
-const HOST = `http://localhost:${port}`;
 const timeout = Number(process.env.TEST_TIMEOUT) || 5000;
 
 const htmlvalidate = new HtmlValidate({
@@ -25,8 +24,8 @@ let server;
 
 beforeAll(async () => {
 	server = createApp();
-	pages = await fetch(`${HOST}/api/pages`).then((res) => res.json());
-	markups = await Promise.all(pages.map((page) => fetch(`${HOST}${page}`).then((res) => res.text())));
+	pages = await fetch(`${host}/api/pages`).then((res) => res.json());
+	markups = await Promise.all(pages.map((page) => fetch(`${host}${page}`).then((res) => res.text())));
 }, timeout);
 
 describe("Testing markups", () => {

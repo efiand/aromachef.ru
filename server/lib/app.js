@@ -1,24 +1,41 @@
 import { createServer } from "node:http";
 import { html } from "#!/utils/mark-template.js";
-import { isDev, port } from "#server/constants.js";
+import { host, isDev, port } from "#server/constants.js";
 import { renderLayout } from "#server/lib/layout.js";
 import { routes } from "#server/routes/index.js";
 
-const HOST = "localhost";
+/** @type {(error: unknown) => { statusCode: number; template: string }} */
+function handleError(error) {
+	if (isDev) {
+		console.error(error);
+	}
 
-/** @type {(reasonPhrase: string, statusCode?: number) => LayoutData} */
-function createErrorPage(reasonPhrase, statusCode = 404) {
+	let message = "На сервере произошла ошибка.";
+	let statusCode = 500;
+	if (error instanceof Error) {
+		if (typeof error.cause === "number") {
+			statusCode = error.cause;
+		}
+		if (isDev || statusCode !== 500) {
+			({ message } = error);
+		}
+	}
+
 	const heading = `Ошибка ${statusCode}`;
+
 	return {
-		description: "Страница ошибок.",
-		heading,
-		pageTemplate: html`
+		statusCode,
+		template: renderLayout({
+			description: "Страница ошибок.",
+			heading,
+			pageTemplate: html`
 			<div class="content">
 				<h1>${heading}</h1>
-				<p>${reasonPhrase}</p>
+				<p>${message}</p>
 				<p><a href="mailto:efiand@ya.ru?subject=aromachef">Связаться с разработчиком</a></p>
 			</div>
 		`,
+		}),
 	};
 }
 
@@ -55,74 +72,48 @@ function getRequestBody(req) {
 	});
 }
 
-/** @type {(res: RouteResponse, layoutData: LayoutData) => Promise<void>} */
-async function sendLayout(res, layoutData) {
-	res.setHeader("Content-Type", "text/html");
-	res.end(renderLayout(layoutData));
-}
-
 /** @type {ServerMiddleware} */
 async function next(req, res) {
-	const url = new URL(`http://localhost${req.url}`);
-	const [, routeName = "", rawId] = url.pathname.split("/");
+	const url = new URL(`${host}${req.url}`);
+	const pathname = url.pathname.replace("/amp", "") || "/";
+	const [, routeName = "", rawId] = pathname.split("/");
 	const routeKey = `/${routeName}${rawId ? `/:id` : ""}`;
-	const route = routes[routeKey] || routes[url.pathname] || routes[routeKey];
+	const route = routes[routeKey] || routes[pathname];
 	const id = Number(rawId);
 
-	if (!route || (!routes[url.pathname] && Number.isNaN(id))) {
-		res.statusCode = 404;
-		sendLayout(res, createErrorPage("Страница не найдена."));
-		return;
-	}
-
-	const { method = "GET" } = req;
-	if (!route[method]) {
-		res.statusCode = 405;
-		sendLayout(res, createErrorPage("Method not allowed!", 405));
-		return;
-	}
+	let contentType = "text/html";
+	let template = "";
+	let statusCode = 200;
 
 	try {
+		if (!route) {
+			throw new Error("Страница не найдена.", { cause: 404 });
+		}
+
+		if (!routes[pathname] && Number.isNaN(id)) {
+			throw new Error("Идентификатор должен быть числом.", { cause: 400 });
+		}
+
+		const { method = "GET" } = req;
+		if (!route[method]) {
+			throw new Error("Method not allowed!", { cause: 405 });
+		}
+
 		const body = await getRequestBody(req);
 		const routeData = await route[method]({ body, id, req, res, url });
-
-		if (routeData.xml) {
-			res.setHeader("Content-Type", "application/xml");
-			res.end(routeData.xml.trim());
-			return;
-		}
-
-		if (routeData.json) {
-			res.setHeader("Content-Type", "application/json");
-			res.end(JSON.stringify(routeData.json));
-			return;
-		}
+		({ contentType = "text/html", template = "" } = routeData);
 
 		if (routeData.page) {
 			routeData.page.pathname = url.pathname;
-			sendLayout(res, routeData.page);
-			return;
+			template = renderLayout(routeData.page);
 		}
-
-		res.setHeader("Content-Type", "text/html");
-		res.end(routeData.template || "");
 	} catch (error) {
-		let message = "На сервере произошла ошибка.";
-		let statusCode = 500;
-		if (error instanceof Error) {
-			if (isDev) {
-				({ message } = error);
-			}
-			if (typeof error.cause === "number") {
-				statusCode = error.cause;
-			}
-		}
-		if (isDev) {
-			console.error(error);
-		}
-		res.statusCode = statusCode;
-		sendLayout(res, createErrorPage(message, res.statusCode));
+		({ statusCode, template } = handleError(error));
 	}
+
+	res.statusCode = statusCode;
+	res.setHeader("Content-Type", contentType);
+	res.end(template.trim());
 }
 
 /** @type {(middleware?: ServerMiddleware) => import("node:http").Server} */
@@ -135,8 +126,8 @@ export function createApp(middleware) {
 		}
 	});
 
-	server.listen(port, HOST, () => {
-		console.info(`Сервер запущен по адресу: http://${HOST}:${port}`);
+	server.listen(port, "localhost", () => {
+		console.info(`Сервер запущен по адресу: ${host}`);
 	});
 
 	return server;

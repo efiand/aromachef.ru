@@ -24,7 +24,8 @@ export const pagesApiRoute = {
 		pages.push("/", "/search", "/structure");
 
 		return {
-			json: pages,
+			contentType: "application/json",
+			template: JSON.stringify(pages),
 		};
 	},
 };

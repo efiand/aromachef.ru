@@ -3,9 +3,10 @@ import { access } from "node:fs/promises";
 import path from "node:path";
 import { STATIC_MIME_TYPES, staticExtensions } from "#!/constants.js";
 import { createApp } from "#server/lib/app.js";
+import { host } from "./constants.js";
 
 createApp(async (req, res, next) => {
-	const { pathname } = new URL(`http://localhost${req.url}`);
+	const { pathname } = new URL(`${host}${req.url}`);
 	const ext = path.extname(pathname);
 
 	if (!staticExtensions.has(ext)) {

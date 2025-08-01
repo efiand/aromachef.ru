@@ -42,6 +42,7 @@ html {
 	--scroll-behavior: auto;
 	--transition: none;
 	--icon-tg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 24 24'%3E%3Cpath d='M5.52 19.9h5.32l3.52 3.52a2.04 2.04 0 0 0 1.45.6 2.1 2.1 0 0 0 .52-.07 2.03 2.03 0 0 0 1.45-1.42l6.2-21.1Zm-1.43-1.4L22.57.01 1.47 6.23A2.05 2.05 0 0 0 .6 9.65l3.5 3.5Z'/%3E%3C/svg%3E");
+
 	font-size: 16px;
 }
 
@@ -118,14 +119,6 @@ input:focus-visible {
 
 mark {
 	background-color: var(--color-lavender);
-}
-
-.admin__heading {
-	margin-bottom: 2rem;
-}
-
-.admin__status {
-	margin: 2rem 0 0;
 }
 
 .article {
