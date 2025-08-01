@@ -1,30 +1,77 @@
-import { BASE_URL, PROJECT_TITLE } from "#!/constants.js";
+import { ALL_STYLESHEETS, BASE_URL, PROJECT_TITLE } from "#!/constants.js";
+import { APM_ASSETS_TEMPLATE } from "#!/templates/amp-assets.js";
 import { renderDocumentTitle } from "#!/templates/document-title.js";
 import { HERO_TEMPLATE } from "#!/templates/hero.js";
 import { YANDEX_METRIKA_TEMPLATE } from "#!/templates/yandex-metrika.js";
 import { html } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
+import { getCss } from "#server/lib/css.js";
 
-const ABOUT_TEMPLATE = html`
+/** @type {(ampPrefix: string) => string} */
+const renderAboutTemplate = (ampPrefix) => html`
 	<li class="layout__footer-item">
-		<a href="/about">Обо мне</a>
+		<a href="${ampPrefix}/about">Обо мне</a>
 	</li>
 `;
 
-const IMPORTANT_TEMPLATE = html`
+/** @type {(ampPrefix: string) => string} */
+const renderImportantTemplate = (ampPrefix) => html`
 	<li class="layout__header-item">
-		<a href="/important"><strong>Важно!</strong></a>
+		<a href="${ampPrefix}/important"><strong>Важно!</strong></a>
 	</li>
 `;
 
-const SEARCH_TEMPLATE = html`
+/** @type {(ampPrefix: string) => string} */
+const renderSearchTemplate = (ampPrefix) => html`
 	<li class="layout__header-item layout__header-item--separated _hidden">
-		<a href="/search">Поиск</a>
+		<a href="${ampPrefix}/search">Поиск</a>
 	</li>
 `;
 
-/** @type {(data: LayoutData) => string} */
-export function renderLayout({
+/** @type {(isAmp?: boolean) => Promise<string>} */
+async function renderAssets(isAmp) {
+	if (isAmp) {
+		const css = await getCss(ALL_STYLESHEETS);
+
+		return html`
+			<style amp-custom>${css}</style>
+			${APM_ASSETS_TEMPLATE}
+		`;
+	}
+
+	const linkTemplates = ALL_STYLESHEETS.map(
+		({ media, name }) => html`<link rel="stylesheet" href="/css/${name}.css" ${media ? `media="${media}"` : ""}>`,
+	);
+	return html`
+		${linkTemplates.join("")}
+		<script type="importmap">
+			{ "imports": { "#!/": "/js/" } }
+		</script>
+	`;
+}
+
+/** @type {(pathname: string, isAmp: boolean) => string} */
+function renderUrlMeta(pathname, isAmp) {
+	if (!pathname) {
+		return html`<meta name="robots" content="noindex, nofollow">`;
+	}
+
+	let ampTemplate = "";
+	if (!isAmp) {
+		const ampUrl = pathname === "/" ? "/amp" : `/amp${pathname}`;
+		ampTemplate = html`<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
+	}
+
+	return html`
+		${ampTemplate}
+		<link rel="canonical" href="${BASE_URL}${pathname}">
+		<meta property="og:url" content="${pathname}">
+	`;
+}
+
+/** @type {(data: LayoutData) => Promise<string>} */
+export async function renderLayout({
+	isAmp = false,
 	description,
 	headTemplate = "",
 	heading = "",
@@ -32,18 +79,13 @@ export function renderLayout({
 	pageTemplate = "",
 	pathname = "",
 }) {
+	const ampPrefix = isAmp ? "/amp" : "";
 	const title = renderDocumentTitle(heading);
+	const assetsTemplate = await renderAssets(isAmp);
 
-	const urlTemplate = pathname
-		? html`
-			<link rel="canonical" href="${BASE_URL}${pathname}">
-			<meta property="og:url" content="${pathname}">
-		`
-		: html`<meta name="robots" content="noindex, nofollow">`;
-
-	return html`
+	const template = html`
 		<!DOCTYPE html>
-		<html lang="ru" prefix="og: http://ogp.me/ns#">
+		<html lang="ru" prefix="og: http://ogp.me/ns#" ${isAmp ? "⚡" : ""}>
 		<head>
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +93,7 @@ export function renderLayout({
 
 			<title>${title}</title>
 			<meta name="description" content="${description}">
-			${urlTemplate}
+			${renderUrlMeta(pathname, isAmp)}
 			<meta property="og:title" content="${title}">
 			<meta property="og:description" content="${description}">
 			<meta property="og:locale" content="ru_RU">
@@ -61,13 +103,7 @@ export function renderLayout({
 			<meta property="og:image:width" content="544">
 			<meta property="og:image:height" content="408">
 
-			<link rel="stylesheet" href="/css/common.css">
-			<link rel="stylesheet" href="/css/hover.css" media="(hover: hover)">
-			<link rel="stylesheet" href="/css/motion.css" media="(prefers-reduced-motion: no-preference)">
-			<link rel="stylesheet" href="/css/385-.css" media="(max-width: 385px)">
-			<link rel="stylesheet" href="/css/887-.css" media="(max-width: 887px)">
-			<link rel="stylesheet" href="/css/888+.css" media="(min-width: 888px)">
-			<link rel="stylesheet" href="/css/1280+.css" media="(min-width: 1280px)">
+			${assetsTemplate}
 
 			<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
 			<link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -81,17 +117,13 @@ export function renderLayout({
 			<link rel="preload" href="/fonts/noto-serif-700.woff2" as="font" crossorigin>
 
 			${headTemplate}
-
-			<script type="importmap">
-				{ "imports": { "#!/": "/js/" } }
-			</script>
 		</head>
 
 		<body class="layout ${pathname === "/" ? "" : "layout--inner"}">
-			${isDev ? "" : YANDEX_METRIKA_TEMPLATE}
+			${isAmp || isDev ? "" : YANDEX_METRIKA_TEMPLATE}
 
 			<header class="layout__header _container">
-				<a class="layout__logo-link" href="/" aria-label="На главную">
+				<a class="layout__logo-link" href="${isAmp ? "/amp" : "/"}" aria-label="На главную">
 					<svg class="layout__logo" width="1.5rem" height="1.5rem" role="img">
 						<use href="/images/aromachef-logo.svg#logo"/>
 					</svg>
@@ -103,8 +135,8 @@ export function renderLayout({
 							<span class="_xs-hidden">и #теги</span>
 						</a>
 					</li>
-					${pathname === "/important" ? "" : IMPORTANT_TEMPLATE}
-					${pathname === "/search" ? "" : SEARCH_TEMPLATE}
+					${pathname === "/important" ? "" : renderImportantTemplate(ampPrefix)}
+					${pathname === "/search" ? "" : renderSearchTemplate(ampPrefix)}
 				</ul>
 			</header>
 
@@ -117,7 +149,7 @@ export function renderLayout({
 					<li class="layout__footer-item">
 						<a class="layout__tg" href="https://t.me/aroma_chef" target="_blank">@aroma_chef</a>
 					</li>
-					${pathname === "/about" ? "" : ABOUT_TEMPLATE}
+					${pathname === "/about" ? "" : renderAboutTemplate(ampPrefix)}
 					<li class="layout__footer-item layout__footer-item--last">
 						<a href="https://efiand.ru" target="_blank" rel="nofollow">Разработано efiand</a>
 					</li>
@@ -126,4 +158,6 @@ export function renderLayout({
 		</body>
 		</html>
 	`;
+
+	return isAmp ? template.replace(/="\/(structure|recipe|tag)/g, '="/amp/$1') : template;
 }

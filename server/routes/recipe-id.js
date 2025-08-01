@@ -48,7 +48,7 @@ export const recipeIdRoute = {
 						},
 					],
 					content: renderRecipeDescription({ description, telegramId }),
-					footerTemplate: renderRecipeFooter({ id: structureId, title: structureTitle }, tags),
+					footerTemplate: renderRecipeFooter({ structure: { id: structureId, title: structureTitle }, tags }),
 					title,
 				}),
 			},

@@ -20,3 +20,34 @@ export const STATIC_MIME_TYPES = {
 
 /** @type {Set<string>} */
 export const staticExtensions = new Set(Object.keys(STATIC_MIME_TYPES));
+
+/** @type {Stylesheet[]} */
+export const ALL_STYLESHEETS = [
+	{
+		name: "common",
+	},
+	{
+		name: "hover",
+		media: "(hover: hover)",
+	},
+	{
+		name: "motion",
+		media: "(prefers-reduced-motion: no-preference)",
+	},
+	{
+		name: "385-",
+		media: "(max-width: 385px)",
+	},
+	{
+		name: "887-",
+		media: "(max-width: 887px)",
+	},
+	{
+		name: "888+",
+		media: "(min-width: 888px)",
+	},
+	{
+		name: "1280+",
+		media: "(min-width: 1280px)",
+	},
+];

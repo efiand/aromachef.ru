@@ -1,7 +1,8 @@
 {
-	"watch": ["server", "public/js/constants.js", "public/js/utils", "public/js/templates"],
+	"watch": ["server", "public/css", "public/js/constants.js", "public/js/utils", "public/js/templates"],
 	"env": {
 		"DEV": true,
 		"PORT": 3101
-	}
+	},
+	"ext": "css,js"
 }

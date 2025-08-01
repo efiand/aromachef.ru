@@ -2,10 +2,10 @@ import { createServer } from "node:http";
 import { html } from "#!/utils/mark-template.js";
 import { host, isDev, port } from "#server/constants.js";
 import { renderLayout } from "#server/lib/layout.js";
-import { routes } from "#server/routes/index.js";
+import { noAmpRoutes, routes } from "#server/routes/index.js";
 
-/** @type {(error: unknown) => { statusCode: number; template: string }} */
-function handleError(error) {
+/** @type {(error: unknown) => Promise<{ statusCode: number; template: string }>} */
+async function handleError(error) {
 	if (isDev) {
 		console.error(error);
 	}
@@ -22,21 +22,19 @@ function handleError(error) {
 	}
 
 	const heading = `Ошибка ${statusCode}`;
-
-	return {
-		statusCode,
-		template: renderLayout({
-			description: "Страница ошибок.",
-			heading,
-			pageTemplate: html`
+	const template = await renderLayout({
+		description: "Страница ошибок.",
+		heading,
+		pageTemplate: html`
 			<div class="content">
 				<h1>${heading}</h1>
 				<p>${message}</p>
 				<p><a href="mailto:efiand@ya.ru?subject=aromachef">Связаться с разработчиком</a></p>
 			</div>
 		`,
-		}),
-	};
+	});
+
+	return { statusCode, template };
 }
 
 /** @type {(req: RouteRequest) => Promise<object>} */
@@ -75,11 +73,12 @@ function getRequestBody(req) {
 /** @type {ServerMiddleware} */
 async function next(req, res) {
 	const url = new URL(`${host}${req.url}`);
-	const pathname = url.pathname.replace("/amp", "") || "/";
+	const isAmp = url.pathname === "/amp" || /^\/amp\//.test(url.pathname);
+	const pathname = url.pathname === "/amp" ? "/" : url.pathname.replace(/^\/amp\//, "/");
 	const [, routeName = "", rawId] = pathname.split("/");
-	const routeKey = `/${routeName}${rawId ? `/:id` : ""}`;
-	const route = routes[routeKey] || routes[pathname];
 	const id = Number(rawId);
+	const routeKey = Number.isNaN(id) ? pathname : `/${routeName}/:id`;
+	const route = routes[routeKey];
 
 	let contentType = "text/html";
 	let template = "";
@@ -90,8 +89,8 @@ async function next(req, res) {
 			throw new Error("Страница не найдена.", { cause: 404 });
 		}
 
-		if (!routes[pathname] && Number.isNaN(id)) {
-			throw new Error("Идентификатор должен быть числом.", { cause: 400 });
+		if (isAmp && noAmpRoutes.has(routeKey)) {
+			throw new Error("Страница не имеет AMP-версии.", { cause: 404 });
 		}
 
 		const { method = "GET" } = req;
@@ -104,11 +103,10 @@ async function next(req, res) {
 		({ contentType = "text/html", template = "" } = routeData);
 
 		if (routeData.page) {
-			routeData.page.pathname = url.pathname;
-			template = renderLayout(routeData.page);
+			template = await renderLayout({ ...routeData.page, isAmp, pathname });
 		}
 	} catch (error) {
-		({ statusCode, template } = handleError(error));
+		({ statusCode, template } = await handleError(error));
 	}
 
 	res.statusCode = statusCode;

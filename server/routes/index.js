@@ -24,3 +24,6 @@ export const routes = {
 	"/tag/:id": tagIdRoute,
 	"/turbo.rss": turboRssRoute,
 };
+
+/** @type {Set<string>} */
+export const noAmpRoutes = new Set(["/api/pages", "/sitemap.xml", "/turbo.rss"]);

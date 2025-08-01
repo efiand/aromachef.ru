@@ -10,3 +10,4 @@ coverage
 logs
 node_modules
 temp
+tools/*.html

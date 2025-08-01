@@ -29,11 +29,7 @@ function renderCard({ alt, id, picturesHost, route, title }) {
  */
 export function renderCards({ alt = "", centered = true, cards = [], picturesHost = "", route = "/recipe" } = {}) {
 	const modifier = centered ? "cards--centered" : "cards--centered-in-mobile";
-	const cardsTemplates = cards.map((card) => renderCard({ ...card, alt, picturesHost, route }));
+	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, picturesHost, route })).join("");
 
-	return html`
-		<ul class="cards ${modifier}">
-			${cardsTemplates.join("")}
-		</ul>
-	`;
+	return html`<ul class="cards ${modifier}">${cardsTemplate}</ul>`;
 }

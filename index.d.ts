@@ -42,6 +42,7 @@ declare global {
 	type DbTable = "recipes" | "recipesTags" | "staticPages" | "structures" | "tags";
 
 	type LayoutData = {
+		isAmp?: boolean;
 		description: string;
 		headTemplate?: string;
 		heading?: string;
@@ -103,6 +104,11 @@ declare global {
 		content: string;
 		description: string;
 		heading: string;
+	};
+
+	type Stylesheet = {
+		name: string;
+		media?: string;
 	};
 
 	type TagTemplateData = {
