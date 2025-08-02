@@ -5,9 +5,31 @@ import { STATIC_MIME_TYPES, staticExtensions } from "#!/constants.js";
 import { createApp } from "#server/lib/app.js";
 import { host } from "./constants.js";
 
+let sseData = "reload";
+
+/**
+ * Server Sent Events
+ *
+ * @type {(res: RouteResponse) => void}
+ */
+function sendReload(res) {
+	res.writeHead(200, {
+		"Content-Type": "text/event-stream",
+		"Cache-Control": "no-cache",
+		Connection: "keep-alive",
+	});
+	res.write(`retry: 33\ndata: ${sseData}\nid: ${Date.now()}\n\n`);
+	sseData = "";
+}
+
 createApp(async (req, res, next) => {
 	const { pathname } = new URL(`${host}${req.url}`);
 	const ext = path.extname(pathname);
+
+	if (req.url === "/dev/watch") {
+		sendReload(res);
+		return;
+	}
 
 	if (!staticExtensions.has(ext)) {
 		next?.(req, res);

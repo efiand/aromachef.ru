@@ -51,6 +51,7 @@ async function renderAssets(isAmp, hasForms) {
 			{ "imports": { "#!/": "/js/" } }
 		</script>
 		<script src="/js/main.js" type="module"></script>
+		${isDev ? html`<script src="/js/dev.js" type="module"></script>` : ""}
 	`;
 }
 
