@@ -1,6 +1,7 @@
 import { error, warn } from "node:console";
 import amphtmlValidator from "amphtml-validator";
 import { HtmlValidate } from "html-validate";
+import { lintBem } from "posthtml-bem-linter";
 import { host } from "#server/constants.js";
 import { createApp } from "#server/lib/app.js";
 
@@ -59,6 +60,23 @@ describe("Testing markups", () => {
 					}
 				}),
 			);
+
+			expect(errorsCount).toEqual(0);
+		},
+		timeout,
+	);
+
+	test(
+		"All pages have valid BEM classes in markup",
+		() => {
+			let errorsCount = 0;
+
+			pages.forEach(async (page, i) => {
+				const result = lintBem({ content: markups[i], log: error, name: page });
+				if (result.warningCount) {
+					errorsCount++;
+				}
+			});
 
 			expect(errorsCount).toEqual(0);
 		},

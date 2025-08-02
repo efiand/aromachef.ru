@@ -1,6 +1,6 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
-
 declare global {
+	import type { IncomingMessage, ServerResponse } from "node:http";
+
 	namespace NodeJS {
 		interface ProcessEnv {
 			DB_HOST: string;
@@ -126,3 +126,5 @@ declare global {
 		title: string;
 	};
 }
+
+export {};
