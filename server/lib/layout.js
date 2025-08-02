@@ -50,6 +50,7 @@ async function renderAssets(isAmp, hasForms) {
 		<script type="importmap">
 			{ "imports": { "#!/": "/js/" } }
 		</script>
+		<script src="/js/main.js" type="module"></script>
 	`;
 }
 

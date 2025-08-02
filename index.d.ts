@@ -39,6 +39,8 @@ declare global {
 
 	type Changefreq = "daily" | "weekly" | "monthly" | "yearly" | undefined;
 
+	type ComponentInitiator = (root: HTMLElement) => void;
+
 	type DbTable = "recipes" | "recipesTags" | "staticPages" | "structures" | "tags";
 
 	type LayoutData = {

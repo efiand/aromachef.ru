@@ -4,10 +4,10 @@ import { host, isDev, port } from "#server/constants.js";
 import { renderLayout } from "#server/lib/layout.js";
 import { noAmpRoutes, routes } from "#server/routes/index.js";
 
-/** @type {(error: unknown) => Promise<{ statusCode: number; template: string }>} */
-async function handleError(error) {
+/** @type {(error: unknown, href: string) => Promise<{ statusCode: number; template: string }>} */
+async function handleError(error, href) {
 	if (isDev) {
-		console.error(error);
+		console.error(error, `[${href}]`);
 	}
 
 	let message = "На сервере произошла ошибка.";
@@ -106,7 +106,7 @@ async function next(req, res) {
 			template = await renderLayout({ ...routeData.page, isAmp, pathname });
 		}
 	} catch (error) {
-		({ statusCode, template } = await handleError(error));
+		({ statusCode, template } = await handleError(error, url.href));
 	}
 
 	res.statusCode = statusCode;

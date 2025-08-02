@@ -50,6 +50,7 @@ h2 {
 
 .search-form {
 	grid-template-columns: 1fr auto;
+	align-items: start;
 }
 
 .structure {
