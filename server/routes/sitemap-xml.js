@@ -2,6 +2,8 @@ import { BASE_URL } from "#!/constants.js";
 import { sql, xml } from "#!/utils/mark-template.js";
 import { getFromDb } from "#server/lib/db.js";
 
+const SERVICE_PAGES = ["", "/structure", "/search"];
+
 const query = sql`
 	SELECT
 		CONCAT('${BASE_URL}/structure/', id) AS loc,
@@ -93,7 +95,7 @@ export const sitemapXmlRoute = {
 		/** Дата крайнего обновления */
 		const [{ lastmod }] = pages;
 
-		pages.push({ priority: "0.8", lastmod, loc: BASE_URL }, { priority: "0.8", lastmod, loc: `${BASE_URL}/structure` });
+		pages.push(...SERVICE_PAGES.map((page) => ({ priority: "0.8", lastmod, loc: `${BASE_URL}${page}` })));
 
 		return {
 			contentType: "application/xml",

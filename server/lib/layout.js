@@ -8,7 +8,7 @@ import { isDev } from "#server/constants.js";
 import { getCss } from "#server/lib/css.js";
 
 const SEARCH_TEMPLATE = html`
-	<li class="layout__header-item layout__header-item--separated _hidden">
+	<li class="layout__header-item layout__header-item--separated">
 		<a href="/search">Поиск</a>
 	</li>
 `;

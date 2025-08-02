@@ -24,7 +24,7 @@ export const searchRoute = {
 		const searchPlaceholder = url.searchParams.get("q");
 
 		/** @type {DbItem[]} */
-		const cards = searchPlaceholder ? await getFromDb(recipesQuery, searchPlaceholder) : [];
+		const cards = searchPlaceholder ? await getFromDb(recipesQuery, searchPlaceholder.trim()) : [];
 
 		return {
 			page: {
