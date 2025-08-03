@@ -2,7 +2,7 @@ import { BASE_URL } from "#!/constants.js";
 import { sql, xml } from "#!/utils/mark-template.js";
 import { getFromDb } from "#server/lib/db.js";
 
-const SERVICE_PAGES = ["", "/structure", "/search"];
+const SERVICE_PAGES = ["", "/structure", "/search", "/turbo.rss"];
 
 const query = sql`
 	SELECT

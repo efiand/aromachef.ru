@@ -23,6 +23,10 @@
 			"complexity": {
 				"noUselessStringConcat": "error"
 			},
+			"correctness": {
+				"noUnusedImports": "error",
+				"noUnusedFunctionParameters": "error"
+			},
 			"performance": {
 				"noAccumulatingSpread": "error"
 			},
