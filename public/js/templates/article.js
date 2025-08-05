@@ -18,7 +18,7 @@ export function renderArticle({ alt = "", content = "", imageAlias, reverse = fa
 					srcset="${imageAlias}@2x.webp 2x"
 					width="384"
 					height="672"
-					alt="${alt}"
+					alt="${alt.replace("[title]", `«${title}»`)}"
 					loading="lazy"
 				>
 			</div>

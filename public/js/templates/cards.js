@@ -1,7 +1,7 @@
 import { html } from "#!/utils/mark-template.js";
 
 /** @type {(data: DbItem & CardAdditionals) => string} */
-function renderCard({ alt, id, picturesHost, route, title }) {
+function renderCard({ alt = "", id, picturesHost, route, title }) {
 	const url = `${route}/${id}`;
 
 	return html`
@@ -13,11 +13,11 @@ function renderCard({ alt, id, picturesHost, route, title }) {
 					srcset="${picturesHost}/pictures${url}@2x.webp 2x"
 					width="272"
 					height="204"
-					alt="${alt}"
+					alt="${alt.replace("[title]", `«${title}»`)}"
 					loading="lazy"
 				>
+				${title}
 			</a>
-			<a href="${url}">${title}</a>
 		</li>
 	`;
 }

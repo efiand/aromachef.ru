@@ -39,7 +39,7 @@ export const searchRoute = {
 						(searchPlaceholder
 							? cards.length
 								? renderCards({
-										alt: "На фото изображено готовое блюдо в миниатюре.",
+										alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 										cards,
 										centered: false,
 										picturesHost,

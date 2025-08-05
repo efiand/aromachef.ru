@@ -15,7 +15,7 @@ export function renderRecipeFooter({ structure, relatedRecipes = [], picturesHos
 					? html`
 							<p class="recipe-footer__text">Если понравился этот рецепт, попробуйте также:</p>
 							${renderCards({
-								alt: "На фото изображено блюдо, приготовленное по связанному рецепту, в миниатюре.",
+								alt: "На фото изображено блюдо, приготовленное по связанному рецепту [title], в миниатюре.",
 								centered: false,
 								className: "recipe-footer__cards",
 								cards: relatedRecipes,

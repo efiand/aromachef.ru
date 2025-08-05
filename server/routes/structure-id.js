@@ -29,7 +29,7 @@ export const structureIdRoute = {
 				ogImage: `${picturesHost}/pictures/structure/${id}@2x.webp`,
 				pageTemplate: renderPageSection({
 					footerTemplate: renderCards({
-						alt: `На фото изображено готовое блюдо из раздела «${structure}» в миниатюре.`,
+						alt: `На фото изображено готовое блюдо [title] из раздела «${structure}» в миниатюре.`,
 						cards,
 						picturesHost,
 					}),

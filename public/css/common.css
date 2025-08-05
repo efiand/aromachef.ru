@@ -167,11 +167,12 @@ mark {
 }
 
 .cards__item {
-	display: grid;
-	align-content: start;
-	gap: 0.5rem;
 	width: 272px;
-	font-family: var(--font-basic);
+}
+
+.cards__item a {
+	display: grid;
+	gap: 0.5rem;
 	text-align: center;
 }
 
@@ -179,10 +180,6 @@ mark {
 	height: 204px;
 	object-fit: cover;
 	object-position: center;
-}
-
-.cards__item a:hover + a {
-	text-decoration: underline;
 }
 
 .content h1,

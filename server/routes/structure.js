@@ -50,7 +50,7 @@ export const structureRoute = {
 						<div>
 							<h1 class="structure__heading">Разделы</h1>
 							${renderCards({
-								alt: "На фото изображено готовое блюдо из этого раздела в миниатюре.",
+								alt: "На фото изображено готовое блюдо из раздела [title] в миниатюре.",
 								cards: structures,
 								centered: false,
 								picturesHost,

@@ -29,7 +29,7 @@ export const mainRoute = {
 				pageTemplate:
 					renderPageSection({
 						footerTemplate: renderCards({
-							alt: "На фото изображено готовое блюдо в миниатюре.",
+							alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 							cards,
 							picturesHost,
 						}),

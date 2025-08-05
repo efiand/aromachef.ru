@@ -32,7 +32,7 @@ export const tagIdRoute = {
 				ogImage: `${picturesHost}/pictures/recipe/${recipeId}@2x.webp`,
 				pageTemplate: renderPageSection({
 					footerTemplate: renderCards({
-						alt: `На фото изображено готовое блюдо на тему «${tag}» в миниатюре.`,
+						alt: `На фото изображено готовое блюдо [title] на тему «${tag}» в миниатюре.`,
 						cards,
 						picturesHost,
 					}),
