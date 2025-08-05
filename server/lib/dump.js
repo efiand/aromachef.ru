@@ -3,10 +3,10 @@ import { getFromDb } from "#server/lib/db.js";
 import { upload } from "#server/lib/yandex-disk.js";
 
 /** @type {DbTable[]} */
-const SQL_TABLES = ["structures", "tags", "recipes", "recipesTags", "staticPages"];
+const SQL_TABLES = ["structures", "tags", "recipes", "recipesTags", "recipesRecipes", "staticPages"];
 
 /** @type {DbTable[]} */
-const SQL_TABLES_FOR_DELETING = ["recipesTags", "tags", "recipes", "structures", "staticPages"];
+const SQL_TABLES_FOR_DELETING = ["recipesRecipes", "recipesTags", "tags", "recipes", "structures", "staticPages"];
 
 const SQL_PREPEND = SQL_TABLES_FOR_DELETING.map((table) => sql`DELETE FROM ${table};\n`).join("");
 

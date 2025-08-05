@@ -35,13 +35,14 @@ declare global {
 	type CardsData = CardAdditionals & {
 		cards?: DbItem[];
 		centered?: boolean;
+		className?: string;
 	};
 
 	type Changefreq = "daily" | "weekly" | "monthly" | "yearly" | undefined;
 
 	type ComponentInitiator = (root: HTMLElement) => void;
 
-	type DbTable = "recipes" | "recipesTags" | "staticPages" | "structures" | "tags";
+	type DbTable = "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
 
 	type LayoutData = {
 		isAmp?: boolean;

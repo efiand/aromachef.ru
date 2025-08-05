@@ -10,6 +10,11 @@ const recipesQuery = sql`
 	s.title AS structureTitle FROM recipes r JOIN structures s
 	WHERE r.id = ? AND s.id = r.structureId ${isDev ? "" : sql`AND r.published = 1`};
 `;
+const relatedRecipesQuery = sql`
+	SELECT r.id, r.title FROM recipes r JOIN recipesRecipes rr
+	WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id
+	ORDER BY r.title;
+`;
 const tagsQuery = sql`
 	SELECT t.id, t.title FROM tags t JOIN recipesTags rt
 	WHERE rt.recipeId = ? AND rt.tagId = t.id
@@ -19,8 +24,12 @@ const tagsQuery = sql`
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ id }) {
-		/** @type {[[Recipe], DbItem[]]} */
-		const [[recipe], tags] = await Promise.all([getFromDb(recipesQuery, id), getFromDb(tagsQuery, id)]);
+		/** @type {[[Recipe], DbItem[], DbItem[]]} */
+		const [[recipe], relatedRecipes, tags] = await Promise.all([
+			getFromDb(recipesQuery, id),
+			getFromDb(relatedRecipesQuery, id),
+			getFromDb(tagsQuery, id),
+		]);
 
 		if (!recipe) {
 			throw new Error("Рецепт не существует.", { cause: 404 });
@@ -48,7 +57,12 @@ export const recipeIdRoute = {
 						},
 					],
 					content: renderRecipeDescription({ description, telegramId }),
-					footerTemplate: renderRecipeFooter({ structure: { id: structureId, title: structureTitle }, tags }),
+					footerTemplate: renderRecipeFooter({
+						structure: { id: structureId, title: structureTitle },
+						picturesHost,
+						relatedRecipes,
+						tags,
+					}),
 					title,
 				}),
 			},

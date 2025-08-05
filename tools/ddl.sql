@@ -41,6 +41,22 @@ COMMENT='';
 CREATE INDEX recipesTags_recipeId_idx USING BTREE ON recipesTags (recipeId);
 CREATE INDEX recipesTags_tagId_idx USING BTREE ON recipesTags (tagId);
 
+CREATE TABLE recipesRecipes (
+	id int(11) auto_increment NOT NULL,
+	recipeId int(11) NOT NULL,
+	relatedRecipeId int(11) NOT NULL,
+	CONSTRAINT `PRIMARY` PRIMARY KEY (id),
+	CONSTRAINT recipesRecipes_recipeId_relatedRecipeId_key UNIQUE KEY (recipeId,relatedRecipeId),
+	CONSTRAINT recipesRecipes_recipeId_fkey_copy FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT recipesRecipes_relatedRecipeId_fkey_copy FOREIGN KEY (relatedRecipeId) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci
+COMMENT='Кросстаблица связей одних рецептов с другими.';
+CREATE INDEX recipesRecipes_recipeId_idx USING BTREE ON recipesRecipes (recipeId);
+CREATE INDEX recipesRecipes_relatedRecipeIdidx USING BTREE ON recipesRecipes (relatedRecipeId);
+
 CREATE TABLE staticPages(
 	id int(11) auto_increment NOT NULL,
 	title varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,

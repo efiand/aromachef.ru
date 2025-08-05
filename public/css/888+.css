@@ -48,6 +48,10 @@ h2 {
 	gap: 4rem;
 }
 
+.recipe-footer__text {
+	margin-top: 2rem;
+}
+
 .search-form {
 	grid-template-columns: 1fr auto;
 	align-items: start;
