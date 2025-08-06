@@ -1,0 +1,12 @@
+.search-dialog {
+	display: grid;
+	gap: 2rem;
+}
+
+.search-dialog__result {
+	display: contents;
+}
+
+.search-dialog__result > button {
+	justify-self: center;
+}

@@ -9,7 +9,7 @@ import { getCss } from "#server/lib/css.js";
 
 const SEARCH_TEMPLATE = html`
 	<li class="layout__header-item layout__header-item--separated">
-		<a href="/search">Поиск</a>
+		<a href="/search" data-search>Поиск</a>
 	</li>
 `;
 

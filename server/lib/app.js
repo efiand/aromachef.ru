@@ -1,6 +1,7 @@
 import { createServer } from "node:http";
 import { html } from "#!/utils/mark-template.js";
 import { host, isDev, port } from "#server/constants.js";
+import { getRequestBody } from "#server/lib/body.js";
 import { renderLayout } from "#server/lib/layout.js";
 import { noAmpRoutes, routes } from "#server/routes/index.js";
 
@@ -37,39 +38,6 @@ async function handleError(error, href) {
 	return { statusCode, template };
 }
 
-/** @type {(req: RouteRequest) => Promise<object>} */
-function getRequestBody(req) {
-	return new Promise((resolve, reject) => {
-		if (req.method === "GET") {
-			resolve({});
-			return;
-		}
-
-		/** @type {Uint8Array<ArrayBufferLike>[]} */
-		const chuncks = [];
-		req
-			.on("error", (error) => {
-				reject(error);
-			})
-			.on("data", (chunk) => {
-				chuncks.push(chunk);
-			})
-			.on("end", () => {
-				/** @type {string} */
-				const body = Buffer.concat(chuncks).toString();
-
-				/** @type {Record<string, string>} */
-				const data = {};
-
-				for (const [name, value] of new URLSearchParams(body)) {
-					data[name] = value;
-				}
-
-				resolve(data);
-			});
-	});
-}
-
 /** @type {ServerMiddleware} */
 async function next(req, res) {
 	const url = new URL(`${host}${req.url}`);
@@ -99,8 +67,8 @@ async function next(req, res) {
 		}
 
 		const body = await getRequestBody(req);
-		const routeData = await route[method]({ body, id, req, res, url });
-		({ contentType = "text/html", template = "" } = routeData);
+		const routeData = await route[method]({ body, id, req, res });
+		({ contentType = "text/html; charset=utf-8", template = "" } = routeData);
 
 		if (routeData.page) {
 			template = await renderLayout({ ...routeData.page, isAmp, pathname });

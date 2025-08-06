@@ -1,0 +1,75 @@
+.dialog {
+	width: 120%;
+	max-width: 100vw;
+	padding: 0;
+	border: none;
+	overflow: hidden auto;
+	backdrop-filter: blur(0.5);
+}
+
+.dialog__inner {
+	position: relative;
+}
+
+.dialog__slot {
+	padding: 3rem 1.5rem;
+}
+
+.dialog__close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0.5rem;
+	color: var(--color-green);
+}
+
+.dialog__close::before {
+	content: "";
+	display: block;
+	width: 2rem;
+	height: 2rem;
+	background-color: currentColor;
+	mask-image: var(--icon-close);
+	mask-size: 100%;
+}
+
+@media (hover: hover) {
+	.dialog__close:hover,
+	.dialog__close:focus-visible {
+		color: var(--color-eggplant);
+	}
+}
+
+@media (min-width: 480px) {
+	.dialog__slot {
+		padding-inline: 2rem;
+	}
+}
+
+@media (min-width: 888px) {
+	.dialog__slot {
+		padding-inline: 3rem;
+	}
+}
+
+@media (max-width: 1335px) {
+	.dialog {
+		height: 120%;
+		max-height: 100dvh;
+	}
+
+	.dialog__inner {
+		height: 100%;
+	}
+}
+
+@media (min-width: 1336px) {
+	.dialog {
+		max-width: 66.8rem;
+	}
+
+	.dialog::backdrop {
+		background-color: rgba(51, 51, 51, 0.5);
+		backdrop-filter: blur(5px);
+	}
+}

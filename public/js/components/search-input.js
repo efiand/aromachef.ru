@@ -1,23 +1,18 @@
+import { loadCss } from "#!/utils/load-css.js";
 import { html } from "#!/utils/mark-template.js";
+import { NonNull } from "#!/utils/non-null.js";
 
-let installed = false;
-
-const CSS_TEMPLATE = html`<link rel="stylesheet" href="/css/components/search-input.css">`;
 const BUTTON_TEMPLATE = html`<button class="search-input__button" type="reset" aria-label="Очистить"></button>`;
 
 /** @type {ComponentInitiator} */
-export const initSearchInput = (rootElement) => {
-	const inputElement = rootElement.querySelector("input");
-	if (!inputElement) {
-		return;
-	}
+export function initSearchInput(rootElement) {
+	loadCss("components/search-input.css");
 
-	if (!installed) {
-		document.head.insertAdjacentHTML("beforeend", CSS_TEMPLATE);
-		installed = true;
-	}
+	/** @type {!HTMLInputElement} */
+	const inputElement = NonNull(rootElement.querySelector("input"));
 
 	inputElement.classList.add("search-input__input");
+	inputElement.autocomplete = "off";
 	inputElement.placeholder = inputElement.ariaLabel || "Введите запрос";
 
 	rootElement.insertAdjacentHTML("beforeend", BUTTON_TEMPLATE);
@@ -29,4 +24,6 @@ export const initSearchInput = (rootElement) => {
 			inputElement.value = "";
 		});
 	}
-};
+
+	rootElement.dataset.ready = "";
+}

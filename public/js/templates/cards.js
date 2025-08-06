@@ -16,7 +16,7 @@ function renderCard({ alt = "", id, picturesHost, route, title }) {
 					alt="${alt.replace("[title]", `«${title}»`)}"
 					loading="lazy"
 				>
-				${title}
+				<span>${title}</span>
 			</a>
 		</li>
 	`;

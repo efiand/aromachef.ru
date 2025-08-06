@@ -1,7 +1,7 @@
 import { renderCards } from "#!/templates/cards.js";
 import { renderPageSection } from "#!/templates/page-section.js";
 import { renderSearchForm } from "#!/templates/search-form.js";
-import { sql } from "#!/utils/mark-template.js";
+import { html, sql } from "#!/utils/mark-template.js";
 import { isDev, picturesHost } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
@@ -18,34 +18,48 @@ const recipesQuery = sql`
 	ORDER BY title;
 `;
 
+/** @type {(cards: DbItem[]) => string} */
+function getCardsTemplate(cards) {
+	if (!cards.length) {
+		return "";
+	}
+
+	return renderCards({
+		alt: "На фото изображено готовое блюдо [title] в миниатюре.",
+		cards,
+		centered: false,
+		picturesHost,
+	});
+}
+
 export const searchRoute = {
 	/** @type {RouteMethod} */
-	async GET({ url }) {
-		const searchPlaceholder = url.searchParams.get("q");
+	async GET({ body }) {
+		const pattern = (body.q || "").trim();
 
 		/** @type {DbItem[]} */
-		const cards = searchPlaceholder ? await getFromDb(recipesQuery, searchPlaceholder.trim()) : [];
+		let cards = [];
+		if (pattern) {
+			cards = await getFromDb(recipesQuery, pattern);
+		}
+
+		const nof = pattern ? cards.length : undefined;
+
+		if (body.fragment !== undefined) {
+			const cardsTemplate = nof ? getCardsTemplate(cards.slice(0, 4)) : html`<p>Ничего не найдено.</p>`;
+			const buttonTemplate =
+				nof && nof > 4 ? html`<button class="button" type="submit">Все результаты (${nof})</button>` : "";
+			return {
+				template: cardsTemplate + buttonTemplate,
+			};
+		}
 
 		return {
 			page: {
 				description: "Ищите рецепты по заголовкам и содержимому.",
 				heading: "Поиск рецептов",
 				pageTemplate: renderPageSection({
-					footerTemplate:
-						renderSearchForm({
-							nof: searchPlaceholder ? cards.length : undefined,
-							value: searchPlaceholder,
-						}) +
-						(searchPlaceholder
-							? cards.length
-								? renderCards({
-										alt: "На фото изображено готовое блюдо [title] в миниатюре.",
-										cards,
-										centered: false,
-										picturesHost,
-									})
-								: ""
-							: ""),
+					footerTemplate: renderSearchForm({ nof, value: pattern }) + (pattern ? getCardsTemplate(cards) : ""),
 					title: "Поиск рецептов",
 				}),
 			},

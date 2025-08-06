@@ -24,11 +24,15 @@
 				"noUselessStringConcat": "error"
 			},
 			"correctness": {
+				"noUnusedVariables": "error",
 				"noUnusedImports": "error",
 				"noUnusedFunctionParameters": "error"
 			},
 			"performance": {
 				"noAccumulatingSpread": "error"
+			},
+			"style": {
+				"useConst": { "fix": "none", "level": "error", "options": {} }
 			},
 			"suspicious": {
 				"noGlobalIsNan": "error"

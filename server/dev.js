@@ -31,6 +31,12 @@ createApp(async (req, res, next) => {
 		return;
 	}
 
+	if (pathname === "/.well-known/appspecific/com.chrome.devtools.json") {
+		res.setHeader("Content-Type", "application/json");
+		res.end("{}");
+		return;
+	}
+
 	if (!staticExtensions.has(ext)) {
 		next?.(req, res);
 		return;

@@ -40,7 +40,7 @@ declare global {
 
 	type Changefreq = "daily" | "weekly" | "monthly" | "yearly" | undefined;
 
-	type ComponentInitiator = (root: HTMLElement) => void;
+	type ComponentInitiator = (element: HTMLElement) => void;
 
 	type DbTable = "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
 
@@ -84,11 +84,10 @@ declare global {
 	type RouteMethod = (params: RouteParams) => Promise<RouteData>;
 
 	type RouteParams = {
-		body: object;
+		body: Record<string, string>;
 		id: number;
 		req: RouteRequest;
 		res: RouteResponse;
-		url: URL;
 	};
 
 	type RouteRequest = IncomingMessage;
