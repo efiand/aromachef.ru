@@ -5,6 +5,7 @@ import { html, sql } from "#!/utils/mark-template.js";
 import { isDev, picturesHost } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
+const maxRecipeQuery = sql`SELECT MAX(id) AS length FROM recipes ${isDev ? "" : sql`WHERE published = 1`}`;
 const recipesQuery = sql`
 	SELECT cooking, description, ingredients, structureId, telegramId, r.title,
 	s.title AS structureTitle FROM recipes r JOIN structures s
@@ -24,8 +25,9 @@ const tagsQuery = sql`
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ id }) {
-		/** @type {[[Recipe], DbItem[], DbItem[]]} */
-		const [[recipe], relatedRecipes, tags] = await Promise.all([
+		/** @type {[[{ length: number }], [Recipe], DbItem[], DbItem[]]} */
+		const [[{ length }], [recipe], relatedRecipes, tags] = await Promise.all([
+			getFromDb(maxRecipeQuery),
 			getFromDb(recipesQuery, id),
 			getFromDb(relatedRecipesQuery, id),
 			getFromDb(tagsQuery, id),
@@ -58,9 +60,11 @@ export const recipeIdRoute = {
 					],
 					content: renderRecipeDescription({ description, telegramId }),
 					footerTemplate: renderRecipeFooter({
-						structure: { id: structureId, title: structureTitle },
+						next: id === length ? 1 : id + 1,
 						picturesHost,
+						prev: id === 1 ? length : id - 1,
 						relatedRecipes,
+						structure: { id: structureId, title: structureTitle },
 						tags,
 					}),
 					title,

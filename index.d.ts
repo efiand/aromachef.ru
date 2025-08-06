@@ -71,6 +71,15 @@ declare global {
 		title: string;
 	};
 
+	type RecipeFooter = {
+		next: number;
+		picturesHost?: string;
+		prev: number;
+		relatedRecipes?: DbItem[];
+		structure: DbItem;
+		tags: DbItem[];
+	};
+
 	type Route = {
 		[method: IncomingMessage["method"]]: RouteMethod;
 	};

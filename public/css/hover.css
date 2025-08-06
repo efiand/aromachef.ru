@@ -2,10 +2,14 @@ a:hover {
 	text-decoration: underline;
 }
 
-.button:hover {
+.button:hover,
+.button:focus-visible {
 	background-color: var(--color-eggplant);
 }
 
-.layout__logo-link:hover {
+.layout__logo-link:hover,
+.layout__logo-link:focus-visible,
+.recipe-footer__nav-link:hover,
+.recipe-footer__nav-link:focus-visible {
 	color: var(--color-green);
 }

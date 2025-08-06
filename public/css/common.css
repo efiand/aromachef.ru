@@ -413,6 +413,32 @@ mark {
 	gap: 2rem;
 }
 
+.recipe-footer__nav {
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	width: 100%;
+}
+
+.recipe-footer__nav-link {
+	display: block;
+	color: var(--color-eggplant);
+}
+
+.recipe-footer__nav-link::before {
+	content: "";
+	display: block;
+	width: 3rem;
+	height: 3rem;
+	background-color: currentColor;
+	mask-image: var(--icon-arrow);
+	mask-size: 100%;
+}
+
+.recipe-footer__nav-link[rel="next"]::before {
+	transform: scaleX(-1);
+}
+
 .recipe-footer__structure-link {
 	text-align: right;
 }
