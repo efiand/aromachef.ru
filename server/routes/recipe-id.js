@@ -5,15 +5,17 @@ import { html, sql } from "#!/utils/mark-template.js";
 import { isDev, picturesHost } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
+const queryCondition = isDev ? "" : sql`AND r.published = 1`;
+
 const maxRecipeQuery = sql`SELECT MAX(id) AS length FROM recipes ${isDev ? "" : sql`WHERE published = 1`}`;
 const recipesQuery = sql`
 	SELECT cooking, description, ingredients, structureId, telegramId, r.title,
 	s.title AS structureTitle FROM recipes r JOIN structures s
-	WHERE r.id = ? AND s.id = r.structureId ${isDev ? "" : sql`AND r.published = 1`};
+	WHERE r.id = ? AND s.id = r.structureId ${queryCondition};
 `;
 const relatedRecipesQuery = sql`
 	SELECT r.id, r.title FROM recipes r JOIN recipesRecipes rr
-	WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id
+	WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id ${queryCondition}
 	ORDER BY r.title;
 `;
 const tagsQuery = sql`
