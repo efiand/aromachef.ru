@@ -3,7 +3,7 @@ import { renderTags } from "#!/templates/tags.js";
 import { html } from "#!/utils/mark-template.js";
 
 /** @type {(params:RecipeFooter) => string} */
-export function renderRecipeFooter({ next, picturesHost = "", prev, relatedRecipes = [], structure, tags }) {
+export function renderRecipeFooter({ picturesHost = "", relatedRecipes = [], structure, tags }) {
 	return html`
 		<div class="recipe-footer">
 			${renderTags({ tags })}
@@ -23,14 +23,6 @@ export function renderRecipeFooter({ next, picturesHost = "", prev, relatedRecip
 						`
 					: ""
 			}
-			<ul class="recipe-footer__nav">
-				<li>
-					<a class="recipe-footer__nav-link" href="/recipe/${prev}" rel="prev" title="Предыдущий рецепт" aria-label="Предыдущий рецепт"></a>
-				</li>
-				<li>
-					<a class="recipe-footer__nav-link" href="/recipe/${next}" rel="next" title="Следующий рецепт" aria-label="Следующий рецепт"></a>
-				</li>
-			</ul>
 		</div>
 	`;
 }

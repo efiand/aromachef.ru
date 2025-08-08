@@ -42,6 +42,10 @@ html {
 	--scroll-behavior: auto;
 	--transition: none;
 
+	/* Критические иконки */
+	--icon-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M10.78 17.02a1 1 0 0 1-1.42 1.41L3 12.07l6.36-6.36a1 1 0 0 1 1.42 1.41l-3.95 3.95h13.66v2H6.83l3.95 3.95Z'/%3E%3C/svg%3E");
+	--icon-tg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 24 24'%3E%3Cpath d='M5.52 19.9h5.32l3.52 3.52a2.04 2.04 0 0 0 1.45.6 2.1 2.1 0 0 0 .52-.07 2.03 2.03 0 0 0 1.45-1.42l6.2-21.1Zm-1.43-1.4L22.57.01 1.47 6.23A2.05 2.05 0 0 0 .6 9.65l3.5 3.5Z'/%3E%3C/svg%3E");
+
 	font-size: 16px;
 }
 
@@ -402,7 +406,42 @@ mark {
 	gap: 3rem;
 }
 
+.page-section__header--with-nav {
+	--icon-size: 2.5rem;
+
+	display: grid;
+	grid-template-columns: var(--icon-size) 1fr var(--icon-size);
+	grid-template-areas: "prev . next" "heading heading heading";
+	align-items: start;
+	gap: var(--icon-size);
+}
+
+.page-section__nav-link {
+	grid-area: prev;
+	display: block;
+	color: var(--color-eggplant);
+}
+
+.page-section__nav-link::before {
+	content: "";
+	display: block;
+	width: var(--icon-size);
+	height: var(--icon-size);
+	background-color: currentColor;
+	mask-image: var(--icon-arrow);
+	mask-size: 100%;
+}
+
+.page-section__nav-link[rel="next"] {
+	grid-area: next;
+}
+
+.page-section__nav-link[rel="next"]::before {
+	transform: scaleX(-1);
+}
+
 .page-section__title {
+	grid-area: heading;
 	text-align: center;
 }
 
@@ -417,33 +456,8 @@ mark {
 	margin-inline: auto;
 }
 
-.recipe-footer__nav {
-	display: flex;
-	justify-content: center;
-	gap: 2rem;
-	width: 100%;
-}
-
-.recipe-footer__nav-link {
-	display: block;
-	color: var(--color-eggplant);
-}
-
-.recipe-footer__nav-link::before {
-	content: "";
-	display: block;
-	width: 3rem;
-	height: 3rem;
-	background-color: currentColor;
-	mask-image: var(--icon-arrow);
-	mask-size: 100%;
-}
-
-.recipe-footer__nav-link[rel="next"]::before {
-	transform: scaleX(-1);
-}
-
 .recipe-footer__structure-link {
+	margin-left: auto;
 	text-align: right;
 }
 

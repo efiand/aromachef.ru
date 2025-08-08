@@ -43,7 +43,7 @@ async function renderAssets(isAmp, hasForms) {
 	}
 
 	const linkTemplates = ALL_STYLESHEETS.map(
-		({ media, name }) => html`<link rel="stylesheet" href="/css/${name}.css?4" ${media ? `media="${media}"` : ""}>`,
+		({ media, name }) => html`<link rel="stylesheet" href="/css/${name}.css?5" ${media ? `media="${media}"` : ""}>`,
 	);
 	return html`
 		${linkTemplates.join("")}

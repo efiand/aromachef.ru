@@ -43,6 +43,10 @@ export const ALL_STYLESHEETS = [
 		media: "(max-width: 887px)",
 	},
 	{
+		name: "480+",
+		media: "(min-width: 480px)",
+	},
+	{
 		name: "888+",
 		media: "(min-width: 888px)",
 	},

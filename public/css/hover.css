@@ -9,7 +9,7 @@ a:hover {
 
 .layout__logo-link:hover,
 .layout__logo-link:focus-visible,
-.recipe-footer__nav-link:hover,
-.recipe-footer__nav-link:focus-visible {
+.page-section__nav-link:hover,
+.page-section__nav-link:focus-visible {
 	color: var(--color-green);
 }

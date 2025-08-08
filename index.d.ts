@@ -58,6 +58,8 @@ declare global {
 		articles?: ArticleData[];
 		content?: string;
 		footerTemplate?: string;
+		next?: string;
+		prev?: string;
 		title: string;
 	};
 
@@ -72,9 +74,7 @@ declare global {
 	};
 
 	type RecipeFooter = {
-		next: number;
 		picturesHost?: string;
-		prev: number;
 		relatedRecipes?: DbItem[];
 		structure: DbItem;
 		tags: DbItem[];

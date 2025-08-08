@@ -48,6 +48,14 @@ h2 {
 	gap: 4rem;
 }
 
+.page-section__header--with-nav {
+	--icon-size: 3rem;
+}
+
+.page-section__nav-link {
+	margin-top: 0.375rem;
+}
+
 .recipe-footer__text {
 	margin-top: 2rem;
 }
