@@ -9,5 +9,5 @@ Thumbs.db
 coverage
 logs
 node_modules
+pictures
 temp
-tools/*.html

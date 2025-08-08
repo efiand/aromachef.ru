@@ -1,7 +1,8 @@
 {
 	"dependencies": {
 		"@dotenvx/dotenvx": "1.48.3",
-		"mysql2": "3.14.3"
+		"mysql2": "3.14.3",
+		"sharp": "0.34.3"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.1.3",
@@ -31,6 +32,7 @@
 	"scripts": {
 		"dump": "dotenvx run -- node ./tools/dump.js",
 		"dev": "dotenvx run -- nodemon ./server/dev.js",
+		"image": "dotenvx run -- node ./tools/images.js",
 		"lint": "npm run type-check && biome check",
 		"lint-format": "npm run type-check && biome check --write",
 		"test": "jest",
