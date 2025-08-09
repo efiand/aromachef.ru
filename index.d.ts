@@ -28,7 +28,6 @@ declare global {
 
 	type CardAdditionals = {
 		alt?: string;
-		picturesHost?: string;
 		route?: string;
 	};
 
@@ -74,7 +73,6 @@ declare global {
 	};
 
 	type RecipeFooter = {
-		picturesHost?: string;
 		relatedRecipes?: DbItem[];
 		structure: DbItem;
 		tags: DbItem[];

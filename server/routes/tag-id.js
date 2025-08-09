@@ -1,7 +1,7 @@
 import { renderCards } from "#!/templates/cards.js";
 import { renderPageSection } from "#!/templates/page-section.js";
 import { sql } from "#!/utils/mark-template.js";
-import { isDev, picturesHost } from "#server/constants.js";
+import { isDev } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
 const query = sql`
@@ -29,12 +29,11 @@ export const tagIdRoute = {
 			page: {
 				description: `Страница содержит рецепты с эфирными маслами на тему «${tag}».`,
 				heading: `Теги : ${title}`,
-				ogImage: `${picturesHost}/pictures/recipe/${recipeId}@2x.webp`,
+				ogImage: `/pictures/recipe/${recipeId}@2x.webp`,
 				pageTemplate: renderPageSection({
 					footerTemplate: renderCards({
 						alt: `На фото изображено готовое блюдо [title] на тему «${tag}» в миниатюре.`,
 						cards,
-						picturesHost,
 					}),
 					title,
 				}),

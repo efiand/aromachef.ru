@@ -3,7 +3,7 @@ import { renderTags } from "#!/templates/tags.js";
 import { html } from "#!/utils/mark-template.js";
 
 /** @type {(params:RecipeFooter) => string} */
-export function renderRecipeFooter({ picturesHost = "", relatedRecipes = [], structure, tags }) {
+export function renderRecipeFooter({ relatedRecipes = [], structure, tags }) {
 	return html`
 		<div class="recipe-footer">
 			${renderTags({ tags })}
@@ -18,7 +18,6 @@ export function renderRecipeFooter({ picturesHost = "", relatedRecipes = [], str
 								alt: "На фото изображено блюдо, приготовленное по связанному рецепту [title], в миниатюре.",
 								className: "recipe-footer__cards",
 								cards: relatedRecipes,
-								picturesHost,
 							})}
 						`
 					: ""

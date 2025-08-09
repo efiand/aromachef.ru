@@ -1,7 +1,7 @@
 import { renderCards } from "#!/templates/cards.js";
 import { renderTags } from "#!/templates/tags.js";
 import { html, sql } from "#!/utils/mark-template.js";
-import { isDev, picturesHost } from "#server/constants.js";
+import { isDev } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
 const queryCondition = isDev ? "" : sql`AND published = 1`;
@@ -53,7 +53,6 @@ export const structureRoute = {
 								alt: "На фото изображено готовое блюдо из раздела [title] в миниатюре.",
 								cards: structures,
 								centered: false,
-								picturesHost,
 								route: "/structure",
 							})}
 						</div>

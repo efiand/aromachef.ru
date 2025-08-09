@@ -42,6 +42,28 @@ createApp(async (req, res, next) => {
 		return;
 	}
 
+	if (pathname.includes("/pictures")) {
+		try {
+			const filePath = path.join(process.cwd(), pathname);
+			try {
+				await access(filePath);
+				res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
+				createReadStream(filePath).pipe(res);
+			} catch {
+				const pictureRes = await fetch(`https://aromachef.ru${pathname}`);
+				if (pictureRes.ok) {
+					const arrayBuffer = await pictureRes.arrayBuffer();
+					res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
+					res.end(Buffer.from(arrayBuffer));
+				}
+			}
+		} catch (error) {
+			console.error(error);
+			next?.(req, res);
+		}
+		return;
+	}
+
 	try {
 		const filePath = path.join(process.cwd(), "./public", pathname);
 		await access(filePath);

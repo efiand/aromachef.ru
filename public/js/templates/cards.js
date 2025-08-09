@@ -1,7 +1,7 @@
 import { html } from "#!/utils/mark-template.js";
 
 /** @type {(data: DbItem & CardAdditionals) => string} */
-function renderCard({ alt = "", id, picturesHost, route, title }) {
+function renderCard({ alt = "", id, route, title }) {
 	const url = `${route}/${id}`;
 
 	return html`
@@ -9,8 +9,8 @@ function renderCard({ alt = "", id, picturesHost, route, title }) {
 			<a href="${url}">
 				<img
 					class="image"
-					src="${picturesHost}/pictures${url}@1x.webp"
-					srcset="${picturesHost}/pictures${url}@2x.webp 2x"
+					src="/pictures${url}@1x.webp"
+					srcset="/pictures${url}@2x.webp 2x"
 					width="272"
 					height="204"
 					alt="${alt.replace("[title]", `«${title}»`)}"
@@ -27,16 +27,9 @@ function renderCard({ alt = "", id, picturesHost, route, title }) {
  *
  * @type {(data?: CardsData) => string}
  */
-export function renderCards({
-	alt = "",
-	centered = true,
-	cards = [],
-	className = "",
-	picturesHost = "",
-	route = "/recipe",
-} = {}) {
+export function renderCards({ alt = "", centered = true, cards = [], className = "", route = "/recipe" } = {}) {
 	const modifier = centered ? "cards--centered" : "cards--centered-in-mobile";
-	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, picturesHost, route })).join("");
+	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, route })).join("");
 
 	return html`<ul class="cards ${modifier} ${className}">${cardsTemplate}</ul>`;
 }

@@ -2,7 +2,7 @@ import { PROJECT_DESCRIPTION } from "#!/constants.js";
 import { renderCards } from "#!/templates/cards.js";
 import { renderPageSection } from "#!/templates/page-section.js";
 import { html, sql } from "#!/utils/mark-template.js";
-import { isDev, picturesHost } from "#server/constants.js";
+import { isDev } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
 const recipesQuery = sql`
@@ -31,7 +31,6 @@ export const mainRoute = {
 						footerTemplate: renderCards({
 							alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 							cards,
-							picturesHost,
 						}),
 						title: "Новые рецепты с эфирными маслами",
 					}) + ALL_RECIPES_TEMPLATE,

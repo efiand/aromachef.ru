@@ -2,7 +2,7 @@ import { renderPageSection } from "#!/templates/page-section.js";
 import { renderRecipeDescription } from "#!/templates/recipe-description.js";
 import { renderRecipeFooter } from "#!/templates/recipe-footer.js";
 import { html, sql } from "#!/utils/mark-template.js";
-import { isDev, picturesHost } from "#server/constants.js";
+import { isDev } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
 const queryCondition = isDev ? "" : sql`AND r.published = 1`;
@@ -40,7 +40,7 @@ export const recipeIdRoute = {
 		}
 
 		const { cooking, description, ingredients, structureId, structureTitle, telegramId, title } = recipe;
-		const imagePrefix = `${picturesHost}/pictures/recipe/${id}`;
+		const imagePrefix = `/pictures/recipe/${id}`;
 
 		return {
 			page: {
@@ -62,7 +62,6 @@ export const recipeIdRoute = {
 					],
 					content: renderRecipeDescription({ description, telegramId }),
 					footerTemplate: renderRecipeFooter({
-						picturesHost,
 						relatedRecipes,
 						structure: { id: structureId, title: structureTitle },
 						tags,

@@ -2,7 +2,7 @@ import { renderCards } from "#!/templates/cards.js";
 import { renderPageSection } from "#!/templates/page-section.js";
 import { renderSearchForm } from "#!/templates/search-form.js";
 import { html, sql } from "#!/utils/mark-template.js";
-import { isDev, picturesHost } from "#server/constants.js";
+import { isDev } from "#server/constants.js";
 import { getFromDb } from "#server/lib/db.js";
 
 const recipesQuery = sql`
@@ -28,7 +28,6 @@ function getCardsTemplate(cards) {
 		alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 		cards,
 		centered: false,
-		picturesHost,
 	});
 }
 
