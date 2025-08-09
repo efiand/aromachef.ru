@@ -3,7 +3,7 @@ import { initSearchInput } from "#!/components/search-input.js";
 import { loadCss } from "#!/utils/load-css.js";
 
 // Некритический CSS
-loadCss("icons.css?5");
+loadCss("icons.css?v1");
 document.body.style.setProperty("--scrollbar-width", `${window.innerWidth - document.documentElement.clientWidth}px`);
 
 /** @type {NodeListOf<HTMLElement>} */

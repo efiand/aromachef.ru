@@ -443,6 +443,7 @@ mark {
 .page-section__title {
 	grid-area: heading;
 	text-align: center;
+	text-wrap: balance;
 }
 
 .recipe-footer {

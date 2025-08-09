@@ -43,14 +43,14 @@ async function renderAssets(isAmp, hasForms) {
 	}
 
 	const linkTemplates = ALL_STYLESHEETS.map(
-		({ media, name }) => html`<link rel="stylesheet" href="/css/${name}.css?5" ${media ? `media="${media}"` : ""}>`,
+		({ media, name }) => html`<link rel="stylesheet" href="/css/${name}.css?v1" ${media ? `media="${media}"` : ""}>`,
 	);
 	return html`
 		${linkTemplates.join("")}
 		<script type="importmap">
 			{ "imports": { "#!/": "/js/" } }
 		</script>
-		<script src="/js/main.js" type="module"></script>
+		<script src="/js/main.js?v1" type="module"></script>
 		${isDev ? html`<script src="/js/dev.js" type="module"></script>` : ""}
 	`;
 }

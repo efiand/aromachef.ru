@@ -10,10 +10,10 @@ const recipesQuery = sql`
 		id,
 		REPLACE(title, ?, CONCAT('<mark>', ?, '</mark>')) as title
 	FROM recipes WHERE
-		LOWER(title) LIKE CONCAT('%', LOWER(?), '%')
+		(LOWER(title) LIKE CONCAT('%', LOWER(?), '%')
 		OR LOWER(description) LIKE CONCAT('%', LOWER(?), '%')
 		OR LOWER(ingredients) LIKE CONCAT('%', LOWER(?), '%')
-		OR LOWER(cooking) LIKE CONCAT('%', LOWER(?), '%')
+		OR LOWER(cooking) LIKE CONCAT('%', LOWER(?), '%'))
 		${isDev ? "" : sql`AND published = 1`}
 	ORDER BY title;
 `;
