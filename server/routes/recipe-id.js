@@ -3,7 +3,7 @@ import { renderRecipeDescription } from "#!/templates/recipe-description.js";
 import { renderRecipeFooter } from "#!/templates/recipe-footer.js";
 import { html, sql } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
 const queryCondition = isDev ? "" : sql`AND r.published = 1`;
 
@@ -29,10 +29,10 @@ export const recipeIdRoute = {
 	async GET({ id }) {
 		/** @type {[[{ length: number }], [Recipe], DbItem[], DbItem[]]} */
 		const [[{ length }], [recipe], relatedRecipes, tags] = await Promise.all([
-			getFromDb(maxRecipeQuery),
-			getFromDb(recipesQuery, id),
-			getFromDb(relatedRecipesQuery, id),
-			getFromDb(tagsQuery, id),
+			processDb(maxRecipeQuery),
+			processDb(recipesQuery, id),
+			processDb(relatedRecipesQuery, id),
+			processDb(tagsQuery, id),
 		]);
 
 		if (!recipe) {

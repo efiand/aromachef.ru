@@ -1,6 +1,7 @@
 User-agent: *
 Host: https://aromachef.ru
 Sitemap: https://aromachef.ru/sitemap.xml
+Disallow: /search
 
 User-agent: Yandex
 Disallow: /amp

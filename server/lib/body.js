@@ -1,6 +1,7 @@
+import formidable from "formidable";
 import { BASE_URL } from "#!/constants.js";
 
-/** @type {(params: URLSearchParams) => Record<string, string>} */
+/** @type {(params: URLSearchParams) => ReqBody} */
 function getObjectFromSearchParams(params) {
 	/** @type {Record<string, string>} */
 	const data = {};
@@ -12,27 +13,26 @@ function getObjectFromSearchParams(params) {
 	return data;
 }
 
-/** @type {(req: RouteRequest) => Promise<Record<string, string>>} */
-export function getRequestBody(req) {
-	return new Promise((resolve, reject) => {
-		if (req.method === "GET") {
-			const { searchParams } = new URL(`${BASE_URL}${req.url}`);
-			resolve(getObjectFromSearchParams(searchParams));
-			return;
-		}
+/** @type {(req: RouteRequest) => Promise<ReqBody>} */
+export async function getRequestBody(req) {
+	if (req.method === "GET") {
+		const { searchParams } = new URL(`${BASE_URL}${req.url}`);
+		return getObjectFromSearchParams(searchParams);
+	}
 
-		/** @type {Uint8Array<ArrayBufferLike>[]} */
-		const chuncks = [];
-		req
-			.on("error", (error) => {
-				reject(error);
-			})
-			.on("data", (chunk) => {
-				chuncks.push(chunk);
-			})
-			.on("end", () => {
-				const body = Buffer.concat(chuncks).toString();
-				resolve(getObjectFromSearchParams(new URLSearchParams(body)));
-			});
-	});
+	const form = formidable({});
+	try {
+		const [fields, files] = await form.parse(req);
+
+		/** @type {ReqBody} */
+		const data = { files };
+
+		Object.entries(fields).forEach(([name, [value = ""] = []]) => {
+			data[name] = value;
+		});
+
+		return data;
+	} catch {
+		return {};
+	}
 }

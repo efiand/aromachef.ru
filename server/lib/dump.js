@@ -1,5 +1,5 @@
 import { sql } from "#!/utils/mark-template.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 import { upload } from "#server/lib/yandex-disk.js";
 
 /** @type {DbTable[]} */
@@ -22,7 +22,7 @@ function createEntityDump(tableName, rows) {
 }
 
 export async function dump() {
-	const entities = await Promise.all(SQL_TABLES.map((table) => getFromDb(sql`SELECT * FROM ${table} ORDER BY id`)));
+	const entities = await Promise.all(SQL_TABLES.map((table) => processDb(sql`SELECT * FROM ${table} ORDER BY id`)));
 
 	const dumpedEntities = entities.map((entity, i) => createEntityDump(SQL_TABLES[i], entity)).filter(Boolean);
 	const dataJson = entities.reduce((acc, entity, i) => {

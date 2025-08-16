@@ -3,7 +3,7 @@ import { renderPageSection } from "#!/templates/page-section.js";
 import { renderSearchForm } from "#!/templates/search-form.js";
 import { html, sql } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
 const recipesQuery = sql`
 	SELECT
@@ -39,7 +39,7 @@ export const searchRoute = {
 		/** @type {DbItem[]} */
 		let cards = [];
 		if (pattern) {
-			cards = await getFromDb(recipesQuery, pattern);
+			cards = await processDb(recipesQuery, pattern);
 		}
 
 		const nof = pattern ? cards.length : undefined;

@@ -1,5 +1,6 @@
 declare global {
 	import type { IncomingMessage, ServerResponse } from "node:http";
+	import type formidable from "formidable";
 
 	namespace NodeJS {
 		interface ProcessEnv {
@@ -78,6 +79,8 @@ declare global {
 		tags: DbItem[];
 	};
 
+	type ReqBody = Record<string, string | formidable.Files<string>>;
+
 	type Route = {
 		[method: IncomingMessage["method"]]: RouteMethod;
 	};
@@ -93,6 +96,7 @@ declare global {
 	type RouteParams = {
 		body: Record<string, string>;
 		id: number;
+		isAmp: boolean;
 		req: RouteRequest;
 		res: RouteResponse;
 	};

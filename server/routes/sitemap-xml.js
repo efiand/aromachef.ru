@@ -1,8 +1,8 @@
 import { BASE_URL } from "#!/constants.js";
 import { sql, xml } from "#!/utils/mark-template.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
-const SERVICE_PAGES = ["", "/structure", "/search", "/turbo.rss"];
+const SERVICE_PAGES = ["", "/structure", "/turbo.rss"];
 
 const query = sql`
 	SELECT
@@ -90,7 +90,7 @@ export const sitemapXmlRoute = {
 	/** @type {RouteMethod} */
 	async GET() {
 		/** @type {SitemapPage[]} */
-		const pages = await getFromDb(query);
+		const pages = await processDb(query);
 
 		/** Дата крайнего обновления */
 		const [{ lastmod }] = pages;

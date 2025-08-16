@@ -2,7 +2,7 @@ import { renderCards } from "#!/templates/cards.js";
 import { renderTags } from "#!/templates/tags.js";
 import { html, sql } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
 const queryCondition = isDev ? "" : sql`AND published = 1`;
 const query = sql`
@@ -25,7 +25,7 @@ export const structureRoute = {
 	/** @type {RouteMethod} */
 	async GET() {
 		/** @type {(DbItem & { tag: 0 | 1 })[]} */
-		const structuresAndTags = await getFromDb(query);
+		const structuresAndTags = await processDb(query);
 
 		/** @type {(DbItem)[]} */
 		const structures = [];

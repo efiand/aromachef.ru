@@ -42,10 +42,11 @@ async function handleError(error, href) {
 async function next(req, res) {
 	const url = new URL(`${host}${req.url}`);
 	const isAmp = url.pathname === "/amp" || /^\/amp\//.test(url.pathname);
+	const isApi = /^\/api\//.test(url.pathname);
 	const pathname = url.pathname === "/amp" ? "/" : url.pathname.replace(/^\/amp\//, "/");
-	const [, routeName = "", rawId] = pathname.split("/");
-	const id = Number(rawId);
-	const routeKey = Number.isNaN(id) ? pathname : `/${routeName}/:id`;
+	const [, routeName = "", rawId, rawIdInApi] = pathname.split("/");
+	const id = Number(isApi ? rawIdInApi : rawId);
+	const routeKey = Number.isNaN(id) ? pathname : `/${isApi ? `api/${rawId}` : routeName}/:id`;
 	const route = routes[routeKey];
 
 	let contentType = "text/html";
@@ -67,7 +68,7 @@ async function next(req, res) {
 		}
 
 		const body = await getRequestBody(req);
-		const routeData = await route[method]({ body, id, req, res });
+		const routeData = await route[method]({ body, id, isAmp, req, res });
 		({ contentType = "text/html; charset=utf-8", template = "" } = routeData);
 
 		if (routeData.page) {

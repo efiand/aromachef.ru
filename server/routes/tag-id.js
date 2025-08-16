@@ -2,7 +2,7 @@ import { renderCards } from "#!/templates/cards.js";
 import { renderPageSection } from "#!/templates/page-section.js";
 import { sql } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
 const query = sql`
 	SELECT r.id, r.title, t.title AS tag FROM recipes r JOIN tags t JOIN recipesTags rt
@@ -16,7 +16,7 @@ const query = sql`
 export const tagIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ id }) {
-		const cards = await getFromDb(query, id);
+		const cards = await processDb(query, id);
 
 		if (!cards.length) {
 			throw new Error("Тег не существует.", { cause: 404 });

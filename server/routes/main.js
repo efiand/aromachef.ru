@@ -3,7 +3,7 @@ import { renderCards } from "#!/templates/cards.js";
 import { renderPageSection } from "#!/templates/page-section.js";
 import { html, sql } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
 const recipesQuery = sql`
 	SELECT id, title FROM recipes ${isDev ? "" : sql`WHERE published = 1`} ORDER BY id DESC LIMIT 12;
@@ -20,7 +20,7 @@ export const mainRoute = {
 	/** @type {RouteMethod} */
 	async GET() {
 		/** @type {DbItem[]} */
-		const cards = await getFromDb(recipesQuery);
+		const cards = await processDb(recipesQuery);
 
 		return {
 			page: {

@@ -1,6 +1,6 @@
 import { renderPageSection } from "#!/templates/page-section.js";
 import { sql } from "#!/utils/mark-template.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
 const sqlQuery = sql`
 	SELECT content, description, title AS heading FROM staticPages WHERE pathname = ?;
@@ -10,7 +10,7 @@ export const importantRoute = {
 	/** @type {RouteMethod} */
 	async GET() {
 		/** @type {StaticPageData[]} */
-		const [{ content, description, heading }] = await getFromDb(sqlQuery, "/important");
+		const [{ content, description, heading }] = await processDb(sqlQuery, "/important");
 
 		return {
 			page: {

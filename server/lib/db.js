@@ -28,7 +28,7 @@ function getPlaceholders(query, payload) {
 }
 
 /** @type {(query: string, payload?: unknown) => Promise<any>} */
-export async function getFromDb(query, payload = []) {
+export async function processDb(query, payload = []) {
 	const connection = await connect();
 
 	const [rows] = await connection.execute(query, getPlaceholders(query, payload));

@@ -1,7 +1,7 @@
 import { BASE_URL, PROJECT_DESCRIPTION, PROJECT_TITLE } from "#!/constants.js";
 import { renderRecipeDescription } from "#!/templates/recipe-description.js";
 import { html, sql, xml } from "#!/utils/mark-template.js";
-import { getFromDb } from "#server/lib/db.js";
+import { processDb } from "#server/lib/db.js";
 
 const query = sql`
 	SELECT
@@ -49,7 +49,7 @@ export const turboRssRoute = {
 	/** @type {RouteMethod} */
 	async GET() {
 		/** @type {TurboPage[]} */
-		const pages = await getFromDb(query);
+		const pages = await processDb(query);
 
 		return {
 			contentType: "application/xml",
