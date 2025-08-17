@@ -10,6 +10,9 @@ declare global {
 			DB_USER: string;
 			DEV?: string;
 			PORT: string;
+			TG_ADMIN_ID: string;
+			TG_AROMACHEF_ID: string;
+			TG_TOKEN: string;
 			YADISK_TOKEN: string;
 		}
 	}
@@ -128,6 +131,14 @@ declare global {
 		className?: string;
 		column?: boolean;
 		tags: DbItem[];
+	};
+
+	type TelegramPayload = {
+		chat?: {
+			id?: string | number;
+			username?: string;
+		};
+		text: string;
 	};
 
 	type TurboPage = {
