@@ -36,27 +36,15 @@ const addCommentQuery = sql`
 	INSERT INTO comments (name, text, recipeId) VALUES (?, ?, ?);
 `;
 
-/** @type {(comment: RecipeComment) => string} */
-function renderComment({ name, text }) {
-	return html`
-		<li>
-			<blockquote>
-				<cite>${name}</cite>
-				${text}
-			</blockquote>
-		</li>
-	`;
-}
-
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ id, isAmp, body }) {
 		if (typeof body.comments !== "undefined") {
 			/** @type {RecipeComment[]} */
 			const comments = await processDb(commentsQuery, id);
-
 			return {
-				template: comments.map(renderComment).join(""),
+				contentType: "application/json",
+				template: JSON.stringify({ comments }),
 			};
 		}
 

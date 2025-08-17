@@ -1,5 +1,6 @@
 import { aboutRoute } from "#server/routes/about.js";
 import { pagesApiRoute } from "#server/routes/api/pages.js";
+import { telegramRoute } from "#server/routes/api/telegram.js";
 import { importantRoute } from "#server/routes/important.js";
 import { mainRoute } from "#server/routes/main.js";
 import { recipeIdRoute } from "#server/routes/recipe-id.js";
@@ -15,6 +16,7 @@ export const routes = {
 	"/": mainRoute,
 	"/about": aboutRoute,
 	"/api/pages": pagesApiRoute,
+	"/api/telegram": telegramRoute,
 	"/important": importantRoute,
 	"/recipe/:id": recipeIdRoute,
 	"/search": searchRoute,

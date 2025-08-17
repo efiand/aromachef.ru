@@ -40,14 +40,15 @@
 	border-bottom: 1px solid var(--color-green);
 }
 
-.comments__list blockquote {
+.comments__item {
 	margin: 0 0 1.5rem;
 }
 
-.comments__list cite {
+.comments__author {
 	display: block;
 	margin: 0 0 0.5rem;
 	font-weight: 700;
+	font-style: normal;
 }
 
 .comments__list p {

@@ -8,22 +8,53 @@ const FORM_INNER_TEMPLATE = html`
 	<button class="comments__button button" type="submit">Отправить</button>
 `;
 
-const TEMPLATE = html`
-	<h2 class="comments__heading">Комментарии</h2>
-	<button class="comments__toggler" aria-expanded="false" aria-controls="comments-body">
-		Показать комментарии
-	</button>
-	<div class="comments__body" id="comments-body">
-		<form class="comments__form" method="post">
-			${FORM_INNER_TEMPLATE}
-		</form>
-	</div>
-`;
+/** @type {(comment: RecipeComment) => string} */
+function renderComment({ name, text }) {
+	return html`
+		<li>
+			<blockquote class="comments__item">
+				<cite class="comments__author">${name}</cite>
+				${text}
+			</blockquote>
+		</li>
+	`;
+}
 
-/** @type {(element: HTMLDivElement) => void} */
-export function initComments(element) {
-	loadCss("components/comments.css");
-	element.innerHTML = TEMPLATE;
+/** @type {(comments: RecipeComment[]) => string} */
+function renderTemplate(comments) {
+	const countTemplate = comments.length ? `(${comments.length})` : "";
+	const listTemplate = comments.length
+		? html`
+			<ul class="comments__list">
+				${comments.map(renderComment).join("")}
+			</ul>
+		`
+		: "";
+
+	return html`
+		<h2 class="comments__heading">Комментарии</h2>
+		<button class="comments__toggler" aria-expanded="false" aria-controls="comments-body">
+			Комментарии ${countTemplate}
+		</button>
+		<div class="comments__body" id="comments-body">
+			${listTemplate}
+			<form class="comments__form" method="post">
+				${FORM_INNER_TEMPLATE}
+			</form>
+		</div>
+	`;
+}
+
+/** @type {(element: HTMLDivElement) => Promise<void>} */
+export async function initComments(element) {
+	loadCss("components/comments.css?v2");
+
+	const res = await fetch(`${location.pathname}?comments`);
+
+	/** @type {{ comments: RecipeComment[] }} */
+	const { comments } = await res.json();
+
+	element.innerHTML = renderTemplate(comments);
 
 	/** @type {HTMLButtonElement} */
 	const togglerElement = NonNull(element.querySelector(".comments__toggler"));
@@ -34,9 +65,6 @@ export function initComments(element) {
 
 	/** @type {HTMLFormElement} */
 	const formElement = NonNull(bodyElement.querySelector(".comments__form"));
-
-	/** @type {HTMLUListElement?} */
-	let listElement = null;
 
 	formElement.addEventListener("submit", async (event) => {
 		event.preventDefault();
@@ -74,18 +102,6 @@ export function initComments(element) {
 			} else {
 				togglerElement.textContent = "Скрыть";
 				togglerElement.ariaExpanded = "true";
-
-				const res = await fetch(`${location.pathname}?comments`);
-				const commentsTemplate = await res.text();
-
-				if (commentsTemplate) {
-					if (!listElement) {
-						listElement = document.createElement("ul");
-						listElement.classList.add("comments__list");
-						bodyElement.prepend(listElement);
-					}
-					listElement.innerHTML = commentsTemplate;
-				}
 			}
 			element.classList.toggle("comments--opened");
 		} else if (typeof target.dataset.close !== "undefined") {
