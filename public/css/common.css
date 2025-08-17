@@ -36,6 +36,7 @@ html {
 	--color-green-light: #b2d4b5;
 	--color-green: #27542b;
 	--color-lavender: #c1abfe;
+	--color-red: #ac272b;
 	--color-white: #ffffff;
 	--font-basic: "Noto Serif", serif;
 	--font-accent: "Noto Sans", sans-serif;
@@ -98,10 +99,55 @@ a {
 }
 
 button {
-	margin: 0;
 	background-color: transparent;
 	cursor: pointer;
 	user-select: none;
+}
+
+button,
+input,
+textarea {
+	margin: 0; /* Safari */
+	font: inherit;
+	font-family: var(--font-accent);
+	color: inherit;
+	border: none;
+}
+
+input,
+textarea {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.75rem 1rem;
+	outline: 1px solid var(--color-green);
+	outline-offset: -1px;
+}
+
+input:user-invalid,
+textarea:user-invalid {
+	outline-color: var(--color-red);
+}
+
+input:focus-visible,
+textarea:focus-visible {
+	outline-color: var(--color-eggplant);
+	outline-width: 2px;
+}
+
+input:user-invalid,
+textarea:user-invalid {
+	outline-color: var(--color-red);
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: inherit;
+	opacity: 0.5;
+}
+
+textarea {
+	min-height: 3rem;
+	resize: vertical;
 }
 
 a,
@@ -124,33 +170,6 @@ p {
 img {
 	max-width: 100%;
 	height: auto;
-}
-
-button,
-input {
-	font: inherit;
-	font-family: var(--font-accent);
-	border: none;
-}
-
-input {
-	box-sizing: border-box;
-	width: 100%;
-	margin: 0;
-	padding: 0.75rem 1rem;
-	outline: none;
-	box-shadow: inset 0 0 0 1px var(--color-green);
-	transition: var(--transition);
-	transition-property: box-shadow;
-}
-
-input:focus-visible {
-	box-shadow: inset 0 0 0 2px var(--color-eggplant);
-}
-
-input::placeholder {
-	color: inherit;
-	opacity: 0.5;
 }
 
 mark {
@@ -468,6 +487,11 @@ mark {
 	text-align: center;
 }
 
+.recipe-footer__comments {
+	width: 100%;
+	margin-top: 1rem;
+}
+
 .search-form {
 	display: grid;
 	gap: 1rem;
@@ -524,6 +548,10 @@ mark {
 ._centered {
 	display: table;
 	margin-inline: auto;
+}
+
+._error {
+	color: var(--color-red);
 }
 
 ._hidden {

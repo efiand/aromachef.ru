@@ -1,5 +1,21 @@
 CREATE DATABASE aromachef;
 
+CREATE TABLE comments (
+	id int(11) auto_increment NOT NULL,
+	name varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Гость' NOT NULL,
+	text varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	recipeId int(11) NOT NULL,
+	published tinyint(1) DEFAULT 0 NOT NULL,
+	publishedAt datetime(3) DEFAULT NULL NULL,
+	CONSTRAINT `PRIMARY` PRIMARY KEY (id),
+	CONSTRAINT comments_recipeId_fkey FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci
+COMMENT='Комментарии пользователей к рецептам.';
+CREATE INDEX comments_srecipeId_idx USING BTREE ON comments (recipeId);
+
 CREATE TABLE recipes (
 	id int(11) auto_increment NOT NULL,
 	title varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -71,7 +87,7 @@ CREATE TABLE staticPages(
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci
-COMMENT='Содержимое статических страниц';
+COMMENT='Содержимое статических страниц.';
 
 CREATE TABLE structures (
 	id int(11) auto_increment NOT NULL,

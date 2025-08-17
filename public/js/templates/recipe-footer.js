@@ -2,8 +2,8 @@ import { renderCards } from "#!/templates/cards.js";
 import { renderTags } from "#!/templates/tags.js";
 import { html } from "#!/utils/mark-template.js";
 
-/** @type {(params:RecipeFooter) => string} */
-export function renderRecipeFooter({ relatedRecipes = [], structure, tags }) {
+/** @type {(params: RecipeFooter) => string} */
+export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags }) {
 	return html`
 		<div class="recipe-footer">
 			${renderTags({ tags })}
@@ -22,6 +22,7 @@ export function renderRecipeFooter({ relatedRecipes = [], structure, tags }) {
 						`
 					: ""
 			}
+			${isAmp ? "" : html`<div class="recipe-footer__comments comments"></div>`}
 		</div>
 	`;
 }

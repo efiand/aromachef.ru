@@ -1,0 +1,77 @@
+.comments {
+	display: grid;
+	gap: 1.5rem;
+	align-items: bottom;
+	min-height: 1.875rem;
+}
+
+.comments--opened {
+	grid-template-columns: 1fr 1fr;
+}
+
+.comments__heading {
+	display: none;
+}
+
+.comments__toggler {
+	align-self: end;
+	justify-self: end;
+	padding: 0;
+	border-bottom: 1px dashed;
+}
+
+.comments__toggler:hover {
+	color: var(--color-green);
+}
+
+.comments__body {
+	grid-column: 1 / -1;
+	display: none;
+}
+
+.comments--opened .comments__heading,
+.comments--opened .comments__body {
+	display: block;
+}
+
+.comments__list {
+	margin: 0 0 2rem;
+	padding: 0 0 0.5rem;
+	border-bottom: 1px solid var(--color-green);
+}
+
+.comments__list blockquote {
+	margin: 0 0 1.5rem;
+}
+
+.comments__list cite {
+	display: block;
+	margin: 0 0 0.5rem;
+	font-weight: 700;
+}
+
+.comments__list p {
+	margin-left: 1.5rem;
+	font-size: 0.85rem;
+	line-height: 1.5294;
+}
+
+.comments__form {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.comments__name {
+	max-width: 27rem;
+}
+
+.comments__button {
+	justify-self: start;
+	margin-top: 0.5rem;
+}
+
+@media (min-width: 888px) {
+	.comments {
+		min-height: 2.5rem;
+	}
+}

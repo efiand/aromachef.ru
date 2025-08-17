@@ -1,3 +1,4 @@
+import { initComments } from "#!/components/comments.js";
 import { initSearchDialog } from "#!/components/search-dialog.js";
 import { initSearchInput } from "#!/components/search-input.js";
 import { loadCss } from "#!/utils/load-css.js";
@@ -21,3 +22,8 @@ searchInputElements.forEach(initSearchInput);
 const searchOpenerElements = document.querySelectorAll("[data-search]");
 // Гидратация диалога поиска
 searchOpenerElements.forEach(initSearchDialog);
+
+/** @type {NodeListOf<HTMLDivElement>} */
+const commentsElements = document.querySelectorAll(".comments");
+// Гидратация блока комментариев
+commentsElements.forEach(initComments);

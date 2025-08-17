@@ -25,6 +25,11 @@ declare global {
 		title?: string;
 	};
 
+	type RecipeComment = {
+		name: string;
+		text: string;
+	};
+
 	type DbItem = {
 		id: number;
 		title: string;
@@ -77,6 +82,7 @@ declare global {
 	};
 
 	type RecipeFooter = {
+		isAmp?: boolean;
 		relatedRecipes?: DbItem[];
 		structure: DbItem;
 		tags: DbItem[];

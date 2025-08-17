@@ -11,8 +11,8 @@ export function renderRecipeDescription({ description, telegramId }) {
 	return html`
 		${description}
 		<p class="small">
-			Посмотреть краткую видеоинструкцию или обсудить рецепт можно
-			по <a href="${url}" target="_blank" rel="nofollow noopener">ссылке</a>.
+			Посмотреть видеорецепт можно в моём
+			<a href="${url}" target="_blank" rel="nofollow noopener">telegram-канале</a>.
 		</p>
 	`;
 }

@@ -4,6 +4,10 @@ import { renderRecipeFooter } from "#!/templates/recipe-footer.js";
 import { html, sql } from "#!/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
+import { prepareText } from "#server/lib/prepare-text.js";
+import { sendTgMessage } from "#server/lib/telegram.js";
+
+const { TG_AROMACHEF_ID } = process.env;
 
 const queryCondition = isDev ? "" : sql`AND r.published = 1`;
 
@@ -23,10 +27,39 @@ const tagsQuery = sql`
 	WHERE rt.recipeId = ? AND rt.tagId = t.id
 	ORDER BY t.title;
 `;
+const commentsQuery = sql`
+	SELECT name, text FROM comments
+	WHERE recipeId = ? ${isDev ? "" : sql`AND published = 1`}
+	ORDER BY publishedAt DESC;
+`;
+const addCommentQuery = sql`
+	INSERT INTO comments (name, text, recipeId) VALUES (?, ?, ?);
+`;
+
+/** @type {(comment: RecipeComment) => string} */
+function renderComment({ name, text }) {
+	return html`
+		<li>
+			<blockquote>
+				<cite>${name}</cite>
+				${text}
+			</blockquote>
+		</li>
+	`;
+}
 
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id }) {
+	async GET({ id, isAmp, body }) {
+		if (typeof body.comments !== "undefined") {
+			/** @type {RecipeComment[]} */
+			const comments = await processDb(commentsQuery, id);
+
+			return {
+				template: comments.map(renderComment).join(""),
+			};
+		}
+
 		/** @type {[[{ length: number }], [Recipe], DbItem[], DbItem[]]} */
 		const [[{ length }], [recipe], relatedRecipes, tags] = await Promise.all([
 			processDb(maxRecipeQuery),
@@ -62,6 +95,7 @@ export const recipeIdRoute = {
 					],
 					content: renderRecipeDescription({ description, telegramId }),
 					footerTemplate: renderRecipeFooter({
+						isAmp,
 						relatedRecipes,
 						structure: { id: structureId, title: structureTitle },
 						tags,
@@ -71,6 +105,22 @@ export const recipeIdRoute = {
 					title,
 				}),
 			},
+		};
+	},
+
+	/** @type {RouteMethod} */
+	async POST({ body, id }) {
+		const name = body.name ? prepareText(body.name, true) : "Гость";
+		const text = prepareText(html`<p>${body.text.replaceAll("\n", "</p><p>")}</p>`);
+		await processDb(addCommentQuery, [name, text, id]);
+
+		await Promise.all([
+			sendTgMessage({ text: "Новый комментарий!" }),
+			sendTgMessage({ chat: { id: TG_AROMACHEF_ID }, text: "Новый комментарий!" }),
+		]);
+
+		return {
+			template: html`<p>Комментарий отправлен на модерацию.</p>`,
 		};
 	},
 };

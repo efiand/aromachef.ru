@@ -3,12 +3,28 @@ CREATE TRIGGER on_update_recipe BEFORE UPDATE ON recipes
 	FOR EACH ROW
 		BEGIN
 			IF NEW.published = 1 AND OLD.published = 0 THEN
-				-- Проставление времени публикации в момент публикации:
+				-- Проставление времени публикации в момент публикации рецепта:
 				SET NEW.publishedAt = NOW();
 			END IF;
 
 			-- Проставление времени обновления при изменении рецепта:
 			SET NEW.updatedAt = NOW();
+		END;
+		//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER on_publish_comment BEFORE UPDATE ON comments
+	FOR EACH ROW
+		BEGIN
+			IF NEW.published = 1 AND OLD.published = 0 THEN
+				-- Проставление времени публикации в момент публикации комментария:
+				SET NEW.publishedAt = NOW();
+			END IF;
+
+			-- Проставление времени обновления рецепта при публикации комментария:
+			UPDATE recipes
+			SET updatedAt = NOW() WHERE id = NEW.recipeId;
 		END;
 		//
 DELIMITER ;
