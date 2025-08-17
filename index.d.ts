@@ -88,7 +88,7 @@ declare global {
 		tags: DbItem[];
 	};
 
-	type ReqBody = Record<string, string | formidable.Files<string>>;
+	type ReqBody = Record<formidable.Files<string> | object | string>;
 
 	type Route = {
 		[method: IncomingMessage["method"]]: RouteMethod;
@@ -103,7 +103,7 @@ declare global {
 	type RouteMethod = (params: RouteParams) => Promise<RouteData>;
 
 	type RouteParams = {
-		body: Record<string, string>;
+		body: ReqBody;
 		id: number;
 		isAmp: boolean;
 		req: RouteRequest;

@@ -9,9 +9,9 @@ const messageOptions = { parse_mode: "Markdown" };
 
 /** @type {(payload: TelegramPayload) => Promise<void>} */
 export async function sendTgMessage({ chat: { id = TG_ADMIN_ID, username = "aroma_chef_bot" } = {}, text }) {
-	const template = `\`\`\`\n${text}\n\`\`\``;
+	const template = `\`\`\`\n${JSON.stringify(text.trim())}\n\`\`\``;
 
-	if (id === TG_ADMIN_ID || TG_AROMACHEF_ID) {
+	if (id === TG_ADMIN_ID || id === TG_AROMACHEF_ID) {
 		await bot.sendMessage(id, template, messageOptions);
 		return;
 	}
@@ -19,8 +19,11 @@ export async function sendTgMessage({ chat: { id = TG_ADMIN_ID, username = "arom
 	const user = username ? `@${username}` : id;
 	await bot.sendMessage(TG_ADMIN_ID, `Сообщение от ${user}:\n${template}`, messageOptions);
 
-	const answer = `Вы писали нам:\n${template}\nСпасибо за обращение! Наш администратор ответит Вам в ближайшее время.`;
-	const addition = "\nЛогин в telegram отсутствует. Пожалуйста, пришлите ссылку для обратной связи.";
+	const answer =
+		text === "/start"
+			? "Доброго времени суток! Мы готовы ответить на Ваши вопросы."
+			: `Вы писали нам:\n${template}\nСпасибо за обращение! Наш администратор ответит Вам в ближайшее время.`;
+	const addition = username ? "" : "\nЛогин в telegram отсутствует. Пожалуйста, пришлите ссылку для обратной связи.";
 
-	await bot.sendMessage(id, `${answer}${username ? "" : addition}`, messageOptions);
+	await bot.sendMessage(id, `${answer}${addition}`, messageOptions);
 }

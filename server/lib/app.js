@@ -30,7 +30,7 @@ async function handleError(error, href) {
 			<div class="content">
 				<h1>${heading}</h1>
 				<p>${message}</p>
-				<p><a href="mailto:efiand@ya.ru?subject=aromachef">Связаться с разработчиком</a></p>
+				<p><a href="mailto:efiand@ya.ru?subject=aromachef">Свяжитесь с разработчиком</a> или напишите в <a href="https://t.me/aroma_chef_bot">telegram-бот</a>.</p>
 			</div>
 		`,
 	});

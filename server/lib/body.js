@@ -3,7 +3,7 @@ import { BASE_URL } from "#!/constants.js";
 
 /** @type {(params: URLSearchParams) => ReqBody} */
 function getObjectFromSearchParams(params) {
-	/** @type {Record<string, string>} */
+	/** @type {ReqBody} */
 	const data = {};
 
 	params.forEach((value, key) => {
@@ -20,15 +20,15 @@ export async function getRequestBody(req) {
 		return getObjectFromSearchParams(searchParams);
 	}
 
-	const form = formidable({});
+	const form = formidable();
 	try {
 		const [fields, files] = await form.parse(req);
 
 		/** @type {ReqBody} */
 		const data = { files };
 
-		Object.entries(fields).forEach(([name, [value = ""] = []]) => {
-			data[name] = value;
+		Object.entries(fields).forEach(([name, value]) => {
+			data[name] = Array.isArray(value) && value.length === 1 ? value[0] : value;
 		});
 
 		return data;
