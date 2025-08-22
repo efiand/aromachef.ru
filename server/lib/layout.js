@@ -45,14 +45,16 @@ async function renderAssets(isAmp, hasForms) {
 	const linkTemplates = ALL_STYLESHEETS.map(
 		({ media, name }) => html`<link rel="stylesheet" href="/css/${name}.css?v2" ${media ? `media="${media}"` : ""}>`,
 	);
-	return html`
-		${linkTemplates.join("")}
-		<script type="importmap">
-			{ "imports": { "#!/": "/js/" } }
-		</script>
-		<script src="/js/main.js?v2" type="module"></script>
-		${isDev ? html`<script src="/js/dev.js" type="module"></script>` : ""}
-	`;
+	const scriptsTemplate = isDev
+		? html`
+			<script type="importmap">
+				{ "imports": { "#!/": "/js/" } }
+			</script>
+			<script src="/js/main.js" type="module"></script>
+			<script src="/js/dev.js" type="module"></script>
+		`
+		: html`<script src="/js/main.bundle.js?v1" defer></script>`;
+	return linkTemplates.join("") + scriptsTemplate;
 }
 
 /** @type {(pathname: string, isAmp: boolean) => string} */
