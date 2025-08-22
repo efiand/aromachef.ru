@@ -4,6 +4,7 @@ CREATE TABLE comments (
 	id int(11) auto_increment NOT NULL,
 	name varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Гость' NOT NULL,
 	text varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	text varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL,
 	recipeId int(11) NOT NULL,
 	published tinyint(1) DEFAULT 0 NOT NULL,
 	publishedAt datetime(3) DEFAULT NULL NULL,

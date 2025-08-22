@@ -41,7 +41,15 @@
 }
 
 .comments__item {
-	margin: 0 0 1.5rem;
+	margin: 0;
+}
+
+.comments__item--answer {
+	margin: 1rem 0 0 1.5rem;
+}
+
+.comments__item:last-child {
+	margin-bottom: 1.5rem;
 }
 
 .comments__author {

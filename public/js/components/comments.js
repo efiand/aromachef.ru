@@ -9,13 +9,25 @@ const FORM_INNER_TEMPLATE = html`
 `;
 
 /** @type {(comment: RecipeComment) => string} */
-function renderComment({ name, text }) {
+function renderComment({ answer, name, text }) {
+	const answerTemplate = answer
+		? html`
+				<blockquote class="comments__item comments__item--answer">
+					<cite class="comments__author">
+						<a href="/about">АромаШеф</a>
+					</cite>
+					${answer}
+				</blockquote>
+			`
+		: "";
+
 	return html`
 		<li>
 			<blockquote class="comments__item">
 				<cite class="comments__author">${name}</cite>
 				${text}
 			</blockquote>
+			${answerTemplate}
 		</li>
 	`;
 }
@@ -47,7 +59,7 @@ function renderTemplate(comments) {
 
 /** @type {(element: HTMLDivElement) => Promise<void>} */
 export async function initComments(element) {
-	loadCss("components/comments.css?v2");
+	loadCss("components/comments.css?v3");
 
 	const res = await fetch(`${location.pathname}?comments`);
 

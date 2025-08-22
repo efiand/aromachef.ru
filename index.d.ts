@@ -28,6 +28,7 @@ declare global {
 	type RecipeComment = {
 		name: string;
 		text: string;
+		answer: string | null;
 	};
 
 	type DbItem = {
@@ -50,7 +51,7 @@ declare global {
 
 	type ComponentInitiator = (element: HTMLElement) => void;
 
-	type DbTable = "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
+	type DbTable = "comments" | "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
 
 	type LayoutData = {
 		isAmp?: boolean;
