@@ -23,6 +23,7 @@
 		"@types/postcss-url": "10.0.4",
 		"amphtml-validator": "1.0.38",
 		"cssnano": "7.1.1",
+		"fast-xml-parser": "5.2.5",
 		"html-validate": "10.0.0",
 		"jest": "30.1.1",
 		"nodemon": "3.1.10",

@@ -1,5 +1,6 @@
 import { error, warn } from "node:console";
 import amphtmlValidator from "amphtml-validator";
+import { XMLValidator } from "fast-xml-parser";
 import { HtmlValidate } from "html-validate";
 import { lintBem } from "posthtml-bem-linter";
 import { host } from "#!/server/constants.js";
@@ -114,6 +115,19 @@ describe("Testing markups", () => {
 		},
 		timeout,
 	);
+});
+
+describe("Testing XML sesrvices", () => {
+	test("sitemap.xml is valid", async () => {
+		const markup = await fetch(`${host}/sitemap.xml`).then((res) => res.text());
+		const result = XMLValidator.validate(markup);
+		const valid = result === true;
+		if (!valid) {
+			const { msg, line, col } = result.err;
+			error(`sitemap.xml [${line}:${col}] ${msg}`);
+		}
+		expect(valid).toEqual(true);
+	});
 });
 
 afterAll(() => {
