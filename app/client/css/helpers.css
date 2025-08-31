@@ -1,0 +1,42 @@
+._container {
+	padding-inline: 1.5rem;
+}
+
+._centered {
+	display: table;
+	margin-inline: auto;
+}
+
+._error {
+	color: var(--color-red);
+}
+
+._hidden {
+	display: none;
+}
+
+._separated {
+	margin-top: 4rem;
+}
+
+._small {
+	font-size: 0.85rem;
+	line-height: 1.5294;
+}
+
+._visually-hidden {
+	position: fixed;
+	transform: scale(0);
+}
+
+@media (max-width: 385px) {
+	._xs-hidden {
+		display: none;
+	}
+}
+
+@media (min-width: 1280px) {
+	._container {
+		padding-inline: calc(50% - 608px);
+	}
+}

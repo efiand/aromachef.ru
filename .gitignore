@@ -1,4 +1,3 @@
-*bundle*
 *cache*
 *tmp*
 .DS_Store
@@ -7,6 +6,7 @@
 !.vscode/extensions.json
 !.vscode/settings.json
 Thumbs.db
+bundles
 coverage
 logs
 node_modules

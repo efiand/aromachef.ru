@@ -1,6 +1,6 @@
 import { readdir, readFile, unlink } from "node:fs/promises";
-import { cwd } from "#server/constants.js";
-import { processImage } from "#server/lib/image.js";
+import { cwd } from "#!/server/constants.js";
+import { processImage } from "#!/server/lib/image.js";
 
 const src = `${cwd}/temp/recipe`;
 const files = await readdir(src);

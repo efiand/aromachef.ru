@@ -2,8 +2,8 @@ import { error, warn } from "node:console";
 import amphtmlValidator from "amphtml-validator";
 import { HtmlValidate } from "html-validate";
 import { lintBem } from "posthtml-bem-linter";
-import { host } from "#server/constants.js";
-import { createApp } from "#server/lib/app.js";
+import { host } from "#!/server/constants.js";
+import { createApp } from "#!/server/lib/app.js";
 
 const timeout = Number(process.env.TEST_TIMEOUT) || 20_000;
 
@@ -84,7 +84,7 @@ describe("Testing markups", () => {
 	);
 
 	test(
-		"All pages have valid AMP markup",
+		"All AMP versions have valid AMP markup",
 		async () => {
 			let errorsCount = 0;
 
@@ -105,7 +105,7 @@ describe("Testing markups", () => {
 
 					result?.errors.forEach(({ col, line, message, severity, specUrl }) => {
 						const log = severity === "ERROR" ? error : warn;
-						log(`${page} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ""})`);
+						log(`${url} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ""})`);
 					});
 				}),
 			);

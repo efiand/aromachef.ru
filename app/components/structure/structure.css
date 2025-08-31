@@ -1,0 +1,37 @@
+.structure {
+	display: grid;
+	gap: 2rem;
+}
+
+.structure__heading {
+	margin-bottom: 4rem;
+}
+
+.structure__sideheading {
+	margin: 1rem 0 4rem;
+}
+
+@media (max-width: 887px) {
+	.structure__heading {
+		text-align: center;
+	}
+
+	.structure__sideheading {
+		margin: 2rem 0;
+		text-align: center;
+	}
+
+	.structure__tags {
+		scroll-margin-top: 2rem;
+	}
+
+	.structure__tags-list {
+		margin-inline: auto;
+	}
+}
+
+@media (min-width: 888px) {
+	.structure {
+		grid-template-columns: 1fr min-content;
+	}
+}

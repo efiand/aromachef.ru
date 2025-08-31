@@ -1,0 +1,28 @@
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 1rem;
+	max-width: 50%;
+}
+
+.tags--column {
+	display: block;
+	width: fit-content;
+	max-width: none;
+}
+
+.tags--column .tags__item:not(:first-child) {
+	margin-top: 0.25rem;
+}
+
+.tags__link {
+	display: table;
+	text-transform: lowercase;
+}
+
+@media (max-width: 887px) {
+	.tags--column {
+		column-count: 2;
+		column-gap: 1.5rem;
+	}
+}

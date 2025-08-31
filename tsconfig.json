@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"baseUrl": "./",
+		"checkJs": true,
+		"lib": ["DOM", "ES2022"],
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"noEmit": true,
+		"noImplicitAny": true,
+		"skipLibCheck": true,
+		"paths": {
+			"#!/*": ["./app/*"]
+		},
+		"resolveJsonModule": true,
+		"strict": true,
+		"target": "es2022"
+	},
+	"exclude": ["coverage", "public/bundles"]
+}

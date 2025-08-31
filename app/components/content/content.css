@@ -1,0 +1,48 @@
+.content h1,
+.content h2 {
+	margin-bottom: 2rem;
+}
+
+.content ul li {
+	position: relative;
+	padding-left: 1rem;
+}
+
+.content ul li:before {
+	content: "\2022";
+	position: absolute;
+	top: 0;
+	right: calc(100% - 0.5rem);
+}
+
+.content ol {
+	counter-reset: list;
+}
+
+.content ol li {
+	position: relative;
+	counter-increment: list;
+	padding-left: 1.25rem;
+}
+
+.content ol li::before {
+	content: counter(list) ". ";
+	position: absolute;
+	top: 0;
+	right: calc(100% - 0.875rem);
+}
+
+.content ol:has(li:nth-child(10)) li {
+	padding-left: 1.75rem;
+}
+
+.content ol:has(li:nth-child(10)) li::before {
+	content: counter(list) ". ";
+	right: calc(100% - 1.375rem);
+}
+
+.content ol:not(:first-child),
+.content ul:not(:first-child),
+.content p:not(:first-child) {
+	margin-top: 1rem;
+}

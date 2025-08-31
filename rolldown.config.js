@@ -1,9 +1,9 @@
 import { defineConfig } from "rolldown";
 
 export default defineConfig({
-	input: "public/js/main.js",
+	input: "app/client/main.js",
 	output: {
-		file: "public/js/main.bundle.js",
+		file: "public/bundles/main.js",
 		format: "iife",
 		minify: true,
 	},

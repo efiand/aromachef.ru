@@ -1,0 +1,15 @@
+.search-form {
+	display: grid;
+	gap: 1rem;
+}
+
+.search-form__nof {
+	margin: 0.5rem 0 0;
+}
+
+@media (min-width: 888px) {
+	.search-form {
+		grid-template-columns: 1fr auto;
+		align-items: start;
+	}
+}

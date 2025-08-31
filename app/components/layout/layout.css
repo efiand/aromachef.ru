@@ -1,0 +1,127 @@
+.layout {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	min-height: 100dvh;
+}
+
+.layout--inner {
+	padding-top: 2.5rem;
+}
+
+.layout__header {
+	--gap: 1rem;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 1;
+	display: flex;
+	gap: var(--gap);
+	padding-block: 0.5rem;
+	font-family: var(--font-accent);
+	text-transform: uppercase;
+	background-color: var(--color-white);
+	box-shadow: 0 0 1rem #00000026;
+}
+
+.layout__logo-link {
+	flex-shrink: 0;
+	color: var(--color-eggplant);
+}
+
+.layout__logo {
+	display: block;
+}
+
+.layout__header-list {
+	display: flex;
+	flex-grow: 1;
+	flex-wrap: wrap;
+	gap: var(--gap);
+}
+
+.layout__header-item {
+	display: contents;
+}
+
+.layout__header-item--separated a {
+	margin-left: auto;
+}
+
+.layout__header-item strong {
+	font-weight: 600;
+	letter-spacing: -0.02em;
+}
+
+.layout__main {
+	flex-grow: 1;
+	padding-block: 4rem;
+}
+
+.layout__footer {
+	--link-color: var(--color-green-light);
+	padding-block: 1.5rem;
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+	font-family: var(--font-accent);
+	color: var(--color-white);
+	background-color: var(--color-black);
+}
+
+.layout__footer-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.layout__footer-item {
+	text-align: center;
+}
+
+.layout__footer-item a {
+	color: var(--link-color);
+}
+
+.layout__tg {
+	--link-color: var(--color-lavender);
+	position: relative;
+	display: block;
+	padding-left: 1.5rem;
+}
+
+.layout__tg::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1.2rem;
+	height: 1.2rem;
+	background-color: currentColor;
+	mask-image: var(--icon-tg);
+	mask-size: 100%;
+}
+
+@media (hover: hover) {
+	.layout__logo-link:hover,
+	.layout__logo-link:focus-visible {
+		color: var(--color-green);
+	}
+}
+
+@media (min-width: 888px) {
+	.layout__header {
+		--gap: 2rem;
+	}
+
+	.layout__footer-list {
+		flex-direction: row;
+		gap: 2rem;
+	}
+
+	.layout__footer-item--last {
+		margin-left: auto;
+	}
+}

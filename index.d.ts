@@ -2,6 +2,10 @@ declare global {
 	import type { IncomingMessage, ServerResponse } from "node:http";
 	import type formidable from "formidable";
 
+	interface Window {
+		isDev?: boolean;
+	}
+
 	namespace NodeJS {
 		interface ProcessEnv {
 			DB_HOST: string;
@@ -53,14 +57,18 @@ declare global {
 
 	type DbTable = "comments" | "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
 
-	type LayoutData = {
+	type LayoutDataBase = {
 		isAmp?: boolean;
+		isDev?: boolean;
+		pageTemplate?: string;
+		pathname?: string;
+	};
+
+	type LayoutData = LayoutDataBase & {
 		description: string;
 		headTemplate?: string;
 		heading?: string;
 		ogImage?: string;
-		pageTemplate?: string;
-		pathname?: string;
 	};
 
 	type PageSectionData = {
@@ -127,11 +135,6 @@ declare global {
 		content: string;
 		description: string;
 		heading: string;
-	};
-
-	type Stylesheet = {
-		name: string;
-		media?: string;
 	};
 
 	type TagTemplateData = {

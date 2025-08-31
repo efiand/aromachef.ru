@@ -1,0 +1,33 @@
+.article {
+	display: grid;
+	gap: 2rem;
+}
+
+@media (max-width: 887px) {
+	.article h2 {
+		text-align: center;
+	}
+
+	.article__image {
+		margin-inline: auto;
+	}
+}
+
+@media (min-width: 888px) {
+	.article {
+		grid-template-columns: 384px 1fr;
+	}
+
+	.article__image {
+		order: -1;
+		margin-top: 0.75rem;
+	}
+
+	.article--reverse {
+		grid-template-columns: 1fr 384px;
+	}
+
+	.article--reverse .article__image {
+		order: initial;
+	}
+}

@@ -1,0 +1,31 @@
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2.125rem;
+}
+
+.cards--centered {
+	justify-content: center;
+}
+
+.cards__item {
+	width: 272px;
+}
+
+.cards__item a {
+	display: grid;
+	gap: 0.5rem;
+	text-align: center;
+}
+
+.cards__item img {
+	height: 204px;
+	object-fit: cover;
+	object-position: center;
+}
+
+@media (max-width: 887px) {
+	.cards--centered-in-mobile {
+		justify-content: center;
+	}
+}

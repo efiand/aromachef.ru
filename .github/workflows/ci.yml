@@ -36,7 +36,7 @@ jobs:
           host: ${{ secrets.DEPLOY_SERVER_HOST }}
           username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
           password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
-          source: public/*,server/*,tools/*,package*.json
+          source: app/*,public/*,,tools/*,package*.json
           target: ${{ secrets.DEPLOY_SERVER_TARGET }}
       - name: Modify server
         if: ${{ contains(github.event.head_commit.message, '[deploy]') }}
