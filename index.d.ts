@@ -150,15 +150,6 @@ declare global {
 		};
 		text: string;
 	};
-
-	type TurboPage = {
-		content: string;
-		description: string;
-		link: string;
-		pubDate: string;
-		telegramId: number | null;
-		title: string;
-	};
 }
 
 export {};

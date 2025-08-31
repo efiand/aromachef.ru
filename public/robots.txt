@@ -6,6 +6,3 @@ Disallow: *?comments
 
 User-agent: Yandex
 Disallow: /amp
-
-User-agent: Googlebot
-Disallow: /turbo.rss

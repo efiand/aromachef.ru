@@ -10,7 +10,6 @@
 - Вывод 12-ти последних рецептов на [главной](https://aromachef.ru).
 - [Карта сайта](https://aromachef.ru/sitemap.xml).
 - API: [список страниц](https://aromachef.ru/api/pages).
-- [Turbo-страницы](https://aromachef.ru/turbo.rss).
 - [AMP-версия](https://aromachef.ru/amp).
 - Интеграция с Telegram-ботом.
 - Комментирование рецептов (с премодерацией).

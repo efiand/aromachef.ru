@@ -9,7 +9,6 @@ import { sitemapXmlRoute } from "#!/server/routes/sitemap-xml.js";
 import { structureRoute } from "#!/server/routes/structure.js";
 import { structureIdRoute } from "#!/server/routes/structure-id.js";
 import { tagIdRoute } from "#!/server/routes/tag-id.js";
-import { turboRssRoute } from "#!/server/routes/turbo-rss.js";
 
 /** @type {{ [name: string]: Route }} */
 export const routes = {
@@ -24,8 +23,7 @@ export const routes = {
 	"/structure": structureRoute,
 	"/structure/:id": structureIdRoute,
 	"/tag/:id": tagIdRoute,
-	"/turbo.rss": turboRssRoute,
 };
 
 /** @type {Set<string>} */
-export const noAmpRoutes = new Set(["/api/pages", "/sitemap.xml", "/turbo.rss"]);
+export const noAmpRoutes = new Set(["/api/pages", "/sitemap.xml"]);
