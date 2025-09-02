@@ -14,7 +14,7 @@ function renderAssets() {
 			<script src="/client/main.js" type="module"></script>
 		`
 		: html`
-			<link rel="stylesheet" href="/bundles/critical.css">
+			<link rel="stylesheet" href="/bundles/critical.css?v1">
 			<script src="/bundles/main.js" defer></script>
 		`;
 }

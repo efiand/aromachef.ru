@@ -24,7 +24,7 @@ export async function renderAmpAssets(hasForms = false) {
 		: "";
 
 	return html`
-		<style amp-custom>${cssCache}</style>
+		<style amp-custom>${cssCache}html{scrollbar-gutter:stable}body{min-height:100dvh}</style>
 		${APM_ASSETS_TEMPLATE}
 		${formScriptTemplate}
 	`;

@@ -23,20 +23,19 @@ function sendReload(res) {
 }
 
 createApp(async (req, res, next) => {
-	const { pathname } = new URL(`${host}${req.url}`);
-	const ext = path.extname(pathname);
-
 	if (isDev && req.url === "/dev/watch") {
 		sendReload(res);
 		return;
 	}
 
+	const { pathname } = new URL(`${host}${req.url}`);
 	if (pathname === "/.well-known/appspecific/com.chrome.devtools.json") {
 		res.setHeader("Content-Type", "application/json");
 		res.end("{}");
 		return;
 	}
 
+	const ext = path.extname(pathname);
 	if (!staticExtensions.has(ext)) {
 		next?.(req, res);
 		return;
@@ -65,7 +64,7 @@ createApp(async (req, res, next) => {
 	}
 
 	try {
-		const staticDir = isDev && /^\/client|components\/.*\.css|js|svg$/.test(pathname) ? "./app" : "./public";
+		const staticDir = isDev && /^\/client|common|components\/.*\.(css|js|svg)$/.test(pathname) ? "./app" : "./public";
 		const filePath = path.join(process.cwd(), staticDir, pathname);
 		await access(filePath);
 		res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });

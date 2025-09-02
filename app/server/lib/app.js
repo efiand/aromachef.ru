@@ -49,7 +49,7 @@ async function next(req, res) {
 	const routeKey = Number.isNaN(id) ? pathname : `/${isApi ? `api/${rawId}` : routeName}/:id`;
 	const route = routes[routeKey];
 
-	let contentType = "text/html";
+	let contentType = "text/html; charset=utf-8";
 	let template = "";
 	let statusCode = 200;
 
