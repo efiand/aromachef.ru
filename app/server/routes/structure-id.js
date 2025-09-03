@@ -1,8 +1,8 @@
-import { sql } from "#!/common/utils/mark-template.js";
-import { renderCards } from "#!/components/cards/cards.js";
-import { renderPageSection } from "#!/components/page-section/page-section.js";
-import { isDev } from "#!/server/constants.js";
-import { processDb } from "#!/server/lib/db.js";
+import { sql } from "#common/utils/mark-template.js";
+import { renderCards } from "#components/cards.js";
+import { renderPageSection } from "#components/page-section.js";
+import { isDev } from "#server/constants.js";
+import { processDb } from "#server/lib/db.js";
 
 const query = sql`
 	SELECT r.id, r.title, s.title AS structure FROM recipes r JOIN structures s

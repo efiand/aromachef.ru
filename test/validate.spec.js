@@ -3,8 +3,8 @@ import amphtmlValidator from "amphtml-validator";
 import { XMLValidator } from "fast-xml-parser";
 import { HtmlValidate } from "html-validate";
 import { lintBem } from "posthtml-bem-linter";
-import { host } from "#!/server/constants.js";
-import { createApp } from "#!/server/lib/app.js";
+import { host } from "#server/constants.js";
+import { createApp } from "#server/lib/app.js";
 
 const timeout = Number(process.env.TEST_TIMEOUT) || 20_000;
 

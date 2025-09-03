@@ -1,9 +1,9 @@
-import { PROJECT_DESCRIPTION } from "#!/common/constants.js";
-import { html, sql } from "#!/common/utils/mark-template.js";
-import { renderCards } from "#!/components/cards/cards.js";
-import { renderPageSection } from "#!/components/page-section/page-section.js";
-import { isDev } from "#!/server/constants.js";
-import { processDb } from "#!/server/lib/db.js";
+import { PROJECT_DESCRIPTION } from "#common/constants.js";
+import { html, sql } from "#common/utils/mark-template.js";
+import { renderCards } from "#components/cards.js";
+import { renderPageSection } from "#components/page-section.js";
+import { isDev } from "#server/constants.js";
+import { processDb } from "#server/lib/db.js";
 
 const recipesQuery = sql`
 	SELECT id, title FROM recipes ${isDev ? "" : sql`WHERE published = 1`} ORDER BY id DESC LIMIT 12;

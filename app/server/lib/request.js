@@ -1,5 +1,5 @@
 import formidable from "formidable";
-import { BASE_URL } from "#!/common/constants.js";
+import { BASE_URL } from "#common/constants.js";
 
 /** @type {(params: URLSearchParams) => ReqBody} */
 function getObjectFromSearchParams(params) {

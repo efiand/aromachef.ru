@@ -4,6 +4,11 @@ export const PROJECT_TITLE = "АромаШеф";
 
 export const PROJECT_DESCRIPTION = "Быстрые, вкусные и полезные рецепты с эфирными маслами.";
 
+export const version = {
+	CSS: 1,
+	JS: 1,
+};
+
 /** @type {Record<string, string>} */
 export const STATIC_MIME_TYPES = {
 	".js": "application/javascript; charset=utf-8",

@@ -1,5 +1,5 @@
-import { sql } from "#!/common/utils/mark-template.js";
-import { processDb } from "#!/server/lib/db.js";
+import { sql } from "#common/utils/mark-template.js";
+import { processDb } from "#server/lib/db.js";
 
 const query = sql`
 	SELECT CONCAT('/structure/', id) AS url FROM structures

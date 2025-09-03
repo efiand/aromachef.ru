@@ -1,4 +1,4 @@
-import { html } from "#!/common/utils/mark-template.js";
+import { html } from "#common/utils/mark-template.js";
 
 export const YANDEX_METRIKA_TEMPLATE = html`
 	<!-- Yandex.Metrika counter -->

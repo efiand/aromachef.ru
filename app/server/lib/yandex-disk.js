@@ -1,5 +1,5 @@
 import path from "node:path";
-import { STATIC_MIME_TYPES } from "#!/common/constants.js";
+import { STATIC_MIME_TYPES } from "#common/constants.js";
 
 const { YADISK_TOKEN } = process.env;
 

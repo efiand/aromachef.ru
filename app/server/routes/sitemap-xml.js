@@ -1,6 +1,6 @@
-import { BASE_URL } from "#!/common/constants.js";
-import { sql, xml } from "#!/common/utils/mark-template.js";
-import { processDb } from "#!/server/lib/db.js";
+import { BASE_URL } from "#common/constants.js";
+import { sql, xml } from "#common/utils/mark-template.js";
+import { processDb } from "#server/lib/db.js";
 
 const SERVICE_PAGES = ["", "/structure"];
 

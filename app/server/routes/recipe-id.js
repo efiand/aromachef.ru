@@ -1,11 +1,11 @@
-import { html, sql } from "#!/common/utils/mark-template.js";
-import { renderPageSection } from "#!/components/page-section/page-section.js";
-import { renderRecipeFooter } from "#!/components/recipe-footer/recipe-footer.js";
-import { isDev } from "#!/server/constants.js";
-import { processDb } from "#!/server/lib/db.js";
-import { prepareText } from "#!/server/lib/prepare-text.js";
-import { renderRecipeDescription } from "#!/server/lib/recipe-description.js";
-import { sendTgMessage } from "#!/server/lib/telegram.js";
+import { html, sql } from "#common/utils/mark-template.js";
+import { renderPageSection } from "#components/page-section.js";
+import { renderRecipeFooter } from "#components/recipe-footer.js";
+import { isDev } from "#server/constants.js";
+import { processDb } from "#server/lib/db.js";
+import { prepareText } from "#server/lib/prepare-text.js";
+import { renderRecipeDescription } from "#server/lib/recipe-description.js";
+import { sendTgMessage } from "#server/lib/telegram.js";
 
 const { TG_AROMACHEF_ID } = process.env;
 

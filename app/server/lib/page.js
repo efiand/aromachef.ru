@@ -1,21 +1,29 @@
-import { BASE_URL, PROJECT_TITLE } from "#!/common/constants.js";
-import { renderDocumentTitle } from "#!/common/lib/title.js";
-import { html } from "#!/common/utils/mark-template.js";
-import { renderLayout } from "#!/components/layout/layout.js";
-import { isDev } from "#!/server/constants.js";
-import { renderAmpAssets } from "#!/server/lib/amp.js";
+import { BASE_URL, PROJECT_TITLE, version } from "#common/constants.js";
+import { renderDocumentTitle } from "#common/lib/title.js";
+import { html } from "#common/utils/mark-template.js";
+import { renderLayout } from "#components/layout.js";
+import { isDev } from "#server/constants.js";
+import { renderAmpAssets } from "#server/lib/amp.js";
+
+const IMPORTMAP = {
+	imports: {
+		"#client/": "/client/",
+		"#common/": "/common/",
+		"#components/": "/components/",
+	},
+};
 
 function renderAssets() {
 	return isDev
 		? html`
-			<link rel="stylesheet" href="/client/critical.css">
-			<script type="importmap">{ "imports": { "#!/": "/" } }</script>
+			<link rel="stylesheet" href="/client/css/critical.css">
+			<script type="importmap">${JSON.stringify(IMPORTMAP)}</script>
 			<script src="/client/dev.js" type="module"></script>
 			<script src="/client/main.js" type="module"></script>
 		`
 		: html`
-			<link rel="stylesheet" href="/bundles/critical.css?v1">
-			<script src="/bundles/main.js" defer></script>
+			<link rel="stylesheet" href="/bundles/critical.css?v${version.CSS}">
+			<script src="/bundles/main.js?v${version.JS}" defer></script>
 		`;
 }
 

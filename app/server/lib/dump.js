@@ -1,6 +1,6 @@
-import { sql } from "#!/common/utils/mark-template.js";
-import { processDb } from "#!/server/lib/db.js";
-import { upload } from "#!/server/lib/yandex-disk.js";
+import { sql } from "#common/utils/mark-template.js";
+import { processDb } from "#server/lib/db.js";
+import { upload } from "#server/lib/yandex-disk.js";
 
 /** @type {DbTable[]} */
 const SQL_TABLES = ["structures", "tags", "recipes", "recipesTags", "recipesRecipes", "comments", "staticPages"];

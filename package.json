@@ -15,6 +15,7 @@
 		"@html-validate/jest-config": "3.13.0",
 		"@types/amphtml-validator": "1.0.4",
 		"@types/formidable": "3.4.5",
+		"@types/html-minifier-terser": "7.0.2",
 		"@types/jest": "30.0.0",
 		"@types/jsdom": "21.1.7",
 		"@types/node": "24.3.0",
@@ -24,6 +25,7 @@
 		"amphtml-validator": "1.0.38",
 		"cssnano": "7.1.1",
 		"fast-xml-parser": "5.2.5",
+		"html-minifier-terser": "7.2.0",
 		"html-validate": "10.0.0",
 		"jest": "30.1.1",
 		"nodemon": "3.1.10",
@@ -37,7 +39,10 @@
 		"typescript": "5.9.2"
 	},
 	"imports": {
-		"#!/*": "./app/*"
+		"#client/*": "./src/client/*",
+		"#common/*": "./app/common/*",
+		"#components/*": "./app/components/*",
+		"#server/*": "./app/server/*"
 	},
 	"main": "./app/server/main.js",
 	"name": "aromachef",
@@ -47,13 +52,13 @@
 	],
 	"private": true,
 	"scripts": {
-		"build": "rolldown -c && postcss app/client/*.css -d public/bundles",
+		"build": "rolldown -c && postcss src/client/css/*.css -d public/bundles",
 		"dump": "dotenvx run -- node ./tools/dump.js",
-		"dev": "dotenvx run -- nodemon ./app/server/preview.js",
+		"dev": "dotenvx run -- nodemon ./src/server/main.js",
 		"image": "dotenvx run -- node ./tools/images.js",
 		"lint": "npm run type-check && biome check",
 		"lint-format": "npm run type-check && biome check --write",
-		"preview": "dotenvx run -- node ./app/server/preview.js",
+		"preview": "dotenvx run -- node ./src/server/main.js",
 		"test": "npm run build && jest",
 		"type-check": "tsc -p ./tsconfig.json",
 		"upgrade": "node ./tools/upgrade.js"

@@ -1,7 +1,7 @@
 import { writeFile } from "node:fs/promises";
 import sharp from "sharp";
-import { cwd } from "#!/server/constants.js";
-import { upload } from "#!/server/lib/yandex-disk.js";
+import { cwd } from "#server/constants.js";
+import { upload } from "#server/lib/yandex-disk.js";
 
 const webpOptions = { quality: 75 };
 

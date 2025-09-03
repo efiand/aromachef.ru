@@ -1,4 +1,4 @@
-import { html } from "#!/common/utils/mark-template.js";
+import { html } from "#common/utils/mark-template.js";
 
 /** @type {(recipe: { description: string; telegramId?: number | null }) => string} */
 export function renderRecipeDescription({ description, telegramId }) {

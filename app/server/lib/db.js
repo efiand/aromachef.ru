@@ -2,19 +2,19 @@ import mysql from "mysql2/promise";
 
 const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
 
-/** @type {typeof globalThis & { dbConnection?: mysql.Connection }} */
-const customGlobal = global;
+/** @type {mysql.Connection?} */
+let dbConnection = null;
 
 async function connect() {
-	if (!customGlobal.dbConnection) {
-		customGlobal.dbConnection = await mysql.createConnection({
+	if (!dbConnection) {
+		dbConnection = await mysql.createConnection({
 			database: DB_NAME,
 			host: DB_HOST,
 			user: DB_USER,
 			password: DB_PASSWORD,
 		});
 	}
-	return customGlobal.dbConnection;
+	return dbConnection;
 }
 
 /** @type {(query: string, payload: unknown) => unknown[]} */

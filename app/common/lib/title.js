@@ -1,4 +1,4 @@
-import { PROJECT_TITLE } from "#!/common/constants.js";
+import { PROJECT_TITLE } from "#common/constants.js";
 
 /** @type {(heading?: string) => string} */
 export function renderDocumentTitle(heading) {

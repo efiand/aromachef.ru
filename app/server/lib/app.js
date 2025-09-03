@@ -1,9 +1,9 @@
 import { createServer } from "node:http";
-import { html } from "#!/common/utils/mark-template.js";
-import { host, isDev, port } from "#!/server/constants.js";
-import { renderPage } from "#!/server/lib/page.js";
-import { getRequestBody } from "#!/server/lib/request.js";
-import { noAmpRoutes, routes } from "#!/server/routes/index.js";
+import { html } from "#common/utils/mark-template.js";
+import { host, isDev, port } from "#server/constants.js";
+import { renderPage } from "#server/lib/page.js";
+import { getRequestBody } from "#server/lib/request.js";
+import { noAmpRoutes, routes } from "#server/routes/index.js";
 
 /** @type {(error: unknown, href: string) => Promise<{ statusCode: number; template: string }>} */
 async function handleError(error, href) {

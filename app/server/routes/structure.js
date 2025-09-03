@@ -1,8 +1,8 @@
-import { html, sql } from "#!/common/utils/mark-template.js";
-import { renderCards } from "#!/components/cards/cards.js";
-import { renderTags } from "#!/components/tags/tags.js";
-import { isDev } from "#!/server/constants.js";
-import { processDb } from "#!/server/lib/db.js";
+import { html, sql } from "#common/utils/mark-template.js";
+import { renderCards } from "#components/cards.js";
+import { renderTags } from "#components/tags.js";
+import { isDev } from "#server/constants.js";
+import { processDb } from "#server/lib/db.js";
 
 const queryCondition = isDev ? "" : sql`AND published = 1`;
 const query = sql`
