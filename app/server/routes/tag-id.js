@@ -1,6 +1,6 @@
+import { renderCards } from "#common/components/cards.js";
+import { renderPageSection } from "#common/components/page-section.js";
 import { sql } from "#common/utils/mark-template.js";
-import { renderCards } from "#components/cards.js";
-import { renderPageSection } from "#components/page-section.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 

@@ -1,6 +1,6 @@
+import { renderCards } from "#common/components/cards.js";
+import { renderTags } from "#common/components/tags.js";
 import { html, sql } from "#common/utils/mark-template.js";
-import { renderCards } from "#components/cards.js";
-import { renderTags } from "#components/tags.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 

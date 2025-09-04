@@ -1,7 +1,7 @@
+import { renderLayout } from "#common/components/layout.js";
 import { BASE_URL, PROJECT_TITLE, version } from "#common/constants.js";
 import { renderDocumentTitle } from "#common/lib/title.js";
 import { html } from "#common/utils/mark-template.js";
-import { renderLayout } from "#components/layout.js";
 import { isDev } from "#server/constants.js";
 import { renderAmpAssets } from "#server/lib/amp.js";
 
@@ -9,7 +9,6 @@ const IMPORTMAP = {
 	imports: {
 		"#client/": "/client/",
 		"#common/": "/common/",
-		"#components/": "/components/",
 	},
 };
 

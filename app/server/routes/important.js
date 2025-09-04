@@ -1,5 +1,5 @@
+import { renderPageSection } from "#common/components/page-section.js";
 import { sql } from "#common/utils/mark-template.js";
-import { renderPageSection } from "#components/page-section.js";
 import { processDb } from "#server/lib/db.js";
 
 const sqlQuery = sql`

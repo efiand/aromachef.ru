@@ -1,6 +1,6 @@
+import { renderCards } from "#common/components/cards.js";
+import { renderTags } from "#common/components/tags.js";
 import { html } from "#common/utils/mark-template.js";
-import { renderCards } from "#components/cards.js";
-import { renderTags } from "#components/tags.js";
 
 /** @type {(params: RecipeFooter) => string} */
 export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags }) {

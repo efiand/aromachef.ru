@@ -1,6 +1,6 @@
+import { HERO_TEMPLATE } from "#common/components/hero.js";
 import { YANDEX_METRIKA_TEMPLATE } from "#common/lib/yandex-metrika.js";
 import { html } from "#common/utils/mark-template.js";
-import { HERO_TEMPLATE } from "#components/hero.js";
 
 const SEARCH_TEMPLATE = html`
 	<li class="layout__header-item layout__header-item--separated">

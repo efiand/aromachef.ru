@@ -1,8 +1,8 @@
+import { openDialog } from "#common/components/dialog.js";
+import { initSearchInput } from "#common/components/search-input.js";
 import { debounce } from "#common/utils/debounce.js";
 import { html } from "#common/utils/mark-template.js";
 import { NonNull } from "#common/utils/non-null.js";
-import { openDialog } from "#components/dialog.js";
-import { initSearchInput } from "#components/search-input.js";
 
 const TEMPLATE = html`
 	<div class="search-input">

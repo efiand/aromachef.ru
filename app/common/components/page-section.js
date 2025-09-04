@@ -1,5 +1,5 @@
+import { renderArticle } from "#common/components/article.js";
 import { html } from "#common/utils/mark-template.js";
-import { renderArticle } from "#components/article.js";
 
 /** @type {(article: ArticleData, i: number) => string} */
 function mapArticle(article, i) {

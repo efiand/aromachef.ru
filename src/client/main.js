@@ -1,8 +1,8 @@
 import { loadCss, setScrollbarWidth } from "#client/lib/css.js";
+import { initComments } from "#common/components/comments.js";
+import { initSearchDialog } from "#common/components/search-dialog.js";
+import { initSearchInput } from "#common/components/search-input.js";
 import { version } from "#common/constants.js";
-import { initComments } from "#components/comments.js";
-import { initSearchDialog } from "#components/search-dialog.js";
-import { initSearchInput } from "#components/search-input.js";
 
 setScrollbarWidth();
 

@@ -41,7 +41,6 @@
 	"imports": {
 		"#client/*": "./src/client/*",
 		"#common/*": "./app/common/*",
-		"#components/*": "./app/components/*",
 		"#server/*": "./app/server/*"
 	},
 	"main": "./app/server/main.js",
@@ -55,7 +54,7 @@
 		"build": "rolldown -c && postcss src/client/css/*.css -d public/bundles",
 		"dump": "dotenvx run -- node ./tools/dump.js",
 		"dev": "dotenvx run -- nodemon ./src/server/main.js",
-		"image": "dotenvx run -- node ./tools/images.js",
+		"images": "dotenvx run -- node ./tools/images.js",
 		"lint": "npm run type-check && biome check",
 		"lint-format": "npm run type-check && biome check --write",
 		"preview": "dotenvx run -- node ./src/server/main.js",

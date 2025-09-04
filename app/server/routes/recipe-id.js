@@ -1,6 +1,6 @@
+import { renderPageSection } from "#common/components/page-section.js";
+import { renderRecipeFooter } from "#common/components/recipe-footer.js";
 import { html, sql } from "#common/utils/mark-template.js";
-import { renderPageSection } from "#components/page-section.js";
-import { renderRecipeFooter } from "#components/recipe-footer.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 import { prepareText } from "#server/lib/prepare-text.js";
