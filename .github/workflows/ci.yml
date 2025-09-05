@@ -24,7 +24,6 @@ jobs:
           echo DB_NAME=${{ secrets.DB_NAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo DB_USER=${{ secrets.DB_USER }} >> .env
-          echo TEST_TIMEOUT=${{ secrets.TEST_TIMEOUT }} >> .env
       - name: Build & Test
         run: npm test
       - name: Copy to server

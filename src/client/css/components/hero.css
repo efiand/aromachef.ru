@@ -30,6 +30,9 @@
 	align-items: flex-end;
 	gap: 1rem;
 	font-weight: 700;
+	font-size: 2em;
+	line-height: 1.25;
+	letter-spacing: -0.03em;
 	font-family: var(--font-basic);
 }
 
@@ -42,5 +45,9 @@
 @media (min-width: 888px) {
 	.hero::before {
 		background-image: url("/images/hero.webp");
+	}
+
+	.hero__heading {
+		font-size: 3rem;
 	}
 }

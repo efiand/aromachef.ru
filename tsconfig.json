@@ -18,5 +18,5 @@
 		"strict": true,
 		"target": "es2022"
 	},
-	"exclude": ["coverage", "public/bundles"]
+	"exclude": ["public/bundles"]
 }
