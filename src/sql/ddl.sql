@@ -4,7 +4,7 @@ CREATE TABLE comments (
 	id int(11) auto_increment NOT NULL,
 	name varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Гость' NOT NULL,
 	text varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-	text varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL,
+	answer varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL,
 	recipeId int(11) NOT NULL,
 	published tinyint(1) DEFAULT 0 NOT NULL,
 	publishedAt datetime(3) DEFAULT NULL NULL,
@@ -39,7 +39,7 @@ CREATE TABLE recipes (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci
-COMMENT='';
+COMMENT='Рецепты.';
 CREATE INDEX recipes_structureId_idx USING BTREE ON recipes (structureId);
 
 CREATE TABLE recipesTags (
@@ -54,7 +54,7 @@ CREATE TABLE recipesTags (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci
-COMMENT='';
+COMMENT='Кросстаблица связи рецептов с тегами.';
 CREATE INDEX recipesTags_recipeId_idx USING BTREE ON recipesTags (recipeId);
 CREATE INDEX recipesTags_tagId_idx USING BTREE ON recipesTags (tagId);
 
@@ -99,7 +99,7 @@ CREATE TABLE structures (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci
-COMMENT='';
+COMMENT='Разделы сайта.';
 
 CREATE TABLE tags (
 	id int(11) auto_increment NOT NULL,
@@ -110,5 +110,5 @@ CREATE TABLE tags (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci
-COMMENT='';
+COMMENT='Теги рецептов.';
 
