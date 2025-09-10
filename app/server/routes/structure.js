@@ -44,7 +44,7 @@ export const structureRoute = {
 		return {
 			page: {
 				description: "Интересующие Вас рецепты Вы можете найти в соответствующих разделах или воспользоваться тегами.",
-				heading: "Разделы и #теги",
+				heading: "Разделы и теги",
 				pageTemplate: html`
 					<section class="structure">
 						<div>

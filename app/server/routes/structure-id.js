@@ -25,7 +25,7 @@ export const structureIdRoute = {
 		return {
 			page: {
 				description: `Страница содержит рецепты с эфирными маслами из раздела «${structure}».`,
-				heading: `Разделы : ${structure}`,
+				heading: `${structure} | Разделы`,
 				ogImage: `/pictures/structure/${id}@2x.webp`,
 				pageTemplate: renderPageSection({
 					footerTemplate: renderCards({

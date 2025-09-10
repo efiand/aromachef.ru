@@ -68,7 +68,7 @@ export const recipeIdRoute = {
 				description: description
 					? description.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, "")
 					: `Страница содержит описание рецепта «${title}».`,
-				heading: `Рецепты : ${title}`,
+				heading: `${title} | Рецепты`,
 				ogImage: `${imagePrefix}@2x.webp`,
 				pageTemplate: renderPageSection({
 					articles: [
