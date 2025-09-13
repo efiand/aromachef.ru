@@ -4,11 +4,11 @@
 }
 
 .structure__heading {
-	margin-bottom: 4rem;
+	margin-bottom: var(--gap-intersection);
 }
 
 .structure__sideheading {
-	margin: 1rem 0 4rem;
+	margin: 1rem 0 var(--gap-intersection);
 }
 
 @media (max-width: 887px) {

@@ -56,7 +56,7 @@
 
 .layout__main {
 	flex-grow: 1;
-	padding-block: 4rem;
+	padding-block: var(--gap-intersection);
 }
 
 .layout__footer {

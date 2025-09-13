@@ -8,6 +8,7 @@ html {
 	--color-white: #ffffff;
 	--font-basic: "Noto Serif", serif;
 	--font-accent: "Noto Sans", sans-serif;
+	--gap-intersection: 2.5rem;
 	--scroll-behavior: auto;
 	--transition: none;
 
@@ -160,6 +161,8 @@ mark {
 
 @media (min-width: 888px) {
 	html {
+		--gap-intersection: 4rem;
+
 		font-size: 20px;
 	}
 

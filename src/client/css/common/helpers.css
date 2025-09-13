@@ -16,7 +16,7 @@
 }
 
 ._separated {
-	margin-top: 4rem;
+	margin-top: var(--gap-intersection);
 }
 
 ._small {
