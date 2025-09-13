@@ -73,6 +73,7 @@ declare global {
 
 	type PageSectionData = {
 		articles?: ArticleData[];
+		className?: string;
 		content?: string;
 		footerTemplate?: string;
 		next?: string;

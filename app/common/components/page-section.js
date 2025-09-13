@@ -14,9 +14,17 @@ function mapArticle(article, i) {
  *
  * @type {(data: PageSectionData) => string}
  */
-export function renderPageSection({ articles = [], content = "", footerTemplate = "", next, prev, title }) {
+export function renderPageSection({
+	articles = [],
+	className = "",
+	content = "",
+	footerTemplate = "",
+	next,
+	prev,
+	title,
+}) {
 	return html`
-		<section class="page-section">
+		<section class="page-section ${className}">
 			<header class="page-section__header ${prev ? "page-section__header--with-nav" : ""}">
 				${prev ? html`<a class="page-section__nav-link" href="${prev}" rel="prev" aria-label="Предыдущий рецепт"></a>` : ""}
 				<h1 class="page-section__title">${title}</h1>
