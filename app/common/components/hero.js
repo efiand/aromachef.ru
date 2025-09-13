@@ -9,6 +9,6 @@ export const HERO_TEMPLATE = html`
 			</svg>
 			${PROJECT_TITLE}
 		</p>
-		<p class="hero__text"><span>Готовим с эфирными маслами!</span></p>
+		<p class="hero__text">Простые и вкусные рецепты<br>на каждый день.</p>
 </div>
 `;
