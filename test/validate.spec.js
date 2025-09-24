@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
-import { error, warn } from "node:console";
+import { createReadStream } from "node:fs";
+import { access } from "node:fs/promises";
+import path from "node:path";
 import { after, before, test } from "node:test";
 import amphtmlValidator from "amphtml-validator";
 import { XMLValidator } from "fast-xml-parser";
@@ -30,11 +32,28 @@ let server;
 
 before(async () => {
 	if (!server) {
-		server = createApp();
+		server = createApp(async (req, res, next) => {
+			const { pathname } = new URL(`${host}${req.url}`);
+			const ext = path.extname(pathname);
+			if (ext === ".html") {
+				try {
+					const filePath = path.join(process.cwd(), "./public", pathname);
+					await access(filePath);
+					res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+					createReadStream(filePath).pipe(res);
+					return;
+				} catch (error) {
+					console.error(error);
+				}
+			}
+
+			next?.(req, res);
+		});
 	}
 
 	if (!pages.length) {
 		pages = await fetch(`${host}/api/pages`).then((res) => res.json());
+		pages.push("/404.html", "/update.html");
 	}
 
 	if (!markups.length) {
@@ -52,7 +71,7 @@ test("All pages have valid HTML markup", async () => {
 				errorsCount++;
 				report.results.forEach(({ messages }) => {
 					messages.forEach(({ column, line, message, ruleUrl }) => {
-						error(`${page} [${line}:${column}] ${message} (${ruleUrl})`);
+						console.error(`${page} [${line}:${column}] ${message} (${ruleUrl})`);
 					});
 				});
 			}
@@ -66,7 +85,7 @@ test("All pages have valid BEM classes in markup", () => {
 	let errorsCount = 0;
 
 	pages.forEach(async (page, i) => {
-		const result = lintBem({ content: markups[i], log: error, name: page });
+		const result = lintBem({ content: markups[i], log: console.error, name: page });
 		if (result.warningCount) {
 			errorsCount++;
 		}
@@ -84,6 +103,10 @@ test("All AMP versions have valid AMP markup", async () => {
 
 	await Promise.all(
 		pages.map(async (page) => {
+			if (page.endsWith(".html")) {
+				return;
+			}
+
 			const url = page === "/" ? "/amp" : `/amp${page}`;
 			const markup = await fetch(`${host}${url}`).then((res) => res.text());
 
@@ -94,7 +117,7 @@ test("All AMP versions have valid AMP markup", async () => {
 			}
 
 			result?.errors.forEach(({ col, line, message, severity, specUrl }) => {
-				const log = severity === "ERROR" ? error : warn;
+				const log = severity === "ERROR" ? console.error : console.warn;
 				log(`${url} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ""})`);
 			});
 		}),
@@ -110,7 +133,7 @@ test("sitemap.xml is valid", async () => {
 
 	if (!valid) {
 		const { msg, line, col } = result.err;
-		error(`sitemap.xml [${line}:${col}] ${msg}`);
+		console.error(`sitemap.xml [${line}:${col}] ${msg}`);
 	}
 
 	assert.strictEqual(valid, true);
