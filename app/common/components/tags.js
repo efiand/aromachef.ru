@@ -1,10 +1,12 @@
 import { html } from "#common/utils/mark-template.js";
 
 /** @type {(tag: DbItem) => string} */
-function renderTag({ id, title }) {
+function renderTag({ current, id, title }) {
 	return html`
 		<li class="tags__item">
-			<a class="tags__link" href="/tag/${id}">#${title}</a>
+			<a class="tags__link" href="/tag/${id}" ${current ? 'aria-current="page"' : ""}>
+				#${title}
+			</a>
 		</li>
 	`;
 }

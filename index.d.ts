@@ -36,6 +36,7 @@ declare global {
 	};
 
 	type DbItem = {
+		current?: boolean;
 		id: number;
 		title: string;
 	};
@@ -136,6 +137,17 @@ declare global {
 		content: string;
 		description: string;
 		heading: string;
+	};
+
+	type StructureData = {
+		alt?: string;
+		asideHeading: string;
+		asideId?: string;
+		cards: DbItem[];
+		heading: string;
+		route?: string;
+		structures?: DbItem[];
+		tags?: DbItem[];
 	};
 
 	type TagTemplateData = {

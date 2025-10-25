@@ -1,41 +1,50 @@
-import { renderCards } from "#common/components/cards.js";
-import { renderPageSection } from "#common/components/page-section.js";
+import { renderStructure } from "#common/components/structure.js";
 import { sql } from "#common/utils/mark-template.js";
 import { capitalize } from "#common/utils/text.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 
-const query = sql`
-	SELECT r.id, r.title, t.title AS tag FROM recipes r JOIN tags t JOIN recipesTags rt
-	WHERE rt.recipeId = r.id
-	AND rt.tagId = t.id
-	AND t.id = ?
-	${isDev ? "" : sql`AND r.published = 1`}
-	ORDER BY r.title;
+const queryCondition = isDev ? "" : sql`AND r.published = 1`;
+const recipesQuery = sql`
+	SELECT r.id, title FROM recipes r JOIN recipesTags rt
+	WHERE rt.recipeId = r.id AND rt.tagId = ? ${queryCondition}
+	ORDER BY title;
+`;
+const tagsQuery = sql`
+	SELECT id, title, (id = ?) AS current FROM tags
+		WHERE (
+			SELECT count(r.id) FROM recipes r WHERE r.id IN (
+				SELECT recipeId FROM recipesTags WHERE tagId = id
+			)
+			${queryCondition}
+		) > 0
+	ORDER BY title;
 `;
 
 export const tagIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ id }) {
-		const cards = await processDb(query, id);
+		/** @type {[DbItem[], DbItem[]]} */
+		const [cards, tags] = await Promise.all([processDb(recipesQuery, id), processDb(tagsQuery, id)]);
 
 		if (!cards.length) {
 			throw new Error("Тег не существует.", { cause: 404 });
 		}
 
-		const [{ id: recipeId, tag }] = cards;
+		const heading = tags.find((item) => item.id === id)?.title || "";
+		const [{ id: recipeId }] = cards;
 
 		return {
 			page: {
-				description: `Страница содержит рецепты с эфирными маслами на тему «${tag}».`,
-				heading: `${capitalize(tag)} | Теги`,
+				description: `Страница содержит рецепты с эфирными маслами на тему «${heading}».`,
+				heading: `${capitalize(heading)} | Теги`,
 				ogImage: `/pictures/recipe/${recipeId}@2x.webp`,
-				pageTemplate: renderPageSection({
-					footerTemplate: renderCards({
-						alt: `На фото изображено готовое блюдо [title] на тему «${tag}» в миниатюре.`,
-						cards,
-					}),
-					title: `#${tag}`,
+				pageTemplate: renderStructure({
+					alt: `На фото изображено готовое блюдо [title] на тему «${heading}» в миниатюре.`,
+					asideHeading: "Теги",
+					cards,
+					heading: `#${heading}`,
+					tags,
 				}),
 			},
 		};

@@ -4,10 +4,6 @@
 	gap: 2.125rem;
 }
 
-.cards--centered {
-	justify-content: center;
-}
-
 .cards__item {
 	width: 272px;
 }
@@ -25,7 +21,7 @@
 }
 
 @media (max-width: 887px) {
-	.cards--centered-in-mobile {
+	.cards {
 		justify-content: center;
 	}
 }

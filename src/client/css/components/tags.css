@@ -1,7 +1,7 @@
 .tags {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0 1rem;
+	gap: 0 0.5rem;
 	max-width: 50%;
 }
 
@@ -12,12 +12,32 @@
 }
 
 .tags--column .tags__item:not(:first-child) {
-	margin-top: 0.25rem;
+	margin-top: 0.5rem;
 }
 
 .tags__link {
 	display: table;
 	text-transform: lowercase;
+	padding: 0.25rem 0.625rem;
+	font-size: 0.8rem;
+	line-height: 1rem;
+	background-color: var(--color-green-light);
+	border-radius: 0.75rem;
+}
+
+.tags__link[aria-current],
+.tags__link:active {
+	color: var(--color-eggplant);
+	background-color: var(--color-lavender);
+	text-decoration: none;
+}
+
+@media (hover: hover) {
+	.tags__link:hover {
+		color: var(--color-eggplant);
+		background-color: var(--color-lavender);
+		text-decoration: none;
+	}
 }
 
 @media (max-width: 887px) {

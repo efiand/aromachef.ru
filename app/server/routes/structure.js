@@ -1,6 +1,5 @@
-import { renderCards } from "#common/components/cards.js";
-import { renderTags } from "#common/components/tags.js";
-import { html, sql } from "#common/utils/mark-template.js";
+import { renderStructure } from "#common/components/structure.js";
+import { sql } from "#common/utils/mark-template.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 
@@ -45,28 +44,15 @@ export const structureRoute = {
 			page: {
 				description: "Интересующие Вас рецепты Вы можете найти в соответствующих разделах или воспользоваться тегами.",
 				heading: "Разделы и теги",
-				pageTemplate: html`
-					<section class="structure">
-						<div>
-							<h1 class="structure__heading">Разделы</h1>
-							${renderCards({
-								alt: "На фото изображено готовое блюдо из раздела [title] в миниатюре.",
-								cards: structures,
-								centered: false,
-								route: "/structure",
-							})}
-						</div>
-
-						<div class="structure__tags" id="tags">
-							<h2 class="structure__sideheading">Теги</h2>
-							${renderTags({
-								className: "structure__tags-list",
-								column: true,
-								tags,
-							})}
-						</div>
-					</section>
-				`,
+				pageTemplate: renderStructure({
+					alt: "На фото изображено готовое блюдо из раздела [title] в миниатюре.",
+					asideHeading: "Теги",
+					asideId: "tags",
+					cards: structures,
+					heading: "Разделы",
+					route: "/structure",
+					tags,
+				}),
 			},
 		};
 	},

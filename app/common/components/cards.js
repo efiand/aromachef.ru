@@ -27,9 +27,8 @@ function renderCard({ alt = "", id, route, title }) {
  *
  * @type {(data?: CardsData) => string}
  */
-export function renderCards({ alt = "", centered = true, cards = [], className = "", route = "/recipe" } = {}) {
-	const modifier = centered ? "cards--centered" : "cards--centered-in-mobile";
+export function renderCards({ alt = "", cards = [], className = "", route = "/recipe" } = {}) {
 	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, route })).join("");
 
-	return html`<ul class="cards ${modifier} ${className}">${cardsTemplate}</ul>`;
+	return html`<ul class="cards ${className}">${cardsTemplate}</ul>`;
 }

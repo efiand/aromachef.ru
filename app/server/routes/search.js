@@ -27,7 +27,6 @@ function getCardsTemplate(cards) {
 	return renderCards({
 		alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 		cards,
-		centered: false,
 	});
 }
 

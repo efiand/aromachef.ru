@@ -7,8 +7,12 @@
 	margin-bottom: var(--gap-intersection);
 }
 
-.structure__sideheading {
+.structure__asideheading {
 	margin: 1rem 0 var(--gap-intersection);
+}
+
+.structure__aside {
+	scroll-margin-top: 2rem;
 }
 
 @media (max-width: 887px) {
@@ -16,16 +20,12 @@
 		text-align: center;
 	}
 
-	.structure__sideheading {
+	.structure__asideheading {
 		margin: 2rem 0;
 		text-align: center;
 	}
 
-	.structure__tags {
-		scroll-margin-top: 2rem;
-	}
-
-	.structure__tags-list {
+	.structure__menu {
 		margin-inline: auto;
 	}
 }
@@ -33,5 +33,12 @@
 @media (min-width: 888px) {
 	.structure {
 		grid-template-columns: 1fr min-content;
+	}
+
+	.structure__aside {
+		position: sticky;
+		top: 6.5rem;
+		align-self: start;
+		scroll-margin-top: 6.5rem;
 	}
 }

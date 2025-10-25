@@ -1,0 +1,17 @@
+.structures {
+	width: fit-content;
+}
+
+.structures__item:not(:first-child) {
+	margin-top: 0.5rem;
+}
+
+.structures__link {
+	display: table;
+	white-space: nowrap;
+}
+
+.structures__link[aria-current] {
+	color: var(--color-eggplant);
+	text-decoration: underline;
+}
