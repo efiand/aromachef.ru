@@ -62,9 +62,9 @@ h2 {
 }
 
 a {
-	text-decoration-skip-ink: none;
 	font-family: var(--font-accent);
 	text-decoration: none;
+	text-decoration-skip-ink: none;
 	color: var(--color-green);
 }
 
@@ -155,6 +155,7 @@ mark {
 @media (hover: hover) {
 	a:hover {
 		text-decoration: underline;
+		text-decoration-thickness: from-font;
 	}
 }
 
