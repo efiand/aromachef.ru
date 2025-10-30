@@ -95,7 +95,7 @@ export const sitemapXmlRoute = {
 		/** Дата крайнего обновления */
 		const [{ lastmod }] = pages;
 
-		pages.push(...SERVICE_PAGES.map((page) => ({ priority: "0.8", lastmod, loc: `${BASE_URL}${page}` })));
+		pages.push(...SERVICE_PAGES.map((page) => ({ lastmod, loc: `${BASE_URL}${page}`, priority: "0.8" })));
 
 		return {
 			contentType: "application/xml",

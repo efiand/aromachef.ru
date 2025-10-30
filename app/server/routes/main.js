@@ -39,9 +39,9 @@ export const mainRoute = {
 					renderPageSection({
 						className: "_separated",
 						footerTemplate: renderCards({
-							isAmp,
 							alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 							cards,
+							isAmp,
 						}),
 						title: "Новые рецепты с эфирными маслами",
 					}) +

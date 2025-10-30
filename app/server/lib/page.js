@@ -94,7 +94,7 @@ export async function renderPage({
 			${headTemplate}
 		</head>
 
-		${renderLayout({ isAmp, isDev, pathname, pageTemplate })}
+		${renderLayout({ isAmp, isDev, pageTemplate, pathname })}
 
 		</html>
 	`;

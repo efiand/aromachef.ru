@@ -49,8 +49,8 @@
 	"private": true,
 	"scripts": {
 		"build": "rolldown -c && postcss src/client/css/*.css -d public/bundles",
-		"dump": "dotenvx run -- node ./tools/dump.js",
 		"dev": "dotenvx run -- nodemon ./src/server/main.js",
+		"dump": "dotenvx run -- node ./tools/dump.js",
 		"images": "dotenvx run -- node ./tools/images.js",
 		"lint": "npm run type-check && biome check",
 		"lint-format": "npm run type-check && biome check --write",

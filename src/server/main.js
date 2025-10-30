@@ -14,9 +14,9 @@ let sseData = "reload";
  */
 function sendReload(res) {
 	res.writeHead(200, {
-		"Content-Type": "text/event-stream",
 		"Cache-Control": "no-cache",
 		Connection: "keep-alive",
+		"Content-Type": "text/event-stream",
 	});
 	res.write(`retry: 33\ndata: ${sseData}\nid: ${Date.now()}\n\n`);
 	sseData = "";

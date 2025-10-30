@@ -8,13 +8,13 @@
 		"moduleResolution": "nodenext",
 		"noEmit": true,
 		"noImplicitAny": true,
-		"skipLibCheck": true,
 		"paths": {
 			"#client/*": ["./src/client/*"],
 			"#common/*": ["./app/common/*"],
 			"#server/*": ["./app/server/*"]
 		},
 		"resolveJsonModule": true,
+		"skipLibCheck": true,
 		"strict": true,
 		"target": "es2022"
 	},

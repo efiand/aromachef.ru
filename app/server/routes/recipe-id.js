@@ -73,14 +73,14 @@ export const recipeIdRoute = {
 				pageTemplate: renderPageSection({
 					articles: [
 						{
-							isAmp,
 							content: html`<h2>Состав</h2>${ingredients}`,
 							imageAlias: `${imageAlias}-ingredients`,
+							isAmp,
 						},
 						{
-							isAmp,
 							content: html`<h2>Приготовление</h2>${cooking}`,
 							imageAlias: `${imageAlias}-cooking`,
+							isAmp,
 						},
 					],
 					content: renderRecipeDescription({ description, telegramId }),

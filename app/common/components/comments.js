@@ -80,8 +80,8 @@ export async function initComments(element) {
 
 		const body = new FormData(formElement);
 		const res = await fetch(location.pathname, {
-			method: "POST",
 			body,
+			method: "POST",
 		});
 		if (res.ok) {
 			const text = await res.text();

@@ -19,9 +19,9 @@ export const importantRoute = {
 				pageTemplate: renderPageSection({
 					articles: [
 						{
-							isAmp,
 							content,
 							imageAlias: "/images/important",
+							isAmp,
 						},
 					],
 					title: heading,

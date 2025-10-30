@@ -16,8 +16,8 @@ export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags
 							<p class="recipe-footer__text">Если понравился этот рецепт, попробуйте также:</p>
 							${renderCards({
 								alt: "На фото изображено блюдо, приготовленное по связанному рецепту [title], в миниатюре.",
-								className: "recipe-footer__cards",
 								cards: relatedRecipes,
+								className: "recipe-footer__cards",
 								isAmp,
 							})}
 						`

@@ -1,9 +1,13 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedKeys": "on"
+			}
+		},
+		"enabled": true
 	},
 	"files": {
 		"ignoreUnknown": true
@@ -19,18 +23,18 @@
 		},
 		"enabled": true,
 		"rules": {
-			"recommended": true,
 			"complexity": {
 				"noUselessStringConcat": "error"
 			},
 			"correctness": {
-				"noUnusedVariables": "error",
+				"noUnusedFunctionParameters": "error",
 				"noUnusedImports": "error",
-				"noUnusedFunctionParameters": "error"
+				"noUnusedVariables": "error"
 			},
 			"performance": {
 				"noAccumulatingSpread": "error"
 			},
+			"recommended": true,
 			"style": {
 				"useConst": { "fix": "none", "level": "error", "options": {} }
 			},
@@ -46,12 +50,9 @@
 			}
 		}
 	},
-	"assist": {
+	"vcs": {
+		"clientKind": "git",
 		"enabled": true,
-		"actions": {
-			"source": {
-				"organizeImports": "on"
-			}
-		}
+		"useIgnoreFile": true
 	}
 }
