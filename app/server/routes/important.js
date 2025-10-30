@@ -8,7 +8,7 @@ const sqlQuery = sql`
 
 export const importantRoute = {
 	/** @type {RouteMethod} */
-	async GET() {
+	async GET({ isAmp }) {
 		/** @type {StaticPageData[]} */
 		const [{ content, description, heading }] = await processDb(sqlQuery, "/important");
 
@@ -19,6 +19,7 @@ export const importantRoute = {
 				pageTemplate: renderPageSection({
 					articles: [
 						{
+							isAmp,
 							content,
 							imageAlias: "/images/important",
 						},

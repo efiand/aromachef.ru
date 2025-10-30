@@ -1,7 +1,8 @@
+import { renderImage } from "#common/components/image.js";
 import { html } from "#common/utils/mark-template.js";
 
 /** @type {(article: ArticleData) => string} */
-export function renderArticle({ alt = "", content = "", imageAlias, reverse = false, title = "" }) {
+export function renderArticle({ alt = "", content = "", imageAlias, isAmp, reverse = false, title = "" }) {
 	const modifier = reverse ? "article--reverse" : "";
 
 	return html`
@@ -12,15 +13,13 @@ export function renderArticle({ alt = "", content = "", imageAlias, reverse = fa
 			</div>
 
 			<div class="article__image">
-				<img
-					class="image"
-					src="${imageAlias}@1x.webp"
-					srcset="${imageAlias}@2x.webp 2x"
-					width="384"
-					height="672"
-					alt="${alt.replace("[title]", `«${title}»`)}"
-					loading="lazy"
-				>
+				${renderImage({
+					alt: alt.replace("[title]", `«${title}»`),
+					height: 672,
+					imageAlias,
+					isAmp,
+					width: 384,
+				})}
 			</div>
 		</div>
 	`;

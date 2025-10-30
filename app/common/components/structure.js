@@ -14,6 +14,7 @@ export function renderStructure({
 	asideId = "",
 	cards,
 	heading,
+	isAmp,
 	route = "/recipe",
 	structures = [],
 	tags = [],
@@ -31,7 +32,7 @@ export function renderStructure({
 		<section class="structure">
 			<div>
 				<h1 class="structure__heading">${heading}</h1>
-				${renderCards({ alt, cards, route })}
+				${renderCards({ alt, cards, isAmp, route })}
 			</div>
 
 			<div class="structure__aside" ${id}>

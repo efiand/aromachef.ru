@@ -22,6 +22,7 @@ declare global {
 	}
 
 	type ArticleData = {
+		isAmp?: boolean;
 		alt?: string;
 		content?: string;
 		imageAlias: string;
@@ -29,26 +30,14 @@ declare global {
 		title?: string;
 	};
 
-	type RecipeComment = {
-		name: string;
-		text: string;
-		answer: string | null;
-	};
-
-	type DbItem = {
-		current?: boolean;
-		id: number;
-		title: string;
-	};
-
 	type CardAdditionals = {
+		isAmp?: boolean;
 		alt?: string;
 		route?: string;
 	};
 
 	type CardsData = CardAdditionals & {
 		cards?: DbItem[];
-		centered?: boolean;
 		className?: string;
 	};
 
@@ -56,7 +45,21 @@ declare global {
 
 	type ComponentInitiator = (element: HTMLElement) => void;
 
+	type DbItem = {
+		current?: boolean;
+		id: number;
+		title: string;
+	};
+
 	type DbTable = "comments" | "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
+
+	type ImageParams = {
+		alt: string;
+		imageAlias: string;
+		isAmp?: boolean;
+		height: number;
+		width: number;
+	};
 
 	type LayoutDataBase = {
 		isAmp?: boolean;
@@ -90,6 +93,12 @@ declare global {
 		structureTitle: string;
 		telegramId?: number | null;
 		title: string;
+	};
+
+	type RecipeComment = {
+		name: string;
+		text: string;
+		answer: string | null;
 	};
 
 	type RecipeFooter = {
@@ -145,6 +154,7 @@ declare global {
 		asideId?: string;
 		cards: DbItem[];
 		heading: string;
+		isAmp?: boolean;
 		route?: string;
 		structures?: DbItem[];
 		tags?: DbItem[];

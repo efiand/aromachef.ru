@@ -18,13 +18,14 @@ const recipesQuery = sql`
 	ORDER BY title;
 `;
 
-/** @type {(cards: DbItem[]) => string} */
-function getCardsTemplate(cards) {
+/** @type {(cards: DbItem[], isAmp: boolean) => string} */
+function getCardsTemplate(cards, isAmp) {
 	if (!cards.length) {
 		return "";
 	}
 
 	return renderCards({
+		isAmp,
 		alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 		cards,
 	});
@@ -32,7 +33,7 @@ function getCardsTemplate(cards) {
 
 export const searchRoute = {
 	/** @type {RouteMethod} */
-	async GET({ body }) {
+	async GET({ body, isAmp }) {
 		const pattern = (body.q || "").trim();
 
 		/** @type {DbItem[]} */
@@ -44,7 +45,7 @@ export const searchRoute = {
 		const nof = pattern ? cards.length : undefined;
 
 		if (body.fragment !== undefined) {
-			const cardsTemplate = nof ? getCardsTemplate(cards.slice(0, 4)) : html`<p>Ничего не найдено.</p>`;
+			const cardsTemplate = nof ? getCardsTemplate(cards.slice(0, 4), isAmp) : html`<p>Ничего не найдено.</p>`;
 			const buttonTemplate =
 				nof && nof > 4 ? html`<button class="button" type="submit">Все результаты (${nof})</button>` : "";
 			return {
@@ -57,7 +58,7 @@ export const searchRoute = {
 				description: "Ищите рецепты по заголовкам и содержимому.",
 				heading: "Поиск рецептов",
 				pageTemplate: renderPageSection({
-					footerTemplate: renderSearchForm({ nof, value: pattern }) + (pattern ? getCardsTemplate(cards) : ""),
+					footerTemplate: renderSearchForm({ nof, value: pattern }) + (pattern ? getCardsTemplate(cards, isAmp) : ""),
 					title: "Поиск рецептов",
 				}),
 			},

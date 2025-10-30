@@ -1,21 +1,21 @@
+import { renderImage } from "#common/components/image.js";
 import { html } from "#common/utils/mark-template.js";
 
 /** @type {(data: DbItem & CardAdditionals) => string} */
-function renderCard({ alt = "", id, route, title }) {
+function renderCard({ alt = "", id, isAmp, route, title }) {
 	const url = `${route}/${id}`;
+	const imageAlias = `/pictures${url}`;
 
 	return html`
 		<li class="cards__item">
 			<a href="${url}">
-				<img
-					class="image"
-					src="/pictures${url}@1x.webp"
-					srcset="/pictures${url}@2x.webp 2x"
-					width="272"
-					height="204"
-					alt="${alt.replace("[title]", `«${title}»`)}"
-					loading="lazy"
-				>
+				${renderImage({
+					alt: alt.replace("[title]", `«${title}»`),
+					height: 204,
+					imageAlias,
+					isAmp,
+					width: 272,
+				})}
 				<span>${title}</span>
 			</a>
 		</li>
@@ -27,8 +27,8 @@ function renderCard({ alt = "", id, route, title }) {
  *
  * @type {(data?: CardsData) => string}
  */
-export function renderCards({ alt = "", cards = [], className = "", route = "/recipe" } = {}) {
-	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, route })).join("");
+export function renderCards({ alt = "", cards = [], className = "", isAmp, route = "/recipe" } = {}) {
+	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, isAmp, route })).join("");
 
 	return html`<ul class="cards ${className}">${cardsTemplate}</ul>`;
 }

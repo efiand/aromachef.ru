@@ -17,7 +17,7 @@ const structuresQuery = sql`
 
 export const structureIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id }) {
+	async GET({ id, isAmp }) {
 		/** @type {[DbItem[], DbItem[]]} */
 		const [cards, structures] = await Promise.all([processDb(recipesQuery, id), processDb(structuresQuery, id)]);
 
@@ -37,6 +37,7 @@ export const structureIdRoute = {
 					asideHeading: "Разделы",
 					cards,
 					heading,
+					isAmp,
 					structures,
 				}),
 			},

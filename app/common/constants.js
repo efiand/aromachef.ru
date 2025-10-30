@@ -5,12 +5,13 @@ export const PROJECT_TITLE = "АромаШеф";
 export const PROJECT_DESCRIPTION = "Быстрые, вкусные и полезные рецепты с эфирными маслами.";
 
 export const version = {
-	CSS: 4,
+	CSS: 5,
 	JS: 1,
 };
 
 /** @type {Record<string, string>} */
 export const STATIC_MIME_TYPES = {
+	".avif": "image/avif",
 	".js": "application/javascript; charset=utf-8",
 	".css": "text/css; charset=utf-8",
 	".html": "text/html; charset=utf-8",

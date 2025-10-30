@@ -22,7 +22,7 @@ const query = sql`
 
 export const structureRoute = {
 	/** @type {RouteMethod} */
-	async GET() {
+	async GET({ isAmp }) {
 		/** @type {(DbItem & { tag: 0 | 1 })[]} */
 		const structuresAndTags = await processDb(query);
 
@@ -50,6 +50,7 @@ export const structureRoute = {
 					asideId: "tags",
 					cards: structures,
 					heading: "Разделы",
+					isAmp,
 					route: "/structure",
 					tags,
 				}),

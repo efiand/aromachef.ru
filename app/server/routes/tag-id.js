@@ -23,7 +23,7 @@ const tagsQuery = sql`
 
 export const tagIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id }) {
+	async GET({ id, isAmp }) {
 		/** @type {[DbItem[], DbItem[]]} */
 		const [cards, tags] = await Promise.all([processDb(recipesQuery, id), processDb(tagsQuery, id)]);
 
@@ -44,6 +44,7 @@ export const tagIdRoute = {
 					asideHeading: "Теги",
 					cards,
 					heading: `#${heading}`,
+					isAmp,
 					tags,
 				}),
 			},

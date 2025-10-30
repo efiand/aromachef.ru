@@ -8,7 +8,7 @@ const sqlQuery = sql`
 
 export const aboutRoute = {
 	/** @type {RouteMethod} */
-	async GET() {
+	async GET({ isAmp }) {
 		/** @type {StaticPageData[]} */
 		const [{ content, description, heading }] = await processDb(sqlQuery, "/about");
 
@@ -21,6 +21,7 @@ export const aboutRoute = {
 						{
 							content,
 							imageAlias: "/images/about",
+							isAmp,
 						},
 					],
 					title: heading,

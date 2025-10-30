@@ -61,7 +61,7 @@ export const recipeIdRoute = {
 		}
 
 		const { cooking, description, ingredients, structureId, structureTitle, telegramId, title } = recipe;
-		const imagePrefix = `/pictures/recipe/${id}`;
+		const imageAlias = `/pictures/recipe/${id}`;
 
 		return {
 			page: {
@@ -69,16 +69,18 @@ export const recipeIdRoute = {
 					? description.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, "")
 					: `Страница содержит описание рецепта «${title}».`,
 				heading: `${title} | Рецепты`,
-				ogImage: `${imagePrefix}@2x.webp`,
+				ogImage: `${imageAlias}@2x.webp`,
 				pageTemplate: renderPageSection({
 					articles: [
 						{
+							isAmp,
 							content: html`<h2>Состав</h2>${ingredients}`,
-							imageAlias: `${imagePrefix}-ingredients`,
+							imageAlias: `${imageAlias}-ingredients`,
 						},
 						{
+							isAmp,
 							content: html`<h2>Приготовление</h2>${cooking}`,
-							imageAlias: `${imagePrefix}-cooking`,
+							imageAlias: `${imageAlias}-cooking`,
 						},
 					],
 					content: renderRecipeDescription({ description, telegramId }),
