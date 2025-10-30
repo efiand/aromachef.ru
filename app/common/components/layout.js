@@ -32,9 +32,7 @@ export function renderLayout({ isAmp, isDev, pathname, pageTemplate }) {
 
 			<header class="layout__header _container">
 				<a class="layout__logo-link" href="${isAmp ? "/amp" : "/"}" aria-label="На главную">
-					<svg class="layout__logo" width="1.5rem" height="1.5rem" role="img">
-						<use href="/images/aromachef-logo.svg#logo"/>
-					</svg>
+					<img src="/images/aromachef-logo.svg?v2" width="30" height="30" alt="">
 				</a>
 				<ul class="layout__header-list">
 					<li class="layout__header-item">

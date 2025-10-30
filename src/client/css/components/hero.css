@@ -51,3 +51,9 @@
 		font-size: 3rem;
 	}
 }
+
+@media (max-width: 887px) {
+	.hero img {
+		width: 1.6em;
+	}
+}

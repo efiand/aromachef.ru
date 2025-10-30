@@ -124,3 +124,9 @@
 		margin-left: auto;
 	}
 }
+
+@media (max-width: 887px) {
+	.layout__logo-link img {
+		width: 1.5rem;
+	}
+}
