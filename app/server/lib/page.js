@@ -17,8 +17,8 @@ function renderAssets() {
 		? html`
 			<link rel="stylesheet" href="/client/css/critical.css">
 			<script type="importmap">${JSON.stringify(IMPORTMAP)}</script>
-			<script src="/client/dev.js" type="module"></script>
-			<script src="/client/main.js" type="module"></script>
+			<script src="/client/entries/dev.js" type="module"></script>
+			<script src="/client/entries/main.js" type="module"></script>
 		`
 		: html`
 			<link rel="stylesheet" href="/bundles/critical.css?v${version.CSS}">

@@ -46,12 +46,16 @@ function minifyHtmlLiterals() {
 	};
 }
 
-export default defineConfig({
-	input: "src/client/main.js",
-	output: {
-		file: "public/bundles/main.js",
-		format: "iife",
-		minify: true,
-	},
-	plugins: [minifyHtmlLiterals()],
-});
+export default defineConfig(
+	["main", "comments"].map((entryName) =>
+		defineConfig({
+			input: `src/client/entries/${entryName}.js`,
+			output: {
+				file: `public/bundles/${entryName}.js`,
+				format: "iife",
+				minify: true,
+			},
+			plugins: [minifyHtmlLiterals()],
+		}),
+	),
+);

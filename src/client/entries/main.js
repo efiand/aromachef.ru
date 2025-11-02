@@ -1,12 +1,11 @@
-import { initComments } from "#client/components/comments.js";
 import { initSearchDialog } from "#client/components/search-dialog.js";
 import { initSearchInput } from "#client/components/search-input.js";
-import { loadCss, setScrollbarWidth } from "#client/lib/css.js";
-import { version } from "#common/constants.js";
+import { loadCssEntry, setScrollbarWidth } from "#client/lib/css.js";
+import { loadScriptEntry } from "#client/lib/load-script.js";
 
 setScrollbarWidth();
 
-loadCss(`/${window.isDev ? "client/css" : "bundles"}/additional.css?v${version.CSS}`);
+loadCssEntry("additional");
 
 /** @type {NodeListOf<HTMLElement>} */
 const hintedElements = document.querySelectorAll("[aria-label]");
@@ -24,7 +23,7 @@ const searchOpenerElements = document.querySelectorAll("[data-search]");
 // Гидратация диалога поиска
 searchOpenerElements.forEach(initSearchDialog);
 
-/** @type {NodeListOf<HTMLDivElement>} */
-const commentsElements = document.querySelectorAll("[data-comments]");
-// Гидратация блока комментариев
-commentsElements.forEach(initComments);
+// Гидратация блоков комментариев
+if (document.querySelector("[data-comments]")) {
+	loadScriptEntry("comments");
+}
