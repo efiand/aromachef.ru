@@ -10,6 +10,29 @@
 	pointer-events: none;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+	.button--loading {
+		position: relative;
+		color: transparent;
+		background-image: linear-gradient(90deg, var(--color-white) 33.3333%, transparent 50%, var(--color-white) 66.6667%);
+		background-size: 300% 100%;
+		background-clip: text;
+		animation: horisontal-slide 0.6s ease-in-out infinite alternate;
+	}
+
+	.button--loading::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background-color: inherit;
+	}
+
+	.button--loading:disabled {
+		opacity: 1;
+	}
+}
+
 @media (hover: hover) {
 	.button:hover,
 	.button:focus-visible {

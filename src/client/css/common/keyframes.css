@@ -1,0 +1,9 @@
+@keyframes horisontal-slide {
+	0% {
+		background-position: right top;
+	}
+
+	100% {
+		background-position: left top;
+	}
+}
