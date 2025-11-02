@@ -1,6 +1,7 @@
 {
 	"recommendations": [
-		"enhancedjs.html-in-template-string",
+		"biomejs.biome",
+		"bierner.lit-html",
 		"forbeslindesay.vscode-sql-template-literal",
 		"hugo-vrijswijk.vscode-lit-xml",
 		"natizyskunk.sftp",

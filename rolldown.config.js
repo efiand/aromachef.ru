@@ -20,19 +20,18 @@ function minifyHtmlLiterals() {
 		name: "minify-html-literals",
 
 		async transform(code, id) {
-			const htmlTemplateRegex = /html`([\s\S]*?)`|String\.raw`html`([\s\S]*?)``/g;
+			const htmlTemplateRegex = /(html`)([\s\S]*?)`/g;
 
 			let transformedCode = code;
 			let match = htmlTemplateRegex.exec(code);
 
 			while (match !== null) {
-				const fullMatch = match[0];
-				const htmlContent = match[1] || match[2];
+				const [fullMatch, tag, htmlContent] = match;
 
 				try {
 					const minifiedHtml = await htmlMinifier.minify(htmlContent, MINIFIER_CONFIG);
 
-					const minifiedLiteral = fullMatch.replace(htmlContent, minifiedHtml);
+					const minifiedLiteral = fullMatch.replace(htmlContent, minifiedHtml).replace(tag, "`");
 					transformedCode = transformedCode.replace(fullMatch, minifiedLiteral);
 				} catch (error) {
 					console.error(`Ошибка минификации HTML в файле ${id}:`, error);
@@ -42,7 +41,7 @@ function minifyHtmlLiterals() {
 				match = htmlTemplateRegex.exec(code);
 			}
 
-			return transformedCode;
+			return transformedCode.replace(/NonNull\((.*)\);/g, "$1");
 		},
 	};
 }
