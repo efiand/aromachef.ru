@@ -28,7 +28,7 @@ const tagsQuery = sql`
 	ORDER BY t.title;
 `;
 const commentsQuery = sql`
-	SELECT name, text, answer FROM comments
+	SELECT id, name, text, answer FROM comments
 	WHERE recipeId = ? ${isDev ? "" : sql`AND published = 1`}
 	ORDER BY publishedAt DESC;
 `;

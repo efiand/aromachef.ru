@@ -10,12 +10,16 @@
 		"enabled": true
 	},
 	"files": {
-		"ignoreUnknown": true
+		"ignoreUnknown": true,
+		"includes": ["**", "!public/vendors"]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
 		"lineWidth": 120
+	},
+	"javascript": {
+		"globals": ["PetiteVue"]
 	},
 	"linter": {
 		"domains": {

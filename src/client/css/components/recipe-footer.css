@@ -22,11 +22,16 @@
 
 .recipe-footer__comments {
 	width: 100%;
+	min-height: 1.875rem;
 	margin-top: 1rem;
 }
 
 @media (min-width: 888px) {
 	.recipe-footer__text {
 		margin-top: 2rem;
+	}
+
+	.recipe-footer__comments {
+		min-height: 2.5rem;
 	}
 }

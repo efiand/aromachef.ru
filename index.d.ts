@@ -2,6 +2,13 @@ declare global {
 	import type { IncomingMessage, ServerResponse } from "node:http";
 	import type formidable from "formidable";
 
+	declare const PetiteVue: {
+		createApp: (data?: object | (() => object)) => { mount(HTMLElement): void };
+		reactive: <T extends object>(obj: T) => T;
+		nextTick(cb: () => void): void;
+		watchEffect(effect: () => void): void;
+	};
+
 	interface Window {
 		isDev?: boolean;
 	}
@@ -96,6 +103,7 @@ declare global {
 	};
 
 	type RecipeComment = {
+		id: number;
 		name: string;
 		text: string;
 		answer: string | null;
