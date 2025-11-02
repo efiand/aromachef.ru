@@ -11,7 +11,7 @@ const SEARCH_TEMPLATE = html`
 /** @type {(ampPrefix: string) => string} */
 const renderAboutTemplate = (ampPrefix) => html`
 	<li class="layout__footer-item">
-		<a href="${ampPrefix}/about">Обо мне</a>
+		<a href="${ampPrefix}/about" rel="author">Обо мне</a>
 	</li>
 `;
 
