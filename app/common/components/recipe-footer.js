@@ -5,7 +5,7 @@ import { html } from "#common/utils/mark-template.js";
 /** @type {(params: RecipeFooter) => string} */
 export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags }) {
 	return html`
-		<div class="recipe-footer">
+		<footer class="recipe-footer">
 			${renderTags({ tags })}
 			<a class="recipe-footer__structure-link" href="/structure/${structure.id}" rel="toc">
 				${structure.title}
@@ -23,7 +23,7 @@ export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags
 						`
 					: ""
 			}
-			${isAmp ? "" : html`<div class="recipe-footer__comments comments"></div>`}
-		</div>
+			${isAmp ? "" : html`<div class="recipe-footer__comments" data-comments></div>`}
+		</footer>
 	`;
 }

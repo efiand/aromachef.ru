@@ -1,5 +1,5 @@
-import { openDialog } from "#common/components/dialog.js";
-import { initSearchInput } from "#common/components/search-input.js";
+import { openDialog } from "#client/components/dialog.js";
+import { initSearchInput } from "#client/components/search-input.js";
 import { debounce } from "#common/utils/debounce.js";
 import { html } from "#common/utils/mark-template.js";
 import { NonNull } from "#common/utils/non-null.js";
