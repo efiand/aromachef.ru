@@ -16,13 +16,6 @@
 .comments__toggler {
 	align-self: end;
 	justify-self: end;
-	padding: 0;
-	color: var(--color-eggplant);
-	border-bottom: 1px dashed;
-}
-
-.comments__toggler:hover {
-	color: var(--color-green);
 }
 
 .comments__body {

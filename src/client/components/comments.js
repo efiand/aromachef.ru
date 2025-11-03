@@ -54,7 +54,7 @@ const TEMPLATE = html`
 	<div class="comments" :class="{ 'comments--opened': opened }" @vue:mounted="mounted">
 		<h2 class="comments__heading">Комментарии</h2>
 		<button
-			class="comments__toggler"
+			class="comments__toggler icon-button icon-button--comment"
 			:aria-expanded="opened"
 			aria-controls="comments-body"
 			@click="opened = !opened"

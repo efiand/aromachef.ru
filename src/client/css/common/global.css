@@ -14,7 +14,7 @@ html {
 
 	/* Критические иконки */
 	--icon-arrow: url("../../icons/arrow.svg");
-	--icon-tg: url("../../icons/tg.svg");
+	--icon-social-tg: url("../../icons/social-tg.svg");
 
 	height: 100%;
 	font-size: 16px;

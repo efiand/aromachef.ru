@@ -25,13 +25,15 @@ const renderImportantTemplate = (ampPrefix) => html`
 /** @type {(data: LayoutDataBase) => string} */
 export function renderLayout({ isAmp, isDev, pathname, pageTemplate }) {
 	const ampPrefix = isAmp ? "/amp" : "";
+	const isIndex = pathname === "/";
+	const ariaCurrentIndex = isIndex ? 'aria-current="page"' : "";
 
 	return html`
-		<body class="layout ${pathname === "/" ? "" : "layout--inner"}">
+		<body class="layout ${isIndex ? "" : "layout--inner"}">
 			${isAmp || isDev ? "" : YANDEX_METRIKA_TEMPLATE}
 
 			<header class="layout__header _container">
-				<a class="layout__logo-link" href="${isAmp ? "/amp" : "/"}" aria-label="На главную">
+				<a class="layout__logo-link" href="${isAmp ? "/amp" : "/"}" aria-label="На главную" ${ariaCurrentIndex}>
 					<img src="/images/aromachef-logo.svg?v2" width="30" height="30" alt="">
 				</a>
 				<ul class="layout__header-list">
@@ -46,7 +48,7 @@ export function renderLayout({ isAmp, isDev, pathname, pageTemplate }) {
 				</ul>
 			</header>
 
-			${pathname === "/" ? HERO_TEMPLATE : ""}
+			${isIndex ? HERO_TEMPLATE : ""}
 
 			<main class="layout__main _container">${pageTemplate}</main>
 
