@@ -19,7 +19,7 @@
 		"lineWidth": 120
 	},
 	"javascript": {
-		"globals": ["PetiteVue", "reef"]
+		"globals": ["PetiteVue"]
 	},
 	"linter": {
 		"domains": {

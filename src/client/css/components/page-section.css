@@ -65,3 +65,22 @@
 		margin-top: 0.6rem;
 	}
 }
+
+@media (min-width: 1480px) {
+	.page-section__header--with-nav {
+		grid-template-areas: "heading heading heading";
+	}
+
+	.page-section__nav-link {
+		position: fixed;
+		top: 3rem;
+	}
+
+	.page-section__nav-link[rel="prev"] {
+		left: 2rem;
+	}
+
+	.page-section__nav-link[rel="next"] {
+		right: 2rem;
+	}
+}
