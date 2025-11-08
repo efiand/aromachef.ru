@@ -1,16 +1,15 @@
-import { renderStructure } from "#common/components/structure.js";
-import { sql } from "#common/utils/mark-template.js";
+import { renderStructure } from "#common/templates/structure.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 
-const recipesQuery = sql`
-	SELECT id, title FROM recipes WHERE structureId = ? ${isDev ? "" : sql`AND published = 1`}
+const recipesQuery = /* sql */ `
+	SELECT id, title FROM recipes WHERE structureId = ? ${isDev ? "" : /* sql */ `AND published = 1`}
 	ORDER BY title;
 `;
-const structuresQuery = sql`
+const structuresQuery = /* sql */ `
 	SELECT id, title, (id = ?) AS current FROM structures s
 		WHERE (
-			SELECT count(id) FROM recipes WHERE structureId = s.id ${isDev ? "" : sql`AND published = 1`}
+			SELECT count(id) FROM recipes WHERE structureId = s.id ${isDev ? "" : /* sql */ `AND published = 1`}
 		) > 0
 	ORDER BY title;
 `;

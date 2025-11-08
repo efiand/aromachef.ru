@@ -1,5 +1,3 @@
-import { html } from "#common/utils/mark-template.js";
-
 /** @type {(recipe: { description: string; telegramId?: number | null }) => string} */
 export function renderRecipeDescription({ description, telegramId }) {
 	if (!telegramId) {
@@ -8,7 +6,7 @@ export function renderRecipeDescription({ description, telegramId }) {
 
 	const url = `https://t.me/aroma_chef/${telegramId}`;
 
-	return html`
+	return /* html */ `
 		${description}
 		<p class="_small">
 			Посмотреть видеорецепт можно в моём

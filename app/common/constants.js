@@ -5,8 +5,8 @@ export const PROJECT_TITLE = "АромаШеф";
 export const PROJECT_DESCRIPTION = "Быстрые, вкусные и полезные рецепты с эфирными маслами.";
 
 export const version = {
-	CSS: 9,
-	JS: 3,
+	CSS: 11,
+	JS: 5,
 };
 
 /** @type {Record<string, string>} */
@@ -24,5 +24,8 @@ export const STATIC_MIME_TYPES = {
 	".woff2": "font/woff2",
 };
 
-/** @type {Set<string>} */
 export const staticExtensions = new Set(Object.keys(STATIC_MIME_TYPES));
+
+export const STATIC_PAGES = ["/404", "/update"];
+
+export const noAmpRoutes = new Set(["/api/pages", "/sitemap.xml", "/search", ...STATIC_PAGES]);

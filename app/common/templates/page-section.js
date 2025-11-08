@@ -1,5 +1,4 @@
-import { renderArticle } from "#common/components/article.js";
-import { html } from "#common/utils/mark-template.js";
+import { renderArticle } from "#common/templates/article.js";
 
 /** @type {(article: ArticleData, i: number) => string} */
 function mapArticle(article, i) {
@@ -11,7 +10,6 @@ function mapArticle(article, i) {
 
 /**
  * Генерирует HTML-шаблон секции страницы
- *
  * @type {(data: PageSectionData) => string}
  */
 export function renderPageSection({
@@ -23,15 +21,15 @@ export function renderPageSection({
 	prev,
 	title,
 }) {
-	return html`
+	return /* html */ `
 		<section class="page-section ${className}">
 			<header class="page-section__header ${prev ? "page-section__header--with-nav" : ""}">
-				${prev ? html`<a class="page-section__nav-link" href="${prev}" rel="prev" aria-label="Предыдущий рецепт"></a>` : ""}
+				${prev ? /* html */ `<a class="page-section__nav-link" href="${prev}" rel="prev" aria-label="Предыдущий рецепт"></a>` : ""}
 				<h1 class="page-section__title">${title}</h1>
-				${next ? html`<a class="page-section__nav-link" href="${next}" rel="next" aria-label="Следующий рецепт"></a>` : ""}
+				${next ? /* html */ `<a class="page-section__nav-link" href="${next}" rel="next" aria-label="Следующий рецепт"></a>` : ""}
 			</header>
 
-			${content ? html`<div class="content">${content}</div>` : ""}
+			${content ? /* html */ `<div class="content">${content}</div>` : ""}
 
 			${articles.map(mapArticle).join("")}
 

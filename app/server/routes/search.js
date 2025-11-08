@@ -1,11 +1,10 @@
-import { renderCards } from "#common/components/cards.js";
-import { renderPageSection } from "#common/components/page-section.js";
-import { renderSearchForm } from "#common/components/search-form.js";
-import { html, sql } from "#common/utils/mark-template.js";
+import { renderCards } from "#common/templates/cards.js";
+import { renderPageSection } from "#common/templates/page-section.js";
+import { renderSearchForm } from "#common/templates/search-form.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 
-const recipesQuery = sql`
+const recipesQuery = /* sql */ `
 	SELECT
 		id,
 		REPLACE(title, ?, CONCAT('<mark>', ?, '</mark>')) as title
@@ -14,7 +13,7 @@ const recipesQuery = sql`
 		OR LOWER(description) LIKE CONCAT('%', LOWER(?), '%')
 		OR LOWER(ingredients) LIKE CONCAT('%', LOWER(?), '%')
 		OR LOWER(cooking) LIKE CONCAT('%', LOWER(?), '%'))
-		${isDev ? "" : sql`AND published = 1`}
+		${isDev ? "" : /* sql */ `AND published = 1`}
 	ORDER BY title;
 `;
 
@@ -45,9 +44,11 @@ export const searchRoute = {
 		const nof = pattern ? cards.length : undefined;
 
 		if (body.fragment !== undefined) {
-			const cardsTemplate = nof ? getCardsTemplate(cards.slice(0, 4), isAmp) : html`<p>Ничего не найдено.</p>`;
+			const cardsTemplate = nof ? getCardsTemplate(cards.slice(0, 4), isAmp) : /* html */ `<p>Ничего не найдено.</p>`;
 			const buttonTemplate =
-				nof && nof > 4 ? html`<button class="button" type="submit">Все результаты (${nof})</button>` : "";
+				nof && nof > 4
+					? /* html */ `<a class="button" href="/search?q=${pattern}" data-goto>Все результаты (${nof})</a>`
+					: "";
 			return {
 				template: cardsTemplate + buttonTemplate,
 			};

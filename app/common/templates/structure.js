@@ -1,11 +1,9 @@
-import { renderCards } from "#common/components/cards.js";
-import { renderStructures } from "#common/components/structures.js";
-import { renderTags } from "#common/components/tags.js";
-import { html } from "#common/utils/mark-template.js";
+import { renderCards } from "#common/templates/cards.js";
+import { renderStructures } from "#common/templates/structures.js";
+import { renderTags } from "#common/templates/tags.js";
 
 /**
  * Генерирует HTML-шаблон списка карточек с боковым меню
- *
  * @type {(data: StructureData) => string}
  */
 export function renderStructure({
@@ -28,7 +26,7 @@ export function renderStructure({
 
 	const id = asideId ? `id="${asideId}"` : "";
 
-	return html`
+	return /* html */ `
 		<section class="structure">
 			<div>
 				<h1 class="structure__heading">${heading}</h1>

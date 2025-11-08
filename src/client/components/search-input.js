@@ -1,26 +1,15 @@
-import { html } from "#common/utils/mark-template.js";
-import { NonNull } from "#common/utils/non-null.js";
-
-const BUTTON_TEMPLATE = html`<button class="search-input__button" type="reset" aria-label="Очистить"></button>`;
+import { getElement } from "#client/lib/get-element.js";
 
 /** @type {ComponentInitiator} */
-export function initSearchInput(rootElement) {
-	/** @type {!HTMLInputElement} */
-	const inputElement = NonNull(rootElement.querySelector("input"));
+export function initSearchInput(element) {
+	getElement("button", element).addEventListener("click", reset);
+}
 
-	inputElement.classList.add("search-input__input");
-	inputElement.autocomplete = "off";
-	inputElement.placeholder = inputElement.ariaLabel || "Введите запрос";
-
-	rootElement.insertAdjacentHTML("beforeend", BUTTON_TEMPLATE);
-
-	// Если изначальное значение было, то ресет кастомный
-	if (inputElement.value) {
-		rootElement.querySelector("button")?.addEventListener("click", (event) => {
-			event.preventDefault();
-			inputElement.value = "";
-		});
+/** @param {PointerEvent} event */
+function reset({ target }) {
+	if (target instanceof HTMLButtonElement && target.previousElementSibling instanceof HTMLInputElement) {
+		target.previousElementSibling.value = "";
+		target.previousElementSibling.focus();
+		target.dispatchEvent(new CustomEvent("clear-search", { bubbles: true }));
 	}
-
-	rootElement.dataset.ready = "";
 }

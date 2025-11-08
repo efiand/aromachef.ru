@@ -7,6 +7,7 @@ import amphtmlValidator from "amphtml-validator";
 import { XMLValidator } from "fast-xml-parser";
 import { HtmlValidate } from "html-validate";
 import { lintBem } from "posthtml-bem-linter";
+import { STATIC_PAGES } from "#common/constants.js";
 import { host } from "#server/constants.js";
 import { createApp } from "#server/lib/app.js";
 
@@ -25,7 +26,10 @@ let ampValidator;
 let markups = [];
 
 /** @type {string[]} */
-let pages = [];
+const pages = [...STATIC_PAGES, "/search"];
+
+/** @type {string[]} */
+let ampPages = [];
 
 /** @type {import("node:http").Server | undefined} */
 let server;
@@ -51,9 +55,9 @@ before(async () => {
 		});
 	}
 
-	if (!pages.length) {
-		pages = await fetch(`${host}/api/pages`).then((res) => res.json());
-		pages.push("/404.html", "/update.html");
+	if (!ampPages.length) {
+		ampPages = await fetch(`${host}/api/pages`).then((res) => res.json());
+		pages.push(...ampPages);
 	}
 
 	if (!markups.length) {
@@ -102,7 +106,7 @@ test("All AMP versions have valid AMP markup", async () => {
 	}
 
 	await Promise.all(
-		pages.map(async (page) => {
+		ampPages.map(async (page) => {
 			if (page.endsWith(".html")) {
 				return;
 			}

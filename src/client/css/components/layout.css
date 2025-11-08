@@ -1,20 +1,16 @@
 .layout {
-	position: relative;
+	position: fixed;
+	inset: 0;
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-}
-
-.layout--inner {
-	padding-top: 2.5rem;
+	overflow-y: scroll;
 }
 
 .layout__header {
 	--gap: 1rem;
-	position: fixed;
+	position: sticky;
 	top: 0;
-	right: 0;
-	left: 0;
 	z-index: 1;
 	display: flex;
 	gap: var(--gap);

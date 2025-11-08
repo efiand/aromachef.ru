@@ -1,10 +1,9 @@
-import { renderStructure } from "#common/components/structure.js";
-import { sql } from "#common/utils/mark-template.js";
+import { renderStructure } from "#common/templates/structure.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 
-const queryCondition = isDev ? "" : sql`AND published = 1`;
-const query = sql`
+const queryCondition = isDev ? "" : /* sql */ `AND published = 1`;
+const query = /* sql */ `
 	SELECT id, title, 0 AS tag FROM structures s
 		WHERE (
 			SELECT count(id) FROM recipes WHERE structureId = s.id ${queryCondition}

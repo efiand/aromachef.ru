@@ -1,7 +1,6 @@
 import { PROJECT_TITLE } from "#common/constants.js";
-import { html } from "#common/utils/mark-template.js";
 
-export const HERO_TEMPLATE = html`
+export const HERO_TEMPLATE = /* html */ `
 	<div class="hero">
 		<p class="hero__heading">
 			<img src="/images/aromachef-logo.svg?v2" width="96" height="96" alt="">

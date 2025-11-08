@@ -1,5 +1,4 @@
 import { hydrate } from "#client/lib/hydrate.js";
-import { html } from "#common/utils/mark-template.js";
 
 const data = {
 	/** @type {RecipeComment[]} */
@@ -50,7 +49,7 @@ const data = {
 	text: "",
 };
 
-const TEMPLATE = html`
+const TEMPLATE = /* html */ `
 	<div class="comments" :class="{ 'comments--opened': opened }" @vue:mounted="mounted">
 		<h2 class="comments__heading">Комментарии</h2>
 		<button
@@ -117,7 +116,7 @@ const TEMPLATE = html`
 	</div>
 `;
 
-/** @type {(element: HTMLDivElement) => Promise<void>} */
+/** @param {HTMLElement} element */
 export async function initComments(element) {
 	await data.fetchComments();
 	hydrate(element, data, TEMPLATE);

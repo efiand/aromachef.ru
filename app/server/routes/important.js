@@ -1,8 +1,7 @@
-import { renderPageSection } from "#common/components/page-section.js";
-import { sql } from "#common/utils/mark-template.js";
+import { renderPageSection } from "#common/templates/page-section.js";
 import { processDb } from "#server/lib/db.js";
 
-const sqlQuery = sql`
+const sqlQuery = /* sql */ `
 	SELECT content, description, title AS heading FROM staticPages WHERE pathname = ?;
 `;
 

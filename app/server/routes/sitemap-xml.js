@@ -1,10 +1,9 @@
 import { BASE_URL } from "#common/constants.js";
-import { sql, xml } from "#common/utils/mark-template.js";
 import { processDb } from "#server/lib/db.js";
 
 const SERVICE_PAGES = ["", "/structure"];
 
-const query = sql`
+const query = /* sql */ `
 	SELECT
 		CONCAT('${BASE_URL}/structure/', id) AS loc,
 		(
@@ -76,12 +75,12 @@ function getChangefreq(lastmod) {
 function renderPage({ lastmod, loc, priority }) {
 	const changefreq = getChangefreq(lastmod);
 
-	return xml`
+	return /* xml */ `
 		<url>
 			<loc>${loc}</loc>
-			${priority ? xml`<priority>${priority}</priority>` : ""}
-			${changefreq ? xml`<changefreq>${changefreq}</changefreq>` : ""}
-			${lastmod ? xml`<lastmod>${lastmod}</lastmod>` : ""}
+			${priority ? /* xml */ `<priority>${priority}</priority>` : ""}
+			${changefreq ? /* xml */ `<changefreq>${changefreq}</changefreq>` : ""}
+			${lastmod ? /* xml */ `<lastmod>${lastmod}</lastmod>` : ""}
 		</url>
 	`;
 }
@@ -99,7 +98,7 @@ export const sitemapXmlRoute = {
 
 		return {
 			contentType: "application/xml",
-			template: xml`
+			template: /* xml */ `
 				<?xml version="1.0" encoding="UTF-8" ?>
 				<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="https://www.w3.org/1999/xhtml">
 					${pages.map(renderPage).join("")}

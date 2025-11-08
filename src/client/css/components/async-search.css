@@ -1,12 +1,12 @@
-.search-dialog {
+.async-search {
 	display: grid;
 	gap: 2rem;
 }
 
-.search-dialog__result {
+.async-search__result {
 	display: contents;
 }
 
-.search-dialog__result > button {
+.async-search__result [data-goto] {
 	justify-self: center;
 }

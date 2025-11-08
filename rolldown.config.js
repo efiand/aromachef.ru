@@ -1,18 +1,8 @@
-import htmlMinifier from "html-minifier-terser";
 import { defineConfig } from "rolldown";
-
-const MINIFIER_CONFIG = {
-	caseSensitive: true,
-	collapseWhitespace: true,
-	conservativeCollapse: false,
-	removeAttributeQuotes: true,
-	removeComments: true,
-	removeEmptyAttributes: true,
-};
+import { minifyHtml } from "#server/lib/minify-html.js";
 
 /**
  * Функция для минификации HTML в шаблонных литералах
- *
  * @type {() => import('rolldown').Plugin}
  */
 function minifyHtmlLiterals() {
@@ -20,18 +10,18 @@ function minifyHtmlLiterals() {
 		name: "minify-html-literals",
 
 		async transform(code, id) {
-			const htmlTemplateRegex = /(html`)([\s\S]*?)`/g;
+			const htmlTemplateRegex = /\/\*\s*html\s*\*\/\s*`([\s\S]*?)`/g;
 
 			let transformedCode = code;
 			let match = htmlTemplateRegex.exec(code);
 
 			while (match !== null) {
-				const [fullMatch, tag, htmlContent] = match;
+				const [fullMatch, htmlContent] = match;
 
 				try {
-					const minifiedHtml = await htmlMinifier.minify(htmlContent, MINIFIER_CONFIG);
+					const minifiedHtml = await minifyHtml(htmlContent);
 
-					const minifiedLiteral = fullMatch.replace(htmlContent, minifiedHtml).replace(tag, "`");
+					const minifiedLiteral = fullMatch.replace(htmlContent, minifiedHtml);
 					transformedCode = transformedCode.replace(fullMatch, minifiedLiteral);
 				} catch (error) {
 					console.error(`Ошибка минификации HTML в файле ${id}:`, error);
@@ -41,7 +31,7 @@ function minifyHtmlLiterals() {
 				match = htmlTemplateRegex.exec(code);
 			}
 
-			return transformedCode.replace(/NonNull\((.*)\);/g, "$1");
+			return transformedCode;
 		},
 	};
 }

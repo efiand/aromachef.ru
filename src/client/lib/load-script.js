@@ -7,7 +7,6 @@ const cache = new Map();
 /**
  * Загружает скрипт по URL только один раз.
  * Возвращает Promise, который резолвится, когда скрипт готов.
- *
  * @type {(src: string, options?: { async?: boolean; defer?: boolean; type?: string }) => Promise<HTMLScriptElement>}
  */
 export function loadScript(src, { async = true, defer = true, type = "" } = {}) {

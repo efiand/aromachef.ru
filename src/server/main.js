@@ -9,7 +9,6 @@ let sseData = "reload";
 
 /**
  * Server Sent Events
- *
  * @type {(res: RouteResponse) => void}
  */
 function sendReload(res) {

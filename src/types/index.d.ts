@@ -50,7 +50,7 @@ declare global {
 
 	type Changefreq = "daily" | "weekly" | "monthly" | "yearly" | undefined;
 
-	type ComponentInitiator = (element: HTMLElement) => void;
+	type ComponentInitiator = (element: HTMLElement) => void | Promise<void>;
 
 	type DbItem = {
 		current?: boolean;

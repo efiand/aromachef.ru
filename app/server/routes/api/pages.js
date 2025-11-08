@@ -1,7 +1,6 @@
-import { sql } from "#common/utils/mark-template.js";
 import { processDb } from "#server/lib/db.js";
 
-const query = sql`
+const query = /* sql */ `
 	SELECT CONCAT('/structure/', id) AS url FROM structures s
 		WHERE (
 			SELECT count(id) FROM recipes WHERE structureId = s.id AND published = 1
@@ -30,7 +29,7 @@ export const pagesApiRoute = {
 		/** @type {string[]} */
 		const pages = rawPages.map(({ url }) => url);
 
-		pages.push("/", "/search", "/structure");
+		pages.push("/", "/structure");
 
 		return {
 			contentType: "application/json",

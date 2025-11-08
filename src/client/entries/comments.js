@@ -1,6 +1,4 @@
 import { initComments } from "#client/components/comments.js";
+import { init } from "#client/lib/init.js";
 
-/** @type {NodeListOf<HTMLDivElement>} */
-const commentsElements = document.querySelectorAll("[data-comments]");
-// Гидратация блока комментариев
-commentsElements.forEach(initComments);
+init("[data-comments]", initComments);

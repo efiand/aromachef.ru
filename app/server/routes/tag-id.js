@@ -1,16 +1,15 @@
-import { renderStructure } from "#common/components/structure.js";
-import { sql } from "#common/utils/mark-template.js";
-import { capitalize } from "#common/utils/text.js";
+import { capitalize } from "#common/lib/text.js";
+import { renderStructure } from "#common/templates/structure.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
 
-const queryCondition = isDev ? "" : sql`AND r.published = 1`;
-const recipesQuery = sql`
+const queryCondition = isDev ? "" : /* sql */ `AND r.published = 1`;
+const recipesQuery = /* sql */ `
 	SELECT r.id, title FROM recipes r JOIN recipesTags rt
 	WHERE rt.recipeId = r.id AND rt.tagId = ? ${queryCondition}
 	ORDER BY title;
 `;
-const tagsQuery = sql`
+const tagsQuery = /* sql */ `
 	SELECT id, title, (id = ?) AS current FROM tags
 		WHERE (
 			SELECT count(r.id) FROM recipes r WHERE r.id IN (

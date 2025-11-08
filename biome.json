@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.4/schema.json",
 	"assist": {
 		"actions": {
 			"source": {
@@ -11,7 +11,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!public/vendors"]
+		"includes": ["**", "!public"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -19,7 +19,7 @@
 		"lineWidth": 120
 	},
 	"javascript": {
-		"globals": ["PetiteVue"]
+		"globals": ["PetiteVue", "reef"]
 	},
 	"linter": {
 		"domains": {

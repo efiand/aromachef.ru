@@ -36,6 +36,7 @@
 @media (hover: hover) {
 	.button:hover,
 	.button:focus-visible {
+		text-decoration: none;
 		background-color: var(--color-eggplant);
 	}
 }

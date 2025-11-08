@@ -1,4 +1,3 @@
-import { sql } from "#common/utils/mark-template.js";
 import { processDb } from "#server/lib/db.js";
 import { upload } from "#server/lib/yandex-disk.js";
 
@@ -16,7 +15,7 @@ const SQL_TABLES_FOR_DELETING = [
 	"staticPages",
 ];
 
-const SQL_PREPEND = SQL_TABLES_FOR_DELETING.map((table) => sql`DELETE FROM ${table};\n`).join("");
+const SQL_PREPEND = SQL_TABLES_FOR_DELETING.map((table) => /* sql */ `DELETE FROM ${table};\n`).join("");
 
 /** @type {(tableName: DbTable, rows: object[]) => string} */
 function createEntityDump(tableName, rows) {
@@ -26,11 +25,13 @@ function createEntityDump(tableName, rows) {
 	const values = rows.map((row) => Object.values(row).map(stringifyCell).join(", ")).join("),\n(");
 	const columns = Object.keys(rows[0]).join(", ");
 
-	return sql`INSERT INTO ${tableName} (${columns}) VALUES\n(${values});`;
+	return /* sql */ `INSERT INTO ${tableName} (${columns}) VALUES\n(${values});`;
 }
 
 export async function dump() {
-	const entities = await Promise.all(SQL_TABLES.map((table) => processDb(sql`SELECT * FROM ${table} ORDER BY id`)));
+	const entities = await Promise.all(
+		SQL_TABLES.map((table) => processDb(/* sql */ `SELECT * FROM ${table} ORDER BY id`)),
+	);
 
 	const dumpedEntities = entities.map((entity, i) => createEntityDump(SQL_TABLES[i], entity)).filter(Boolean);
 	const dataJson = entities.reduce((acc, entity, i) => {
@@ -47,7 +48,6 @@ export async function dump() {
 }
 
 /**
- *
  * @param {boolean | Buffer | Date | null | number | string} value
  * @return {string}
  */

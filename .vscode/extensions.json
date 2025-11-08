@@ -1,11 +1,3 @@
 {
-	"recommendations": [
-		"biomejs.biome",
-		"bierner.lit-html",
-		"forbeslindesay.vscode-sql-template-literal",
-		"hugo-vrijswijk.vscode-lit-xml",
-		"natizyskunk.sftp",
-		"oouo-diogo-perdigao.docthis",
-		"editorconfig.editorconfig"
-	]
+	"recommendations": ["biomejs.biome", "editorconfig.editorconfig", "tobermory.es6-string-html"]
 }

@@ -1,7 +1,6 @@
-import { renderLayout } from "#common/components/layout.js";
 import { BASE_URL, PROJECT_TITLE, version } from "#common/constants.js";
-import { renderDocumentTitle } from "#common/lib/title.js";
-import { html } from "#common/utils/mark-template.js";
+import { renderLayout } from "#common/templates/layout.js";
+import { renderDocumentTitle } from "#common/templates/title.js";
 import { isDev } from "#server/constants.js";
 import { renderAmpAssets } from "#server/lib/amp.js";
 
@@ -14,13 +13,13 @@ const IMPORTMAP = {
 
 function renderAssets() {
 	return isDev
-		? html`
+		? /* html */ `
 			<link rel="stylesheet" href="/client/css/critical.css">
 			<script type="importmap">${JSON.stringify(IMPORTMAP)}</script>
 			<script src="/client/entries/dev.js" type="module"></script>
 			<script src="/client/entries/main.js" type="module"></script>
 		`
-		: html`
+		: /* html */ `
 			<link rel="stylesheet" href="/bundles/critical.css?v${version.CSS}">
 			<script src="/bundles/main.js?v${version.JS}" defer></script>
 		`;
@@ -29,16 +28,16 @@ function renderAssets() {
 /** @type {(pathname: string, isAmp: boolean) => string} */
 function renderUrlMeta(pathname, isAmp) {
 	if (!pathname) {
-		return html`<meta name="robots" content="noindex, nofollow">`;
+		return /* html */ `<meta name="robots" content="noindex, nofollow">`;
 	}
 
 	let ampTemplate = "";
 	if (!isAmp) {
 		const ampUrl = pathname === "/" ? "/amp" : `/amp${pathname}`;
-		ampTemplate = html`<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
+		ampTemplate = /* html */ `<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
 	}
 
-	return html`
+	return /* html */ `
 		${ampTemplate}
 		<link rel="canonical" href="${BASE_URL}${pathname}">
 		<meta property="og:url" content="${pathname}">
@@ -58,7 +57,7 @@ export async function renderPage({
 	const title = renderDocumentTitle(heading);
 	const assetsTemplate = isAmp ? await renderAmpAssets(pageTemplate.includes("<form")) : renderAssets();
 
-	const template = html`
+	const template = /* html */ `
 		<!DOCTYPE html>
 		<html lang="ru" prefix="og: http://ogp.me/ns#" ${isAmp ? "⚡" : ""}>
 		<head>

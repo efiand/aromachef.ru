@@ -1,9 +1,10 @@
 import { createServer } from "node:http";
-import { html } from "#common/utils/mark-template.js";
+import { noAmpRoutes } from "#common/constants.js";
+import { renderErrorPage } from "#common/templates/errorPage.js";
 import { host, isDev, port } from "#server/constants.js";
 import { renderPage } from "#server/lib/page.js";
 import { getRequestBody } from "#server/lib/request.js";
-import { noAmpRoutes, routes } from "#server/routes/index.js";
+import { routes } from "#server/routes/index.js";
 
 /** @type {(error: unknown, href: string) => Promise<{ statusCode: number; template: string }>} */
 async function handleError(error, href) {
@@ -26,13 +27,7 @@ async function handleError(error, href) {
 	const template = await renderPage({
 		description: "Страница ошибок.",
 		heading,
-		pageTemplate: html`
-			<div class="content">
-				<h1>${heading}</h1>
-				<p>${message}</p>
-				<p><a href="mailto:efiand@ya.ru?subject=aromachef">Свяжитесь с разработчиком</a> или напишите в <a href="https://t.me/aroma_chef_bot">telegram-бот</a>.</p>
-			</div>
-		`,
+		pageTemplate: renderErrorPage(heading, message),
 	});
 
 	return { statusCode, template };

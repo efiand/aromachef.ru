@@ -1,8 +1,6 @@
-import { html } from "#common/utils/mark-template.js";
-
 /** @type {(structure: DbItem) => string} */
 function renderStructureItem({ current, id, title }) {
-	return html`
+	return /* html */ `
 		<li class="structures__item">
 			<a class="structures__link" href="/structure/${id}" ${current ? 'aria-current="page"' : ""}>
 				${title}
@@ -13,11 +11,10 @@ function renderStructureItem({ current, id, title }) {
 
 /**
  * Генерирует HTML-шаблон списка тегов
- *
  * @type {(data: { className?: string; structures: DbItem[] }) => string}
  */
 export function renderStructures({ className = "", structures }) {
-	return html`
+	return /* html */ `
 		<ul class="structures ${className}">
 			${structures.map(renderStructureItem).join("")}
 		</ul>

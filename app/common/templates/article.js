@@ -1,14 +1,13 @@
-import { renderImage } from "#common/components/image.js";
-import { html } from "#common/utils/mark-template.js";
+import { renderImage } from "#common/templates/image.js";
 
 /** @type {(article: ArticleData) => string} */
 export function renderArticle({ alt = "", content = "", imageAlias, isAmp, reverse = false, title = "" }) {
 	const modifier = reverse ? "article--reverse" : "";
 
-	return html`
+	return /* html */ `
 		<div class="article ${modifier}">
 			<div class="content">
-				${title ? html`<h2>${title}</h2>` : ""}
+				${title ? /* html */ `<h2>${title}</h2>` : ""}
 				${content}
 			</div>
 

@@ -1,12 +1,11 @@
-import { renderImage } from "#common/components/image.js";
-import { html } from "#common/utils/mark-template.js";
+import { renderImage } from "#common/templates/image.js";
 
 /** @type {(data: DbItem & CardAdditionals) => string} */
 function renderCard({ alt = "", id, isAmp, route, title }) {
 	const url = `${route}/${id}`;
 	const imageAlias = `/pictures${url}`;
 
-	return html`
+	return /* html */ `
 		<li class="cards__item">
 			<a href="${url}">
 				${renderImage({
@@ -24,11 +23,10 @@ function renderCard({ alt = "", id, isAmp, route, title }) {
 
 /**
  * Генерирует HTML-шаблон списка карточек
- *
  * @type {(data?: CardsData) => string}
  */
 export function renderCards({ alt = "", cards = [], className = "", isAmp, route = "/recipe" } = {}) {
 	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, isAmp, route })).join("");
 
-	return html`<ul class="cards ${className}">${cardsTemplate}</ul>`;
+	return /* html */ `<ul class="cards ${className}">${cardsTemplate}</ul>`;
 }

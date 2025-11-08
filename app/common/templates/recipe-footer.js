@@ -1,10 +1,9 @@
-import { renderCards } from "#common/components/cards.js";
-import { renderTags } from "#common/components/tags.js";
-import { html } from "#common/utils/mark-template.js";
+import { renderCards } from "#common/templates/cards.js";
+import { renderTags } from "#common/templates/tags.js";
 
 /** @type {(params: RecipeFooter) => string} */
 export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags }) {
-	return html`
+	return /* html */ `
 		<footer class="recipe-footer">
 			${renderTags({ tags })}
 			<a class="recipe-footer__structure-link" href="/structure/${structure.id}" rel="toc">
@@ -12,7 +11,7 @@ export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags
 			</a>
 			${
 				relatedRecipes.length
-					? html`
+					? /* html */ `
 							<p class="recipe-footer__text">Если понравился этот рецепт, попробуйте также:</p>
 							${renderCards({
 								alt: "На фото изображено блюдо, приготовленное по связанному рецепту [title], в миниатюре.",
@@ -23,7 +22,7 @@ export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags
 						`
 					: ""
 			}
-			${isAmp ? "" : html`<div class="recipe-footer__comments" data-comments></div>`}
+			${isAmp ? "" : /* html */ `<div class="recipe-footer__comments" data-comments></div>`}
 		</footer>
 	`;
 }
