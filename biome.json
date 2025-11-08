@@ -18,9 +18,6 @@
 		"indentStyle": "tab",
 		"lineWidth": 120
 	},
-	"javascript": {
-		"globals": ["PetiteVue"]
-	},
 	"linter": {
 		"domains": {
 			"project": "all"
