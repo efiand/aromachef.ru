@@ -12,7 +12,7 @@ const queryCondition = isDev ? "" : /* sql */ `AND r.published = 1`;
 
 const maxRecipeQuery = /* sql */ `SELECT MAX(id) AS length FROM recipes ${isDev ? "" : /* sql */ `WHERE published = 1`}`;
 const recipesQuery = /* sql */ `
-	SELECT cooking, description, ingredients, structureId, telegramId, r.title,
+	SELECT cooking, description, ingredients, ingredientsExtra, structureId, telegramId, r.title,
 	s.title AS structureTitle FROM recipes r JOIN structures s
 	WHERE r.id = ? AND s.id = r.structureId ${queryCondition};
 `;
@@ -59,8 +59,13 @@ export const recipeIdRoute = {
 			throw new Error("Рецепт не существует.", { cause: 404 });
 		}
 
-		const { cooking, description, ingredients, structureId, structureTitle, telegramId, title } = recipe;
+		const { cooking, description, ingredients, ingredientsExtra, structureId, structureTitle, telegramId, title } =
+			recipe;
 		const imageAlias = `/pictures/recipe/${id}`;
+
+		const ingredientsExtraTemplate = ingredientsExtra
+			? /* html */ `<p><strong>По желанию:</strong></p>${ingredientsExtra}`
+			: "";
 
 		return {
 			page: {
@@ -72,7 +77,7 @@ export const recipeIdRoute = {
 				pageTemplate: renderPageSection({
 					articles: [
 						{
-							content: /* html */ `<h2>Состав</h2>${ingredients}`,
+							content: /* html */ `<h2>Состав</h2>${ingredients}${ingredientsExtraTemplate}`,
 							imageAlias: `${imageAlias}-ingredients`,
 							isAmp,
 						},

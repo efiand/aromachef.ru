@@ -12,6 +12,7 @@ const recipesQuery = /* sql */ `
 		(LOWER(title) LIKE CONCAT('%', LOWER(?), '%')
 		OR LOWER(description) LIKE CONCAT('%', LOWER(?), '%')
 		OR LOWER(ingredients) LIKE CONCAT('%', LOWER(?), '%')
+		OR LOWER(ingredientsExtra) LIKE CONCAT('%', LOWER(?), '%')
 		OR LOWER(cooking) LIKE CONCAT('%', LOWER(?), '%'))
 		${isDev ? "" : /* sql */ `AND published = 1`}
 	ORDER BY title;

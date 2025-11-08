@@ -96,6 +96,7 @@ declare global {
 		cooking: string;
 		description: string;
 		ingredients: string;
+		ingredientsExtra: string | null;
 		structureId: number;
 		structureTitle: string;
 		telegramId?: number | null;
