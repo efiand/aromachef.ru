@@ -7,4 +7,8 @@ Disallow: /search
 Disallow: /update
 
 User-agent: Yandex
+Disallow: *?comments
+Disallow: /404
 Disallow: /amp
+Disallow: /search
+Disallow: /update
