@@ -10,6 +10,7 @@ let innerElement = null;
 
 function close() {
 	modalElement?.classList.remove("modal--opened");
+	innerElement?.classList.remove("modal__inner--full-width");
 	innerElement?.lastElementChild?.remove();
 	document.removeEventListener("keydown", onKeydown);
 	layoutElement.inert = false;
@@ -41,14 +42,17 @@ function onKeydown(event) {
 	}
 }
 
-/** @param {HTMLElement} element */
-export function openModal(element) {
+/** @type {(element: HTMLElement, fullWidth?: boolean) => void} */
+export function openModal(element, fullWidth = false) {
 	if (!modalElement) {
 		init();
 	}
 
 	layoutElement.inert = true;
 	innerElement?.append(element);
+	if (fullWidth) {
+		innerElement?.classList.add("modal__inner--full-width");
+	}
 	document.addEventListener("keydown", onKeydown);
 	modalElement?.classList.add("modal--opened");
 }

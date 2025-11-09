@@ -16,11 +16,14 @@
 	position: relative;
 	margin: auto;
 	box-sizing: border-box;
-	width: 100%;
 	min-width: 320px;
 	max-width: 66.8rem;
 	padding: 3rem 1.5rem;
 	background-color: var(--color-white);
+}
+
+.modal__inner--full-width {
+	width: 100%;
 }
 
 .modal__close {

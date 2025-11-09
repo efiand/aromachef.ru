@@ -57,7 +57,7 @@ export function initAsyncSearch(openerElement) {
 			createElements();
 		}
 		if (asyncSearchElement) {
-			openModal(asyncSearchElement);
+			openModal(asyncSearchElement, true);
 			getElement("input", asyncSearchElement).focus();
 		}
 	});
