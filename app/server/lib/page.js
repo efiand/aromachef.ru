@@ -1,4 +1,4 @@
-import { BASE_URL, PROJECT_TITLE, version } from "#common/constants.js";
+import { BASE_URL, noAmpRoutes, PROJECT_TITLE, version } from "#common/constants.js";
 import { renderLayout } from "#common/templates/layout.js";
 import { renderDocumentTitle } from "#common/templates/title.js";
 import { isDev } from "#server/constants.js";
@@ -32,7 +32,7 @@ function renderUrlMeta(pathname, isAmp) {
 	}
 
 	let ampTemplate = "";
-	if (!isAmp) {
+	if (!isAmp && !noAmpRoutes.has(pathname)) {
 		const ampUrl = pathname === "/" ? "/amp" : `/amp${pathname}`;
 		ampTemplate = /* html */ `<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
 	}

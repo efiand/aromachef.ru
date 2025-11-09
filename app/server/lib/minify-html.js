@@ -1,9 +1,11 @@
 import htmlMinifier from "html-minifier-terser";
 
+/** @type {import("html-minifier-terser").Options} */
 const MINIFIER_CONFIG = {
 	caseSensitive: true,
 	collapseWhitespace: true,
 	conservativeCollapse: false,
+	minifyJS: true,
 	removeAttributeQuotes: true,
 	removeComments: true,
 	removeEmptyAttributes: true,
