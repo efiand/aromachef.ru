@@ -1,4 +1,9 @@
-export function renderSearchInput(value = "") {
+export function renderSearchInput(value = "", async = false) {
+	let label = "Введите запрос";
+	if (async) {
+		label += " (не менее 3-х букв)";
+	}
+
 	return /* html */ `
 		<div class="search-input" data-search-input>
 			<input
@@ -8,8 +13,8 @@ export function renderSearchInput(value = "") {
 				value="${value}"
 				autocomplete="off"
 				autofocus
-				placeholder="Введите запрос"
-				aria-label="Введите запрос"
+				placeholder="${label}"
+				aria-label="${label}"
 			>
 			<button
 				class="search-input__button"

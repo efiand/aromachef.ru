@@ -3,6 +3,10 @@
 }
 
 .search-input__input {
+	padding-left: 3rem;
+}
+
+.search-input__input:not(:placeholder-shown) {
 	padding-right: 3rem;
 }
 
@@ -21,6 +25,7 @@
 	color: var(--color-green);
 }
 
+.search-input::before,
 .search-input__button::before {
 	content: "";
 	display: block;
@@ -29,6 +34,14 @@
 	background-color: currentColor;
 	mask-image: var(--icon-close);
 	mask-size: 100%;
+}
+
+.search-input::before {
+	position: absolute;
+	top: 0.75rem;
+	left: 0.75rem;
+	color: var(--color-green);
+	mask-image: var(--icon-search);
 }
 
 .search-input__input:placeholder-shown ~ .search-input__button {

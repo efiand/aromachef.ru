@@ -3,7 +3,7 @@
 	inset: 0;
 	z-index: 1;
 	display: none;
-	overflow: hidden auto;
+	overflow-y: scroll;
 	background-color: rgba(51, 51, 51, 0.5);
 	backdrop-filter: blur(5px);
 }
@@ -17,6 +17,7 @@
 	margin: auto;
 	box-sizing: border-box;
 	width: 100%;
+	min-width: 320px;
 	max-width: 66.8rem;
 	padding: 3rem 1.5rem;
 	background-color: var(--color-white);

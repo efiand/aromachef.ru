@@ -29,12 +29,6 @@
 	transform: scale(0);
 }
 
-@media (max-width: 385px) {
-	._xs-hidden {
-		display: none;
-	}
-}
-
 @media (min-width: 1280px) {
 	._container {
 		padding-inline: calc(50% - 608px);

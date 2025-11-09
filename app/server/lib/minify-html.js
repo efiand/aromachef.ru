@@ -12,5 +12,7 @@ const MINIFIER_CONFIG = {
 /** @type {(html: string) => Promise<string>} */
 export async function minifyHtml(html) {
 	const minifiedHtml = await htmlMinifier.minify(html, MINIFIER_CONFIG);
-	return minifiedHtml.replace(/value=(\$\{.*?\})/g, 'value="$1"');
+
+	// Принудительно добавляем кавычки вокруг шаблонных литералов
+	return minifiedHtml.replace(/=(\$\{.*?\})/g, '="$1"');
 }

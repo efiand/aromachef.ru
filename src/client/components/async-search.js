@@ -13,7 +13,7 @@ let resultElement = null;
 function createElements() {
 	asyncSearchElement = document.createElement("div");
 	asyncSearchElement.classList.add("async-search");
-	asyncSearchElement.innerHTML = renderSearchInput();
+	asyncSearchElement.innerHTML = renderSearchInput("", true);
 	asyncSearchElement.addEventListener("clear-search", onClear);
 
 	const searchInputElement = getElement("[data-search-input]", asyncSearchElement);
@@ -58,6 +58,7 @@ export function initAsyncSearch(openerElement) {
 		}
 		if (asyncSearchElement) {
 			openModal(asyncSearchElement);
+			getElement("input", asyncSearchElement).focus();
 		}
 	});
 }

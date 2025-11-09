@@ -2,15 +2,17 @@ import { HERO_TEMPLATE } from "#common/templates/hero.js";
 import { YANDEX_METRIKA_TEMPLATE } from "#common/templates/yandex-metrika.js";
 
 const SEARCH_TEMPLATE = /* html */ `
-	<li class="layout__header-item layout__header-item--separated">
-		<a href="/search" data-async-search>Поиск</a>
+	<li class="header__item">
+		<a  class="header__search" href="/search" data-async-search>
+			<span>Поиск</span>
+		</a>
 	</li>
 `;
 
 /** @type {(ampPrefix: string) => string} */
 function renderAboutTemplate(ampPrefix) {
 	return /* html */ `
-		<li class="layout__footer-item">
+		<li class="footer__item">
 			<a href="${ampPrefix}/about" rel="author">Обо мне</a>
 		</li>
 	`;
@@ -19,7 +21,7 @@ function renderAboutTemplate(ampPrefix) {
 /** @type {(ampPrefix: string) => string} */
 function renderImportantTemplate(ampPrefix) {
 	return /* html */ `
-		<li class="layout__header-item">
+		<li class="header__item">
 			<a href="${ampPrefix}/important"><strong>Важно!</strong></a>
 		</li>
 	`;
@@ -32,16 +34,13 @@ function renderLayoutInner({ isAmp, pathname, pageTemplate }) {
 	const ariaCurrentIndex = isIndex ? 'aria-current="page"' : "";
 
 	return /* html */ `
-		<header class="layout__header _container">
-			<a class="layout__logo-link" href="${isAmp ? "/amp" : "/"}" aria-label="На главную" ${ariaCurrentIndex}>
+		<header class="header layout__header _container">
+			<a class="header__logo" href="${isAmp ? "/amp" : "/"}" aria-label="На главную" ${ariaCurrentIndex}>
 				<img src="/images/aromachef-logo.svg?v2" width="30" height="30" alt="">
 			</a>
-			<ul class="layout__header-list">
-				<li class="layout__header-item">
-					<a href="/structure">
-						Разделы
-						<span class="_xs-hidden">и #теги</span>
-					</a>
+			<ul class="header__list">
+				<li class="header__item">
+					<a class="header__structure" href="/structure">Разделы <span>и #теги</span></a>
 				</li>
 				${pathname === "/important" ? "" : renderImportantTemplate(ampPrefix)}
 				${pathname === "/search" ? "" : SEARCH_TEMPLATE}
@@ -52,13 +51,13 @@ function renderLayoutInner({ isAmp, pathname, pageTemplate }) {
 
 		<main class="layout__main _container">${pageTemplate}</main>
 
-		<footer class="layout__footer _container">
-			<ul class="layout__footer-list">
-				<li class="layout__footer-item">
-					<a class="layout__tg" href="https://t.me/aroma_chef" target="_blank">@aroma_chef</a>
+		<footer class="footer layout__footer _container">
+			<ul class="footer__list">
+				<li class="footer__item">
+					<a class="footer__tg" href="https://t.me/aroma_chef" target="_blank">@aroma_chef</a>
 				</li>
 				${pathname === "/about" ? "" : renderAboutTemplate(ampPrefix)}
-				<li class="layout__footer-item layout__footer-item--last">
+				<li class="footer__item footer__item--last">
 					<a href="https://efiand.ru" target="_blank" rel="nofollow">Разработано efiand</a>
 				</li>
 			</ul>

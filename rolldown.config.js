@@ -40,7 +40,7 @@ export default defineConfig(
 	process.env.npm_lifecycle_event === "build:vendors"
 		? ["petite-vue"].map((entryName) =>
 				defineConfig({
-					input: `src/vendors/${entryName}.js`,
+					input: `src/client/vendors/${entryName}.js`,
 					output: {
 						file: `public/vendors/${entryName}.min.js`,
 						format: "iife",

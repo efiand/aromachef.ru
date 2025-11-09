@@ -14,13 +14,13 @@ html {
 
 	/* Критические иконки */
 	--icon-arrow: url("../../icons/arrow.svg");
+	--icon-search: url("../../icons/search.svg");
 	--icon-social-tg: url("../../icons/social-tg.svg");
 
 	font-size: 16px;
 }
 
 body {
-	min-width: 320px;
 	margin: 0;
 	line-height: 1.5;
 	font-family: var(--font-basic);
@@ -30,7 +30,7 @@ body {
 	color: var(--color-black);
 	text-rendering: optimizeLegibility;
 	-webkit-tap-highlight-color: transparent;
-	overflow-X: hidden;
+	overflow-x: hidden;
 	overflow-anchor: none;
 }
 

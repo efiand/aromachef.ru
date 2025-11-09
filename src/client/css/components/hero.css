@@ -6,6 +6,7 @@
 	align-items: center;
 	gap: 2rem;
 	box-sizing: border-box;
+	min-width: 320px;
 	min-height: 100dvh;
 	padding: 4rem 2rem;
 	color: var(--color-eggplant);
