@@ -98,7 +98,7 @@ const TEMPLATE = /* html */ `
 					v-model="text"
 					rows="5"
 					aria-label="Текст"
-					placeholder="Напишите комментарий (до 3000 символов) *"
+					placeholder="Напишите комментарий (до 3000 символов) *"
 					maxlength="3000"
 					required
 				></textarea>

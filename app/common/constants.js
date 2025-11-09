@@ -6,7 +6,7 @@ export const PROJECT_DESCRIPTION = "Быстрые, вкусные и поле�
 
 export const version = {
 	CSS: 13,
-	JS: 7,
+	JS: 8,
 };
 
 /** @type {Record<string, string>} */
