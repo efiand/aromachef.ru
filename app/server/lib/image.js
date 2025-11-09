@@ -7,7 +7,7 @@ sharp.cache(false);
 sharp.concurrency(1);
 
 const WEBP_OPTIONS = { chromaSubsampling: "4:2:0", effort: 4, quality: 75 };
-const AVIF_OPTIONS = { chromaSubsampling: "4:2:0", effort: 8, quality: 60 };
+const AVIF_OPTIONS = { chromaSubsampling: "4:2:0", effort: 8, quality: 50 };
 
 /** @type {(image: sharp.SharpInput, name: string) => Promise<void>} */
 export async function processImage(rawImage, name) {
