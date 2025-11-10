@@ -1,9 +1,12 @@
 .icon-button {
 	position: relative;
+	min-height: 1.5rem;
 	padding: 0 0 0 1.5rem;
 	color: var(--color-eggplant);
 	text-decoration: underline;
 	text-decoration-style: dashed;
+	text-decoration-skip-ink: none;
+	text-decoration-thickness: from-font;
 }
 
 .icon-button::before {
@@ -19,6 +22,10 @@
 
 .icon-button--comment::before {
 	mask-image: var(--icon-comment);
+}
+
+.icon-button--share::before {
+	mask-image: var(--icon-share);
 }
 
 .icon-button:hover {

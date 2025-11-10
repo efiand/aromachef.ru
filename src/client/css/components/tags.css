@@ -33,7 +33,8 @@
 }
 
 @media (hover: hover) {
-	.tags__link:hover {
+	.tags__link:hover,
+	.tags__link:focus-visible {
 		color: var(--color-eggplant);
 		background-color: var(--color-lavender);
 		text-decoration: none;

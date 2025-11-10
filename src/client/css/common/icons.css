@@ -1,4 +1,8 @@
 html {
 	--icon-close: url("../../icons/close.svg");
 	--icon-comment: url("../../icons/comment.svg");
+	--icon-share: url("../../icons/share.svg");
+	--icon-social-ok: url("../../icons/social-ok.svg");
+	--icon-social-vk: url("../../icons/social-vk.svg");
+	--icon-social-wa: url("../../icons/social-wa.svg");
 }

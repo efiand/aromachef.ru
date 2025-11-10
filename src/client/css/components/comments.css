@@ -1,4 +1,5 @@
 .comments {
+	position: relative;
 	display: grid;
 	gap: 1.5rem;
 	align-items: bottom;
@@ -7,6 +8,16 @@
 
 .comments--opened {
 	grid-template-columns: 1fr 1fr;
+}
+
+.comments .comments__share {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.comments--opened .comments__share {
+	display: none;
 }
 
 .comments__heading {
@@ -70,4 +81,11 @@
 .comments__button {
 	justify-self: start;
 	margin-top: 0.5rem;
+}
+
+@media (max-width: 359px) {
+	.comments__share span {
+		position: fixed;
+		transform: scale(0);
+	}
 }

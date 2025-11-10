@@ -149,6 +149,12 @@ declare global {
 		priority?: string;
 	};
 
+	type ShareItem = {
+		id: string;
+		title: string;
+		url: string;
+	};
+
 	type StaticPageData = {
 		content: string;
 		description: string;

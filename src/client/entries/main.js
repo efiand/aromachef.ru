@@ -1,5 +1,6 @@
 import { initAsyncSearch } from "#client/components/async-search.js";
 import { initSearchInput } from "#client/components/search-input.js";
+import { initShare } from "#client/components/share.js";
 import { loadCssEntry } from "#client/lib/css.js";
 import { init } from "#client/lib/init.js";
 import { loadScriptEntry } from "#client/lib/load-script.js";
@@ -16,4 +17,6 @@ init("[data-async-search]", initAsyncSearch);
 
 if (document.querySelector("[data-comments]")) {
 	loadScriptEntry("comments");
+} else {
+	initShare(window.location.pathname === "/" ? "main-footer__share-place" : "layout__main");
 }

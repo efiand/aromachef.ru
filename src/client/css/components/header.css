@@ -67,12 +67,14 @@
 
 @media (max-width: 410px) {
 	.header__search span {
-		display: none;
+		position: fixed;
+		transform: scale(0);
 	}
 }
 
 @media (max-width: 350px) {
 	.header__structure span {
-		display: none;
+		position: fixed;
+		transform: scale(0);
 	}
 }

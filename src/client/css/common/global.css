@@ -146,7 +146,8 @@ mark {
 }
 
 @media (hover: hover) {
-	a:hover {
+	a:hover,
+	a:focus-visible {
 		text-decoration: underline;
 		text-decoration-thickness: from-font;
 	}

@@ -23,5 +23,11 @@
 
 .layout__main {
 	flex-grow: 1;
+	display: grid;
+	gap: 4rem;
 	padding-block: var(--gap-intersection);
+}
+
+.layout__share {
+	justify-self: start;
 }

@@ -8,8 +8,11 @@ const recipesQuery = /* sql */ `
 	SELECT id, title FROM recipes ${isDev ? "" : /* sql */ `WHERE published = 1`} ORDER BY id DESC LIMIT 12;
 `;
 
-const ALL_RECIPES_TEMPLATE = /* html */ `
-	<a class="button _centered _separated" href="/structure">Все рецепты</a>
+const MAIN_FOOTER_TEMPLATE = /* html */ `
+	<footer class="main-footer _separated">
+		<div class="main-footer__share-place"></div>
+		<a class="button main-footer__button" href="/structure">Все рецепты</a>
+	</footer>
 `;
 
 const headTemplate = /* html */ `
@@ -46,7 +49,7 @@ export const mainRoute = {
 						}),
 						title: "Новые рецепты с эфирными маслами",
 					}) +
-					ALL_RECIPES_TEMPLATE,
+					MAIN_FOOTER_TEMPLATE,
 			},
 		};
 	},

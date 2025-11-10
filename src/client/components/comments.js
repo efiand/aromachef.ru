@@ -1,3 +1,4 @@
+import { initShare } from "#client/components/share.js";
 import { hydrate } from "#client/lib/hydrate.js";
 
 const data = {
@@ -14,6 +15,7 @@ const data = {
 	hasError: false,
 	mounted() {
 		setInterval(this.fetchComments, 180_000);
+		initShare("comments");
 	},
 	name: "",
 	/** @type {(event: SubmitEvent) => Promise<void>} */
