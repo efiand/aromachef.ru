@@ -168,6 +168,7 @@ declare global {
 		cards: DbItem[];
 		heading: string;
 		isAmp?: boolean;
+		asyncSupport?: boolean;
 		route?: string;
 		structures?: DbItem[];
 		tags?: DbItem[];

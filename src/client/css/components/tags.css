@@ -32,6 +32,10 @@
 	text-decoration: none;
 }
 
+.tags__link[aria-current] {
+	cursor: default;
+}
+
 @media (hover: hover) {
 	.tags__link:hover,
 	.tags__link:focus-visible {

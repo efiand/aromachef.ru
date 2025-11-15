@@ -25,6 +25,7 @@
 	flex-grow: 1;
 	display: grid;
 	gap: 4rem;
+	align-content: start;
 	padding-block: var(--gap-intersection);
 }
 

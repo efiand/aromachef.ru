@@ -1,4 +1,5 @@
 import { initAsyncSearch } from "#client/components/async-search.js";
+import { initAsyncStructure } from "#client/components/async-structure.js";
 import { initSearchInput } from "#client/components/search-input.js";
 import { initShare } from "#client/components/share.js";
 import { loadCssEntry } from "#client/lib/css.js";
@@ -14,6 +15,8 @@ init("[aria-label]", (element) => {
 init(".search-input", initSearchInput);
 
 init("[data-async-search]", initAsyncSearch);
+
+init("[data-async-structure]", initAsyncStructure);
 
 if (document.querySelector("[data-comments]")) {
 	loadScriptEntry("comments");

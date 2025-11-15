@@ -25,7 +25,13 @@ function renderCard({ alt = "", id, isAmp, route, title }) {
  * Генерирует HTML-шаблон списка карточек
  * @type {(data?: CardsData) => string}
  */
-export function renderCards({ alt = "", cards = [], className = "", isAmp, route = "/recipe" } = {}) {
+export function renderCards({
+	alt = "На фото изображено готовое блюдо [title] в миниатюре.",
+	cards = [],
+	className = "",
+	isAmp,
+	route = "/recipe",
+} = {}) {
 	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, isAmp, route })).join("");
 
 	return /* html */ `<ul class="cards ${className}">${cardsTemplate}</ul>`;

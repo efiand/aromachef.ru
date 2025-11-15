@@ -41,13 +41,15 @@ const sharedElement = renderFromTemplate(/* html */ `
 		<ul class="share__list">${ITEMS.map(renderItem).join("")}</ul>
 
 		<div class="share__copy">
-			<input value="${window.location}" readonly>
+			<input readonly>
 			<button class="button" type="button">Скопировать ссылку</button>
 
 			<p class="share__copy-message">Ссылка скопирована.</p>
 		</div>
 	</div>
 `);
+
+const copyInputElement = /** @type {HTMLInputElement} */ (getElement(".share__copy input", sharedElement));
 
 const copyStatusElement = getElement(".share__copy-message", sharedElement);
 
@@ -71,6 +73,7 @@ export function initShare(wrapperClassName) {
 }
 
 function onClickOpener() {
+	copyInputElement.value = window.location.href;
 	openModal(sharedElement);
 }
 

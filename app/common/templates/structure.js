@@ -7,12 +7,13 @@ import { renderTags } from "#common/templates/tags.js";
  * @type {(data: StructureData) => string}
  */
 export function renderStructure({
-	alt = "",
+	alt,
 	asideHeading,
 	asideId = "",
 	cards,
 	heading,
 	isAmp,
+	asyncSupport,
 	route = "/recipe",
 	structures = [],
 	tags = [],
@@ -27,13 +28,13 @@ export function renderStructure({
 	const id = asideId ? `id="${asideId}"` : "";
 
 	return /* html */ `
-		<section class="structure">
-			<div>
-				<h1 class="structure__heading">${heading}</h1>
+		<section class="structure" ${asyncSupport ? "data-async-structure" : ""}>
+			<div class="structure__cards" data-cards>
+				<h1>${heading}</h1>
 				${renderCards({ alt, cards, isAmp, route })}
 			</div>
 
-			<div class="structure__aside" ${id}>
+			<div class="structure__aside" ${id} data-aside>
 				<h2 class="structure__asideheading">${asideHeading}</h2>
 				${asideTemplate}
 			</div>

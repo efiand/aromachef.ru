@@ -15,4 +15,5 @@
 	color: var(--color-eggplant);
 	text-decoration: underline;
 	text-decoration-thickness: from-font;
+	cursor: default;
 }

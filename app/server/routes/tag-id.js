@@ -1,4 +1,5 @@
 import { capitalize } from "#common/lib/text.js";
+import { renderCards } from "#common/templates/cards.js";
 import { renderStructure } from "#common/templates/structure.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
@@ -22,9 +23,18 @@ const tagsQuery = /* sql */ `
 
 export const tagIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id, isAmp }) {
-		/** @type {[DbItem[], DbItem[]]} */
-		const [cards, tags] = await Promise.all([processDb(recipesQuery, id), processDb(tagsQuery, id)]);
+	async GET({ body, id, isAmp }) {
+		/** @type {Promise<DbItem[]>[]} */
+		const promises = [processDb(recipesQuery, id)];
+		if (body.fragment === undefined) {
+			promises.push(processDb(tagsQuery, id));
+		}
+
+		const [cards, tags = []] = await Promise.all(promises);
+
+		if (body.fragment !== undefined) {
+			return { template: renderCards({ cards, isAmp }) };
+		}
 
 		if (!cards.length) {
 			throw new Error("Тег не существует.", { cause: 404 });
@@ -39,8 +49,8 @@ export const tagIdRoute = {
 				heading: `${capitalize(heading)} | Теги`,
 				ogImage: `/pictures/recipe/${recipeId}@2x.webp`,
 				pageTemplate: renderStructure({
-					alt: `На фото изображено готовое блюдо [title] на тему «${heading}» в миниатюре.`,
 					asideHeading: "Теги",
+					asyncSupport: true,
 					cards,
 					heading: `#${heading}`,
 					isAmp,

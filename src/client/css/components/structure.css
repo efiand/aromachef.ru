@@ -1,9 +1,10 @@
 .structure {
 	display: grid;
 	gap: 2rem;
+	scroll-margin-top: 2rem;
 }
 
-.structure__heading {
+.structure__cards h1 {
 	margin-bottom: var(--gap-intersection);
 }
 
@@ -11,12 +12,8 @@
 	margin: 1rem 0 var(--gap-intersection);
 }
 
-.structure__aside {
-	scroll-margin-top: 2rem;
-}
-
 @media (max-width: 887px) {
-	.structure__heading {
+	.structure__cards h1 {
 		text-align: center;
 	}
 
@@ -33,12 +30,12 @@
 @media (min-width: 888px) {
 	.structure {
 		grid-template-columns: 1fr min-content;
+		scroll-margin-top: 6.5rem;
 	}
 
 	.structure__aside {
 		position: sticky;
 		top: 6.5rem;
 		align-self: start;
-		scroll-margin-top: 6.5rem;
 	}
 }

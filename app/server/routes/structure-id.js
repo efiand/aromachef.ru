@@ -1,3 +1,4 @@
+import { renderCards } from "#common/templates/cards.js";
 import { renderStructure } from "#common/templates/structure.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
@@ -16,9 +17,18 @@ const structuresQuery = /* sql */ `
 
 export const structureIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id, isAmp }) {
-		/** @type {[DbItem[], DbItem[]]} */
-		const [cards, structures] = await Promise.all([processDb(recipesQuery, id), processDb(structuresQuery, id)]);
+	async GET({ body, id, isAmp }) {
+		/** @type {Promise<DbItem[]>[]} */
+		const promises = [processDb(recipesQuery, id)];
+		if (body.fragment === undefined) {
+			promises.push(processDb(structuresQuery, id));
+		}
+
+		const [cards, structures = []] = await Promise.all(promises);
+
+		if (body.fragment !== undefined) {
+			return { template: renderCards({ cards, isAmp }) };
+		}
 
 		if (!cards.length) {
 			throw new Error("Раздел не существует.", { cause: 404 });
@@ -32,8 +42,8 @@ export const structureIdRoute = {
 				heading: `${heading} | Разделы`,
 				ogImage: `/pictures/structure/${id}@2x.webp`,
 				pageTemplate: renderStructure({
-					alt: `На фото изображено готовое блюдо [title] из раздела «${heading}» в миниатюре.`,
 					asideHeading: "Разделы",
+					asyncSupport: true,
 					cards,
 					heading,
 					isAmp,
