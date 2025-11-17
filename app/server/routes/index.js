@@ -1,5 +1,9 @@
 import { notFoundRoute } from "#server/routes/404.js";
 import { aboutRoute } from "#server/routes/about.js";
+import { authRoute } from "#server/routes/admin/auth.js";
+import { dumpRoute } from "#server/routes/admin/dump.js";
+import { logoutRoute } from "#server/routes/admin/logout.js";
+import { adminRoute } from "#server/routes/admin/main.js";
 import { pagesApiRoute } from "#server/routes/api/pages.js";
 import { telegramRoute } from "#server/routes/api/telegram.js";
 import { importantRoute } from "#server/routes/important.js";
@@ -17,6 +21,10 @@ export const routes = {
 	"/": mainRoute,
 	"/404": notFoundRoute,
 	"/about": aboutRoute,
+	"/admin": adminRoute,
+	"/admin/auth": authRoute,
+	"/admin/dump": dumpRoute,
+	"/admin/logout": logoutRoute,
 	"/api/pages": pagesApiRoute,
 	"/api/telegram": telegramRoute,
 	"/important": importantRoute,

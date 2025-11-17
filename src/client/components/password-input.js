@@ -1,13 +1,13 @@
 import { getElement } from "#client/lib/get-element.js";
 
 /** @type {ComponentInitiator} */
-export function initSearchInput(element) {
+export function initPasswordInput(element) {
 	const buttonElement = /** @type {HTMLButtonElement} */ (getElement("button", element));
 	const inputElement = /** @type {HTMLInputElement} */ (getElement("input", element));
 
 	buttonElement.addEventListener("click", () => {
-		inputElement.value = "";
+		inputElement.type = inputElement.type === "password" ? "text" : "password";
 		inputElement.focus();
-		buttonElement.dispatchEvent(new CustomEvent("clear-search", { bubbles: true }));
+		buttonElement.classList.toggle("password-input__button--shown");
 	});
 }

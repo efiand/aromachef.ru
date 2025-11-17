@@ -8,39 +8,35 @@ import { sendTgMessage } from "#server/lib/telegram.js";
 
 const { TG_AROMACHEF_ID } = process.env;
 
-const queryCondition = isDev ? "" : /* sql */ `AND r.published = 1`;
-
-const maxRecipeQuery = /* sql */ `SELECT MAX(id) AS length FROM recipes ${isDev ? "" : /* sql */ `WHERE published = 1`}`;
-const recipesQuery = /* sql */ `
-	SELECT cooking, description, ingredients, ingredientsExtra, structureId, telegramId, r.title,
-	s.title AS structureTitle FROM recipes r JOIN structures s
-	WHERE r.id = ? AND s.id = r.structureId ${queryCondition};
+const ADD_COMMENT_QUERY = /* sql */ `
+	INSERT INTO comments (name, text, recipeId) VALUES (?, ?, ?);
 `;
-const relatedRecipesQuery = /* sql */ `
-	SELECT r.id, r.title FROM recipes r JOIN recipesRecipes rr
-	WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id ${queryCondition}
-	ORDER BY r.title;
-`;
-const tagsQuery = /* sql */ `
+const TAGS_QUERY = /* sql */ `
 	SELECT t.id, t.title FROM tags t JOIN recipesTags rt
 	WHERE rt.recipeId = ? AND rt.tagId = t.id
 	ORDER BY t.title;
 `;
-const commentsQuery = /* sql */ `
-	SELECT id, name, text, answer FROM comments
-	WHERE recipeId = ? ${isDev ? "" : /* sql */ `AND published = 1`}
-	ORDER BY publishedAt DESC;
-`;
-const addCommentQuery = /* sql */ `
-	INSERT INTO comments (name, text, recipeId) VALUES (?, ?, ?);
-`;
+
+const maxRecipeQuery = /* sql */ `SELECT MAX(id) AS length FROM recipes`;
+const maxRecipeQueryWithPublishedOnly = /* sql */ `SELECT MAX(id) AS length FROM recipes WHERE published = 1`;
+
+const recipesQuery = getRecipesQuery();
+const recipesQueryWithPublishedOnly = getRecipesQuery(/* sql */ `AND r.published = 1`);
+
+const relatedRecipesQuery = getRelatedRecipesQuery();
+const relatedRecipesQueryWithPublishedOnly = getRelatedRecipesQuery(/* sql */ `AND r.published = 1`);
+
+const commentsQuery = getCommentsQuery();
+const commentsQueryWithPublishedOnly = getCommentsQuery(/* sql */ `AND published = 1`);
 
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id, isAmp, body }) {
+	async GET({ authorized, id, isAmp, body }) {
+		const needUnpublished = isDev || (authorized && Boolean(body.preview));
+
 		if (typeof body.comments !== "undefined") {
 			/** @type {RecipeComment[]} */
-			const comments = await processDb(commentsQuery, id);
+			const comments = await processDb(needUnpublished ? commentsQuery : commentsQueryWithPublishedOnly, id);
 			return {
 				contentType: "application/json",
 				template: JSON.stringify({ comments }),
@@ -49,10 +45,10 @@ export const recipeIdRoute = {
 
 		/** @type {[[{ length: number }], [Recipe], DbItem[], DbItem[]]} */
 		const [[{ length }], [recipe], relatedRecipes, tags] = await Promise.all([
-			processDb(maxRecipeQuery),
-			processDb(recipesQuery, id),
-			processDb(relatedRecipesQuery, id),
-			processDb(tagsQuery, id),
+			processDb(needUnpublished ? maxRecipeQuery : maxRecipeQueryWithPublishedOnly),
+			processDb(needUnpublished ? recipesQuery : recipesQueryWithPublishedOnly, id),
+			processDb(needUnpublished ? relatedRecipesQuery : relatedRecipesQueryWithPublishedOnly, id),
+			processDb(TAGS_QUERY, id),
 		]);
 
 		if (!recipe) {
@@ -104,9 +100,12 @@ export const recipeIdRoute = {
 
 	/** @type {RouteMethod} */
 	async POST({ body, id }) {
-		const name = body.name ? prepareText(body.name, true) : "Гость";
-		const text = prepareText(/* html */ `<p>${body.text.replaceAll("\n", "</p><p>")}</p>`);
-		await processDb(addCommentQuery, [name, text, id]);
+		const { name, text } = /** @type {PostedComment} */ (body);
+		await processDb(ADD_COMMENT_QUERY, [
+			name ? prepareText(name, true) : "Гость",
+			prepareText(/* html */ `<p>${text.replaceAll("\n", "</p><p>")}</p>`),
+			id,
+		]);
 
 		await Promise.all([
 			sendTgMessage({ text: "Новый комментарий!" }),
@@ -118,3 +117,27 @@ export const recipeIdRoute = {
 		};
 	},
 };
+
+function getCommentsQuery(queryCondition = "") {
+	return /* sql */ `
+		SELECT id, name, text, answer FROM comments
+		WHERE recipeId = ? ${queryCondition}
+		ORDER BY publishedAt DESC;
+	`;
+}
+
+function getRecipesQuery(queryCondition = "") {
+	return /* sql */ `
+		SELECT cooking, description, ingredients, ingredientsExtra, structureId, telegramId, r.title,
+		s.title AS structureTitle FROM recipes r JOIN structures s
+		WHERE r.id = ? AND s.id = r.structureId ${queryCondition};
+	`;
+}
+
+function getRelatedRecipesQuery(queryCondition = "") {
+	return /* sql */ `
+		SELECT r.id, r.title FROM recipes r JOIN recipesRecipes rr
+		WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id ${queryCondition}
+		ORDER BY r.title;
+	`;
+}

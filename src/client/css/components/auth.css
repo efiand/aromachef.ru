@@ -1,0 +1,15 @@
+.auth {
+	display: grid;
+	gap: 1rem;
+}
+
+@media (min-width: 888px) {
+	.auth {
+		grid-template-columns: 1fr 1fr auto;
+		align-items: start;
+	}
+
+	.auth__error {
+		grid-column: 1 / -1;
+	}
+}

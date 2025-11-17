@@ -1,10 +1,10 @@
-._container {
-	padding-inline: 1.5rem;
-}
-
 ._centered {
 	display: table;
 	margin-inline: auto;
+}
+
+._container {
+	padding-inline: 1.5rem;
 }
 
 ._error {
@@ -15,8 +15,9 @@
 	display: none;
 }
 
-._separated {
-	margin-top: var(--gap-intersection);
+._required::after {
+	content: " *";
+	color: var(--color-red);
 }
 
 ._small {

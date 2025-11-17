@@ -5,6 +5,7 @@ html {
 	--color-green: #27542b;
 	--color-lavender: #c1abfe;
 	--color-red: #ac272b;
+	--color-red-light: #e8b5b6;
 	--color-white: #ffffff;
 	--font-basic: "Noto Serif", serif;
 	--font-accent: "Noto Sans", sans-serif;
@@ -75,15 +76,18 @@ button {
 
 button,
 input,
+select,
 textarea {
 	margin: 0; /* Safari */
 	font: inherit;
 	font-family: var(--font-accent);
 	color: inherit;
+	background-color: transparent;
 	border: none;
 }
 
 input,
+select,
 textarea {
 	box-sizing: border-box;
 	width: 100%;
@@ -92,18 +96,15 @@ textarea {
 	outline-offset: -1px;
 }
 
-input:user-invalid,
-textarea:user-invalid {
-	outline-color: var(--color-red);
-}
-
-input:focus-visible,
-textarea:focus-visible {
+input:focus,
+select:focus,
+textarea:focus {
 	outline-color: var(--color-eggplant);
 	outline-width: 2px;
 }
 
 input:user-invalid,
+select:user-invalid,
 textarea:user-invalid {
 	outline-color: var(--color-red);
 }
@@ -112,6 +113,21 @@ input::placeholder,
 textarea::placeholder {
 	color: inherit;
 	opacity: 0.5;
+}
+
+input[type="number"] {
+	appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	margin: 0;
+	appearance: none;
+}
+
+select {
+	overflow: auto;
+	appearance: none;
 }
 
 textarea {

@@ -9,7 +9,7 @@ const recipesQuery = /* sql */ `
 `;
 
 const MAIN_FOOTER_TEMPLATE = /* html */ `
-	<footer class="main-footer _separated">
+	<footer class="main-footer">
 		<div class="main-footer__share-place"></div>
 		<a class="button main-footer__button" href="/structure">Все рецепты</a>
 	</footer>
@@ -41,7 +41,6 @@ export const mainRoute = {
 				pageTemplate:
 					PREAMBLE_TEMPLATE +
 					renderPageSection({
-						className: "_separated",
 						footerTemplate: renderCards({
 							alt: "На фото изображено готовое блюдо [title] в миниатюре.",
 							cards,

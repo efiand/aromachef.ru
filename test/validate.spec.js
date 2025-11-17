@@ -11,6 +11,8 @@ import { STATIC_PAGES } from "#common/constants.js";
 import { host } from "#server/constants.js";
 import { createApp } from "#server/lib/app.js";
 
+const { AUTH_LOGIN, AUTH_PASSWORD } = process.env;
+
 const htmlvalidate = new HtmlValidate({
 	extends: ["html-validate:recommended"],
 	rules: {
@@ -19,20 +21,27 @@ const htmlvalidate = new HtmlValidate({
 	},
 });
 
+const adminPages = ["/admin"];
+
 /** @type {amphtmlValidator.Validator | undefined} */
 let ampValidator;
 
 /** @type {string[]} */
 let markups = [];
 
-/** @type {string[]} */
-const pages = [...STATIC_PAGES, "/search"];
+const pages = [...STATIC_PAGES, "/search", "/search", "/admin/auth"];
 
 /** @type {string[]} */
 let ampPages = [];
 
 /** @type {import("node:http").Server | undefined} */
 let server;
+
+let authorized = false;
+
+async function getMarkup(page = "") {
+	return await fetch(`${host}${page}`).then((res) => res.text());
+}
 
 before(async () => {
 	if (!server) {
@@ -61,8 +70,23 @@ before(async () => {
 	}
 
 	if (!markups.length) {
-		markups = await Promise.all(pages.map((page) => fetch(`${host}${page}`).then((res) => res.text())));
+		markups = await Promise.all(pages.map(getMarkup));
 	}
+
+	({ ok: authorized } = await fetch(`${host}/admin/auth`, {
+		body: `login=${AUTH_LOGIN}&password=${AUTH_PASSWORD}`,
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+		method: "POST",
+	}));
+
+	const adminMarkups = await Promise.all(adminPages.map(getMarkup));
+	markups.push(...adminMarkups);
+});
+
+test("Success authorization", async () => {
+	assert.strictEqual(authorized, true);
 });
 
 test("All pages have valid HTML markup", async () => {

@@ -3,12 +3,14 @@ Host: https://aromachef.ru
 Sitemap: https://aromachef.ru/sitemap.xml
 Disallow: *?comments
 Disallow: /404
+Disallow: /admin
 Disallow: /search
 Disallow: /update
 
 User-agent: Yandex
 Disallow: *?comments
 Disallow: /404
+Disallow: /admin
 Disallow: /amp
 Disallow: /search
 Disallow: /update

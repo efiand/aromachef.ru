@@ -48,7 +48,7 @@ export default defineConfig(
 					},
 				}),
 			)
-		: ["main", "comments"].map((entryName) =>
+		: ["admin", "comments", "main"].map((entryName) =>
 				defineConfig({
 					input: `src/client/entries/${entryName}.js`,
 					output: {

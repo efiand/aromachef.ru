@@ -12,7 +12,7 @@ init("[aria-label]", (element) => {
 	element.title = element.ariaLabel || "";
 });
 
-init(".search-input", initSearchInput);
+init("[data-search-input]", initSearchInput);
 
 init("[data-async-search]", initAsyncSearch);
 

@@ -1,7 +1,9 @@
 import { createServer } from "node:http";
-import { noAmpRoutes } from "#common/constants.js";
+import jwt from "jsonwebtoken";
+import { noAmp } from "#common/lib/no-amp.js";
 import { renderErrorPage } from "#common/templates/errorPage.js";
 import { host, isDev, port } from "#server/constants.js";
+import { getCookies } from "#server/lib/cookies.js";
 import { renderPage } from "#server/lib/page.js";
 import { getRequestBody } from "#server/lib/request.js";
 import { routes } from "#server/routes/index.js";
@@ -36,16 +38,26 @@ async function handleError(error, href) {
 /** @type {ServerMiddleware} */
 async function next(req, res) {
 	const url = new URL(`${host}${req.url}`);
-	const isAmp = url.pathname === "/amp" || /^\/amp\//.test(url.pathname);
-	const isApi = /^\/api\//.test(url.pathname);
+	const isAmp = url.pathname === "/amp" || url.pathname.startsWith("/amp/");
+	const isAdmin = url.pathname === "/admin" || url.pathname.startsWith("/admin/");
+	const isApi = url.pathname.startsWith("/api/");
 	const pathname = url.pathname === "/amp" ? "/" : url.pathname.replace(/^\/amp\//, "/");
-	const [, routeName = "", rawId, rawIdInApi] = pathname.split("/");
-	const id = Number(isApi ? rawIdInApi : rawId);
-	const routeKey = Number.isNaN(id) ? pathname : `/${isApi ? `api/${rawId}` : routeName}/:id`;
+	const [, rawRouteName = "", rawId, rawIdInApi] = pathname.split("/");
+	const id = Number(isApi || isAdmin ? rawIdInApi : rawId);
+
+	let routeName = rawRouteName;
+	if (isApi) {
+		routeName = `api/${rawId}`;
+	} else if (isAdmin) {
+		routeName = `admin/${rawId}`;
+	}
+
+	const routeKey = Number.isNaN(id) ? pathname : `/${routeName}/:id`;
 	const route = routes[routeKey];
 
 	let contentType = "text/html; charset=utf-8";
 	let template = "";
+	let redirect = "";
 	let statusCode = 200;
 
 	try {
@@ -53,7 +65,7 @@ async function next(req, res) {
 			throw new Error("Страница не найдена.", { cause: 404 });
 		}
 
-		if (isAmp && noAmpRoutes.has(routeKey)) {
+		if (isAmp && noAmp(routeKey)) {
 			throw new Error("Страница не имеет AMP-версии.", { cause: 404 });
 		}
 
@@ -62,19 +74,36 @@ async function next(req, res) {
 			throw new Error("Method not allowed!", { cause: 405 });
 		}
 
+		const { authToken } = getCookies(req);
+		const authorized = Boolean(authToken && jwt.verify(authToken, process.env.AUTH_SECRET));
+
+		if (isAdmin && pathname !== "/admin/auth" && !authorized) {
+			res.statusCode = 302;
+			res.setHeader("Location", "/admin/auth");
+			res.end();
+			return;
+		}
+
 		const body = await getRequestBody(req);
-		const routeData = await route[method]({ body, id, isAmp, req, res });
-		({ contentType = "text/html; charset=utf-8", template = "" } = routeData);
+		const routeData = await route[method]({ authorized, body, id, isAmp, req, res });
+		({ contentType = "text/html; charset=utf-8", redirect = "", statusCode = 200, template = "" } = routeData);
 
 		if (routeData.page) {
-			template = await renderPage({ ...routeData.page, isAmp, pathname });
+			template = await renderPage({ ...routeData.page, authorized, isAmp, pathname });
 		}
 	} catch (error) {
 		({ statusCode, template } = await handleError(error, url.href));
 	}
 
+	if (redirect) {
+		if (statusCode === 200) {
+			statusCode = 302;
+		}
+		res.setHeader("Location", redirect);
+	} else {
+		res.setHeader("Content-Type", contentType);
+	}
 	res.statusCode = statusCode;
-	res.setHeader("Content-Type", contentType);
 	res.end(template.trim());
 }
 

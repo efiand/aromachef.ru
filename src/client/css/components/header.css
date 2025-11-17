@@ -29,21 +29,28 @@
 	letter-spacing: -0.02em;
 }
 
-.header__search {
+.header__extra {
 	margin-left: auto;
 	display: flex;
 	align-items: flex-start;
 	gap: 0.25rem;
 }
 
-.header__search::before {
+.header__extra::before {
 	content: "";
 	display: block;
 	width: 1.5rem;
 	height: 1.5rem;
 	background-color: currentColor;
-	mask-image: var(--icon-search);
 	mask-size: 100%;
+}
+
+.header__extra--search::before {
+	mask-image: var(--icon-search);
+}
+
+.header__extra--logout::before {
+	mask-image: var(--icon-logout);
 }
 
 @media (hover: hover) {
@@ -66,7 +73,7 @@
 }
 
 @media (max-width: 410px) {
-	.header__search span {
+	.header__extra span {
 		position: fixed;
 		transform: scale(0);
 	}

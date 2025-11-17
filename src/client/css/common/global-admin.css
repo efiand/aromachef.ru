@@ -1,0 +1,5 @@
+html {
+	--icon-eye: url("../../icons/eye.svg");
+	--icon-eye-slash: url("../../icons/eye-slash.svg");
+	--icon-logout: url("../../icons/logout.svg");
+}

@@ -9,7 +9,7 @@
 	}
 
 	.article__image {
-		margin-inline: auto;
+		margin-inline: var(--article-image-margin-inline-mobile, auto);
 	}
 }
 
@@ -20,7 +20,7 @@
 
 	.article__image {
 		order: -1;
-		margin-top: 0.75rem;
+		margin-top: var(--article-margin-top, 0.75rem);
 	}
 
 	.article--reverse {

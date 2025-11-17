@@ -20,6 +20,10 @@ jobs:
       - name: Create env file
         run: |
           touch .env
+          echo AUTH_HASH=${{ secrets.AUTH_HASH }} >> .env
+          echo AUTH_LOGIN=${{ secrets.AUTH_LOGIN }} >> .env
+          echo AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }} >> .env
+          echo AUTH_SECRET=${{ secrets.AUTH_SECRET }} >> .env
           echo DB_HOST=${{ secrets.DB_HOST }} >> .env
           echo DB_NAME=${{ secrets.DB_NAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env

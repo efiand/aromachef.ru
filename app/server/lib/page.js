@@ -1,5 +1,7 @@
-import { BASE_URL, noAmpRoutes, PROJECT_TITLE, version } from "#common/constants.js";
+import { BASE_URL, PROJECT_TITLE, version } from "#common/constants.js";
+import { noAmp } from "#common/lib/no-amp.js";
 import { renderLayout } from "#common/templates/layout.js";
+import { renderLayoutAdmin } from "#common/templates/layout-admin.js";
 import { renderDocumentTitle } from "#common/templates/title.js";
 import { isDev } from "#server/constants.js";
 import { renderAmpAssets } from "#server/lib/amp.js";
@@ -11,17 +13,21 @@ const IMPORTMAP = {
 	},
 };
 
-function renderAssets() {
+function renderAssets(isAdmin = false) {
+	const bundleName = isAdmin ? "admin" : "main";
+
 	return isDev
 		? /* html */ `
 			<link rel="stylesheet" href="/client/css/critical.css">
+			${isAdmin ? /* html */ `<link rel="stylesheet" href="/client/css/admin.css">` : ""}
 			<script type="importmap">${JSON.stringify(IMPORTMAP)}</script>
 			<script src="/client/entries/dev.js" type="module"></script>
-			<script src="/client/entries/main.js" type="module"></script>
+			<script src="/client/entries/${bundleName}.js" type="module"></script>
 		`
 		: /* html */ `
 			<link rel="stylesheet" href="/bundles/critical.css?v${version.CSS}">
-			<script src="/bundles/main.js?v${version.JS}" defer></script>
+			${isAdmin ? /* html */ `<link rel="stylesheet" href="/bundles/admin.css?v${version.CSS}">` : ""}
+			<script src="/bundles/${bundleName}.js?v${version.JS}" defer></script>
 		`;
 }
 
@@ -32,7 +38,7 @@ function renderUrlMeta(pathname, isAmp) {
 	}
 
 	let ampTemplate = "";
-	if (!isAmp && !noAmpRoutes.has(pathname)) {
+	if (!isAmp && !noAmp(pathname)) {
 		const ampUrl = pathname === "/" ? "/amp" : `/amp${pathname}`;
 		ampTemplate = /* html */ `<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
 	}
@@ -46,16 +52,28 @@ function renderUrlMeta(pathname, isAmp) {
 
 /** @type {(data: LayoutData) => Promise<string>} */
 export async function renderPage({
-	isAmp = false,
+	authorized,
 	description,
 	headTemplate = "",
 	heading = "",
+	isAmp = false,
 	ogImage = "/images/og.webp",
 	pageTemplate = "",
 	pathname = "",
 }) {
+	const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
 	const title = renderDocumentTitle(heading);
-	const assetsTemplate = isAmp ? await renderAmpAssets(pageTemplate.includes("<form")) : renderAssets();
+	const assetsTemplate = isAmp ? await renderAmpAssets(pageTemplate.includes("<form")) : renderAssets(isAdmin);
+	const descriptionTemplate = description
+		? /* html */ `
+			<meta name="description" content="${description}">
+			<meta property="og:description" content="${description}">
+		`
+		: "";
+
+	const layoutTemplate = isAdmin
+		? renderLayoutAdmin({ heading, pageTemplate, pathname })
+		: renderLayout({ authorized, isAmp, isDev, pageTemplate, pathname });
 
 	const template = /* html */ `
 		<!DOCTYPE html>
@@ -66,10 +84,8 @@ export async function renderPage({
 			<meta name="apple-mobile-web-app-title" content="${PROJECT_TITLE}">
 
 			<title>${title}</title>
-			<meta name="description" content="${description}">
 			${renderUrlMeta(pathname, isAmp)}
 			<meta property="og:title" content="${title}">
-			<meta property="og:description" content="${description}">
 			<meta property="og:locale" content="ru_RU">
 			<meta property="og:type" content="website">
 			<meta property="og:site_name" content="${PROJECT_TITLE}">
@@ -77,6 +93,7 @@ export async function renderPage({
 			<meta property="og:image:width" content="544">
 			<meta property="og:image:height" content="408">
 
+			${descriptionTemplate}
 			${assetsTemplate}
 
 			<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
@@ -93,7 +110,7 @@ export async function renderPage({
 			${headTemplate}
 		</head>
 
-		${renderLayout({ isAmp, isDev, pageTemplate, pathname })}
+		${layoutTemplate}
 
 		</html>
 	`;

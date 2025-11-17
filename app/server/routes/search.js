@@ -21,7 +21,8 @@ const recipesQuery = /* sql */ `
 export const searchRoute = {
 	/** @type {RouteMethod} */
 	async GET({ body, isAmp }) {
-		const pattern = (body.q || "").trim();
+		const { q = "" } = /** @type {{ q?: string; }} */ (body);
+		const pattern = q.trim();
 
 		/** @type {DbItem[]} */
 		let cards = [];
