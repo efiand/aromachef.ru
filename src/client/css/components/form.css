@@ -1,16 +1,12 @@
-.form__group {
-	display: grid;
-	gap: 0.5rem;
+.form__errors {
+	margin-bottom: 2rem;
+	color: var(--color-red);
 }
 
 .form__group + .form__checker,
 .form__group + .form__group,
 .form__groups + .form__group {
 	margin-top: 2rem;
-}
-
-.form__label {
-	justify-self: start;
 }
 
 .form__article {

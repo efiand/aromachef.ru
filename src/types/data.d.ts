@@ -7,6 +7,30 @@ declare global {
 
 	type DbTable = "comments" | "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
 
+	type PostedComment = {
+		name?: string;
+		text: string;
+	};
+
+	type PostedRecipe = {
+		/** Сериализованные данные о предыдущих связях с тегами и рецептами */
+		cache: string;
+
+		cooking: string;
+		cookingImage?: string;
+		description: string;
+		id: string;
+		ingredients: string;
+		ingredientsExtra: string;
+		ingredientsImage?: string;
+		published: string;
+		"relatedIds[]": string[];
+		structureId: string;
+		"tagIds[]": string[];
+		telegramId: string;
+		title: string;
+	};
+
 	type Recipe = {
 		cooking: string;
 		description: string;
@@ -18,6 +42,11 @@ declare global {
 		title: string;
 	};
 
+	type RecipeCache = {
+		oldRelatedIds: number[];
+		oldTagIds: number[];
+	};
+
 	type RecipeComment = {
 		id: number;
 		name: string;
@@ -25,28 +54,11 @@ declare global {
 		answer: string | null;
 	};
 
-	type PostedComment = {
-		name?: string;
-		text: string;
-	};
-
-	type PostedRecipe = {
-		cooking: string;
-		cookingImage?: string;
-		description: string;
-		ingredients: string;
-		ingredientsImage?: string;
-		ingredientsExtra: string;
-		published: string;
-		"relatedIds[]": string[];
-		structureId: string;
-		"tagIds[]": string[];
-		telegramId: string;
-		title: string;
-	};
-
-	type RecipeInAdmin = Omit<Recipe, "structureTitle"> & {
+	type RecipeInForm = Omit<Recipe, "structureTitle"> & {
 		published: boolean;
+	};
+
+	type RecipeInAdmin = RecipeInForm & {
 		id: number;
 		recipes: DbItem[];
 		relatedIds: number[];

@@ -17,6 +17,12 @@ async function connect() {
 	return dbConnection;
 }
 
+/** @type {(error: unknown) => string} */
+export function getDbError(error) {
+	const { sqlMessage = "" } = /** @type {{ sqlMessage?: string }} */ (error || {});
+	return sqlMessage;
+}
+
 /** @type {(query: string, payload: unknown) => unknown[]} */
 function getPlaceholders(query, payload) {
 	if (Array.isArray(payload)) {

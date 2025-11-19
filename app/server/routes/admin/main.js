@@ -1,14 +1,32 @@
+import { processDb } from "#server/lib/db.js";
+
+const RECIPES_QUERY = /* sql */ `SELECT id, title FROM recipes ORDER BY id;`;
+
 export const adminRoute = {
 	/** @type {RouteMethod} */
 	async GET() {
+		/** @type {DbItem[]} */
+		const recipes = await processDb(RECIPES_QUERY);
+
 		return {
 			page: {
 				heading: "Панель управления",
 				pageTemplate: /* html */ `
 					<div class="structure">
-						<form action="/admin/dump">
-							<button class="button" type="submit">Резервное копирование</button>
-						</form>
+						<div class="page-section">
+							<form action="/admin/dump">
+								<button class="button" type="submit">Резервное копирование</button>
+							</form>
+
+							<div class="form-group">
+								<label for="recipes">Рецепты</label>
+								<select id="recipes"data-select-menu="/admin/recipe">
+									<option value="" hidden></option>
+									<option value="0">ДОБАВИТЬ</option>
+									${recipes.map((item) => renderOption(item)).join("")}
+								</select>
+							</div>
+						</div>
 
 						<div class="structure__aside">
 							<ul class="structures structure__menu">
@@ -23,3 +41,10 @@ export const adminRoute = {
 		};
 	},
 };
+
+/** @type {(item: DbItem) => string} */
+function renderOption({ id, title }) {
+	return /* html */ `
+		<option value="${id}">${id} – ${title}</option>
+	`;
+}

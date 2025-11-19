@@ -21,7 +21,7 @@ const htmlvalidate = new HtmlValidate({
 	},
 });
 
-const adminPages = ["/admin"];
+const adminPages = ["/admin", "/admin/recipe/0"];
 
 /** @type {amphtmlValidator.Validator | undefined} */
 let ampValidator;
