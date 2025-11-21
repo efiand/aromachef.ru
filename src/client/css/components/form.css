@@ -1,11 +1,14 @@
-.form__errors {
-	margin-bottom: 2rem;
-	color: var(--color-red);
+.form__groups {
+	display: grid;
+	gap: 2rem;
+	margin-top: 2rem;
 }
 
-.form__group + .form__checker,
-.form__group + .form__group,
-.form__groups + .form__group {
+.form__subtitle {
+	margin-bottom: 2rem;
+}
+
+.form__group:not(:first-child) {
 	margin-top: 2rem;
 }
 
@@ -16,59 +19,14 @@
 	margin-top: 3rem;
 }
 
-.form__image {
-	display: block;
-	position: relative;
-	width: 272px;
-	padding-top: 175%;
-	color: var(--color-green);
-	background-color: var(--color-green-light);
-	background-size: cover;
-	cursor: pointer;
-}
-
-.form__image:has(:user-invalid) {
-	color: var(--color-red);
-	background-color: var(--color-red-light);
-}
-
-.form__image[style*="url"] {
-	color: transparent;
-}
-
-.form__image-label {
-	position: absolute;
-	top: 50%;
-	right: 0;
-	left: 0;
-	padding: 2rem;
-	font-weight: 700;
-	font-family: var(--font-accent);
-	text-align: center;
-	transform: translateY(-50%);
-}
-
+.form__checker,
 .form__submit {
 	margin-top: 2rem;
 }
 
-@media (min-width: 432px) {
-	.form__image {
-		display: block;
-		width: 384px;
-	}
-}
-
 @media (min-width: 768px) {
 	.form__groups {
-		display: grid;
 		grid-template-columns: 1fr 384px;
 		align-items: start;
-		gap: 2rem;
-		margin-top: 2rem;
-	}
-
-	.form__groups .form__group {
-		margin: 0;
 	}
 }

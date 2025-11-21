@@ -18,7 +18,7 @@ export function renderLayoutAdmin({ heading, pageTemplate, pathname }) {
 
 	return /* html */ `
 		<body>
-			<div class="layout">
+			<div class="layout" data-layout>
 				<header class="header layout__header _container">
 					<a class="header__logo" href="/" aria-label="На главную">
 						<img src="/images/aromachef-logo.svg?v2" width="30" height="30" alt="">

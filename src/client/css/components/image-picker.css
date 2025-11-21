@@ -1,0 +1,39 @@
+.image-picker {
+	display: block;
+	position: relative;
+	width: 272px;
+	height: 476px;
+	color: var(--color-green);
+	background-color: var(--color-green-light);
+	background-size: cover;
+	cursor: pointer;
+}
+
+.image-picker:has(:user-invalid) {
+	color: var(--color-red);
+	background-color: var(--color-red-light);
+}
+
+.image-picker[style*="url"] {
+	color: transparent;
+}
+
+.image-picker__label {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	left: 0;
+	padding: 2rem;
+	font-weight: 700;
+	font-family: var(--font-accent);
+	text-align: center;
+	transform: translateY(-50%);
+}
+
+@media (min-width: 432px) {
+	.image-picker {
+		display: block;
+		width: 384px;
+		height: 672px;
+	}
+}

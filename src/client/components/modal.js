@@ -1,5 +1,8 @@
 import { getElement } from "#client/lib/get-element.js";
 
+/** @type {Record<string, () => void>} */
+const closeByModalId = {};
+
 const layoutElement = getElement("[data-layout]");
 
 /** @type {HTMLElement | null} */
@@ -11,7 +14,16 @@ let innerElement = null;
 function close() {
 	modalElement?.classList.remove("modal--opened");
 	innerElement?.classList.remove("modal__inner--full-width");
-	innerElement?.lastElementChild?.remove();
+
+	if (innerElement?.lastElementChild) {
+		const {
+			dataset: { modalId = "" },
+		} = /** @type {HTMLElement} */ (innerElement.lastElementChild);
+
+		innerElement.lastElementChild.remove();
+		closeByModalId[modalId]?.();
+	}
+
 	document.removeEventListener("keydown", onKeydown);
 	layoutElement.inert = false;
 }
@@ -42,10 +54,15 @@ function onKeydown(event) {
 	}
 }
 
-/** @type {(element: HTMLElement, fullWidth?: boolean) => void} */
-export function openModal(element, fullWidth = false) {
+/** @type {(element: HTMLElement, fullWidth?: boolean, onClose?: () => void) => void} */
+export function openModal(element, fullWidth = false, onClose) {
 	if (!modalElement) {
 		init();
+	}
+
+	const { modalId = "" } = element.dataset;
+	if (modalId && onClose && !closeByModalId[modalId]) {
+		closeByModalId[modalId] = onClose;
 	}
 
 	layoutElement.inert = true;

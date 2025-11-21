@@ -1,3 +1,7 @@
+import { renderCheckers } from "#common/templates/chechers.js";
+import { renderFormErrors } from "#common/templates/form-errors.js";
+import { renderImagePicker } from "#common/templates/image-picker.js";
+
 /** @type {(data: RecipeInAdmin, errors?: string[]) => string} */
 export function renderRecipeForm(
 	{
@@ -21,11 +25,8 @@ export function renderRecipeForm(
 	const cache = { oldRelatedIds: relatedIds, oldTagIds: tagIds };
 
 	return /* html */ `
-		<form class="form" method="post" enctype="multipart/form-data">
-			<input name="id" type="hidden" value='${id}'>
-			<input name="cache" type="hidden" value='${JSON.stringify(cache)}'>
-
-			${errors.length ? /* html */ `<ul class="form__errors">${errors.map(renderServerError).join("")}</ul>` : ""}
+		<form class="form" id="recipe-form" method="post" enctype="multipart/form-data">
+			${errors.length ? /* html */ renderFormErrors(errors) : ""}
 
 			<div class="form__group form-group">
 				<label class="_required" for="title">Название</label>
@@ -85,7 +86,9 @@ export function renderRecipeForm(
 					</div>
 				</div>
 
-				${renderImage(id, "ingredients", /* html */ `Изображение<br>для состава`)}
+				<div class="article__image">
+					${renderImagePicker(id, "ingredients", /* html */ `Изображение<br>для состава`)}
+				</div>
 			</div>
 
 			<div class="form__article article article--reverse">
@@ -102,23 +105,18 @@ export function renderRecipeForm(
 					</div>
 				</div>
 
-				${renderImage(id, "cooking", /* html */ `Изображение<br>для приготовления`)}
+				<div class="article__image">
+					${renderImagePicker(id, "cooking", /* html */ `Изображение<br>для приготовления`)}
+				</div>
 			</div>
 
-			<div class="form__group form-groups">
-				<div class="form__group form-group">
-					<label for="tagIds">Теги (несколько – c нажатой клавишей Ctrl)</label>
-					<select
-						id="tagIds"
-						name="tagIds[]"
-						size="${tags.length}"
-						multiple
-					>
-						${tags.map((item) => renderOptionFromDbItem(item, tagIds))}
-					</select>
+			<div class="form__groups">
+				<div class="form-group">
+					<button class="button" type="button" data-checkers-open="tags">Теги</button>
+					<button class="button" type="button" data-checkers-open="recipes">Связанные рецепты</button>
 				</div>
 
-				<div class="form__group form-group">
+				<div class="form-group">
 					<label class="_required" for="structureId">Раздел</label>
 					<select
 						id="structureId"
@@ -131,50 +129,29 @@ export function renderRecipeForm(
 				</div>
 			</div>
 
-			<div class="form__group form-group">
-				<label for="relatedIds">Связанные рецепты (несколько – c нажатой клавишей Ctrl)</label>
-				<select
-					id="relatedIds"
-					name="relatedIds[]"
-					size="10"
-					multiple
-				>
-					${recipes.map((item) => renderOptionFromDbItem(item, relatedIds)).join("")}
-				</select>
-			</div>
-
-			<label class="form__checker checker" for="published">
-				<input id="published" name="published" type="checkbox" ${published ? "checked" : ""}>
+			<label class="form__checker checker">
+				<input name="published" type="checkbox" ${published ? "checked" : ""}>
 				Опубликован
 			</label>
 
 			<button class="form__submit button" type="submit">${id ? "Сохранить" : "Добавить"}</button>
+
+			<div hidden data-checkers="tags">
+				<div>
+					<h2 class="form__subtitle">Теги:</h2>
+					${renderCheckers({ checkedIds: tagIds, items: tags, name: "tagIds[]" })}
+				</div>
+			</div>
+			<div hidden data-checkers="recipes">
+				<div>
+					<h2 class="form__subtitle">Связанные рецепты:</h2>
+					${renderCheckers({ checkedIds: relatedIds, items: recipes, name: "relatedIds[]" })}
+				</div>
+			</div>
+
+			<input name="id" type="hidden" value='${id}'>
+			<input name="cache" type="hidden" value='${JSON.stringify(cache)}'>
 		</form>
-	`;
-}
-
-function renderServerError(error = "") {
-	return /* html */ `<li>${error}</li>`;
-}
-
-function renderImage(id = 0, alias = "", label = "") {
-	return /* html */ `
-		<div class="article__image">
-			<label
-				class="form__image"
-				style="background-image: ${id ? `url('/pictures/recipe/${id}-${alias}@2x.webp')` : "none"}"
-				data-file-picker
-			>
-				<span class="form__image-label">${label}</span>
-				<input
-					class="_visually-hidden"
-					name="${alias}Image"
-					type="file"
-					accept="image/*"
-					${id ? "" : "required"}
-				>
-			</label>
-		</div>
 	`;
 }
 

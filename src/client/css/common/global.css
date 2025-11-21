@@ -126,7 +126,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 select {
-	overflow: auto;
 	appearance: none;
 }
 
