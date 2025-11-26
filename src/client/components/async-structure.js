@@ -1,5 +1,3 @@
-import { getElement } from "#client/lib/get-element.js";
-
 /** @type {Record<string, string>} */
 const cache = {};
 
@@ -31,8 +29,8 @@ async function updateView(linkElement, linkElements, cardsElement, element) {
 
 /** @type {ComponentInitiator} */
 export function initAsyncStructure(element) {
-	const cardsElement = getElement("[data-cards]", element);
-	const linkElements = getElement("[data-aside]", element).querySelectorAll("a");
+	const cardsElement = /** @type {HTMLElement} */ (element.querySelector("[data-cards]"));
+	const linkElements = /** @type {NodeListOf<HTMLAnchorElement>}*/ (element.querySelectorAll("[data-aside] a"));
 
 	linkElements.forEach((linkElement, i) => {
 		linkElement.addEventListener("click", async (event) => {

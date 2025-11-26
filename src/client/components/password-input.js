@@ -1,9 +1,7 @@
-import { getElement } from "#client/lib/get-element.js";
-
 /** @type {ComponentInitiator} */
 export function initPasswordInput(element) {
-	const buttonElement = /** @type {HTMLButtonElement} */ (getElement("button", element));
-	const inputElement = /** @type {HTMLInputElement} */ (getElement("input", element));
+	const buttonElement = /** @type {HTMLButtonElement} */ (element.querySelector("button"));
+	const inputElement = /** @type {HTMLInputElement} */ (element.querySelector("input"));
 
 	buttonElement.addEventListener("click", () => {
 		inputElement.type = inputElement.type === "password" ? "text" : "password";

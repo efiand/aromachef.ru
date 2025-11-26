@@ -12,8 +12,5 @@ export function loadCss(url) {
 
 /** @type {(entryName: string) => void} */
 export function loadCssEntry(entryName) {
-	if (window.isDev) {
-		return loadCss(`${dir.CSS}/${entryName}.css`);
-	}
-	return loadCss(`${dir.CSS}/${entryName}.css?v${version.CSS}`);
+	loadCss(`${dir.CSS}/${entryName}.css?v${version.CSS}`);
 }

@@ -1,5 +1,4 @@
 import { openModal } from "#client/components/modal.js";
-import { getElement } from "#client/lib/get-element.js";
 import { renderFromTemplate } from "#client/lib/renderFromTemplate.js";
 
 const text = document.querySelector('[name="description"]')?.getAttribute("content") || "";
@@ -49,9 +48,9 @@ const sharedElement = renderFromTemplate(/* html */ `
 	</div>
 `);
 
-const copyInputElement = /** @type {HTMLInputElement} */ (getElement(".share__copy input", sharedElement));
+const copyInputElement = /** @type {HTMLInputElement} */ (sharedElement.querySelector(".share__copy input"));
 
-const copyStatusElement = getElement(".share__copy-message", sharedElement);
+const copyStatusElement = /** @type {HTMLElement} */ (sharedElement.querySelector(".share__copy-message"));
 
 sharedElement.querySelector("button")?.addEventListener("click", () => {
 	navigator.clipboard.writeText(`${window.location}`);

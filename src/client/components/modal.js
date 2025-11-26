@@ -1,9 +1,7 @@
-import { getElement } from "#client/lib/get-element.js";
-
 /** @type {Record<string, () => void>} */
 const closeByModalId = {};
 
-const layoutElement = getElement("[data-layout]");
+const layoutElement = /** @type {HTMLElement} */ (document.querySelector("[data-layout]"));
 
 /** @type {HTMLElement | null} */
 let modalElement = null;
@@ -41,8 +39,8 @@ function onModalClick({ target }) {
 function init() {
 	document.body.insertAdjacentHTML("beforeend", renderModal());
 
-	modalElement = getElement(".modal");
-	innerElement = getElement(".modal__inner", modalElement);
+	modalElement = /** @type {HTMLElement} */ (document.querySelector(".modal"));
+	innerElement = /** @type {HTMLElement} */ (modalElement?.querySelector(".modal__inner"));
 	modalElement.addEventListener("click", onModalClick);
 }
 

@@ -1,7 +1,6 @@
 import { openModal } from "#client/components/modal.js";
 import { initSearchInput } from "#client/components/search-input.js";
 import { debounce } from "#client/lib/debounce.js";
-import { getElement } from "#client/lib/get-element.js";
 import { renderSearchInput } from "#common/templates/search-input.js";
 
 /** @type {HTMLDivElement | null} */
@@ -16,9 +15,9 @@ function createElements() {
 	asyncSearchElement.innerHTML = renderSearchInput("", true);
 	asyncSearchElement.addEventListener("clear-search", onClear);
 
-	const searchInputElement = getElement("[data-search-input]", asyncSearchElement);
+	const searchInputElement = /** @type {HTMLInputElement} */ (asyncSearchElement.querySelector("[data-search-input]"));
 	initSearchInput(searchInputElement);
-	getElement("input", searchInputElement).addEventListener("input", onInput);
+	searchInputElement.querySelector("input")?.addEventListener("input", onInput);
 
 	resultElement = document.createElement("div");
 	resultElement.classList.add("async-search__result");
@@ -58,7 +57,7 @@ export function initAsyncSearch(openerElement) {
 		}
 		if (asyncSearchElement) {
 			openModal(asyncSearchElement, true);
-			getElement("input", asyncSearchElement).focus();
+			asyncSearchElement.querySelector("input")?.focus();
 		}
 	});
 }

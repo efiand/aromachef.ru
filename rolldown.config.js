@@ -42,7 +42,7 @@ export default defineConfig(
 				defineConfig({
 					input: `src/client/vendors/${entryName}.js`,
 					output: {
-						file: `public/vendors/${entryName}.min.js`,
+						file: `public/vendors/${entryName}.js`,
 						format: "iife",
 						minify: true,
 					},

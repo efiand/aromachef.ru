@@ -1,8 +1,6 @@
-import { getElement } from "#client/lib/get-element.js";
-
 /** @type {ComponentInitiator} */
 export function initFilePicker(element) {
-	const inputElement = /** @type {HTMLInputElement} */ (getElement("input", element));
+	const inputElement = /** @type {HTMLInputElement} */ (element.querySelector('[type="file"]'));
 
 	inputElement.addEventListener("change", () => {
 		const file = inputElement.files?.[0];

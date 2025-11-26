@@ -1,11 +1,11 @@
 declare global {
 	interface Window {
-		isDev?: boolean;
 		PetiteVue: {
 			createApp: (data?: object | (() => object)) => { mount(HTMLElement): void };
 			reactive?: <T extends object>(obj: T) => T;
 			nextTick?: (cb: () => void) => void;
 		};
+		isDev?: boolean;
 	}
 
 	namespace NodeJS {
