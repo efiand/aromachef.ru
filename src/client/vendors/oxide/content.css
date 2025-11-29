@@ -1,0 +1,15 @@
+@import url("../../../../node_modules/tinymce/skins/ui/oxide/content.css");
+
+.mce-content-body {
+	padding: 0.75rem 1rem !important;
+}
+
+.mce-content-body [data-mce-selected="inline-boundary"] {
+	background-color: var(--color-green-light);
+}
+
+@media (min-width: 768px) {
+	html:has(.mce-content-body) {
+		font-size: 20px;
+	}
+}

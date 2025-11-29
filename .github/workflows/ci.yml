@@ -48,7 +48,7 @@ jobs:
           password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
           script: |
             cd ${{ secrets.DEPLOY_SERVER_TARGET }}/new
-            npm ci --omit=dev
+            npm ci --omit=dev --ignore-scripts
             cd ..
             systemctl stop app-aromachef
             mkdir old

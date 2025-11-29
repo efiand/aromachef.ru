@@ -48,6 +48,7 @@ export function renderRecipeForm(
 					rows="5"
 					maxlength="1000"
 					required
+					data-editor
 				>${description}</textarea>
 			</div>
 
@@ -72,6 +73,7 @@ export function renderRecipeForm(
 							rows="18"
 							maxlength="3000"
 							required
+							data-editor
 						>${ingredients}</textarea>
 					</div>
 
@@ -82,6 +84,7 @@ export function renderRecipeForm(
 							name="ingredientsExtra"
 							rows="3"
 							maxlength="1000"
+							data-editor
 						>${ingredientsExtra || ""}</textarea>
 					</div>
 				</div>
@@ -101,6 +104,7 @@ export function renderRecipeForm(
 							rows="25"
 							maxlength="3000"
 							required
+							data-editor
 						>${cooking}</textarea>
 					</div>
 				</div>

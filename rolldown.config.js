@@ -38,7 +38,7 @@ function minifyHtmlLiterals() {
 
 export default defineConfig(
 	process.env.npm_lifecycle_event === "build:vendors"
-		? ["petite-vue"].map((entryName) =>
+		? ["petite-vue", "tinymce"].map((entryName) =>
 				defineConfig({
 					input: `src/client/vendors/${entryName}.js`,
 					output: {

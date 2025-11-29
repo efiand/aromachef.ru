@@ -13,7 +13,7 @@
 }
 
 .form__article {
-	--article-margin-top: 2rem;
+	--article-margin-top: 0;
 	--article-image-margin-inline-mobile: 0;
 
 	margin-top: 3rem;

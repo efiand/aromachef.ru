@@ -1,3 +1,5 @@
+import type { TinyMCE } from "tinymce";
+
 declare global {
 	interface Window {
 		PetiteVue: {
@@ -6,6 +8,7 @@ declare global {
 			nextTick?: (cb: () => void) => void;
 		};
 		isDev?: boolean;
+		tinymce: TinyMCE;
 	}
 
 	namespace NodeJS {
@@ -27,5 +30,3 @@ declare global {
 		}
 	}
 }
-
-export {};
