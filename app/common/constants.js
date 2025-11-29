@@ -5,8 +5,8 @@ export const PROJECT_TITLE = "АромаШеф";
 export const PROJECT_DESCRIPTION = "Быстрые, вкусные и полезные рецепты с эфирными маслами.";
 
 export const version = {
-	CSS: 21,
-	JS: 16,
+	CSS: 22,
+	JS: 17,
 };
 
 /** @type {Record<string, string>} */

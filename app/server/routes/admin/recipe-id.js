@@ -1,7 +1,6 @@
 import { renderRecipeForm } from "#common/templates/recipe-form.js";
 import { getDbError, processDb } from "#server/lib/db.js";
 import { processImage } from "#server/lib/image.js";
-import { getStructuresAndTags } from "#server/lib/structures-and-tags.js";
 
 const CREATE_RECIPE_QUERY = /* sql */ `
 	INSERT INTO recipes
@@ -19,11 +18,13 @@ const RELATED_RECIPES_QUERY = /* sql */ `
 	WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id
 	ORDER BY r.title;
 `;
-const TAGS_QUERY = /* sql */ `
+const RECIPE_TAGS_QUERY = /* sql */ `
 	SELECT t.id FROM tags t JOIN recipesTags rt
 	WHERE rt.recipeId = ? AND rt.tagId = t.id
 	ORDER BY t.title;
 `;
+const STRUCTURES_QUERY = /* sql */ `SELECT id, title FROM structures ORDER BY title;`;
+const TAGS_QUERY = /* sql */ `SELECT id, title FROM tags ORDER BY title;`;
 const UPDATE_RECIPE_QUERY = /* sql */ `
 	UPDATE recipes
 	SET title = ?, description = ?, ingredients = ?, ingredientsExtra = ?, cooking = ?, structureId = ?, telegramId = ?, published = ?
@@ -102,7 +103,7 @@ export const recipeIdAdminRoute = {
 				/** @type {import('mysql2').ResultSetHeader} */
 				(({ insertId: newId } = await processDb(CREATE_RECIPE_QUERY, payload)));
 			} catch (error) {
-				errors.push(/* html */ `<b>Ошибка ${newId ? "обновления" : "создания"} рецепта:</b> ${getDbError(error)}`);
+				errors.push(/* html */ `<b>Ошибка создания рецепта:</b> ${getDbError(error)}`);
 			}
 		}
 
@@ -211,14 +212,14 @@ export const recipeIdAdminRoute = {
 
 /** @type {(data: { errors?: string[]; id: number; recipeData?: RecipeInForm }) => Promise<RouteData>} */
 async function getView({ errors = [], id, recipeData }) {
-	const [structures, tags] = await getStructuresAndTags(false);
-
-	/** @type {[[RecipeInForm], DbItem[], DbItem[], DbItem[]]} */
-	const [[recipe], relatedRecipes, recipeTags, recipes] = await Promise.all([
+	/** @type {[[RecipeInForm], DbItem[], DbItem[], DbItem[], DbItem[], DbItem[]]} */
+	const [[recipe], recipeTags, relatedRecipes, recipes, structures, tags] = await Promise.all([
 		recipeData ? [recipeData] : processDb(RECIPE_QUERY, id),
+		processDb(RECIPE_TAGS_QUERY, id),
 		processDb(RELATED_RECIPES_QUERY, id),
-		processDb(TAGS_QUERY, id),
 		processDb(RECIPES_QUERY),
+		processDb(STRUCTURES_QUERY),
+		processDb(TAGS_QUERY),
 	]);
 
 	return {

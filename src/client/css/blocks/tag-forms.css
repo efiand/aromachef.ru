@@ -1,0 +1,18 @@
+.tag-forms {
+	display: grid;
+	gap: 2rem;
+}
+
+.tag-forms__list {
+	display: contents;
+}
+
+.tag-forms__form {
+	display: grid;
+}
+
+@media (min-width: 888px) {
+	.tag-forms__form {
+		grid-template-columns: 1fr auto;
+	}
+}
