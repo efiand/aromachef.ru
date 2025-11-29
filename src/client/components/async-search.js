@@ -15,7 +15,9 @@ function createElements() {
 	asyncSearchElement.innerHTML = renderSearchInput("", true);
 	asyncSearchElement.addEventListener("clear-search", onClear);
 
-	const searchInputElement = /** @type {HTMLInputElement} */ (asyncSearchElement.querySelector("[data-search-input]"));
+	const searchInputElement = /** @type {HTMLInputElement} */ (
+		asyncSearchElement.querySelector(`[data-component="searchInput"]`)
+	);
 	initSearchInput(searchInputElement);
 	searchInputElement.querySelector("input")?.addEventListener("input", onInput);
 

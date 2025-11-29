@@ -1,8 +1,8 @@
 @import url("common/icons.css");
 @import url("common/keyframes.css");
 
-@import url("components/async-search.css");
-@import url("components/comments.css");
-@import url("components/icon-button.css");
-@import url("components/modal.css");
-@import url("components/search-input.css");
+@import url("blocks/async-search.css");
+@import url("blocks/comments.css");
+@import url("blocks/icon-button.css");
+@import url("blocks/modal.css");
+@import url("blocks/search-input.css");

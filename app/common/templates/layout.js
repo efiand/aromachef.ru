@@ -7,7 +7,7 @@ const ADMIN_TEMPLATE = /* html */ `
 
 const SEARCH_TEMPLATE = /* html */ `
 	<li class="header__item">
-		<a class="header__extra header__extra--search" href="/search" data-async-search>
+		<a class="header__extra header__extra--search" href="/search" data-component="asyncSearch">
 			<span>Поиск</span>
 		</a>
 	</li>

@@ -15,12 +15,12 @@ export const adminRoute = {
 					<div class="structure">
 						<div class="page-section">
 							<form action="/admin/dump">
-								<button class="button" type="submit">Резервное копирование</button>
+								<button class="button" type="submit" data-component="submitter">Резервное копирование</button>
 							</form>
 
 							<div class="form-group">
 								<label for="recipes">Рецепты</label>
-								<select id="recipes"data-select-menu="/admin/recipe">
+								<select id="recipes" data-component="selectMenu" data-endpoint="/admin/recipe">
 									<option value="" hidden></option>
 									<option value="0">ДОБАВИТЬ</option>
 									${recipes.map((item) => renderOption(item)).join("")}

@@ -5,3 +5,10 @@ export function init(selector, initItem) {
 
 	elements.forEach(initItem);
 }
+
+/** @param {Record<string, ComponentInitiator>} dict */
+export function initComponents(dict) {
+	Object.entries(dict).forEach(([name, initComponent]) => {
+		init(`[data-component="${name}"]`, initComponent);
+	});
+}

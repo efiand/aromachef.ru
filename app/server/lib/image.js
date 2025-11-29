@@ -14,41 +14,25 @@ export async function processImage(rawImage, name) {
 	const image = sharp(rawImage);
 	const [id, alias] = name.split("-");
 
-	/** @type {Promise<void>[]} */
-	const outputPromises = [];
-
 	/** @type {(filename: string, image: sharp.Sharp) => Promise<void>} */
-	async function updateOutputPromises(filename, image) {
+	async function process(filename, image) {
 		const webpFilename = `pictures/recipe/${filename}.webp`;
 		const avifFilename = `pictures/recipe/${filename}.avif`;
 
 		const webpBuffer = await image.clone().webp(WEBP_OPTIONS).toBuffer();
 		await writeFile(`${cwd}/${webpFilename}`, webpBuffer);
-		await upload(webpFilename, webpBuffer);
+		upload(webpFilename, webpBuffer);
 
 		const avifBuffer = await image.avif(AVIF_OPTIONS).toBuffer();
 		await writeFile(`${cwd}/${avifFilename}`, avifBuffer);
-		await upload(avifFilename, avifBuffer);
+		upload(avifFilename, avifBuffer);
 	}
 
-	const promises = [
-		updateOutputPromises(`${name}@2x`, image.clone()),
-		updateOutputPromises(`${name}@1x`, image.clone().resize(384)),
-	];
+	await process(`${name}@2x`, image.clone());
+	await process(`${name}@1x`, image.clone().resize(384));
 
 	if (alias === "cooking") {
-		promises.push(
-			updateOutputPromises(
-				`${id}@2x`,
-				image.clone().resize(544).extract({ height: 408, left: 0, top: 272, width: 544 }),
-			),
-			updateOutputPromises(
-				`${id}@1x`,
-				image.clone().resize(272).extract({ height: 204, left: 0, top: 136, width: 272 }),
-			),
-		);
+		await process(`${id}@2x`, image.clone().resize(544).extract({ height: 408, left: 0, top: 272, width: 544 }));
+		await process(`${id}@1x`, image.clone().resize(272).extract({ height: 204, left: 0, top: 136, width: 272 }));
 	}
-
-	await Promise.all(promises);
-	await Promise.all(outputPromises);
 }

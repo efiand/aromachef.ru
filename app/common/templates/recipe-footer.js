@@ -22,7 +22,7 @@ export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags
 						`
 					: ""
 			}
-			${isAmp ? "" : /* html */ `<div class="recipe-footer__comments" data-comments></div>`}
+			${isAmp ? "" : /* html */ `<div class="recipe-footer__comments" data-component="comments"></div>`}
 		</footer>
 	`;
 }

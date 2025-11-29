@@ -44,7 +44,7 @@ function getView(error = "", login = "") {
 				required
 			>
 
-			<div class="password-input" data-password-input>
+			<div class="password-input" data-component="passwordInput">
 				<input
 					class="password-input__input"
 					type="password"
@@ -56,7 +56,7 @@ function getView(error = "", login = "") {
 				<button class="password-input__button" type="button" aria-label="Видимость пароля"></button>
 			</div>
 
-			<button class="button" type="submit">Войти</button>
+			<button class="button" type="submit" data-component="submitter">Войти</button>
 
 			${error ? /* html */ `<p class="auth__error _error">${error}</p>` : ""}
 		</form>

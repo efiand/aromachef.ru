@@ -5,7 +5,7 @@ export function renderSearchInput(value = "", async = false) {
 	}
 
 	return /* html */ `
-		<div class="search-input" data-search-input>
+		<div class="search-input" data-component="searchInput">
 			<input
 				class="search-input__input"
 				type="search"

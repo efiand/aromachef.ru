@@ -28,7 +28,7 @@ export function renderStructure({
 	const id = asideId ? `id="${asideId}"` : "";
 
 	return /* html */ `
-		<section class="structure" ${asyncSupport ? "data-async-structure" : ""}>
+		<section class="structure" ${asyncSupport ? `data-component="asyncStructure"` : ""}>
 			<div class="structure__cards" data-cards>
 				<h1>${heading}</h1>
 				${renderCards({ alt, cards, isAmp, route })}

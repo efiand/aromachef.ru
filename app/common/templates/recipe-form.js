@@ -48,7 +48,7 @@ export function renderRecipeForm(
 					rows="5"
 					maxlength="1000"
 					required
-					data-editor
+					data-component="editor"
 				>${description}</textarea>
 			</div>
 
@@ -73,7 +73,7 @@ export function renderRecipeForm(
 							rows="18"
 							maxlength="3000"
 							required
-							data-editor
+							data-component="editor"
 						>${ingredients}</textarea>
 					</div>
 
@@ -84,7 +84,7 @@ export function renderRecipeForm(
 							name="ingredientsExtra"
 							rows="3"
 							maxlength="1000"
-							data-editor
+							data-component="editor"
 						>${ingredientsExtra || ""}</textarea>
 					</div>
 				</div>
@@ -104,7 +104,7 @@ export function renderRecipeForm(
 							rows="25"
 							maxlength="3000"
 							required
-							data-editor
+							data-component="editor"
 						>${cooking}</textarea>
 					</div>
 				</div>
@@ -138,15 +138,15 @@ export function renderRecipeForm(
 				Опубликован
 			</label>
 
-			<button class="form__submit button" type="submit">${id ? "Сохранить" : "Добавить"}</button>
+			<button class="form__submit button" type="submit" data-component="submitter">${id ? "Сохранить" : "Добавить"}</button>
 
-			<div hidden data-checkers="tags">
+			<div hidden data-component="checkers" data-checkers="tags">
 				<div>
 					<h2 class="form__subtitle">Теги:</h2>
 					${renderCheckers({ checkedIds: tagIds, items: tags, name: "tagIds[]" })}
 				</div>
 			</div>
-			<div hidden data-checkers="recipes">
+			<div hidden data-component="checkers" data-checkers="recipes">
 				<div>
 					<h2 class="form__subtitle">Связанные рецепты:</h2>
 					${renderCheckers({ checkedIds: relatedIds, items: recipes, name: "relatedIds[]" })}

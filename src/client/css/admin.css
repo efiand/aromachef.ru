@@ -1,12 +1,12 @@
 @import url("common/global-admin.css");
 @import url("common/keyframes.css");
 
-@import url("components/auth.css");
-@import url("components/checker.css");
-@import url("components/checkers.css");
-@import url("components/form.css");
-@import url("components/form-group.css");
-@import url("components/image-picker.css");
-@import url("components/modal.css");
-@import url("components/operation-status.css");
-@import url("components/password-input.css");
+@import url("blocks/auth.css");
+@import url("blocks/checker.css");
+@import url("blocks/checkers.css");
+@import url("blocks/form.css");
+@import url("blocks/form-group.css");
+@import url("blocks/image-picker.css");
+@import url("blocks/modal.css");
+@import url("blocks/operation-status.css");
+@import url("blocks/password-input.css");

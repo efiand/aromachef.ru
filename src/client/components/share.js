@@ -1,7 +1,7 @@
 import { openModal } from "#client/components/modal.js";
 import { renderFromTemplate } from "#client/lib/renderFromTemplate.js";
 
-const text = document.querySelector('[name="description"]')?.getAttribute("content") || "";
+const text = document.querySelector(`[name="description"]`)?.getAttribute("content") || "";
 
 /** @type {ShareItem[]} */
 const ITEMS = [

@@ -1,4 +1,6 @@
 import { initComments } from "#client/components/comments.js";
-import { init } from "#client/lib/init.js";
+import { initComponents } from "#client/lib/init.js";
 
-init("[data-comments]", initComments);
+initComponents({
+	comments: initComments,
+});
