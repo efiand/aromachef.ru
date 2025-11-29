@@ -1,6 +1,7 @@
 import { renderRecipeForm } from "#common/templates/recipe-form.js";
 import { getDbError, processDb } from "#server/lib/db.js";
 import { processImage } from "#server/lib/image.js";
+import { prepareText } from "#server/lib/prepare-text.js";
 
 const CREATE_RECIPE_QUERY = /* sql */ `
 	INSERT INTO recipes
@@ -81,11 +82,11 @@ export const recipeIdAdminRoute = {
 		const telegramId = parseInt(rawTelegramId, 10) || null;
 		const structureId = parseInt(rawStructureId, 10);
 		const payload = [
-			title,
-			description,
-			ingredients,
-			ingredientsExtra || null,
-			cooking,
+			prepareText(title),
+			prepareText(description),
+			prepareText(ingredients),
+			ingredientsExtra ? prepareText(ingredientsExtra) : null,
+			prepareText(cooking),
 			structureId,
 			telegramId,
 			published ? 1 : 0,

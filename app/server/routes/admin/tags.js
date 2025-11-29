@@ -1,5 +1,6 @@
 import { renderTagForms } from "#common/templates/tag-forms.js";
 import { getDbError, processDb } from "#server/lib/db.js";
+import { prepareText } from "#server/lib/prepare-text.js";
 
 const CREATE_TAG_QUERY = /* sql */ `INSERT INTO tags (title) VALUES(?);`;
 const TAGS_QUERY = /* sql */ `SELECT id, title FROM tags ORDER BY title;`;
@@ -15,17 +16,18 @@ export const tagsAdminRoute = {
 	async POST({ body }) {
 		const { id, title } = /** @type {{ id: string; title: string }} */ (body);
 		const newId = parseInt(id, 10);
+		const payload = prepareText(title);
 		let error = "";
 
 		if (newId) {
 			try {
-				await processDb(UPDATE_TAG_QUERY, [title, newId]);
+				await processDb(UPDATE_TAG_QUERY, [payload, newId]);
 			} catch (updatingError) {
 				error = /* html */ `<b>Ошибка обновления тега ${id}:</b> ${getDbError(updatingError)}`;
 			}
 		} else {
 			try {
-				await processDb(CREATE_TAG_QUERY, title);
+				await processDb(CREATE_TAG_QUERY, payload);
 			} catch (creatingError) {
 				error = /* html */ `<b>Ошибка создания тега:</b> ${getDbError(creatingError)}`;
 			}

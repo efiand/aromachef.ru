@@ -103,7 +103,7 @@ export const recipeIdRoute = {
 		const { name, text } = /** @type {PostedComment} */ (body);
 		await processDb(ADD_COMMENT_QUERY, [
 			name ? prepareText(name, true) : "Гость",
-			prepareText(/* html */ `<p>${text.replaceAll("\n", "</p><p>")}</p>`),
+			/* html */ `<p>${prepareText(text, true).replaceAll("\n", "</p><p>")}</p>`,
 			id,
 		]);
 
