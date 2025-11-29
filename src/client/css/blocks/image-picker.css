@@ -2,11 +2,16 @@
 	display: block;
 	position: relative;
 	width: 272px;
-	height: 476px;
+	height: 204px;
 	color: var(--color-green);
 	background-color: var(--color-green-light);
-	background-size: cover;
+	background-size: 100% auto;
+	background-position: center;
 	cursor: pointer;
+}
+
+.image-picker--recipe {
+	height: 476px;
 }
 
 .image-picker:has(:user-invalid) {
@@ -31,8 +36,7 @@
 }
 
 @media (min-width: 432px) {
-	.image-picker {
-		display: block;
+	.image-picker--recipe {
 		width: 384px;
 		height: 672px;
 	}

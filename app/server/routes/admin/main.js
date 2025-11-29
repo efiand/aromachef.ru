@@ -31,6 +31,9 @@ export const adminRoute = {
 						<div class="structure__aside">
 							<ul class="structures structure__menu">
 								<li class="structures__item">
+									<a class="structures__link" href="/admin/structures">Разделы</a>
+								</li>
+								<li class="structures__item">
 									<a class="structures__link" href="/admin/tags">Теги</a>
 								</li>
 								<li class="structures__item">

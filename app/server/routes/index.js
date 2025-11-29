@@ -5,6 +5,7 @@ import { dumpRoute } from "#server/routes/admin/dump.js";
 import { logoutRoute } from "#server/routes/admin/logout.js";
 import { adminRoute } from "#server/routes/admin/main.js";
 import { recipeIdAdminRoute } from "#server/routes/admin/recipe-id.js";
+import { structuresAdminRoute } from "#server/routes/admin/structures.js";
 import { tagsAdminRoute } from "#server/routes/admin/tags.js";
 import { pagesApiRoute } from "#server/routes/api/pages.js";
 import { telegramRoute } from "#server/routes/api/telegram.js";
@@ -28,6 +29,7 @@ export const routes = {
 	"/admin/dump": dumpRoute,
 	"/admin/logout": logoutRoute,
 	"/admin/recipe/:id": recipeIdAdminRoute,
+	"/admin/structures": structuresAdminRoute,
 	"/admin/tags": tagsAdminRoute,
 	"/api/pages": pagesApiRoute,
 	"/api/telegram": telegramRoute,
