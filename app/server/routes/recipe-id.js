@@ -32,7 +32,7 @@ const commentsQueryWithPublishedOnly = getCommentsQuery(/* sql */ `AND published
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ authorized, id, isAmp, body }) {
-		const needUnpublished = isDev || (authorized && Boolean(body.preview));
+		const needUnpublished = isDev || (authorized && typeof body.preview !== "undefined");
 
 		if (typeof body.comments !== "undefined") {
 			/** @type {RecipeComment[]} */

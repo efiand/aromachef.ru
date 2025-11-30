@@ -8,8 +8,8 @@ import { renderPage } from "#server/lib/page.js";
 import { getRequestBody } from "#server/lib/request.js";
 import { routes } from "#server/routes/index.js";
 
-/** @type {(error: unknown, href: string) => Promise<{ statusCode: number; template: string }>} */
-async function handleError(error, href) {
+/** @type {(error: unknown, href: string, authorized?: boolean) => Promise<{ statusCode: number; template: string }>} */
+async function handleError(error, href, authorized = false) {
 	if (!isDev) {
 		console.error(error, `[${href}]`);
 	}
@@ -27,6 +27,7 @@ async function handleError(error, href) {
 
 	const heading = `Ошибка ${statusCode}`;
 	const template = await renderPage({
+		authorized,
 		description: "Страница ошибок.",
 		heading,
 		pageTemplate: renderErrorPage(heading, message),
@@ -59,8 +60,12 @@ async function next(req, res) {
 	let template = "";
 	let redirect = "";
 	let statusCode = 200;
+	let authorized = false;
 
 	try {
+		const { authToken } = getCookies(req);
+		authorized = Boolean(authToken && jwt.verify(authToken, process.env.AUTH_SECRET));
+
 		if (!route) {
 			throw new Error("Страница не найдена.", { cause: 404 });
 		}
@@ -73,9 +78,6 @@ async function next(req, res) {
 		if (!route[method]) {
 			throw new Error("Method not allowed!", { cause: 405 });
 		}
-
-		const { authToken } = getCookies(req);
-		const authorized = Boolean(authToken && jwt.verify(authToken, process.env.AUTH_SECRET));
 
 		if (isAdmin && pathname !== "/admin/auth" && !authorized) {
 			res.statusCode = 302;
@@ -92,7 +94,7 @@ async function next(req, res) {
 			template = await renderPage({ ...routeData.page, authorized, isAmp, pathname });
 		}
 	} catch (error) {
-		({ statusCode, template } = await handleError(error, url.href));
+		({ statusCode, template } = await handleError(error, url.href, authorized));
 	}
 
 	if (redirect) {

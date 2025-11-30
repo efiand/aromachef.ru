@@ -138,7 +138,12 @@ export function renderRecipeForm(
 				Опубликован
 			</label>
 
-			<button class="form__submit button" type="submit" data-component="submitter">${id ? "Сохранить" : "Добавить"}</button>
+			<div class="form__footer">
+				<button class="form__submit button" type="submit" data-component="submitter">${id ? "Сохранить" : "Добавить"}</button>
+				<a href="/recipe/${id}${published ? "" : "?preview"}" target="_blank">
+					${published ? "Просмотр" : "Предварительный просмотр"}
+				</a>
+			</div>
 
 			<div hidden data-component="checkers" data-checkers="tags">
 				<div>

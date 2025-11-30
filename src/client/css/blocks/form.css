@@ -19,8 +19,13 @@
 	margin-top: 3rem;
 }
 
-.form__checker,
-.form__submit {
+.form__checker {
+	margin-top: 2rem;
+}
+
+.form__footer {
+	display: grid;
+	gap: 1rem;
 	margin-top: 2rem;
 }
 
@@ -28,5 +33,11 @@
 	.form__groups {
 		grid-template-columns: 1fr 384px;
 		align-items: start;
+	}
+
+	.form__footer {
+		grid-template-columns: repeat(2, auto);
+		justify-content: space-between;
+		align-items: center;
 	}
 }
