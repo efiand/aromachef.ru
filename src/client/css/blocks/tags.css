@@ -2,13 +2,11 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.5rem;
-	max-width: 50%;
 }
 
 .tags--column {
 	display: block;
 	width: fit-content;
-	max-width: none;
 }
 
 .tags--column .tags__item:not(:first-child) {

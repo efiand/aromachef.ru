@@ -1,27 +1,27 @@
 .recipe-footer {
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: 1fr auto;
 	justify-content: space-between;
 	gap: 2rem;
 }
 
 .recipe-footer__cards {
+	grid-column: 1 / -1;
 	margin-inline: auto;
 }
 
 .recipe-footer__structure-link {
-	margin-left: auto;
 	text-align: right;
 }
 
 .recipe-footer__text {
-	width: 100%;
+	grid-column: 1 / -1;
 	margin-top: 1rem;
 	text-align: center;
 }
 
 .recipe-footer__comments {
-	width: 100%;
+	grid-column: 1 / -1;
 	min-height: 1.875rem;
 	margin-top: 1rem;
 }
