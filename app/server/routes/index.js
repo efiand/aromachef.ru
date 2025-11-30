@@ -1,6 +1,8 @@
 import { notFoundRoute } from "#server/routes/404.js";
 import { aboutRoute } from "#server/routes/about.js";
 import { authRoute } from "#server/routes/admin/auth.js";
+import { commentIdAdminRoute } from "#server/routes/admin/comment-id.js";
+import { commentsIdAdminRoute } from "#server/routes/admin/comments-id.js";
 import { dumpRoute } from "#server/routes/admin/dump.js";
 import { logoutRoute } from "#server/routes/admin/logout.js";
 import { adminRoute } from "#server/routes/admin/main.js";
@@ -26,6 +28,8 @@ export const routes = {
 	"/about": aboutRoute,
 	"/admin": adminRoute,
 	"/admin/auth": authRoute,
+	"/admin/comment/:id": commentIdAdminRoute,
+	"/admin/comments/:id": commentsIdAdminRoute,
 	"/admin/dump": dumpRoute,
 	"/admin/logout": logoutRoute,
 	"/admin/recipe/:id": recipeIdAdminRoute,

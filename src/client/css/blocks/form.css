@@ -8,6 +8,10 @@
 	margin-bottom: 2rem;
 }
 
+.form__group--indented {
+	margin-left: 2rem;
+}
+
 .form__group:not(:first-child) {
 	margin-top: 2rem;
 }

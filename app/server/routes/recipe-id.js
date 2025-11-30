@@ -11,6 +11,11 @@ const { TG_AROMACHEF_ID } = process.env;
 const ADD_COMMENT_QUERY = /* sql */ `
 	INSERT INTO comments (name, text, recipeId) VALUES (?, ?, ?);
 `;
+const COMMENTS_QUERY = /* sql */ `
+	SELECT id, name, text, answer FROM comments
+	WHERE recipeId = ? AND published = 1
+	ORDER BY publishedAt DESC;
+`;
 const TAGS_QUERY = /* sql */ `
 	SELECT t.id, t.title FROM tags t JOIN recipesTags rt
 	WHERE rt.recipeId = ? AND rt.tagId = t.id
@@ -26,9 +31,6 @@ const recipesQueryWithPublishedOnly = getRecipesQuery(/* sql */ `AND r.published
 const relatedRecipesQuery = getRelatedRecipesQuery();
 const relatedRecipesQueryWithPublishedOnly = getRelatedRecipesQuery(/* sql */ `AND r.published = 1`);
 
-const commentsQuery = getCommentsQuery();
-const commentsQueryWithPublishedOnly = getCommentsQuery(/* sql */ `AND published = 1`);
-
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ authorized, id, isAmp, body }) {
@@ -36,7 +38,7 @@ export const recipeIdRoute = {
 
 		if (typeof body.comments !== "undefined") {
 			/** @type {RecipeComment[]} */
-			const comments = await processDb(needUnpublished ? commentsQuery : commentsQueryWithPublishedOnly, id);
+			const comments = await processDb(COMMENTS_QUERY, id);
 			return {
 				contentType: "application/json",
 				template: JSON.stringify({ comments }),
@@ -101,15 +103,18 @@ export const recipeIdRoute = {
 	/** @type {RouteMethod} */
 	async POST({ body, id }) {
 		const { name, text } = /** @type {PostedComment} */ (body);
-		await processDb(ADD_COMMENT_QUERY, [
+		/** @type {import('mysql2').ResultSetHeader} */
+		const { insertId } = await processDb(ADD_COMMENT_QUERY, [
 			name ? prepareText(name, true) : "Гость",
 			/* html */ `<p>${prepareText(text, true).replaceAll("\n", "</p><p>")}</p>`,
 			id,
 		]);
 
+		const tgAnswer = `Новый комментарий!\nhttps://aromachef.ru/admin/comment/${insertId}`;
+
 		await Promise.all([
-			sendTgMessage({ text: "Новый комментарий!" }),
-			sendTgMessage({ chat: { id: TG_AROMACHEF_ID }, text: "Новый комментарий!" }),
+			sendTgMessage({ text: tgAnswer }),
+			sendTgMessage({ chat: { id: TG_AROMACHEF_ID }, text: tgAnswer }),
 		]);
 
 		return {
@@ -117,14 +122,6 @@ export const recipeIdRoute = {
 		};
 	},
 };
-
-function getCommentsQuery(queryCondition = "") {
-	return /* sql */ `
-		SELECT id, name, text, answer FROM comments
-		WHERE recipeId = ? ${queryCondition}
-		ORDER BY publishedAt DESC;
-	`;
-}
 
 function getRecipesQuery(queryCondition = "") {
 	return /* sql */ `

@@ -1,11 +1,14 @@
 import { processDb } from "#server/lib/db.js";
 
-const RECIPES_QUERY = /* sql */ `SELECT id, title FROM recipes ORDER BY id;`;
+const RECIPES_QUERY = /* sql */ `
+	SELECT id, title, (SELECT count(c.id) FROM comments c WHERE recipeId = r.id) as commentsCount
+	FROM recipes r ORDER BY id;
+`;
 
 export const adminRoute = {
 	/** @type {RouteMethod} */
 	async GET() {
-		/** @type {DbItem[]} */
+		/** @type {(DbItem & { commentsCount: number; })[]} */
 		const recipes = await processDb(RECIPES_QUERY);
 
 		return {
@@ -24,6 +27,17 @@ export const adminRoute = {
 									<option value="" hidden></option>
 									<option value="0">ДОБАВИТЬ</option>
 									${recipes.map((item) => renderOption(item)).join("")}
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="recipes">Комментарии</label>
+								<select id="recipes" data-component="selectMenu" data-endpoint="/admin/comments">
+									<option value="" hidden></option>
+									${recipes
+										.filter(({ commentsCount }) => commentsCount)
+										.map((item) => renderOption(item, "comments"))
+										.join("")}
 								</select>
 							</div>
 						</div>
@@ -48,9 +62,9 @@ export const adminRoute = {
 	},
 };
 
-/** @type {(item: DbItem) => string} */
-function renderOption({ id, title }) {
+/** @type {(item: DbItem & { commentsCount: number; }, mode?: string) => string} */
+function renderOption({ commentsCount, id, title }, mode = "") {
 	return /* html */ `
-		<option value="${id}">${id} – ${title}</option>
+		<option value="${id}">${id} – ${title}${mode === "comments" ? ` (${commentsCount})` : ""}</option>
 	`;
 }

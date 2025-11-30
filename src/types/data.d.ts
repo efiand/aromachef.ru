@@ -54,9 +54,14 @@ declare global {
 		answer: string | null;
 	};
 
-	type RecipeInForm = Omit<Recipe, "structureTitle"> & {
+	type RecipeCommentInForm = Omit<RecipeComment, "id"> & {
+		action?: string;
 		published: boolean;
+		recipeId: number | string;
+		recipeTitle: string;
 	};
+
+	type RecipeInForm = Omit<Recipe, "structureTitle"> & { published: boolean };
 
 	type RecipeInAdmin = RecipeInForm & {
 		id: number;

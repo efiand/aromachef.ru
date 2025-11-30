@@ -106,9 +106,8 @@ const TEMPLATE = /* html */ `
 				></textarea>
 				<button
 					class="comments__button button"
-					:class="{ 'button--loading': posting }"
 					type="submit"
-					:disabled="posting"
+					:data-loading="posting ? '' : undefined"
 				>
 					Отправить
 				</button>

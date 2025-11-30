@@ -9,7 +9,7 @@ const messageOptions = { parse_mode: "Markdown" };
 
 /** @type {(payload: TelegramPayload) => Promise<void>} */
 export async function sendTgMessage({ chat: { id = TG_ADMIN_ID, username = "aroma_chef_bot" } = {}, text }) {
-	const template = `\`\`\`\n${JSON.stringify(text.trim())}\n\`\`\``;
+	const template = text.trim();
 
 	if (id === TG_ADMIN_ID || id === TG_AROMACHEF_ID) {
 		await bot.sendMessage(id, template, messageOptions);
@@ -17,7 +17,7 @@ export async function sendTgMessage({ chat: { id = TG_ADMIN_ID, username = "arom
 	}
 
 	const user = username ? `@${username}` : id;
-	await bot.sendMessage(TG_ADMIN_ID, `Сообщение от ${user}:\n${template}`, messageOptions);
+	await bot.sendMessage(TG_ADMIN_ID, `Сообщение от ${user}:\n\`\`\`\n${template}\n\`\`\``, messageOptions);
 
 	const answer =
 		text === "/start"

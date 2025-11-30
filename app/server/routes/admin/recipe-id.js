@@ -82,6 +82,7 @@ export const recipeIdAdminRoute = {
 		const telegramId = parseInt(rawTelegramId, 10) || null;
 		const structureId = parseInt(rawStructureId, 10);
 
+		const preparedTitle = prepareText(title);
 		const [preparedDescription, preparedIngredients, preparedCooking] = await Promise.all([
 			prepareAndMinifyHtml(description),
 			prepareAndMinifyHtml(ingredients),
@@ -90,7 +91,7 @@ export const recipeIdAdminRoute = {
 		const preparedIngredientsExtra = ingredientsExtra ? await prepareAndMinifyHtml(ingredientsExtra) : null;
 
 		const payload = [
-			prepareText(title),
+			preparedTitle,
 			preparedDescription,
 			preparedIngredients,
 			preparedIngredientsExtra,
@@ -203,14 +204,14 @@ export const recipeIdAdminRoute = {
 				errors,
 				id: newId,
 				recipeData: {
-					cooking,
-					description,
-					ingredients,
-					ingredientsExtra,
+					cooking: preparedCooking,
+					description: preparedDescription,
+					ingredients: preparedIngredients,
+					ingredientsExtra: preparedIngredientsExtra,
 					published: Boolean(published),
 					structureId,
 					telegramId,
-					title,
+					title: preparedTitle,
 				},
 			});
 		}
