@@ -1,6 +1,7 @@
 import DOMPurify from "dompurify";
 import { JSDOM } from "jsdom";
 import Typograf from "typograf";
+import { minifyHtml } from "#server/lib/minify-html.js";
 
 const { window } = new JSDOM("");
 const { document } = window;
@@ -24,4 +25,9 @@ export function prepareText(html, clearTags = false) {
 	}
 
 	return typograf.execute(text).trim();
+}
+
+/** @type {(html: string, clearTags?: boolean) => Promise<string>} */
+export async function prepareAndMinifyHtml(html, clearTags = false) {
+	return await minifyHtml(prepareText(html, clearTags), { removeAttributeQuotes: false });
 }

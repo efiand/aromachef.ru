@@ -1,7 +1,7 @@
 import { renderRecipeForm } from "#common/templates/recipe-form.js";
 import { getDbError, processDb } from "#server/lib/db.js";
 import { processImage } from "#server/lib/image.js";
-import { prepareText } from "#server/lib/prepare-text.js";
+import { prepareAndMinifyHtml, prepareText } from "#server/lib/prepare-text.js";
 
 const CREATE_RECIPE_QUERY = /* sql */ `
 	INSERT INTO recipes
@@ -81,12 +81,20 @@ export const recipeIdAdminRoute = {
 		const tagIds = rawTagIds.map(Number);
 		const telegramId = parseInt(rawTelegramId, 10) || null;
 		const structureId = parseInt(rawStructureId, 10);
+
+		const [preparedDescription, preparedIngredients, preparedCooking] = await Promise.all([
+			prepareAndMinifyHtml(description),
+			prepareAndMinifyHtml(ingredients),
+			prepareAndMinifyHtml(cooking),
+		]);
+		const preparedIngredientsExtra = ingredientsExtra ? await prepareAndMinifyHtml(ingredientsExtra) : null;
+
 		const payload = [
 			prepareText(title),
-			prepareText(description),
-			prepareText(ingredients),
-			ingredientsExtra ? prepareText(ingredientsExtra) : null,
-			prepareText(cooking),
+			preparedDescription,
+			preparedIngredients,
+			preparedIngredientsExtra,
+			preparedCooking,
 			structureId,
 			telegramId,
 			published ? 1 : 0,
