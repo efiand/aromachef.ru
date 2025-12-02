@@ -18,21 +18,17 @@
 	box-shadow: none;
 }
 
-.tox .tox-toolbar-overlord {
-	position: relative;
-}
-
-.tox .tox-toolbar-overlord::before {
+.tox .tox-editor-header::before {
 	content: "";
 	position: absolute;
-	right: 0;
-	bottom: -6px;
-	left: 0;
+	right: 1px;
+	bottom: -1px;
+	left: 1px;
 	height: 1px;
 	background-color: var(--color-green);
 }
 
-.tox-edit-focus .tox-toolbar-overlord::before {
+.tox-edit-focus .tox-editor-header::before {
 	height: 2px;
 	background-color: var(--color-eggplant);
 }
@@ -43,8 +39,8 @@
 
 .tox .tox-edit-area__iframe {
 	width: calc(100% - 2px);
-	height: calc(100% - 8px);
-	margin: 1px;
+	height: calc(100% - 7px);
+	margin: 0 1px 1px;
 	outline: 1px solid var(--color-green);
 	outline-offset: -1px;
 }
@@ -72,6 +68,6 @@ textarea:user-invalid + .tox .tox-edit-area__iframe {
 	outline-color: var(--color-red);
 }
 
-textarea:user-invalid + .tox .tox-toolbar-overlord::before {
+textarea:user-invalid + .tox .tox-editor-header::before {
 	background-color: var(--color-red);
 }

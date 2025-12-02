@@ -56,6 +56,7 @@ const config = {
 	skin: "oxide",
 	statusbar: false,
 	toolbar: `undo redo bold smallToggle bullist numlist link unlink clearContent code`,
+	toolbar_mode: "wrap",
 	valid_elements: `p[class],a[href],strong/b,ul,ol,li,br`,
 };
 
