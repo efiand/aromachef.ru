@@ -5,6 +5,7 @@ import { renderErrorPage } from "#common/templates/errorPage.js";
 import { host, isDev, port } from "#server/constants.js";
 import { getCookies } from "#server/lib/cookies.js";
 import { renderPage } from "#server/lib/page.js";
+import { getPageFromCache, recordPagesCache } from "#server/lib/pages-cache.js";
 import { getRequestBody } from "#server/lib/request.js";
 import { routes } from "#server/routes/index.js";
 
@@ -87,11 +88,24 @@ async function next(req, res) {
 		}
 
 		const body = await getRequestBody(req);
-		const routeData = await route[method]({ authorized, body, id, isAmp, req, res });
-		({ contentType = "text/html; charset=utf-8", redirect = "", statusCode = 200, template = "" } = routeData);
+		const isCanonical = Object.keys(body).length === 0;
+		const isFragment = Object.keys(body).length === 1 && body.fragment !== undefined;
 
-		if (routeData.page) {
-			template = await renderPage({ ...routeData.page, authorized, isAmp, pathname });
+		if (!isAdmin && isCanonical && getPageFromCache(url.pathname)) {
+			template = getPageFromCache(url.pathname);
+		} else if (!isAdmin && isFragment && getPageFromCache(url.pathname, true)) {
+			template = getPageFromCache(url.pathname, true);
+		} else {
+			const routeData = await route[method]({ authorized, body, id, isAmp, req, res });
+			({ contentType = "text/html; charset=utf-8", redirect = "", statusCode = 200, template = "" } = routeData);
+
+			if (routeData.page) {
+				template = await renderPage({ ...routeData.page, authorized, isAmp, pathname });
+			}
+
+			if (isCanonical || isFragment) {
+				recordPagesCache(url.pathname, template, isFragment);
+			}
 		}
 	} catch (error) {
 		({ statusCode, template } = await handleError(error, url.href, authorized));
@@ -106,7 +120,7 @@ async function next(req, res) {
 		res.setHeader("Content-Type", contentType);
 	}
 	res.statusCode = statusCode;
-	res.end(template.trim());
+	res.end(template);
 }
 
 /** @type {(middleware?: ServerMiddleware) => import("node:http").Server} */

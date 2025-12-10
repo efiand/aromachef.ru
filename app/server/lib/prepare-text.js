@@ -5,7 +5,6 @@ import { minifyHtml } from "#server/lib/minify-html.js";
 
 const { window } = new JSDOM("");
 const { document } = window;
-// @ts-expect-error
 const purify = DOMPurify(window);
 
 // @ts-expect-error

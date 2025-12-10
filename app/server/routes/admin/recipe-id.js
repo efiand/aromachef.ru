@@ -1,6 +1,7 @@
 import { renderRecipeForm } from "#common/templates/recipe-form.js";
 import { getDbError, processDb } from "#server/lib/db.js";
 import { processImage } from "#server/lib/image.js";
+import { resetPageCache } from "#server/lib/pages-cache.js";
 import { prepareAndMinifyHtml, prepareText } from "#server/lib/prepare-text.js";
 
 const CREATE_RECIPE_QUERY = /* sql */ `
@@ -216,6 +217,9 @@ export const recipeIdAdminRoute = {
 			});
 		}
 
+		if (published) {
+			resetPageCache();
+		}
 		return { redirect: `/recipe/${newId}${published ? "" : "?preview"}` };
 	},
 };

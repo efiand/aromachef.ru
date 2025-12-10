@@ -50,7 +50,7 @@ jobs:
             cd ${{ secrets.DEPLOY_SERVER_TARGET }}/new
             npm ci --omit=dev --ignore-scripts
             cd ..
-            systemctl stop app-aromachef
+            systemctl stop ${{ secrets.APP_NAME }}
             mkdir old
             mv app old/app
             mv node_modules old/node_modules
@@ -59,6 +59,6 @@ jobs:
             mv package.json old/package.json
             mv package-lock.json old/package-lock.json
             mv new/* .
-            systemctl start app-aromachef
+            systemctl start ${{ secrets.APP_NAME }}
             rm -rf old
             rm -rf new
