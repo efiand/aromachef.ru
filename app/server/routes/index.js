@@ -7,10 +7,12 @@ import { dumpRoute } from "#server/routes/admin/dump.js";
 import { logoutRoute } from "#server/routes/admin/logout.js";
 import { adminRoute } from "#server/routes/admin/main.js";
 import { recipeIdAdminRoute } from "#server/routes/admin/recipe-id.js";
+import { resetCacheRoute } from "#server/routes/admin/reset-cache.js";
 import { structuresAdminRoute } from "#server/routes/admin/structures.js";
 import { tagsAdminRoute } from "#server/routes/admin/tags.js";
 import { pagesApiRoute } from "#server/routes/api/pages.js";
 import { telegramRoute } from "#server/routes/api/telegram.js";
+import { commentsIdRoute } from "#server/routes/comments-id.js";
 import { importantRoute } from "#server/routes/important.js";
 import { mainRoute } from "#server/routes/main.js";
 import { recipeIdRoute } from "#server/routes/recipe-id.js";
@@ -33,10 +35,12 @@ export const routes = {
 	"/admin/dump": dumpRoute,
 	"/admin/logout": logoutRoute,
 	"/admin/recipe/:id": recipeIdAdminRoute,
+	"/admin/reset-cache": resetCacheRoute,
 	"/admin/structures": structuresAdminRoute,
 	"/admin/tags": tagsAdminRoute,
 	"/api/pages": pagesApiRoute,
 	"/api/telegram": telegramRoute,
+	"/comments/:id": commentsIdRoute,
 	"/important": importantRoute,
 	"/recipe/:id": recipeIdRoute,
 	"/search": searchRoute,

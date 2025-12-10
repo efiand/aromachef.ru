@@ -1,5 +1,6 @@
 import { renderCommentForm } from "#common/templates/comment-form.js";
 import { getDbError, processDb } from "#server/lib/db.js";
+import { resetPageCache } from "#server/lib/pages-cache.js";
 import { prepareAndMinifyHtml, prepareText } from "#server/lib/prepare-text.js";
 
 const COMMENT_QUERY = /* sql */ `
@@ -40,6 +41,7 @@ export const commentIdAdminRoute = {
 		if (action === "delete") {
 			try {
 				await processDb(DELETE_COMMENT_QUERY, id);
+				resetPageCache("/comments/");
 			} catch (deletingError) {
 				error = /* html */ `<b>Ошибка удаления комментария:</b> ${getDbError(deletingError)}`;
 			}
@@ -47,6 +49,9 @@ export const commentIdAdminRoute = {
 			try {
 				const payload = [preparedName, preparedText, preparedAnswer, published ? 1 : 0, id];
 				await processDb(UPDATE_COMMENT_QUERY, payload);
+				if (published) {
+					resetPageCache("/comments/");
+				}
 			} catch (updatingError) {
 				error = /* html */ `<b>Ошибка изменения комментария:</b> ${getDbError(updatingError)}`;
 			}

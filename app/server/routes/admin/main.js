@@ -17,10 +17,6 @@ export const adminRoute = {
 				pageTemplate: /* html */ `
 					<div class="structure">
 						<div class="page-section">
-							<form action="/admin/dump">
-								<button class="button" type="submit" data-component="submitter">Резервное копирование</button>
-							</form>
-
 							<div class="form-group">
 								<label for="recipes">Рецепты</label>
 								<select id="recipes" data-component="selectMenu" data-endpoint="/admin/recipe">
@@ -40,6 +36,14 @@ export const adminRoute = {
 										.join("")}
 								</select>
 							</div>
+
+							<form action="/admin/dump">
+								<button class="button" type="submit" data-component="submitter">Резервное копирование</button>
+							</form>
+
+							<form action="/admin/reset-cache">
+								<button class="button" type="submit" data-component="submitter">Очистить кэш</button>
+							</form>
 						</div>
 
 						<div class="structure__aside">

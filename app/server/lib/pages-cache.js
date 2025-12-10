@@ -14,7 +14,21 @@ export function recordPagesCache(url, html, useFragment = false) {
 	(useFragment ? fragmentCache : cache)[url] = html;
 }
 
-export function resetPageCache() {
-	cache = {};
-	fragmentCache = {};
+/** @type {(prefix?: string) => void} */
+export function resetPageCache(prefix) {
+	if (prefix) {
+		Object.keys(cache).forEach((key) => {
+			if (key.startsWith(prefix)) {
+				delete cache[key];
+			}
+		});
+		Object.keys(fragmentCache).forEach((key) => {
+			if (key.startsWith(prefix)) {
+				delete fragmentCache[key];
+			}
+		});
+	} else {
+		cache = {};
+		fragmentCache = {};
+	}
 }

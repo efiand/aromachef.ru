@@ -1,11 +1,13 @@
 import { initShare } from "#client/components/share.js";
 import { hydrate } from "#client/lib/hydrate.js";
 
+const endpoint = location.pathname.replace("/recipe/", "/comments/");
+
 const data = {
 	/** @type {RecipeComment[]} */
 	comments: [],
 	async fetchComments() {
-		const res = await fetch(`${location.pathname}?comments`);
+		const res = await fetch(endpoint);
 
 		/** @type {{ comments: RecipeComment[] }} */
 		const { comments } = await res.json();
@@ -29,10 +31,7 @@ const data = {
 		body.append("name", this.name);
 		body.append("text", this.text);
 
-		const res = await fetch(location.pathname, {
-			body,
-			method: "POST",
-		});
+		const res = await fetch(endpoint, { body, method: "POST" });
 
 		if (res.ok) {
 			this.successText = await res.text();
