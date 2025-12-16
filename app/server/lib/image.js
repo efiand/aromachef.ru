@@ -14,6 +14,9 @@ export async function processImage(rawImage, name, dir = "recipe") {
 	const image = sharp(rawImage);
 	const [id, alias] = name.split("-");
 
+	/** @type {Promise<void>[]} */
+	const uploads = [];
+
 	/** @type {(filename: string, image: sharp.Sharp) => Promise<void>} */
 	async function process(filename, image) {
 		const webpFilename = `pictures/${dir}/${filename}.webp`;
@@ -21,11 +24,11 @@ export async function processImage(rawImage, name, dir = "recipe") {
 
 		const webpBuffer = await image.clone().webp(WEBP_OPTIONS).toBuffer();
 		await writeFile(`${cwd}/${webpFilename}`, webpBuffer);
-		upload(webpFilename, webpBuffer);
+		uploads.push(upload(webpFilename, webpBuffer));
 
 		const avifBuffer = await image.avif(AVIF_OPTIONS).toBuffer();
 		await writeFile(`${cwd}/${avifFilename}`, avifBuffer);
-		upload(avifFilename, avifBuffer);
+		uploads.push(upload(avifFilename, avifBuffer));
 	}
 
 	if (alias) {
@@ -37,4 +40,6 @@ export async function processImage(rawImage, name, dir = "recipe") {
 		await process(`${id}@2x`, image.clone().resize(544).extract({ height: 408, left: 0, top: 272, width: 544 }));
 		await process(`${id}@1x`, image.clone().resize(272).extract({ height: 204, left: 0, top: 136, width: 272 }));
 	}
+
+	await Promise.all(uploads);
 }
