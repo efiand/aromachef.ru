@@ -4,6 +4,7 @@ import { noAmp } from "#common/lib/no-amp.js";
 import { renderErrorPage } from "#common/templates/errorPage.js";
 import { host, isDev, port } from "#server/constants.js";
 import { getCookies } from "#server/lib/cookies.js";
+import { closeDbPool } from "#server/lib/db.js";
 import { renderPage } from "#server/lib/page.js";
 import { getPageFromCache, recordPagesCache } from "#server/lib/pages-cache.js";
 import { getRequestBody } from "#server/lib/request.js";
@@ -139,4 +140,19 @@ export function createApp(middleware) {
 	});
 
 	return server;
+}
+
+/** @type {(server?: import("node:http").Server) => Promise<void>} */
+export async function closeApp(server) {
+	try {
+		if (server) {
+			await new Promise((resolve, reject) => {
+				server.close((err) => (err ? reject(err) : resolve("")));
+			});
+		}
+
+		await closeDbPool();
+	} catch (error) {
+		console.error("[CLOSING ERROR]", error);
+	}
 }

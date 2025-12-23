@@ -1,3 +1,9 @@
+import { closeDbPool } from "#server/lib/db.js";
 import { dump } from "#server/lib/dump.js";
 
-dump().then(() => process.exit(0));
+try {
+	await dump();
+	console.info("✅ Резервное копирование выполнено");
+} finally {
+	await closeDbPool();
+}

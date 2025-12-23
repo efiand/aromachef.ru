@@ -2,25 +2,40 @@ import mysql from "mysql2/promise";
 
 const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
 
-/** @type {mysql.Connection?} */
-let dbConnection = null;
+/** @type {mysql.Pool} */
+const pool = mysql.createPool({
+	connectionLimit: 5,
+	database: DB_NAME,
+	host: DB_HOST,
+	idleTimeout: 120000, // 2 минуты
+	maxIdle: 2,
+	password: DB_PASSWORD,
+	queueLimit: 0,
+	user: DB_USER,
+	waitForConnections: true,
+});
 
-async function connect() {
-	if (!dbConnection) {
-		dbConnection = await mysql.createConnection({
-			database: DB_NAME,
-			host: DB_HOST,
-			password: DB_PASSWORD,
-			user: DB_USER,
-		});
-	}
-	return dbConnection;
+export async function closeDbPool() {
+	await pool.end(); // закрывает все соединения пула и даёт ему «умереть»
 }
 
 /** @type {(error: unknown) => string} */
 export function getDbError(error) {
 	const { sqlMessage = "" } = /** @type {{ sqlMessage?: string }} */ (error || {});
 	return sqlMessage;
+}
+/** @type {(error: unknown, context: { query?: string, payload?: unknown }) => void} */
+function logDbError(error, context = {}) {
+	const err = /** @type {any} */ (error || {});
+	console.error("[DB ERROR]", {
+		code: err.code,
+		errno: err.errno,
+		message: err.message,
+		sql: err.sql,
+		sqlMessage: err.sqlMessage,
+		sqlState: err.sqlState,
+		...context,
+	});
 }
 
 /** @type {(query: string, payload: unknown) => unknown[]} */
@@ -35,8 +50,11 @@ function getPlaceholders(query, payload) {
 
 /** @type {(query: string, payload?: unknown) => Promise<any>} */
 export async function processDb(query, payload = []) {
-	const connection = await connect();
-
-	const [rows] = await connection.execute(query, getPlaceholders(query, payload));
-	return rows;
+	try {
+		const [rows] = await pool.execute(query, getPlaceholders(query, payload));
+		return rows;
+	} catch (error) {
+		logDbError(error, { payload, query });
+		throw error; // пробрасываем выше, чтобы роутер вернул 500 и не «глотал» ошибку
+	}
 }

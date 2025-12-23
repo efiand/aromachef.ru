@@ -12,7 +12,7 @@ for (const filename of files) {
 		try {
 			await processImage(file, filename.replace(/\..*$/, ""));
 			await unlink(filePath);
-			console.info(`${filename}: процесс завершён успешно!`);
+			console.info(`✅ ${filename}: процесс завершён успешно!`);
 		} catch (error) {
 			console.error(error);
 		}

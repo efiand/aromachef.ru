@@ -9,7 +9,7 @@ import { HtmlValidate } from "html-validate";
 import { lintBem } from "posthtml-bem-linter";
 import { STATIC_PAGES } from "#common/constants.js";
 import { host } from "#server/constants.js";
-import { createApp } from "#server/lib/app.js";
+import { closeApp, createApp } from "#server/lib/app.js";
 
 const { AUTH_LOGIN, AUTH_PASSWORD } = process.env;
 
@@ -112,7 +112,7 @@ test("All pages have valid HTML markup", async () => {
 test("All pages have valid BEM classes in markup", () => {
 	let errorsCount = 0;
 
-	pages.forEach(async (page, i) => {
+	pages.forEach((page, i) => {
 		const result = lintBem({ content: markups[i], log: console.error, name: page });
 		if (result.warningCount) {
 			errorsCount++;
@@ -168,6 +168,5 @@ test("sitemap.xml is valid", async () => {
 });
 
 after(async () => {
-	server?.close();
-	setTimeout(process.exit, 0);
+	await closeApp(server);
 });
