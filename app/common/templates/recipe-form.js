@@ -1,4 +1,4 @@
-import { renderCheckers } from "#common/templates/chechers.js";
+import { renderCheckers } from "#common/templates/checkers.js";
 import { renderFormErrors } from "#common/templates/form-errors.js";
 import { renderImagePicker } from "#common/templates/image-picker.js";
 
@@ -140,9 +140,15 @@ export function renderRecipeForm(
 
 			<div class="form__footer">
 				<button class="form__submit button" type="submit" data-component="submitter">${id ? "Сохранить" : "Добавить"}</button>
-				<a href="/recipe/${id}${published ? "" : "?preview"}" target="_blank">
-					${published ? "Просмотр" : "Предварительный просмотр"}
-				</a>
+				${
+					id
+						? /* html */ `
+							<a href="/recipe/${id}${published ? "" : "?preview"}" target="_blank">
+								${published ? "Просмотр" : "Предварительный просмотр"}
+							</a>
+						`
+						: ""
+				}
 			</div>
 
 			<div hidden data-component="checkers" data-checkers="tags">
