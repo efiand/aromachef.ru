@@ -5,7 +5,7 @@ const { TG_ADMIN_ID, TG_TOKEN, TG_AROMACHEF_ID } = process.env;
 const bot = new TelegramBot(TG_TOKEN);
 
 /** @type {TelegramBot.SendMessageOptions} */
-const messageOptions = { parse_mode: "Markdown" };
+const messageOptions = { parse_mode: "HTML" };
 
 /** @type {(payload: TelegramPayload) => Promise<void>} */
 export async function sendTgMessage({ chat: { id = TG_ADMIN_ID, username = "aroma_chef_bot" } = {}, text }) {
@@ -16,14 +16,16 @@ export async function sendTgMessage({ chat: { id = TG_ADMIN_ID, username = "arom
 		return;
 	}
 
+	const quote = /* html */ `<blockquote>${template}</blockquote>`;
+
 	const user = username ? `@${username}` : id;
-	await bot.sendMessage(TG_ADMIN_ID, `Сообщение от ${user}:\n\`\`\`\n${template}\n\`\`\``, messageOptions);
+	await bot.sendMessage(TG_ADMIN_ID, /* html */ `Сообщение от ${user}:${quote}`, messageOptions);
 
 	const answer =
 		text === "/start"
 			? "Доброго времени суток! Мы готовы ответить на Ваши вопросы."
-			: `Вы писали нам:\n${template}\nСпасибо за обращение! Наш администратор ответит Вам в ближайшее время.`;
-	const addition = username ? "" : "\nЛогин в telegram отсутствует. Пожалуйста, пришлите ссылку для обратной связи.";
+			: `Вы писали нам:${quote}Спасибо за обращение! Наш администратор ответит Вам в ближайшее время.`;
+	const addition = username ? "" : "\nЛогин в telegram отсутствует. Пожалуйста, пришлите ссылку для обратной связи.";
 
 	await bot.sendMessage(id, `${answer}${addition}`, messageOptions);
 }
