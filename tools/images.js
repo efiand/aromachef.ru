@@ -1,4 +1,5 @@
 import { readdir, readFile, unlink } from "node:fs/promises";
+import { log } from "#common/lib/log.js";
 import { cwd } from "#server/constants.js";
 import { processImage } from "#server/lib/image.js";
 
@@ -12,9 +13,9 @@ for (const filename of files) {
 		try {
 			await processImage(file, filename.replace(/\..*$/, ""));
 			await unlink(filePath);
-			console.info(`✅ ${filename}: процесс завершён успешно!`);
+			log.info(`✅ ${filename}: процесс завершён успешно!`);
 		} catch (error) {
-			console.error(error);
+			log.error(error);
 		}
 	}
 }

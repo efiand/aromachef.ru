@@ -73,7 +73,9 @@ export async function initEditor(target) {
 function toggleClass(editor, className, allowedTags) {
 	const blocks = editor.selection.getSelectedBlocks();
 
-	if (!blocks.length) return;
+	if (!blocks.length) {
+		return;
+	}
 
 	editor.undoManager.transact(() => {
 		blocks.forEach((block) => {

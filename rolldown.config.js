@@ -1,4 +1,5 @@
 import { defineConfig } from "rolldown";
+import { log } from "#common/lib/log.js";
 import { minifyHtml } from "#server/lib/minify-html.js";
 
 /**
@@ -24,7 +25,7 @@ function minifyHtmlLiterals() {
 					const minifiedLiteral = fullMatch.replace(htmlContent, minifiedHtml);
 					transformedCode = transformedCode.replace(fullMatch, minifiedLiteral);
 				} catch (error) {
-					console.error(`Ошибка минификации HTML в файле ${id}:`, error);
+					log.error(`Ошибка минификации HTML в файле ${id}:`, error);
 				}
 
 				// Получаем следующее совпадение

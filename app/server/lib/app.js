@@ -1,5 +1,6 @@
 import { createServer } from "node:http";
 import jwt from "jsonwebtoken";
+import { log } from "#common/lib/log.js";
 import { noAmp } from "#common/lib/no-amp.js";
 import { renderErrorPage } from "#common/templates/errorPage.js";
 import { host, isDev, port } from "#server/constants.js";
@@ -12,10 +13,6 @@ import { routes } from "#server/routes/index.js";
 
 /** @type {(error: unknown, href: string, authorized?: boolean) => Promise<{ statusCode: number; template: string }>} */
 async function handleError(error, href, authorized = false) {
-	if (!isDev) {
-		console.error(error, `[${href}]`);
-	}
-
 	let message = "На сервере произошла ошибка.";
 	let statusCode = 500;
 	if (error instanceof Error) {
@@ -26,6 +23,8 @@ async function handleError(error, href, authorized = false) {
 			({ message } = error);
 		}
 	}
+
+	log.error(`❌ [HTTP ERROR ${statusCode} | ${href}]`, error);
 
 	const heading = `Ошибка ${statusCode}`;
 	const template = await renderPage({
@@ -136,7 +135,7 @@ export function createApp(middleware) {
 	});
 
 	server.listen(port, "localhost", () => {
-		console.info(`Сервер запущен по адресу: ${host}`);
+		log.info(`✅ Сервер запущен по адресу: ${host}`);
 	});
 
 	return server;
@@ -153,6 +152,6 @@ export async function closeApp(server) {
 
 		await closeDbPool();
 	} catch (error) {
-		console.error("[CLOSING ERROR]", error);
+		log.error("❌ [CLOSING ERROR]", error);
 	}
 }

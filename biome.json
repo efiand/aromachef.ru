@@ -33,6 +33,7 @@
 			"performance": { "noAccumulatingSpread": "error" },
 			"recommended": true,
 			"style": {
+				"useBlockStatements": "error",
 				"useConst": { "fix": "none", "level": "error", "options": {} }
 			},
 			"suspicious": {

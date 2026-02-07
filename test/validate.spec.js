@@ -8,6 +8,7 @@ import { XMLValidator } from "fast-xml-parser";
 import { HtmlValidate } from "html-validate";
 import { lintBem } from "posthtml-bem-linter";
 import { STATIC_PAGES } from "#common/constants.js";
+import { log } from "#common/lib/log.js";
 import { host } from "#server/constants.js";
 import { closeApp, createApp } from "#server/lib/app.js";
 
@@ -56,7 +57,7 @@ before(async () => {
 					createReadStream(filePath).pipe(res);
 					return;
 				} catch (error) {
-					console.error(error);
+					log.error(error);
 				}
 			}
 
@@ -99,7 +100,7 @@ test("All pages have valid HTML markup", async () => {
 				errorsCount++;
 				report.results.forEach(({ messages }) => {
 					messages.forEach(({ column, line, message, ruleUrl }) => {
-						console.error(`${page} [${line}:${column}] ${message} (${ruleUrl})`);
+						log.error(`${page} [${line}:${column}] ${message} (${ruleUrl})`);
 					});
 				});
 			}
@@ -113,7 +114,7 @@ test("All pages have valid BEM classes in markup", () => {
 	let errorsCount = 0;
 
 	pages.forEach((page, i) => {
-		const result = lintBem({ content: markups[i], log: console.error, name: page });
+		const result = lintBem({ content: markups[i], log: log.error, name: page });
 		if (result.warningCount) {
 			errorsCount++;
 		}
@@ -145,8 +146,8 @@ test("All AMP versions have valid AMP markup", async () => {
 			}
 
 			result?.errors.forEach(({ col, line, message, severity, specUrl }) => {
-				const log = severity === "ERROR" ? console.error : console.warn;
-				log(`${url} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ""})`);
+				const output = severity === "ERROR" ? log.error : log.warn;
+				output(`${url} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ""})`);
 			});
 		}),
 	);
@@ -161,7 +162,7 @@ test("sitemap.xml is valid", async () => {
 
 	if (!valid) {
 		const { msg, line, col } = result.err;
-		console.error(`sitemap.xml [${line}:${col}] ${msg}`);
+		log.error(`sitemap.xml [${line}:${col}] ${msg}`);
 	}
 
 	assert.strictEqual(valid, true);
