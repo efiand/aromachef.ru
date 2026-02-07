@@ -1,3 +1,5 @@
+import { trackPageView } from "#client/lib/yandex-metrika.js";
+
 /** @type {Record<string, string>} */
 const cache = {};
 
@@ -44,6 +46,7 @@ export function initAsyncStructure(element) {
 
 			updateView(linkElement, linkElements, cardsElement, element);
 			window.history.pushState({ i, id: "structure" }, "", linkElement.href);
+			trackPageView(linkElement.href, document.title);
 		});
 	});
 
@@ -52,5 +55,6 @@ export function initAsyncStructure(element) {
 		const { i = 0 } = event.state || {};
 
 		updateView(linkElements[i], linkElements, cardsElement, element);
+		trackPageView(linkElements[i].href, document.title);
 	});
 }

@@ -79,7 +79,7 @@ CREATE TABLE comments (
 	CONSTRAINT comments_recipeId_fkey FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE
 )
 COMMENT='Комментарии пользователей к рецептам.';
-CREATE INDEX comments_srecipeId_idx USING BTREE ON comments (recipeId);
+CREATE INDEX comments_recipeId_idx USING BTREE ON comments (recipeId);
 
 CREATE TABLE staticPages(
 	id int auto_increment NOT NULL,

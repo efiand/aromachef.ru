@@ -4,9 +4,11 @@ export const PROJECT_TITLE = "АромаШеф";
 
 export const PROJECT_DESCRIPTION = "Быстрые, вкусные и полезные рецепты с эфирными маслами.";
 
+export const YANDEX_METRIKA_ID = 99498629;
+
 export const version = {
 	CSS: 27,
-	JS: 19,
+	JS: 20,
 };
 
 /** @type {Record<string, string>} */

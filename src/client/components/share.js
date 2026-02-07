@@ -1,5 +1,5 @@
 import { openModal } from "#client/components/modal.js";
-import { renderFromTemplate } from "#client/lib/renderFromTemplate.js";
+import { renderFromTemplate } from "#client/lib/render-from-template.js";
 
 const text = document.querySelector(`[name="description"]`)?.getAttribute("content") || "";
 
