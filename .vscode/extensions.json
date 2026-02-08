@@ -1,3 +1,10 @@
 {
-	"recommendations": ["biomejs.biome", "editorconfig.editorconfig", "tobermory.es6-string-html"]
+	"recommendations": [
+		"ahmadalli.vscode-nginx-conf",
+		"biomejs.biome",
+		"editorconfig.editorconfig",
+		"natizyskunk.sftp",
+		"oouo-diogo-perdigao.docthis",
+		"tobermory.es6-string-html"
+	]
 }

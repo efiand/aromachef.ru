@@ -1,7 +1,4 @@
 import assert from "node:assert/strict";
-import { createReadStream } from "node:fs";
-import { access } from "node:fs/promises";
-import path from "node:path";
 import { after, before, test } from "node:test";
 import amphtmlValidator from "amphtml-validator";
 import { XMLValidator } from "fast-xml-parser";
@@ -23,22 +20,21 @@ const htmlvalidate = new HtmlValidate({
 });
 
 const adminPages = ["/admin", "/admin/recipe/0"];
+const pages = [...STATIC_PAGES, "/search", "/admin/auth"];
 
 /** @type {amphtmlValidator.Validator | undefined} */
 let ampValidator;
 
 /** @type {string[]} */
-let markups = [];
+let ampPages = [];
 
-const pages = [...STATIC_PAGES, "/search", "/search", "/admin/auth"];
+let authorized = false;
 
 /** @type {string[]} */
-let ampPages = [];
+let markups = [];
 
 /** @type {import("node:http").Server | undefined} */
 let server;
-
-let authorized = false;
 
 async function getMarkup(page = "") {
 	return await fetch(`${host}${page}`).then((res) => res.text());
@@ -46,23 +42,7 @@ async function getMarkup(page = "") {
 
 before(async () => {
 	if (!server) {
-		server = createApp(async (req, res, next) => {
-			const { pathname } = new URL(`${host}${req.url}`);
-			const ext = path.extname(pathname);
-			if (ext === ".html") {
-				try {
-					const filePath = path.join(process.cwd(), "./public", pathname);
-					await access(filePath);
-					res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-					createReadStream(filePath).pipe(res);
-					return;
-				} catch (error) {
-					log.error(error);
-				}
-			}
-
-			next?.(req, res);
-		});
+		server = createApp();
 	}
 
 	if (!ampPages.length) {

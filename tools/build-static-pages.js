@@ -11,19 +11,15 @@ try {
 	await Promise.all(
 		STATIC_PAGES.map(async (url) => {
 			const markup = await fetch(`${host}${url}`).then((res) => res.text());
+			const dir = `./${url.startsWith("/__") ? "app" : "public"}${url}`;
 
-			if (url.includes(".")) {
-				await writeFile(`./public${url}`, markup);
-			} else {
-				const dir = `./public${url}`;
-				try {
-					await access(dir);
-				} catch {
-					await mkdir(dir, { recursive: true });
-				}
-
-				await writeFile(`${dir}/index.html`, await minifyHtml(markup));
+			try {
+				await access(dir);
+			} catch {
+				await mkdir(dir, { recursive: true });
 			}
+
+			await writeFile(`${dir}/index.html`, await minifyHtml(markup));
 			console.info(`Страница ${url} сгенерирована.`);
 			completedPages++;
 		}),

@@ -37,17 +37,16 @@ function renderUrlMeta(pathname, isAmp) {
 		return /* html */ `<meta name="robots" content="noindex, nofollow">`;
 	}
 
-	let ampTemplate = "";
+	let template = /* html */ `<meta property="og:url" content="${pathname}">`;
 	if (!isAmp && !noAmp(pathname)) {
 		const ampUrl = pathname === "/" ? "/amp" : `/amp${pathname}`;
-		ampTemplate = /* html */ `<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
+		template += /* html */ `<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
+	}
+	if (!pathname.startsWith("/__")) {
+		template += /* html */ `<link rel="canonical" href="${BASE_URL}${pathname}">`;
 	}
 
-	return /* html */ `
-		${ampTemplate}
-		<link rel="canonical" href="${BASE_URL}${pathname}">
-		<meta property="og:url" content="${pathname}">
-	`;
+	return template;
 }
 
 /** @type {(data: LayoutData) => Promise<string>} */

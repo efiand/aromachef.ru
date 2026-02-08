@@ -28,4 +28,4 @@ export const STATIC_MIME_TYPES = {
 
 export const staticExtensions = new Set(Object.keys(STATIC_MIME_TYPES));
 
-export const STATIC_PAGES = ["/404", "/update"];
+export const STATIC_PAGES = ["/__/404", "/__/update"];

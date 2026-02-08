@@ -71,10 +71,10 @@ function renderLayoutInner({ authorized, isAmp, pathname, pageTemplate }) {
 }
 
 /** @type {(data: LayoutData) => string} */
-export function renderLayout({ authorized, isAmp, isDev, pathname, pageTemplate }) {
+export function renderLayout({ authorized, isAmp, isDev, pathname = "", pageTemplate }) {
 	return /* html */ `
 		<body>
-			${isDev || isAmp ? "" : YANDEX_METRIKA_TEMPLATE}
+			${isDev || isAmp || pathname.startsWith("/__") ? "" : YANDEX_METRIKA_TEMPLATE}
 			<div class="layout" data-layout>
 				${renderLayoutInner({ authorized, isAmp, pageTemplate, pathname })}
 			</div>

@@ -1,4 +1,5 @@
-import { notFoundRoute } from "#server/routes/404.js";
+import { notFoundRoute } from "#server/routes/__/404.js";
+import { updateRoute } from "#server/routes/__/update.js";
 import { aboutRoute } from "#server/routes/about.js";
 import { authRoute } from "#server/routes/admin/auth.js";
 import { commentIdAdminRoute } from "#server/routes/admin/comment-id.js";
@@ -21,12 +22,12 @@ import { sitemapXmlRoute } from "#server/routes/sitemap-xml.js";
 import { structureRoute } from "#server/routes/structure.js";
 import { structureIdRoute } from "#server/routes/structure-id.js";
 import { tagIdRoute } from "#server/routes/tag-id.js";
-import { updateRoute } from "#server/routes/update.js";
 
 /** @type {{ [name: string]: Route }} */
 export const routes = {
 	"/": mainRoute,
-	"/404": notFoundRoute,
+	"/__/404": notFoundRoute,
+	"/__/update": updateRoute,
 	"/about": aboutRoute,
 	"/admin": adminRoute,
 	"/admin/auth": authRoute,
@@ -48,5 +49,4 @@ export const routes = {
 	"/structure": structureRoute,
 	"/structure/:id": structureIdRoute,
 	"/tag/:id": tagIdRoute,
-	"/update": updateRoute,
 };

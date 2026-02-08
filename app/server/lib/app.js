@@ -11,8 +11,8 @@ import { getPageFromCache, recordPagesCache } from "#server/lib/pages-cache.js";
 import { getRequestBody } from "#server/lib/request.js";
 import { routes } from "#server/routes/index.js";
 
-/** @type {(error: unknown, href: string, authorized?: boolean) => Promise<{ statusCode: number; template: string }>} */
-async function handleError(error, href, authorized = false) {
+/** @type {(error: unknown, url: URL, authorized?: boolean) => Promise<{ statusCode: number; template: string }>} */
+async function handleError(error, { href, pathname }, authorized = false) {
 	let message = "На сервере произошла ошибка.";
 	let statusCode = 500;
 	if (error instanceof Error) {
@@ -24,7 +24,9 @@ async function handleError(error, href, authorized = false) {
 		}
 	}
 
-	log.error(`❌ [HTTP ERROR ${statusCode} | ${href}]`, error);
+	if (!pathname?.startsWith("/__")) {
+		log.error(`❌ [HTTP ERROR ${statusCode} | ${href}]`, error);
+	}
 
 	const heading = `Ошибка ${statusCode}`;
 	const template = await renderPage({
@@ -32,6 +34,7 @@ async function handleError(error, href, authorized = false) {
 		description: "Страница ошибок.",
 		heading,
 		pageTemplate: renderErrorPage(heading, message),
+		pathname,
 	});
 
 	return { statusCode, template };
@@ -109,7 +112,7 @@ async function next(req, res) {
 			}
 		}
 	} catch (error) {
-		({ statusCode, template } = await handleError(error, url.href, authorized));
+		({ statusCode, template } = await handleError(error, url, authorized));
 	}
 
 	if (redirect) {

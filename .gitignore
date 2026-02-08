@@ -7,8 +7,8 @@
 !.vscode/extensions.json
 !.vscode/settings.json
 Thumbs.db
+app/__
 bundles
-index.html
 logs
 node_modules
 pictures
