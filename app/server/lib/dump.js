@@ -2,10 +2,24 @@ import { processDb } from "#server/lib/db.js";
 import { upload } from "#server/lib/yandex-disk.js";
 
 /** @type {DbTable[]} */
-const SQL_TABLES = ["structures", "tags", "recipes", "recipesTags", "recipesRecipes", "comments", "staticPages"];
+const SQL_TABLES = [
+	"structures",
+	"tags",
+	"recipes",
+	"recipesTags",
+	"recipesRecipes",
+	"comments",
+	"articles",
+	"articlesArticles",
+	"articlesRecipes",
+	"staticPages",
+];
 
 /** @type {DbTable[]} */
 const SQL_TABLES_FOR_DELETING = [
+	"articlesArticles",
+	"articlesRecipes",
+	"articles",
 	"comments",
 	"recipesRecipes",
 	"recipesTags",

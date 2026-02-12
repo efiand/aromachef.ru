@@ -1,6 +1,7 @@
 import { notFoundRoute } from "#server/routes/__/404.js";
 import { updateRoute } from "#server/routes/__/update.js";
 import { aboutRoute } from "#server/routes/about.js";
+import { articleIdAdminRoute } from "#server/routes/admin/article-id.js";
 import { authRoute } from "#server/routes/admin/auth.js";
 import { commentIdAdminRoute } from "#server/routes/admin/comment-id.js";
 import { commentsIdAdminRoute } from "#server/routes/admin/comments-id.js";
@@ -13,6 +14,7 @@ import { structuresAdminRoute } from "#server/routes/admin/structures.js";
 import { tagsAdminRoute } from "#server/routes/admin/tags.js";
 import { pagesApiRoute } from "#server/routes/api/pages.js";
 import { telegramRoute } from "#server/routes/api/telegram.js";
+import { articleIdRoute } from "#server/routes/article-id.js";
 import { commentsIdRoute } from "#server/routes/comments-id.js";
 import { importantRoute } from "#server/routes/important.js";
 import { mainRoute } from "#server/routes/main.js";
@@ -31,6 +33,7 @@ export const routes = {
 	"/about": aboutRoute,
 	"/admin": adminRoute,
 	"/admin/auth": authRoute,
+	"/admin/blog/:id": articleIdAdminRoute,
 	"/admin/comment/:id": commentIdAdminRoute,
 	"/admin/comments/:id": commentsIdAdminRoute,
 	"/admin/dump": dumpRoute,
@@ -41,6 +44,7 @@ export const routes = {
 	"/admin/tags": tagsAdminRoute,
 	"/api/pages": pagesApiRoute,
 	"/api/telegram": telegramRoute,
+	"/blog/:id": articleIdRoute,
 	"/comments/:id": commentsIdRoute,
 	"/important": importantRoute,
 	"/recipe/:id": recipeIdRoute,

@@ -1,4 +1,5 @@
 import { renderArticle } from "#common/templates/article.js";
+import { renderImage } from "./image.js";
 
 /** @type {(article: ArticleData, i: number) => string} */
 function mapArticle(article, i) {
@@ -13,10 +14,13 @@ function mapArticle(article, i) {
  * @type {(data: PageSectionData) => string}
  */
 export function renderPageSection({
+	alt = "",
 	articles = [],
 	className = "",
 	content = "",
 	footerTemplate = "",
+	imageAlias,
+	isAmp,
 	next,
 	prev,
 	title,
@@ -29,7 +33,22 @@ export function renderPageSection({
 				${next ? /* html */ `<a class="page-section__nav-link" href="${next}" rel="next" aria-label="Следующий рецепт"></a>` : ""}
 			</header>
 
-			${content ? /* html */ `<div class="content">${content}</div>` : ""}
+			${
+				content
+					? /* html */ `<div class="content">${
+							imageAlias
+								? renderImage({
+										alt: alt.replace("[title]", `«${title}»`),
+										className: "page-section__image",
+										height: 672,
+										imageAlias,
+										isAmp,
+										width: 384,
+									})
+								: ""
+						}${content}</div>`
+					: ""
+			}
 
 			${articles.map(mapArticle).join("")}
 

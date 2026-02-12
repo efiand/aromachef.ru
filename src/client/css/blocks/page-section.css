@@ -43,6 +43,10 @@
 	text-wrap: balance;
 }
 
+.page-section__image {
+	margin: 0 auto 2.5rem;
+}
+
 @media (hover: hover) {
 	.page-section__nav-link:hover,
 	.page-section__nav-link:focus-visible {
@@ -63,6 +67,17 @@
 
 	.page-section__nav-link {
 		margin-top: 0.6rem;
+	}
+
+	.page-section__image {
+		float: left;
+		margin: 0 2.5rem 2.5rem 0;
+	}
+}
+
+@media (min-width: 1200px) {
+	.page-section__image {
+		margin: 0 var(--gap-intersection) var(--gap-intersection) 0;
 	}
 }
 

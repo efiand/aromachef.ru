@@ -11,7 +11,9 @@ const config = {
 	block_formats: "Paragraph=p;",
 	body_class: "content",
 	branding: false,
+	browser_spellcheck: true,
 	content_css: window.isDev ? "/client/css/critical.css" : `/bundles/critical.css?v${version.CSS}`,
+	contextmenu: false,
 	convert_urls: false,
 	entity_encoding: "raw",
 	forced_root_block: undefined,
@@ -60,13 +62,18 @@ const config = {
 	valid_elements: `p[class],a[href],strong/b,ul,ol,li,br`,
 };
 
-/** @type {(element: HTMLElement) => Promise<void>} */
+/** @type {(target: HTMLElement) => Promise<void>} */
 export async function initEditor(target) {
 	if (!window.tinymce) {
 		await loadScript("/vendors/tinymce.js?v8.2.2");
 	}
 
-	window.tinymce.init({ ...config, target });
+	const options = { ...config, target };
+	if ("article" in target.dataset) {
+		options.valid_elements += ",h2";
+	}
+
+	window.tinymce.init(options);
 }
 
 /** @type {(editor: import('tinymce').Editor, className: string, allowedTags: Set<string>) => void} */

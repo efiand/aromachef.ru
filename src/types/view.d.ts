@@ -1,11 +1,17 @@
 declare global {
 	type ArticleData = {
+		imageAlias: string;
 		isAmp?: boolean;
 		alt?: string;
 		content?: string;
-		imageAlias: string;
 		reverse?: boolean;
 		title?: string;
+	};
+
+	type ArticleFooter = {
+		isAmp?: boolean;
+		recipes?: DbItem[];
+		relatedArticles?: DbItem[];
 	};
 
 	type CardAdditionals = {
@@ -20,9 +26,10 @@ declare global {
 	};
 
 	type ImageParams = {
-		alt: string;
+		className?: string;
 		imageAlias: string;
 		isAmp?: boolean;
+		alt: string;
 		height: number;
 		width: number;
 	};
@@ -40,10 +47,13 @@ declare global {
 	};
 
 	type PageSectionData = {
+		alt?: string;
 		articles?: ArticleData[];
 		className?: string;
 		content?: string;
 		footerTemplate?: string;
+		imageAlias?: string;
+		isAmp?: boolean;
 		next?: string;
 		prev?: string;
 		title: string;

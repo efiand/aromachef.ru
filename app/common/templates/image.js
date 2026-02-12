@@ -1,8 +1,8 @@
 /** @type {(data: ImageParams) => string} */
-export function renderImage({ alt = "", imageAlias, isAmp, height, width }) {
+export function renderImage({ alt = "", className = "", imageAlias, isAmp, height, width }) {
 	const imageTemplate = /* html */ `
 		<img
-			class="image"
+			class="image ${className}"
 			src="${imageAlias}@1x.webp"
 			srcset="${imageAlias}@2x.webp 2x"
 			width="${width}"

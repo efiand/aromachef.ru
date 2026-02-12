@@ -2,6 +2,7 @@
 @import url("common/global.css");
 @import url("common/helpers.css");
 
+@import url("blocks/article-footer.css");
 @import url("blocks/article.css");
 @import url("blocks/button.css");
 @import url("blocks/cards.css");

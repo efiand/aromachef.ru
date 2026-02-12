@@ -1,11 +1,56 @@
 declare global {
+	type Article = {
+		content: string;
+		description: string;
+		title: string;
+	};
+
+	type ArticleCache = {
+		oldRecipeIds: number[];
+		oldRelatedIds: number[];
+	};
+
+	type ArticleInAdmin = ArticleInForm & {
+		articles: DbItem[];
+		id: number;
+		recipes: DbItem[];
+		recipeIds: number[];
+		relatedIds: number[];
+	};
+
+	type ArticleInForm = Article & { published: boolean };
+
 	type DbItem = {
 		current?: boolean;
 		id: number;
 		title: string;
 	};
 
-	type DbTable = "comments" | "recipes" | "recipesRecipes" | "recipesTags" | "staticPages" | "structures" | "tags";
+	type DbTable =
+		| "articles"
+		| "articlesArticles"
+		| "articlesRecipes"
+		| "comments"
+		| "recipes"
+		| "recipesRecipes"
+		| "recipesTags"
+		| "staticPages"
+		| "structures"
+		| "tags";
+
+	type PostedArticle = {
+		/** Сериализованные данные о предыдущих связях с рецептами и статьями и рецептами */
+		cache: string;
+
+		content: string;
+		contentImage?: string;
+		description: string;
+		id: string;
+		published: string;
+		"recipeIds[]": string[];
+		"relatedIds[]": string[];
+		title: string;
+	};
 
 	type PostedComment = {
 		name?: string;

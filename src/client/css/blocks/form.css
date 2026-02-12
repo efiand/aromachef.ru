@@ -19,7 +19,9 @@
 .form__article {
 	--article-margin-top: 0;
 	--article-image-margin-inline-mobile: 0;
+}
 
+.form__article:not(:first-child) {
 	margin-top: 3rem;
 }
 
@@ -37,6 +39,10 @@
 	.form__groups {
 		grid-template-columns: 1fr 384px;
 		align-items: start;
+	}
+
+	.form__groups--equals {
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	.form__footer {

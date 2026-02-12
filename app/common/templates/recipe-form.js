@@ -160,7 +160,7 @@ export function renderRecipeForm(
 			<div hidden data-component="checkers" data-checkers="recipes">
 				<div>
 					<h2 class="form__subtitle">Связанные рецепты:</h2>
-					${renderCheckers({ checkedIds: relatedIds, items: recipes, name: "relatedIds[]" })}
+					${renderCheckers({ checkedIds: relatedIds, items: recipes.filter((recipe) => recipe.id !== id), name: "relatedIds[]" })}
 				</div>
 			</div>
 

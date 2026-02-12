@@ -3,6 +3,10 @@
 	margin-bottom: 2rem;
 }
 
+.content h2:not(:first-child) {
+	margin-top: 3rem;
+}
+
 .content ul li {
 	position: relative;
 	padding-left: 1rem;
@@ -37,7 +41,6 @@
 }
 
 .content ol:has(li:nth-child(10)) li::before {
-	content: counter(list) ". ";
 	right: calc(100% - 1.375rem);
 }
 
@@ -45,4 +48,11 @@
 .content ul:not(:first-child),
 .content p:not(:first-child) {
 	margin-top: 1rem;
+}
+
+.content picture:first-child + h2,
+.content picture:first-child + ol,
+.content picture:first-child + ul,
+.content picture:first-child + p {
+	margin-top: 0;
 }

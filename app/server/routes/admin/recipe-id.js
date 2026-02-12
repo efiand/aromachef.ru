@@ -137,7 +137,7 @@ export const recipeIdAdminRoute = {
 					rows.flat(),
 				);
 			} catch (error) {
-				errors.push(/* html */ `<b>Ошибка добавления связи с другими рецептами:</b> ${error}`);
+				errors.push(/* html */ `<b>Ошибка добавления связей с другими рецептами:</b> ${error}`);
 			}
 		}
 		if (deletingRelatedIds.length) {
@@ -148,7 +148,7 @@ export const recipeIdAdminRoute = {
 					[newId, ...deletingRelatedIds],
 				);
 			} catch (error) {
-				errors.push(/* html */ `<b>Ошибка удаления связи с другими рецептами:</b> ${error}`);
+				errors.push(/* html */ `<b>Ошибка удаления связей с другими рецептами:</b> ${error}`);
 			}
 		}
 
@@ -169,7 +169,7 @@ export const recipeIdAdminRoute = {
 
 				await processDb(/* sql */ `INSERT INTO recipesTags (recipeId, tagId) VALUES ${placeholders}`, rows.flat());
 			} catch (error) {
-				errors.push(/* html */ `<b>Ошибка добавления связи с тегами:</b> ${error}`);
+				errors.push(/* html */ `<b>Ошибка добавления связей с тегами:</b> ${error}`);
 			}
 		}
 		if (deletingTagIds.length) {
@@ -180,7 +180,7 @@ export const recipeIdAdminRoute = {
 					...deletingTagIds,
 				]);
 			} catch (error) {
-				errors.push(/* html */ `<b>Ошибка удаления связи с тегами:</b> ${error}`);
+				errors.push(/* html */ `<b>Ошибка удаления связей с тегами:</b> ${error}`);
 			}
 		}
 

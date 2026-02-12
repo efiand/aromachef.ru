@@ -16,6 +16,8 @@ const query = /* sql */ `
 	UNION
 	SELECT CONCAT('/recipe/', id) AS url FROM recipes WHERE published = 1
 	UNION
+	SELECT CONCAT('/blog/', id) AS url FROM articles WHERE published = 1
+	UNION
 	SELECT pathname AS url FROM staticPages
 	ORDER BY LENGTH(url), url;
 `;

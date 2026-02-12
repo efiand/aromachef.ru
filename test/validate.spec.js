@@ -19,7 +19,7 @@ const htmlvalidate = new HtmlValidate({
 	},
 });
 
-const adminPages = ["/admin", "/admin/recipe/0"];
+const adminPages = ["/admin", "/admin/blog/0", "/admin/recipe/0"];
 const pages = [...STATIC_PAGES, "/search", "/admin/auth"];
 
 /** @type {amphtmlValidator.Validator | undefined} */

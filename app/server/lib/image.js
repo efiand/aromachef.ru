@@ -36,7 +36,7 @@ export async function processImage(rawImage, name, dir = "recipe") {
 		await process(`${name}@1x`, image.clone().resize(384));
 	}
 
-	if (alias === "cooking" || !alias) {
+	if (alias !== "ingredients") {
 		await process(`${id}@2x`, image.clone().resize(544).extract({ height: 408, left: 0, top: 272, width: 544 }));
 		await process(`${id}@1x`, image.clone().resize(272).extract({ height: 204, left: 0, top: 136, width: 272 }));
 	}

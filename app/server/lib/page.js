@@ -114,5 +114,5 @@ export async function renderPage({
 		</html>
 	`;
 
-	return isAmp ? template.replace(/="\/(recipe|search|structure|tag)/g, '="/amp/$1') : template;
+	return isAmp ? template.replace(/="\/(blog|recipe|search|structure|tag)/g, '="/amp/$1') : template;
 }

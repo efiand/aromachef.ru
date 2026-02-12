@@ -10,6 +10,7 @@
 	cursor: pointer;
 }
 
+.image-picker--blog,
 .image-picker--recipe {
 	height: 476px;
 }
@@ -36,6 +37,7 @@
 }
 
 @media (min-width: 432px) {
+	.image-picker--blog,
 	.image-picker--recipe {
 		width: 384px;
 		height: 672px;

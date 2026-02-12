@@ -41,6 +41,13 @@ const query = /* sql */ `
 		WHERE published = 1
 	UNION
 	SELECT
+		CONCAT('${BASE_URL}/blog/', id) AS loc,
+		DATE_FORMAT(updatedAt, '%Y-%m-%dT%H:%i:%s+03:00') AS lastmod,
+		'0.8' as priority
+		FROM articles
+		WHERE published = 1
+	UNION
+	SELECT
 		CONCAT('${BASE_URL}', pathname) AS loc,
 		DATE_FORMAT(updatedAt, '%Y-%m-%dT%H:%i:%s+03:00') AS lastmod,
 		'0.5' as priority
