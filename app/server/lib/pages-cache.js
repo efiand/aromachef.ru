@@ -1,17 +1,17 @@
-/** @type {Record<string, string>} */
+/** @type {Record<string, PageCache>} */
 let cache = {};
 
-/** @type {Record<string, string>} */
+/** @type {Record<string, PageCache>} */
 let fragmentCache = {};
 
-/** @type {(url: string, useFragment?: boolean) => string} */
+/** @type {(url: string, useFragment?: boolean) => PageCache | null} */
 export function getPageFromCache(url, useFragment = false) {
-	return (useFragment ? fragmentCache : cache)[url] || "";
+	return (useFragment ? fragmentCache : cache)[url] || null;
 }
 
-/** @type {(url: string, html: string, useFragment?: boolean) => void} */
-export function recordPagesCache(url, html, useFragment = false) {
-	(useFragment ? fragmentCache : cache)[url] = html;
+/** @type {(url: string, data: PageCache, useFragment?: boolean) => void} */
+export function recordPagesCache(url, data, useFragment = false) {
+	(useFragment ? fragmentCache : cache)[url] = data;
 }
 
 /** @type {(prefix?: string) => void} */

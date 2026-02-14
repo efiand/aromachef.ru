@@ -42,6 +42,8 @@ declare global {
 		isAmp?: boolean;
 		isDev?: boolean;
 		ogImage?: string;
+		ogImageHeight?: string | number;
+		ogImageWidth?: string | number;
 		pageTemplate?: string;
 		pathname?: string;
 	};

@@ -1,6 +1,4 @@
-import { STATIC_PAGES } from "#common/constants.js";
-
-const noAmpRoutes = ["/admin", "/api", "/search", "/sitemap.xml", ...STATIC_PAGES];
+const noAmpRoutes = ["/__", "/admin", "/api", "/search", "/sitemap.xml"];
 
 export function noAmp(pathname = "") {
 	return noAmpRoutes.some((item) => pathname.startsWith(item));

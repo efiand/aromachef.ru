@@ -1,8 +1,8 @@
 import { renderPageSection } from "#common/templates/page-section.js";
+import { renderRecipeDescription } from "#common/templates/recipe-description.js";
 import { renderRecipeFooter } from "#common/templates/recipe-footer.js";
 import { isDev } from "#server/constants.js";
 import { processDb } from "#server/lib/db.js";
-import { renderRecipeDescription } from "#server/lib/recipe-description.js";
 
 const TAGS_QUERY = /* sql */ `
 	SELECT t.id, t.title FROM tags t JOIN recipesTags rt

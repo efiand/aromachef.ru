@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 import jwt from "jsonwebtoken";
 import { log } from "#common/lib/log.js";
 import { noAmp } from "#common/lib/no-amp.js";
-import { renderErrorPage } from "#common/templates/errorPage.js";
+import { renderErrorPage } from "#common/templates/error-page.js";
 import { host, isDev, port } from "#server/constants.js";
 import { getCookies } from "#server/lib/cookies.js";
 import { closeDbPool } from "#server/lib/db.js";
@@ -42,6 +42,7 @@ async function handleError(error, { href, pathname }, authorized = false) {
 
 /** @type {ServerMiddleware} */
 async function next(req, res) {
+	const { method = "GET" } = req;
 	const url = new URL(`${host}${req.url}`);
 	const isAmp = url.pathname === "/amp" || url.pathname.startsWith("/amp/");
 	const isAdmin = url.pathname === "/admin" || url.pathname.startsWith("/admin/");
@@ -78,9 +79,12 @@ async function next(req, res) {
 			throw new Error("Страница не имеет AMP-версии.", { cause: 404 });
 		}
 
-		const { method = "GET" } = req;
 		if (!route[method]) {
-			throw new Error("Method not allowed!", { cause: 405 });
+			if (method === "HEAD" && route.GET) {
+				route.HEAD = route.GET;
+			} else {
+				throw new Error("Method not allowed!", { cause: 405 });
+			}
 		}
 
 		if (isAdmin && pathname !== "/admin/auth" && !authorized) {
@@ -93,12 +97,19 @@ async function next(req, res) {
 		const body = await getRequestBody(req);
 		const isCanonical = Object.keys(body).length === 0;
 		const isFragment = Object.keys(body).length === 1 && body.fragment !== undefined;
-		const noCache = authorized || isAdmin;
 
-		if (!noCache && isCanonical && getPageFromCache(url.pathname)) {
-			template = getPageFromCache(url.pathname);
-		} else if (!noCache && isFragment && getPageFromCache(url.pathname, true)) {
-			template = getPageFromCache(url.pathname, true);
+		/** @type {PageCache | null} */
+		let cache = null;
+		if (authorized || isAdmin) {
+			if (isCanonical) {
+				cache = getPageFromCache(url.pathname);
+			} else if (isFragment) {
+				cache = getPageFromCache(url.pathname, true);
+			}
+		}
+
+		if (cache) {
+			({ contentType, template } = cache);
 		} else {
 			const routeData = await route[method]({ authorized, body, id, isAmp, req, res });
 			({ contentType = "text/html; charset=utf-8", redirect = "", statusCode = 200, template = "" } = routeData);
@@ -108,7 +119,7 @@ async function next(req, res) {
 			}
 
 			if (!authorized && (isCanonical || isFragment)) {
-				recordPagesCache(url.pathname, template, isFragment);
+				recordPagesCache(url.pathname, { contentType, template }, isFragment);
 			}
 		}
 	} catch (error) {
@@ -124,7 +135,7 @@ async function next(req, res) {
 		res.setHeader("Content-Type", contentType);
 	}
 	res.statusCode = statusCode;
-	res.end(template);
+	res.end(method === "HEAD" ? "" : template);
 }
 
 /** @type {(middleware?: ServerMiddleware) => import("node:http").Server} */

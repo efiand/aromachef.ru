@@ -1,19 +1,19 @@
 {
 	"dependencies": {
-		"@dotenvx/dotenvx": "1.52.0",
 		"bcrypt-ts": "8.0.1",
 		"dompurify": "3.3.1",
 		"formidable": "3.5.4",
 		"html-minifier-terser": "7.2.0",
 		"jsdom": "28.0.0",
 		"jsonwebtoken": "9.0.3",
-		"mysql2": "3.17.0",
+		"mysql2": "3.17.1",
 		"node-telegram-bot-api": "0.67.0",
 		"sharp": "0.34.5",
 		"typograf": "7.6.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.15",
+		"@dotenvx/dotenvx": "1.52.0",
 		"@fastify/pre-commit": "2.2.1",
 		"@types/amphtml-validator": "1.0.4",
 		"@types/formidable": "3.4.6",
@@ -26,7 +26,7 @@
 		"@types/postcss-url": "10.0.4",
 		"amphtml-validator": "1.0.38",
 		"cssnano": "7.1.2",
-		"fast-xml-parser": "5.3.5",
+		"fast-xml-parser": "5.3.6",
 		"html-validate": "10.7.0",
 		"nodemon": "3.1.11",
 		"petite-vue": "0.4.1",

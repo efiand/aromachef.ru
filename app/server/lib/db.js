@@ -25,6 +25,17 @@ export function getDbError(error) {
 	const { sqlMessage = "" } = /** @type {{ sqlMessage?: string }} */ (error || {});
 	return sqlMessage;
 }
+
+/** @type {(query: string, payload: unknown) => unknown[]} */
+function getPlaceholders(query, payload) {
+	if (Array.isArray(payload)) {
+		return payload;
+	}
+
+	const { length } = query.match(/\?/g) || [];
+	return Array.from({ length }, () => payload);
+}
+
 /** @type {(error: unknown, context: { query?: string, payload?: unknown }) => void} */
 function logDbError(error, context = {}) {
 	const err = /** @type {any} */ (error || {});
@@ -37,16 +48,6 @@ function logDbError(error, context = {}) {
 		sqlState: err.sqlState,
 		...context,
 	});
-}
-
-/** @type {(query: string, payload: unknown) => unknown[]} */
-function getPlaceholders(query, payload) {
-	if (Array.isArray(payload)) {
-		return payload;
-	}
-
-	const { length } = query.match(/\?/g) || [];
-	return Array.from({ length }, () => payload);
 }
 
 /** @type {(query: string, payload?: unknown) => Promise<any>} */

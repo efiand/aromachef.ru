@@ -1,4 +1,5 @@
 {
+	"biome.requireConfiguration": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.biome": "explicit",
 		"source.organizeImports.biome": "explicit",
@@ -13,5 +14,6 @@
 	},
 	"emmet.preferences": {
 		"output.reverseAttributes": true
-	}
+	},
+	"prettier.enable": false
 }

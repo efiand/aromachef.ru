@@ -3,7 +3,7 @@ import { access } from "node:fs/promises";
 import path from "node:path";
 import { STATIC_MIME_TYPES, staticExtensions } from "#common/constants.js";
 import { log } from "#common/lib/log.js";
-import { host, isDev } from "#server/constants.js";
+import { cwd, host, isDev } from "#server/constants.js";
 import { createApp } from "#server/lib/app.js";
 
 let sseData = "reload";
@@ -58,7 +58,7 @@ createApp(async (req, res, next) => {
 
 	if (pathname.includes("/pictures")) {
 		try {
-			const filePath = path.join(process.cwd(), pathname);
+			const filePath = path.join(cwd, pathname);
 			try {
 				await access(filePath);
 				res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
@@ -79,7 +79,7 @@ createApp(async (req, res, next) => {
 	}
 
 	try {
-		const filePath = path.join(process.cwd(), getStaticDir(pathname), pathname);
+		const filePath = path.join(cwd, getStaticDir(pathname), pathname);
 		await access(filePath);
 		res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
 		createReadStream(filePath).pipe(res);

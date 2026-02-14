@@ -1,4 +1,4 @@
-import { renderErrorPage } from "#common/templates/errorPage.js";
+import { renderErrorPage } from "#common/templates/error-page.js";
 
 const heading = "Ошибка 404";
 

@@ -51,6 +51,7 @@ declare global {
 			DB_USER: string;
 			DEV?: string;
 			PORT: string;
+			PROJECT_ROOT?: string;
 			TG_ADMIN_ID: string;
 			TG_AROMACHEF_ID: string;
 			TG_TOKEN: string;

@@ -1,8 +1,10 @@
 import TelegramBot from "node-telegram-bot-api";
+import { log } from "#common/lib/log.js";
 
-const { TG_ADMIN_ID, TG_TOKEN, TG_AROMACHEF_ID } = process.env;
+const TG_ADMIN_ID = Number(process.env.TG_ADMIN_ID);
+const TG_AROMACHEF_ID = Number(process.env.TG_AROMACHEF_ID);
 
-const bot = new TelegramBot(TG_TOKEN);
+const bot = new TelegramBot(process.env.TG_TOKEN);
 
 /** @type {TelegramBot.SendMessageOptions} */
 const messageOptions = { parse_mode: "HTML" };
@@ -12,7 +14,8 @@ export async function sendTgMessage({ chat: { id = TG_ADMIN_ID, username = "arom
 	const template = text.trim();
 
 	if (id === TG_ADMIN_ID || id === TG_AROMACHEF_ID) {
-		await bot.sendMessage(id, template, messageOptions);
+		// Собственный запрос
+		log.error("❌ [TG OWN MESSAGE]", template);
 		return;
 	}
 

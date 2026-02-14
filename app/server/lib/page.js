@@ -57,6 +57,8 @@ export async function renderPage({
 	heading = "",
 	isAmp = false,
 	ogImage = "/images/og.webp",
+	ogImageWidth = 544,
+	ogImageHeight = 408,
 	pageTemplate = "",
 	pathname = "",
 }) {
@@ -81,6 +83,7 @@ export async function renderPage({
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<meta name="apple-mobile-web-app-title" content="${PROJECT_TITLE}">
+			<meta name="apple-mobile-web-app-capable" content="yes">
 
 			<title>${title}</title>
 			${renderUrlMeta(pathname, isAmp)}
@@ -89,8 +92,8 @@ export async function renderPage({
 			<meta property="og:type" content="website">
 			<meta property="og:site_name" content="${PROJECT_TITLE}">
 			<meta property="og:image" content="${ogImage}">
-			<meta property="og:image:width" content="544">
-			<meta property="og:image:height" content="408">
+			<meta property="og:image:width" content="${ogImageWidth}">
+			<meta property="og:image:height" content="${ogImageHeight}">
 
 			${descriptionTemplate}
 			${assetsTemplate}

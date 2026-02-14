@@ -13,6 +13,11 @@ declare global {
 		sameSite?: "Lax" | "None" | "Strict";
 	};
 
+	type PageCache = {
+		contentType: string;
+		template: string;
+	};
+
 	type ReqBody = Record<string, unknown>;
 
 	type Route = {
