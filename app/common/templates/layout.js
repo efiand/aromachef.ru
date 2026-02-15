@@ -1,10 +1,6 @@
 import { HERO_TEMPLATE } from "#common/templates/hero.js";
 import { YANDEX_METRIKA_TEMPLATE } from "#common/templates/yandex-metrika.js";
 
-const ADMIN_TEMPLATE = /* html */ `
-	<li class="footer__item"><a href="/admin">Панель управления</a></li>
-`;
-
 const SEARCH_TEMPLATE = /* html */ `
 	<li class="header__item">
 		<a class="header__extra header__extra--search" href="/search" data-component="asyncSearch">
@@ -20,6 +16,15 @@ function renderAboutTemplate(ampPrefix) {
 			<a href="${ampPrefix}/about" rel="author">Обо мне</a>
 		</li>
 	`;
+}
+
+/** @type {(pathname?: string) => string} */
+function renderAdminTemplate(pathname = "") {
+	const editTemplate = /^\/(recipe|blog)\/.+$/.test(pathname)
+		? /* html */ `<li class="footer__item"><a href="/admin${pathname}">Редактировать</a></li>`
+		: "";
+
+	return /* html */ `<li class="footer__item"><a href="/admin">Панель управления</a></li>${editTemplate}`;
 }
 
 /** @type {(ampPrefix: string) => string} */
@@ -61,7 +66,7 @@ function renderLayoutInner({ authorized, isAmp, pathname, pageTemplate }) {
 					<a class="footer__tg" href="https://t.me/aroma_chef" target="_blank">@aroma_chef</a>
 				</li>
 				${pathname === "/about" ? "" : renderAboutTemplate(ampPrefix)}
-				${authorized ? ADMIN_TEMPLATE : ""}
+				${authorized ? renderAdminTemplate(pathname) : ""}
 				<li class="footer__item footer__item--last">
 					<a href="https://efiand.ru" target="_blank" rel="nofollow">Разработано efiand</a>
 				</li>

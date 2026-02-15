@@ -3,12 +3,24 @@ import { JSDOM } from "jsdom";
 import Typograf from "typograf";
 import { minifyHtml } from "#server/lib/minify-html.js";
 
+const purifyConfig = { ADD_ATTR: ["target", "rel"] };
+
 const { window } = new JSDOM("");
 const { document } = window;
 const purify = DOMPurify(window);
-
 // @ts-expect-error
 const typograf = new Typograf({ locale: ["ru", "en-US"] });
+
+purify.addHook("afterSanitizeAttributes", (node) => {
+	if (node.nodeName === "A" && node.getAttribute("target") === "_blank") {
+		if (!node.hasAttribute("rel")) {
+			node.setAttribute("rel", "noopener noreferrer");
+		}
+	}
+});
+
+// Отключаем перенос кавычек вокруг ссылок
+typograf.disableRule("common/punctuation/quoteLink");
 
 /** @type {(html: string, clearTags?: boolean) => string} */
 export function prepareText(html, clearTags = false) {
@@ -20,7 +32,7 @@ export function prepareText(html, clearTags = false) {
 		element.innerHTML = html;
 		text = element.textContent || "";
 	} else {
-		text = purify.sanitize(html);
+		text = purify.sanitize(html, purifyConfig);
 	}
 
 	return typograf.execute(text).trim();

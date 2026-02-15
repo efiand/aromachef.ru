@@ -19,9 +19,7 @@
 		"lineWidth": 120
 	},
 	"linter": {
-		"domains": {
-			"project": "all"
-		},
+		"domains": { "project": "all" },
 		"enabled": true,
 		"rules": {
 			"complexity": { "noUselessStringConcat": "error" },
@@ -34,7 +32,11 @@
 			"recommended": true,
 			"style": {
 				"useBlockStatements": "error",
-				"useConst": { "fix": "none", "level": "error", "options": {} }
+				"useConst": {
+					"fix": "none",
+					"level": "error",
+					"options": {}
+				}
 			},
 			"suspicious": {
 				"noConsole": {
@@ -49,13 +51,7 @@
 	"overrides": [
 		{
 			"includes": ["**/vendors/**"],
-			"linter": {
-				"rules": {
-					"complexity": {
-						"noImportantStyles": "off"
-					}
-				}
-			}
+			"linter": { "rules": { "complexity": { "noImportantStyles": "off" } } }
 		}
 	],
 	"vcs": {

@@ -8,7 +8,7 @@ export const YANDEX_METRIKA_ID = 99498629;
 
 export const version = {
 	CSS: 28,
-	JS: 21,
+	JS: 22,
 };
 
 /** @type {Record<string, string>} */

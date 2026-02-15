@@ -97,10 +97,11 @@ async function next(req, res) {
 		const body = await getRequestBody(req);
 		const isCanonical = Object.keys(body).length === 0;
 		const isFragment = Object.keys(body).length === 1 && body.fragment !== undefined;
+		const needCache = !authorized && !isAdmin && (isCanonical || isFragment);
 
 		/** @type {PageCache | null} */
 		let cache = null;
-		if (authorized || isAdmin) {
+		if (needCache) {
 			if (isCanonical) {
 				cache = getPageFromCache(url.pathname);
 			} else if (isFragment) {
@@ -118,7 +119,7 @@ async function next(req, res) {
 				template = await renderPage({ ...routeData.page, authorized, isAmp, pathname });
 			}
 
-			if (!authorized && (isCanonical || isFragment)) {
+			if (needCache) {
 				recordPagesCache(url.pathname, { contentType, template }, isFragment);
 			}
 		}

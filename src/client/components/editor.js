@@ -3,7 +3,7 @@ import { sanitizeHTML } from "#client/lib/html.js";
 import { loadScript } from "#client/lib/load-script.js";
 import { version } from "#common/constants.js";
 
-const allowedTags = new Set(["a", "br", "li", "ol", "p", "strong", "ul"]);
+const allowedTags = new Set(["a", "b", "br", "li", "ol", "p", "strong", "ul"]);
 const allowedClassNames = new Set(["_small"]);
 
 /** @type {import('tinymce').RawEditorOptions} */
@@ -59,7 +59,7 @@ const config = {
 	statusbar: false,
 	toolbar: `undo redo bold smallToggle bullist numlist link unlink clearContent code`,
 	toolbar_mode: "wrap",
-	valid_elements: `p[class],a[href],strong/b,ul,ol,li,br`,
+	valid_elements: `a[href|target|rel],br,li,ol,p[class],strong/b,ul`,
 };
 
 /** @type {(target: HTMLElement) => Promise<void>} */

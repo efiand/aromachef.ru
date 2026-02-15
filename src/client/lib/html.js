@@ -1,3 +1,9 @@
+/** @type {Record<string, Set<string>>} */
+const allowedAttributes = {
+	a: new Set(["href", "target", "rel"]),
+	p: new Set(["class"]),
+};
+
 /**
  * Удаляет все теги, кроме указанных
  * @type {(element: HTMLElement, allowedTags: Set<string>, allowedClassNames: Set<string>) => void}
@@ -13,19 +19,30 @@ export function clean(element, allowedTags, allowedClassNames) {
  * @type {(childElement: HTMLElement, allowedTags: Set<string>, allowedClassNames: Set<string>) => void}
  */
 export function cleanChildren(childElement, allowedTags, allowedClassNames) {
-	if (!allowedTags.has(childElement.tagName.toLowerCase())) {
+	const tag = childElement.tagName.toLowerCase();
+
+	if (!allowedTags.has(tag)) {
 		childElement.replaceWith(...childElement.childNodes);
-	} else {
-		// удаляем все классы кроме _small
-		if (childElement.tagName.toLowerCase() === "p") {
-			[...childElement.classList].forEach((className) => {
-				if (!allowedClassNames.has(className)) {
-					childElement.classList.remove(className);
-				}
-			});
-		}
-		clean(childElement, allowedTags, allowedClassNames);
+		return;
 	}
+
+	// Очистка атрибутов
+	for (const attr of [...childElement.attributes]) {
+		if (!allowedAttributes[tag]?.has(attr.name)) {
+			childElement.removeAttribute(attr.name);
+		}
+	}
+
+	if (tag === "p") {
+		// Очистка class для p
+		for (const className of [...childElement.classList]) {
+			if (!allowedClassNames.has(className)) {
+				childElement.classList.remove(className);
+			}
+		}
+	}
+
+	clean(childElement, allowedTags, allowedClassNames);
 }
 
 /**
