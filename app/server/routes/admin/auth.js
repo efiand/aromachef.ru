@@ -49,6 +49,7 @@ function getView(error = "", login = "") {
 					class="password-input__input"
 					type="password"
 					name="password"
+					autocomplete="on"
 					placeholder="Пароль *"
 					aria-label="Пароль"
 					required
