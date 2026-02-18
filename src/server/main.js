@@ -44,7 +44,7 @@ createApp(async (req, res, next) => {
 	}
 
 	const { pathname } = new URL(`${host}${req.url}`);
-	if (pathname === "/.well-known/appspecific/com.chrome.devtools.json") {
+	if (pathname.includes(".well-known/appspecific/com.chrome.devtools.json")) {
 		res.setHeader("Content-Type", "application/json");
 		res.end("{}");
 		return;
