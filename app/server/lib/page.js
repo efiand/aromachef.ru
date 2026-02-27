@@ -37,9 +37,9 @@ function renderUrlMeta(pathname, isAmp) {
 		return /* html */ `<meta name="robots" content="noindex, nofollow">`;
 	}
 
-	let template = /* html */ `<meta property="og:url" content="${pathname}">`;
+	const ampUrl = pathname === "/" ? "/amp" : `/amp${pathname}`;
+	let template = /* html */ `<meta property="og:url" content="${BASE_URL}${isAmp ? ampUrl : pathname}">`;
 	if (!isAmp && !noAmp(pathname)) {
-		const ampUrl = pathname === "/" ? "/amp" : `/amp${pathname}`;
 		template += /* html */ `<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
 	}
 	if (!pathname.startsWith("/__")) {
