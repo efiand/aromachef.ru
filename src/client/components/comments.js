@@ -65,25 +65,33 @@ const TEMPLATE = /* html */ `
 		</button>
 		<div class="comments__body" id="comments-body">
 			<ul class="comments__list" v-if="comments.length">
-				<li v-for="{ answer, id, name, text } in comments" :key="id">
-					<figure
-						class="comments__item"
-						itemscope
-						itemtype="https://schema.org/Comment"
-					>
-						<figcaption class="comments__author" itemprop="author">{{ name }}</figcaption>
+				<li
+					v-for="{ answer, id, name, publishedAt, text } in comments"
+					:key="id"
+					itemprop="comment"
+					itemscope
+					itemtype="https://schema.org/Comment"
+				>
+					<figure class="comments__item">
+						<cite class="comments__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+							<span itemprop="name">{{ name }}</span>
+						</cite>
 						<blockquote class="comments__quote" itemprop="text" v-html="text"></blockquote>
+						<meta itemprop="datePublished" :content="publishedAt">
 					</figure>
 					<figure
 						class="comments__item comments__item--answer"
 						v-if="answer"
+						itemprop="comment"
 						itemscope
 						itemtype="https://schema.org/Comment"
 					>
-						<figcaption class="comments__author">
-							<a href="/about" itemprop="author" rel="author">АромаШеф</a>
-						</figcaption>
+						<link itemprop="author" href="https://aromachef.ru/#author">
+						<cite class="comments__author">
+							<a href="/about" rel="author">АромаШеф</a>
+						</cite>
 						<blockquote class="comments__quote" itemprop="text" v-html="answer"></blockquote>
+						<meta itemprop="datePublished" :content="publishedAt">
 					</figure>
 				</li>
 			</ul>

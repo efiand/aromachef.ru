@@ -59,7 +59,9 @@
 }
 
 .comments__author {
+	display: block;
 	margin: 0 0 0.5rem;
+	font-style: normal;
 	font-weight: 700;
 }
 

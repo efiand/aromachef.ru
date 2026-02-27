@@ -81,6 +81,7 @@ declare global {
 		description: string;
 		ingredients: string;
 		ingredientsExtra: string | null;
+		publishedAt?: string | null;
 		structureId: number;
 		structureTitle: string;
 		telegramId?: number | null;

@@ -13,6 +13,8 @@ declare global {
 		sameSite?: "Lax" | "None" | "Strict";
 	};
 
+	type DbPlaceholder = DbPlaceholder[] | null | number | string;
+
 	type PageCache = {
 		contentType: string;
 		template: string;

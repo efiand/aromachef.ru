@@ -1,9 +1,11 @@
 declare global {
 	type ArticleData = {
-		imageAlias: string;
-		isAmp?: boolean;
 		alt?: string;
 		content?: string;
+		imageAlias: string;
+		isAmp?: boolean;
+		isSchemaSupport?: boolean;
+		itemprop?: string;
 		reverse?: boolean;
 		title?: string;
 	};
@@ -15,8 +17,8 @@ declare global {
 	};
 
 	type CardAdditionals = {
-		isAmp?: boolean;
 		alt?: string;
+		isAmp?: boolean;
 		route?: string;
 	};
 
@@ -26,11 +28,12 @@ declare global {
 	};
 
 	type ImageParams = {
+		alt: string;
 		className?: string;
+		height: number;
 		imageAlias: string;
 		isAmp?: boolean;
-		alt: string;
-		height: number;
+		isSchemaSupport?: boolean;
 		width: number;
 	};
 
@@ -56,8 +59,11 @@ declare global {
 		footerTemplate?: string;
 		imageAlias?: string;
 		isAmp?: boolean;
+		itempropMeta?: string;
+		itemtype?: string;
 		next?: string;
 		prev?: string;
+		publishedAt?: string | null;
 		title: string;
 	};
 

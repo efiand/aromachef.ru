@@ -26,6 +26,9 @@ export function loadScript(src, { async = true, defer = true, type = "" } = {}) 
 		element.defer = defer;
 		if (type) {
 			element.type = type;
+			if (type === "module") {
+				element.defer = false;
+			}
 		}
 
 		element.onload = () => resolve(element);

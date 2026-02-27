@@ -26,7 +26,7 @@ export function getDbError(error) {
 	return sqlMessage;
 }
 
-/** @type {(query: string, payload: unknown) => unknown[]} */
+/** @type {(query: string, payload: DbPlaceholder) => DbPlaceholder[]} */
 function getPlaceholders(query, payload) {
 	if (Array.isArray(payload)) {
 		return payload;
@@ -50,7 +50,7 @@ function logDbError(error, context = {}) {
 	});
 }
 
-/** @type {(query: string, payload?: unknown) => Promise<any>} */
+/** @type {(query: string, payload?: DbPlaceholder) => Promise<any>} */
 export async function processDb(query, payload = []) {
 	try {
 		const [rows] = await pool.execute(query, getPlaceholders(query, payload));

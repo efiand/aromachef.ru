@@ -7,8 +7,8 @@ export const PROJECT_DESCRIPTION = "Быстрые, вкусные и поле�
 export const YANDEX_METRIKA_ID = 99498629;
 
 export const version = {
-	CSS: 28,
-	JS: 22,
+	CSS: 29,
+	JS: 24,
 };
 
 /** @type {Record<string, string>} */

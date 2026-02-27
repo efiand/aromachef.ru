@@ -8,7 +8,7 @@ const ADD_COMMENT_QUERY = /* sql */ `
 	INSERT INTO comments (name, text, recipeId) VALUES (?, ?, ?);
 `;
 const COMMENTS_QUERY = /* sql */ `
-	SELECT id, name, text, answer FROM comments
+	SELECT id, name, text, answer, publishedAt FROM comments
 	WHERE recipeId = ? AND published = 1
 	ORDER BY publishedAt DESC;
 `;

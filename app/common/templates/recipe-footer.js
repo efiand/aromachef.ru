@@ -5,10 +5,14 @@ import { renderTags } from "#common/templates/tags.js";
 export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags }) {
 	return /* html */ `
 		<footer class="recipe-footer">
+			<meta itemprop="keywords" content="${tags.map(({ title }) => title).join(", ")}">
 			${renderTags({ tags })}
+
+			<meta itemprop="recipeCategory" content="${structure.title}">
 			<a class="recipe-footer__structure-link" href="/structure/${structure.id}" rel="toc">
 				${structure.title}
 			</a>
+
 			${
 				relatedRecipes.length
 					? /* html */ `
@@ -22,6 +26,7 @@ export function renderRecipeFooter({ isAmp, relatedRecipes = [], structure, tags
 						`
 					: ""
 			}
+
 			${isAmp ? "" : /* html */ `<div class="recipe-footer__comments" data-component="comments"></div>`}
 		</footer>
 	`;

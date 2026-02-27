@@ -36,8 +36,17 @@ export const recipeIdRoute = {
 			throw new Error("Рецепт не существует.", { cause: 404 });
 		}
 
-		const { cooking, description, ingredients, ingredientsExtra, structureId, structureTitle, telegramId, title } =
-			recipe;
+		const {
+			cooking,
+			description,
+			ingredients,
+			ingredientsExtra,
+			publishedAt,
+			structureId,
+			structureTitle,
+			telegramId,
+			title,
+		} = recipe;
 		const imageAlias = `/pictures/recipe/${id}`;
 
 		const ingredientsExtraTemplate = ingredientsExtra
@@ -54,14 +63,17 @@ export const recipeIdRoute = {
 				pageTemplate: renderPageSection({
 					articles: [
 						{
-							content: /* html */ `<h2>Состав</h2>${ingredients}${ingredientsExtraTemplate}`,
+							content: /* html */ `<h2>Состав</h2>${getIngredientsTemplate(ingredients + ingredientsExtraTemplate)}`,
 							imageAlias: `${imageAlias}-ingredients`,
 							isAmp,
+							isSchemaSupport: true,
 						},
 						{
 							content: /* html */ `<h2>Приготовление</h2>${cooking}`,
 							imageAlias: `${imageAlias}-cooking`,
 							isAmp,
+							isSchemaSupport: true,
+							itemprop: "recipeInstructions",
 						},
 					],
 					content: renderRecipeDescription({ description, telegramId }),
@@ -71,8 +83,10 @@ export const recipeIdRoute = {
 						structure: { id: structureId, title: structureTitle },
 						tags,
 					}),
+					itemtype: "Recipe",
 					next: `/recipe/${id === length ? 1 : id + 1}`,
 					prev: `/recipe/${id === 1 ? length : id - 1}`,
+					publishedAt,
 					title,
 				}),
 			},
@@ -82,7 +96,7 @@ export const recipeIdRoute = {
 
 function getRecipesQuery(queryCondition = "") {
 	return /* sql */ `
-		SELECT cooking, description, ingredients, ingredientsExtra, structureId, telegramId, r.title,
+		SELECT cooking, description, ingredients, ingredientsExtra, publishedAt, structureId, telegramId, r.title,
 		s.title AS structureTitle FROM recipes r JOIN structures s
 		WHERE r.id = ? AND s.id = r.structureId ${queryCondition};
 	`;
@@ -94,4 +108,8 @@ function getRelatedRecipesQuery(queryCondition = "") {
 		WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id ${queryCondition}
 		ORDER BY r.title;
 	`;
+}
+
+function getIngredientsTemplate(text = "") {
+	return text.replaceAll("<li", '<li itemprop="recipeIngredient"');
 }

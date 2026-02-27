@@ -25,7 +25,7 @@ function minifyHtmlLiterals() {
 					const minifiedLiteral = fullMatch.replace(htmlContent, minifiedHtml);
 					transformedCode = transformedCode.replace(fullMatch, minifiedLiteral);
 				} catch (error) {
-					log.error(`Ошибка минификации HTML в файле ${id}:`, error);
+					log.error(`❌ Ошибка минификации HTML в файле ${id}:`, error);
 				}
 
 				// Получаем следующее совпадение
