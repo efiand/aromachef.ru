@@ -1,7 +1,7 @@
-import { BASE_URL } from "#common/constants.js";
-import { processDb } from "#server/lib/db.js";
+import { BASE_URL } from '#common/constants.js';
+import { processDb } from '#server/lib/db.js';
 
-const SERVICE_PAGES = ["", "/structure"];
+const SERVICE_PAGES = ['', '/structure'];
 
 const query = /* sql */ `
 	SELECT
@@ -64,16 +64,16 @@ function getChangefreq(lastmod) {
 	const daysAfterMod = Math.floor((Date.now() - new Date(lastmod).valueOf()) / 86_400_000);
 
 	if (daysAfterMod < 1) {
-		return "daily";
+		return 'daily';
 	}
 	if (daysAfterMod < 7) {
-		return "weekly";
+		return 'weekly';
 	}
 	if (daysAfterMod < 30) {
-		return "monthly";
+		return 'monthly';
 	}
 	if (daysAfterMod < 365) {
-		return "yearly";
+		return 'yearly';
 	}
 	return undefined;
 }
@@ -85,9 +85,9 @@ function renderPage({ lastmod, loc, priority }) {
 	return /* xml */ `
 		<url>
 			<loc>${loc}</loc>
-			${priority ? /* xml */ `<priority>${priority}</priority>` : ""}
-			${changefreq ? /* xml */ `<changefreq>${changefreq}</changefreq>` : ""}
-			${lastmod ? /* xml */ `<lastmod>${lastmod}</lastmod>` : ""}
+			${priority ? /* xml */ `<priority>${priority}</priority>` : ''}
+			${changefreq ? /* xml */ `<changefreq>${changefreq}</changefreq>` : ''}
+			${lastmod ? /* xml */ `<lastmod>${lastmod}</lastmod>` : ''}
 		</url>
 	`;
 }
@@ -101,13 +101,13 @@ export const sitemapXmlRoute = {
 		/** Дата крайнего обновления */
 		const [{ lastmod }] = pages;
 
-		pages.push(...SERVICE_PAGES.map((page) => ({ lastmod, loc: `${BASE_URL}${page}`, priority: "0.8" })));
+		pages.push(...SERVICE_PAGES.map((page) => ({ lastmod, loc: `${BASE_URL}${page}`, priority: '0.8' })));
 
 		return {
-			contentType: "application/xml",
+			contentType: 'application/xml',
 			template: /* xml */ `<?xml version="1.0" encoding="UTF-8" ?>
 				<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="https://www.w3.org/1999/xhtml">
-					${pages.map(renderPage).join("")}
+					${pages.map(renderPage).join('')}
 				</urlset>`,
 		};
 	},

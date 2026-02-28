@@ -1,18 +1,18 @@
-import { writeFile } from "node:fs/promises";
-import sharp from "sharp";
-import { cwd } from "#server/constants.js";
-import { upload } from "#server/lib/yandex-disk.js";
+import { writeFile } from 'node:fs/promises';
+import sharp from 'sharp';
+import { cwd } from '#server/constants.js';
+import { upload } from '#server/lib/yandex-disk.js';
 
 sharp.cache(false);
 sharp.concurrency(1);
 
-const WEBP_OPTIONS = { chromaSubsampling: "4:2:0", effort: 4, quality: 75 };
-const AVIF_OPTIONS = { chromaSubsampling: "4:2:0", effort: 8, quality: 50 };
+const WEBP_OPTIONS = { chromaSubsampling: '4:2:0', effort: 4, quality: 75 };
+const AVIF_OPTIONS = { chromaSubsampling: '4:2:0', effort: 8, quality: 50 };
 
 /** @type {(image: sharp.SharpInput, name: string, dir?: string) => Promise<void>} */
-export async function processImage(rawImage, name, dir = "recipe") {
+export async function processImage(rawImage, name, dir = 'recipe') {
 	const image = sharp(rawImage);
-	const [id, alias] = name.split("-");
+	const [id, alias] = name.split('-');
 
 	/** @type {Promise<void>[]} */
 	const uploads = [];
@@ -36,7 +36,7 @@ export async function processImage(rawImage, name, dir = "recipe") {
 		await process(`${name}@1x`, image.clone().resize(384));
 	}
 
-	if (alias !== "ingredients") {
+	if (alias !== 'ingredients') {
 		await process(`${id}@2x`, image.clone().resize(544).extract({ height: 408, left: 0, top: 272, width: 544 }));
 		await process(`${id}@1x`, image.clone().resize(272).extract({ height: 204, left: 0, top: 136, width: 272 }));
 	}

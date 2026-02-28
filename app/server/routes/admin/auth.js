@@ -1,6 +1,6 @@
-import { compare } from "bcrypt-ts";
-import jwt from "jsonwebtoken";
-import { setCookie } from "#server/lib/cookies.js";
+import { compare } from 'bcrypt-ts';
+import jwt from 'jsonwebtoken';
+import { setCookie } from '#server/lib/cookies.js';
 
 const { AUTH_HASH, AUTH_LOGIN, AUTH_SECRET } = process.env;
 const maxAge = 86_400;
@@ -8,7 +8,7 @@ const maxAge = 86_400;
 export const authRoute = {
 	/** @type {RouteMethod} */
 	async GET({ authorized }) {
-		return authorized ? { redirect: "/admin" } : getView();
+		return authorized ? { redirect: '/admin' } : getView();
 	},
 
 	/** @type {RouteMethod} */
@@ -16,22 +16,22 @@ export const authRoute = {
 		const { login, password } = /** @type {{ login: string; password: string; }} */ (body);
 
 		if (login !== AUTH_LOGIN) {
-			return getView("Неверный логин!");
+			return getView('Неверный логин!');
 		}
 
 		const compared = await compare(password, AUTH_HASH);
 		if (!compared) {
-			return getView("Неверный пароль!", login);
+			return getView('Неверный пароль!', login);
 		}
 
-		const authToken = jwt.sign({ authedUser: AUTH_LOGIN }, AUTH_SECRET, { expiresIn: "24h" });
-		setCookie(res, { maxAge, name: "authToken", value: authToken });
+		const authToken = jwt.sign({ authedUser: AUTH_LOGIN }, AUTH_SECRET, { expiresIn: '24h' });
+		setCookie(res, { maxAge, name: 'authToken', value: authToken });
 
-		return { redirect: "/admin" };
+		return { redirect: '/admin' };
 	},
 };
 
-function getView(error = "", login = "") {
+function getView(error = '', login = '') {
 	const template = /* html */ `
 		<form class="auth" action="/admin/auth" method="post">
 			<input
@@ -59,8 +59,8 @@ function getView(error = "", login = "") {
 
 			<button class="button" type="submit" data-component="submitter">Войти</button>
 
-			${error ? /* html */ `<p class="auth__error _error">${error}</p>` : ""}
+			${error ? /* html */ `<p class="auth__error _error">${error}</p>` : ''}
 		</form>
 	`;
-	return { page: { heading: "Авторизация", pageTemplate: template } };
+	return { page: { heading: 'Авторизация', pageTemplate: template } };
 }

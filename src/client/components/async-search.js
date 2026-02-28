@@ -1,7 +1,7 @@
-import { openModal } from "#client/components/modal.js";
-import { initSearchInput } from "#client/components/search-input.js";
-import { debounce } from "#client/lib/debounce.js";
-import { renderSearchInput } from "#common/templates/search-input.js";
+import { openModal } from '#client/components/modal.js';
+import { initSearchInput } from '#client/components/search-input.js';
+import { debounce } from '#client/lib/debounce.js';
+import { renderSearchInput } from '#common/templates/search-input.js';
 
 /** @type {HTMLDivElement | null} */
 let asyncSearchElement = null;
@@ -10,26 +10,26 @@ let asyncSearchElement = null;
 let resultElement = null;
 
 function createElements() {
-	asyncSearchElement = document.createElement("div");
-	asyncSearchElement.classList.add("async-search");
-	asyncSearchElement.innerHTML = renderSearchInput("", true);
-	asyncSearchElement.addEventListener("clear-search", onClear);
+	asyncSearchElement = document.createElement('div');
+	asyncSearchElement.classList.add('async-search');
+	asyncSearchElement.innerHTML = renderSearchInput('', true);
+	asyncSearchElement.addEventListener('clear-search', onClear);
 
 	const searchInputElement = /** @type {HTMLInputElement} */ (
 		asyncSearchElement.querySelector(`[data-component="searchInput"]`)
 	);
 	initSearchInput(searchInputElement);
-	searchInputElement.querySelector("input")?.addEventListener("input", onInput);
+	searchInputElement.querySelector('input')?.addEventListener('input', onInput);
 
-	resultElement = document.createElement("div");
-	resultElement.classList.add("async-search__result");
+	resultElement = document.createElement('div');
+	resultElement.classList.add('async-search__result');
 
 	asyncSearchElement.append(resultElement);
 }
 
 function onClear() {
 	if (resultElement) {
-		resultElement.innerHTML = "";
+		resultElement.innerHTML = '';
 	}
 }
 
@@ -48,7 +48,7 @@ const onInput = debounce(
 
 /** @type {(openElement: HTMLElement) => void} */
 export function initAsyncSearch(openerElement) {
-	openerElement.addEventListener("click", (event) => {
+	openerElement.addEventListener('click', (event) => {
 		if (event.ctrlKey) {
 			return;
 		}
@@ -59,7 +59,7 @@ export function initAsyncSearch(openerElement) {
 		}
 		if (asyncSearchElement) {
 			openModal(asyncSearchElement, true);
-			asyncSearchElement.querySelector("input")?.focus();
+			asyncSearchElement.querySelector('input')?.focus();
 		}
 	});
 }

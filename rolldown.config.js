@@ -1,6 +1,6 @@
-import { defineConfig } from "rolldown";
-import { log } from "#common/lib/log.js";
-import { minifyHtml } from "#server/lib/minify-html.js";
+import { defineConfig } from 'rolldown';
+import { log } from '#common/lib/log.js';
+import { minifyHtml } from '#server/lib/minify-html.js';
 
 /**
  * Функция для минификации HTML в шаблонных литералах
@@ -8,7 +8,7 @@ import { minifyHtml } from "#server/lib/minify-html.js";
  */
 function minifyHtmlLiterals() {
 	return {
-		name: "minify-html-literals",
+		name: 'minify-html-literals',
 
 		async transform(code, id) {
 			const htmlTemplateRegex = /\/\*\s*html\s*\*\/\s*`([\s\S]*?)`/g;
@@ -38,23 +38,23 @@ function minifyHtmlLiterals() {
 }
 
 export default defineConfig(
-	process.env.npm_lifecycle_event === "build:vendors"
-		? ["petite-vue", "tinymce"].map((entryName) =>
+	process.env.npm_lifecycle_event === 'build:vendors'
+		? ['petite-vue', 'tinymce'].map((entryName) =>
 				defineConfig({
 					input: `src/client/vendors/${entryName}.js`,
 					output: {
 						file: `public/vendors/${entryName}.js`,
-						format: "iife",
+						format: 'iife',
 						minify: true,
 					},
 				}),
 			)
-		: ["admin", "comments", "main"].map((entryName) =>
+		: ['admin', 'comments', 'main'].map((entryName) =>
 				defineConfig({
 					input: `src/client/entries/${entryName}.js`,
 					output: {
 						file: `public/bundles/${entryName}.js`,
-						format: "iife",
+						format: 'iife',
 						minify: true,
 					},
 					plugins: [minifyHtmlLiterals()],

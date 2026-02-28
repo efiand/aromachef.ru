@@ -1,7 +1,7 @@
-import { renderCommentForm } from "#common/templates/comment-form.js";
-import { getDbError, processDb } from "#server/lib/db.js";
-import { resetPageCache } from "#server/lib/pages-cache.js";
-import { prepareAndMinifyHtml, prepareText } from "#server/lib/prepare-text.js";
+import { renderCommentForm } from '#common/templates/comment-form.js';
+import { getDbError, processDb } from '#server/lib/db.js';
+import { resetPageCache } from '#server/lib/pages-cache.js';
+import { prepareAndMinifyHtml, prepareText } from '#server/lib/prepare-text.js';
 
 const COMMENT_QUERY = /* sql */ `
 	SELECT name, text, answer, c.published, recipeId, r.title as recipeTitle
@@ -32,16 +32,16 @@ export const commentIdAdminRoute = {
 	/** @type {RouteMethod} */
 	async POST({ body, id }) {
 		const { action, answer, name, published, recipeId, recipeTitle, text } = /** @type {RecipeCommentInForm} */ (body);
-		let error = "";
+		let error = '';
 
-		const preparedName = name ? prepareText(name) : "Гость";
+		const preparedName = name ? prepareText(name) : 'Гость';
 		const preparedText = await prepareAndMinifyHtml(text);
 		const preparedAnswer = answer ? await prepareAndMinifyHtml(answer) : null;
 
-		if (action === "delete") {
+		if (action === 'delete') {
 			try {
 				await processDb(DELETE_COMMENT_QUERY, id);
-				resetPageCache("/comments/");
+				resetPageCache('/comments/');
 			} catch (deletingError) {
 				error = /* html */ `<b>Ошибка удаления комментария:</b> ${getDbError(deletingError)}`;
 			}
@@ -50,7 +50,7 @@ export const commentIdAdminRoute = {
 				const payload = [preparedName, preparedText, preparedAnswer, published ? 1 : 0, id];
 				await processDb(UPDATE_COMMENT_QUERY, payload);
 				if (published) {
-					resetPageCache("/comments/");
+					resetPageCache('/comments/');
 				}
 			} catch (updatingError) {
 				error = /* html */ `<b>Ошибка изменения комментария:</b> ${getDbError(updatingError)}`;
@@ -69,10 +69,10 @@ export const commentIdAdminRoute = {
 };
 
 /** @type {(data: RecipeCommentInForm, error?: string) => RouteData} */
-function getView(data, error = "") {
+function getView(data, error = '') {
 	return {
 		page: {
-			heading: "Редактировать комментарий",
+			heading: 'Редактировать комментарий',
 			pageTemplate: renderCommentForm(data, error),
 		},
 	};

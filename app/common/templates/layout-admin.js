@@ -1,8 +1,8 @@
 /** @type {(data: LayoutData) => string} */
 export function renderLayoutAdmin({ heading, pageTemplate, pathname }) {
 	const menuTemplate =
-		pathname === "/admin/auth"
-			? ""
+		pathname === '/admin/auth'
+			? ''
 			: /* html */ `
 				<ul class="header__list">
 					<li class="header__item">
@@ -27,7 +27,7 @@ export function renderLayoutAdmin({ heading, pageTemplate, pathname }) {
 				</header>
 
 				<main class="layout__main _container">
-					${heading ? /* html */ `<h1>${heading}</h1>` : ""}
+					${heading ? /* html */ `<h1>${heading}</h1>` : ''}
 					${pageTemplate}
 				</main>
 			</div>

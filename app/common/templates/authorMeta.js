@@ -6,6 +6,6 @@ export function renderAuthorMeta(publishedAt = null) {
 			<link itemprop="url" href="https://aromachef.ru/about">
 		</div>
 		<link itemprop="author" href="https://aromachef.ru/#author">
-		${publishedAt ? /* html */ `<meta itemprop="datePublished" content="${publishedAt}">` : ""}
+		${publishedAt ? /* html */ `<meta itemprop="datePublished" content="${publishedAt}">` : ''}
 	`;
 }

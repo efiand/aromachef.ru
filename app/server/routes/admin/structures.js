@@ -1,7 +1,7 @@
-import { renderStructureForms } from "#common/templates/structure-forms.js";
-import { getDbError, processDb } from "#server/lib/db.js";
-import { processImage } from "#server/lib/image.js";
-import { prepareText } from "#server/lib/prepare-text.js";
+import { renderStructureForms } from '#common/templates/structure-forms.js';
+import { getDbError, processDb } from '#server/lib/db.js';
+import { processImage } from '#server/lib/image.js';
+import { prepareText } from '#server/lib/prepare-text.js';
 
 const CREATE_STRUCTURE_QUERY = /* sql */ `INSERT INTO structures (title) VALUES(?);`;
 const STRUCTURES_QUERY = /* sql */ `SELECT id, title FROM structures ORDER BY title;`;
@@ -37,7 +37,7 @@ export const structuresAdminRoute = {
 
 		if (image) {
 			try {
-				await processImage(image, `${newId}`, "structure");
+				await processImage(image, `${newId}`, 'structure');
 			} catch (imageError) {
 				errors.push(/* html */ `<b>Ошибка добавления изображения для раздела ${newId}:</b> ${imageError}`);
 			}
@@ -52,13 +52,13 @@ export const structuresAdminRoute = {
 };
 
 /** @type {(errors?: string[], title?: string) => Promise<RouteData>} */
-async function getView(errors = [], title = "") {
+async function getView(errors = [], title = '') {
 	/** @type {DbItem[]} */
 	const structures = await processDb(STRUCTURES_QUERY);
 
 	return {
 		page: {
-			heading: "Разделы",
+			heading: 'Разделы',
 			pageTemplate: renderStructureForms([{ id: 0, title }, ...structures], errors),
 		},
 	};

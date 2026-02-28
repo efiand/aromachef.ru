@@ -1,12 +1,12 @@
-import { dir } from "#client/constants.js";
-import { version } from "#common/constants.js";
+import { dir } from '#client/constants.js';
+import { version } from '#common/constants.js';
 
 /** @type {(name: string) => void} */
 export function loadCss(url) {
 	const href = `href="${url}"`;
 
 	if (!document.head.querySelector(`[${href}]`)) {
-		document.head.insertAdjacentHTML("beforeend", /* html */ `<link rel="stylesheet" ${href}>`);
+		document.head.insertAdjacentHTML('beforeend', /* html */ `<link rel="stylesheet" ${href}>`);
 	}
 }
 

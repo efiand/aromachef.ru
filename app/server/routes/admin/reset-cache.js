@@ -1,4 +1,4 @@
-import { resetPageCache } from "#server/lib/pages-cache.js";
+import { resetPageCache } from '#server/lib/pages-cache.js';
 
 export const resetCacheRoute = {
 	/** @type {RouteMethod} */
@@ -7,7 +7,7 @@ export const resetCacheRoute = {
 
 		return {
 			page: {
-				heading: "Очистка кэша",
+				heading: 'Очистка кэша',
 				pageTemplate: /* html */ `
 					<div class="operation-status">
 						<p>Очистка кэша успешно выполнена.</p>

@@ -1,4 +1,4 @@
-import { processDb } from "#server/lib/db.js";
+import { processDb } from '#server/lib/db.js';
 
 const query = /* sql */ `
 	SELECT CONCAT('/structure/', id) AS url FROM structures s
@@ -31,10 +31,10 @@ export const pagesApiRoute = {
 		/** @type {string[]} */
 		const pages = rawPages.map(({ url }) => url);
 
-		pages.push("/", "/structure");
+		pages.push('/', '/structure');
 
 		return {
-			contentType: "application/json",
+			contentType: 'application/json',
 			template: JSON.stringify(pages),
 		};
 	},

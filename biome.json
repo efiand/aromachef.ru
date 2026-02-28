@@ -18,6 +18,11 @@
 		"indentStyle": "tab",
 		"lineWidth": 120
 	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
 	"linter": {
 		"domains": { "project": "all" },
 		"enabled": true,

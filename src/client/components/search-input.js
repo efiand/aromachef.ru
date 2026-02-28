@@ -5,14 +5,14 @@ export function initSearchInput(element) {
 		return;
 	}
 
-	const buttonElement = /** @type {HTMLButtonElement} */ (element.querySelector("button"));
-	const inputElement = /** @type {HTMLInputElement} */ (element.querySelector("input"));
+	const buttonElement = /** @type {HTMLButtonElement} */ (element.querySelector('button'));
+	const inputElement = /** @type {HTMLInputElement} */ (element.querySelector('input'));
 
-	buttonElement.addEventListener("click", () => {
-		inputElement.value = "";
+	buttonElement.addEventListener('click', () => {
+		inputElement.value = '';
 		inputElement.focus();
-		buttonElement.dispatchEvent(new CustomEvent("clear-search", { bubbles: true }));
+		buttonElement.dispatchEvent(new CustomEvent('clear-search', { bubbles: true }));
 	});
 
-	element.dataset.ready = "";
+	element.dataset.ready = '';
 }

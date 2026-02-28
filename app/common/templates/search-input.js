@@ -1,7 +1,7 @@
-export function renderSearchInput(value = "", async = false) {
-	let label = "Введите запрос";
+export function renderSearchInput(value = '', async = false) {
+	let label = 'Введите запрос';
 	if (async) {
-		label += " (не менее 3-х букв)";
+		label += ' (не менее 3-х букв)';
 	}
 
 	return /* html */ `

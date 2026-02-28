@@ -1,6 +1,6 @@
-import { renderTagForms } from "#common/templates/tag-forms.js";
-import { getDbError, processDb } from "#server/lib/db.js";
-import { prepareText } from "#server/lib/prepare-text.js";
+import { renderTagForms } from '#common/templates/tag-forms.js';
+import { getDbError, processDb } from '#server/lib/db.js';
+import { prepareText } from '#server/lib/prepare-text.js';
 
 const CREATE_TAG_QUERY = /* sql */ `INSERT INTO tags (title) VALUES(?);`;
 const TAGS_QUERY = /* sql */ `SELECT id, title FROM tags ORDER BY title;`;
@@ -17,7 +17,7 @@ export const tagsAdminRoute = {
 		const { id, title } = /** @type {{ id: string; title: string }} */ (body);
 		const newId = parseInt(id, 10);
 		const payload = prepareText(title);
-		let error = "";
+		let error = '';
 
 		if (newId) {
 			try {
@@ -42,13 +42,13 @@ export const tagsAdminRoute = {
 };
 
 /** @type {(error?: string, title?: string) => Promise<RouteData>} */
-async function getView(error = "", title = "") {
+async function getView(error = '', title = '') {
 	/** @type {DbItem[]} */
 	const tags = await processDb(TAGS_QUERY);
 
 	return {
 		page: {
-			heading: "Теги",
+			heading: 'Теги',
 			pageTemplate: renderTagForms([{ id: 0, title }, ...tags], error),
 		},
 	};

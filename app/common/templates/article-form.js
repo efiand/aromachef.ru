@@ -1,6 +1,6 @@
-import { renderCheckers } from "#common/templates/checkers.js";
-import { renderFormErrors } from "#common/templates/form-errors.js";
-import { renderImagePicker } from "#common/templates/image-picker.js";
+import { renderCheckers } from '#common/templates/checkers.js';
+import { renderFormErrors } from '#common/templates/form-errors.js';
+import { renderImagePicker } from '#common/templates/image-picker.js';
 
 /** @type {(data: ArticleInAdmin, errors?: string[]) => string} */
 export function renderArticleForm(
@@ -11,7 +11,7 @@ export function renderArticleForm(
 
 	return /* html */ `
 		<form class="form" id="blog-form" method="post" enctype="multipart/form-data">
-			${errors.length ? /* html */ renderFormErrors(errors) : ""}
+			${errors.length ? /* html */ renderFormErrors(errors) : ''}
 
 			<div class="form__article article">
 				<div>
@@ -40,7 +40,7 @@ export function renderArticleForm(
 				</div>
 
 				<div class="article__image">
-					${renderImagePicker(id, "content", /* html */ `Изображение`, "blog")}
+					${renderImagePicker(id, 'content', /* html */ `Изображение`, 'blog')}
 				</div>
 			</div>
 
@@ -68,29 +68,29 @@ export function renderArticleForm(
 			</div>
 
 			<label class="form__checker checker">
-				<input name="published" type="checkbox" ${published ? "checked" : ""}>
+				<input name="published" type="checkbox" ${published ? 'checked' : ''}>
 				Опубликован
 			</label>
 
 			<div class="form__footer">
-				<button class="form__submit button" type="submit" data-component="submitter">${id ? "Сохранить" : "Добавить"}</button>
+				<button class="form__submit button" type="submit" data-component="submitter">${id ? 'Сохранить' : 'Добавить'}</button>
 				${
 					id
-						? /* html */ `<a href="/blog/${id}?preview" target="_blank">${published ? "Просмотр" : "Предварительный просмотр"}</a>`
-						: ""
+						? /* html */ `<a href="/blog/${id}?preview" target="_blank">${published ? 'Просмотр' : 'Предварительный просмотр'}</a>`
+						: ''
 				}
 			</div>
 
 			<div hidden data-component="checkers" data-checkers="recipes">
 				<div>
 					<h2 class="form__subtitle">Связанные рецепты:</h2>
-					${renderCheckers({ checkedIds: recipeIds, items: recipes, name: "recipeIds[]" })}
+					${renderCheckers({ checkedIds: recipeIds, items: recipes, name: 'recipeIds[]' })}
 				</div>
 			</div>
 			<div hidden data-component="checkers" data-checkers="articles">
 				<div>
 					<h2 class="form__subtitle">Связанные статьи:</h2>
-					${renderCheckers({ checkedIds: relatedIds, items: articles.filter((article) => article.id !== id), name: "relatedIds[]" })}
+					${renderCheckers({ checkedIds: relatedIds, items: articles.filter((article) => article.id !== id), name: 'relatedIds[]' })}
 				</div>
 			</div>
 

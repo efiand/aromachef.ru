@@ -6,7 +6,7 @@ export function renderChecker({ checked = false, item: { id, title }, name }) {
 				name="${name}"
 				value="${id}"
 				type="checkbox"
-				${checked ? "checked" : ""}
+				${checked ? 'checked' : ''}
 			>
 			${title}
 		</label>

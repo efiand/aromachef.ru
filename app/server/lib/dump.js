@@ -1,43 +1,43 @@
-import { processDb } from "#server/lib/db.js";
-import { upload } from "#server/lib/yandex-disk.js";
+import { processDb } from '#server/lib/db.js';
+import { upload } from '#server/lib/yandex-disk.js';
 
 /** @type {DbTable[]} */
 const SQL_TABLES = [
-	"structures",
-	"tags",
-	"recipes",
-	"recipesTags",
-	"recipesRecipes",
-	"comments",
-	"articles",
-	"articlesArticles",
-	"articlesRecipes",
-	"staticPages",
+	'structures',
+	'tags',
+	'recipes',
+	'recipesTags',
+	'recipesRecipes',
+	'comments',
+	'articles',
+	'articlesArticles',
+	'articlesRecipes',
+	'staticPages',
 ];
 
 /** @type {DbTable[]} */
 const SQL_TABLES_FOR_DELETING = [
-	"articlesArticles",
-	"articlesRecipes",
-	"articles",
-	"comments",
-	"recipesRecipes",
-	"recipesTags",
-	"tags",
-	"recipes",
-	"structures",
-	"staticPages",
+	'articlesArticles',
+	'articlesRecipes',
+	'articles',
+	'comments',
+	'recipesRecipes',
+	'recipesTags',
+	'tags',
+	'recipes',
+	'structures',
+	'staticPages',
 ];
 
-const SQL_PREPEND = SQL_TABLES_FOR_DELETING.map((table) => /* sql */ `DELETE FROM ${table};\n`).join("");
+const SQL_PREPEND = SQL_TABLES_FOR_DELETING.map((table) => /* sql */ `DELETE FROM ${table};\n`).join('');
 
 /** @type {(tableName: DbTable, rows: object[]) => string} */
 function createEntityDump(tableName, rows) {
 	if (!rows.length) {
-		return "";
+		return '';
 	}
-	const values = rows.map((row) => Object.values(row).map(stringifyCell).join(", ")).join("),\n(");
-	const columns = Object.keys(rows[0]).join(", ");
+	const values = rows.map((row) => Object.values(row).map(stringifyCell).join(', ')).join('),\n(');
+	const columns = Object.keys(rows[0]).join(', ');
 
 	return /* sql */ `INSERT INTO ${tableName} (${columns}) VALUES\n(${values});`;
 }
@@ -57,7 +57,7 @@ export async function dump() {
 
 	await Promise.all([
 		upload(`${filename}.json`, JSON.stringify(dataJson)),
-		upload(`${filename}.sql`, `${SQL_PREPEND}\n${dumpedEntities.join("\n\n")}`),
+		upload(`${filename}.sql`, `${SQL_PREPEND}\n${dumpedEntities.join('\n\n')}`),
 	]);
 }
 
@@ -67,18 +67,18 @@ export async function dump() {
  */
 function stringifyCell(value) {
 	if (value === null) {
-		return "null";
+		return 'null';
 	}
 
-	if (typeof value === "string") {
+	if (typeof value === 'string') {
 		// Особенности одинарных кавычек в SQL
-		const safeValue = value.trim().replace(/(?<apos>')/gu, "$<apos>$<apos>");
+		const safeValue = value.trim().replace(/(?<apos>')/gu, '$<apos>$<apos>');
 
 		return `'${safeValue}'`;
 	}
 
 	if (value instanceof Date) {
-		const data = value.toISOString().replace("T", " ").slice(0, -1);
+		const data = value.toISOString().replace('T', ' ').slice(0, -1);
 
 		return `'${data}'`;
 	}

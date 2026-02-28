@@ -3,7 +3,7 @@ function renderOptionFromDbItem({ id, title }, selectedValues) {
 	return /* html */ `
 		<option
 			value="${id}"
-			${selectedValues?.includes(id) ? "selected" : ""}
+			${selectedValues?.includes(id) ? 'selected' : ''}
 		>
 			${title}
 		</option>
@@ -26,22 +26,22 @@ export function renderSelect({
 			${
 				label
 					? /* html */ `
-						<label ${required ? 'class="_required"' : ""} for="${name}">
+						<label ${required ? 'class="_required"' : ''} for="${name}">
 							${label}
 						</label>
 					`
-					: ""
+					: ''
 			}
 			<div class="select">
 				<select
 					id="${name}"
 					name="${name}"
-					${endpoint ? `data-component="selectMenu" data-endpoint="${endpoint}"` : ""}
-					${required ? "required" : ""}
+					${endpoint ? `data-component="selectMenu" data-endpoint="${endpoint}"` : ''}
+					${required ? 'required' : ''}
 				>
-					${isEmptySupport ? /* html */ `<option value="" hidden></option>` : ""}
-					${isAddingSupport ? /* html */ `<option value="0">ДОБАВИТЬ</option>` : ""}
-					${options.map((item) => renderOptionFromDbItem(item, selectedValues)).join("")}
+					${isEmptySupport ? /* html */ `<option value="" hidden></option>` : ''}
+					${isAddingSupport ? /* html */ `<option value="0">ДОБАВИТЬ</option>` : ''}
+					${options.map((item) => renderOptionFromDbItem(item, selectedValues)).join('')}
 				</select>
 			</div>
 		</div>

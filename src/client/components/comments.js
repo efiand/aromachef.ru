@@ -1,7 +1,7 @@
-import { initShare } from "#client/components/share.js";
-import { hydrate } from "#client/lib/hydrate.js";
+import { initShare } from '#client/components/share.js';
+import { hydrate } from '#client/lib/hydrate.js';
 
-const endpoint = location.pathname.replace("/recipe/", "/comments/");
+const endpoint = location.pathname.replace('/recipe/', '/comments/');
 
 const data = {
 	/** @type {RecipeComment[]} */
@@ -17,9 +17,9 @@ const data = {
 	hasError: false,
 	mounted() {
 		setInterval(this.fetchComments, 180_000);
-		initShare("comments");
+		initShare('comments');
 	},
-	name: "",
+	name: '',
 	/** @type {(event: SubmitEvent) => Promise<void>} */
 	async onSubmit(event) {
 		event.preventDefault();
@@ -28,10 +28,10 @@ const data = {
 		this.posting = true;
 
 		const body = new FormData();
-		body.append("name", this.name);
-		body.append("text", this.text);
+		body.append('name', this.name);
+		body.append('text', this.text);
 
-		const res = await fetch(endpoint, { body, method: "POST" });
+		const res = await fetch(endpoint, { body, method: 'POST' });
 
 		if (res.ok) {
 			this.successText = await res.text();
@@ -41,13 +41,13 @@ const data = {
 		this.posting = false;
 	},
 	onSuccess() {
-		this.successText = "";
-		this.text = "";
+		this.successText = '';
+		this.text = '';
 	},
 	opened: false,
 	posting: false,
-	successText: "",
-	text: "",
+	successText: '',
+	text: '',
 };
 
 const TEMPLATE = /* html */ `

@@ -1,4 +1,4 @@
-import { dump } from "#server/lib/dump.js";
+import { dump } from '#server/lib/dump.js';
 
 export const dumpRoute = {
 	/** @type {RouteMethod} */
@@ -7,7 +7,7 @@ export const dumpRoute = {
 
 		return {
 			page: {
-				heading: "Резервное копирование",
+				heading: 'Резервное копирование',
 				pageTemplate: /* html */ `
 					<div class="operation-status">
 						<p>Резервное копирование успешно выполнено.</p>

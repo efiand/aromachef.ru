@@ -1,4 +1,4 @@
-import { YANDEX_METRIKA_ID } from "#common/constants.js";
+import { YANDEX_METRIKA_ID } from '#common/constants.js';
 
 window.__metrikaHitsQueue = [];
 
@@ -10,16 +10,16 @@ window.__metrikaHitsQueue = [];
  * @returns {void}
  */
 export function trackPageView(url, title) {
-	if (typeof window === "undefined") {
+	if (typeof window === 'undefined') {
 		return;
 	}
 
-	if (typeof window.ym !== "function") {
+	if (typeof window.ym !== 'function') {
 		window.__metrikaHitsQueue?.push({ title, url });
 		return;
 	}
 
-	window.ym(YANDEX_METRIKA_ID, "hit", url, {
+	window.ym(YANDEX_METRIKA_ID, 'hit', url, {
 		referer: document.referrer,
 		title,
 	});

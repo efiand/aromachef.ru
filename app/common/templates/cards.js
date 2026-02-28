@@ -1,7 +1,7 @@
-import { renderImage } from "#common/templates/image.js";
+import { renderImage } from '#common/templates/image.js';
 
 /** @type {(data: DbItem & CardAdditionals) => string} */
-function renderCard({ alt = "", id, isAmp, route, title }) {
+function renderCard({ alt = '', id, isAmp, route, title }) {
 	const url = `${route}/${id}`;
 	const imageAlias = `/pictures${url}`;
 
@@ -9,7 +9,7 @@ function renderCard({ alt = "", id, isAmp, route, title }) {
 		<li class="cards__item">
 			<a href="${url}">
 				${renderImage({
-					alt: alt.replace("[title]", `«${title}»`),
+					alt: alt.replace('[title]', `«${title}»`),
 					height: 204,
 					imageAlias,
 					isAmp,
@@ -26,13 +26,13 @@ function renderCard({ alt = "", id, isAmp, route, title }) {
  * @type {(data?: CardsData) => string}
  */
 export function renderCards({
-	alt = "На фото изображено готовое блюдо [title] в миниатюре.",
+	alt = 'На фото изображено готовое блюдо [title] в миниатюре.',
 	cards = [],
-	className = "",
+	className = '',
 	isAmp,
-	route = "/recipe",
+	route = '/recipe',
 } = {}) {
-	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, isAmp, route })).join("");
+	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, isAmp, route })).join('');
 
 	return /* html */ `<ul class="cards ${className}">${cardsTemplate}</ul>`;
 }

@@ -1,5 +1,5 @@
-import { renderPageSection } from "#common/templates/page-section.js";
-import { processDb } from "#server/lib/db.js";
+import { renderPageSection } from '#common/templates/page-section.js';
+import { processDb } from '#server/lib/db.js';
 
 const sqlQuery = /* sql */ `
 	SELECT content, description, title AS heading FROM staticPages WHERE pathname = ?;
@@ -9,7 +9,7 @@ export const importantRoute = {
 	/** @type {RouteMethod} */
 	async GET({ isAmp }) {
 		/** @type {StaticPageData[]} */
-		const [{ content, description, heading }] = await processDb(sqlQuery, "/important");
+		const [{ content, description, heading }] = await processDb(sqlQuery, '/important');
 
 		return {
 			page: {
@@ -19,7 +19,7 @@ export const importantRoute = {
 					articles: [
 						{
 							content,
-							imageAlias: "/images/important",
+							imageAlias: '/images/important',
 							isAmp,
 						},
 					],

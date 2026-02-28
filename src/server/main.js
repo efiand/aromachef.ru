@@ -1,12 +1,12 @@
-import { createReadStream } from "node:fs";
-import { access } from "node:fs/promises";
-import path from "node:path";
-import { STATIC_MIME_TYPES, staticExtensions } from "#common/constants.js";
-import { log } from "#common/lib/log.js";
-import { cwd, host, isDev } from "#server/constants.js";
-import { createApp } from "#server/lib/app.js";
+import { createReadStream } from 'node:fs';
+import { access } from 'node:fs/promises';
+import path from 'node:path';
+import { STATIC_MIME_TYPES, staticExtensions } from '#common/constants.js';
+import { log } from '#common/lib/log.js';
+import { cwd, host, isDev } from '#server/constants.js';
+import { createApp } from '#server/lib/app.js';
 
-let sseData = "reload";
+let sseData = 'reload';
 
 /**
  * Server Sent Events
@@ -14,39 +14,39 @@ let sseData = "reload";
  */
 function sendReload(res) {
 	res.writeHead(200, {
-		"Cache-Control": "no-cache",
-		Connection: "keep-alive",
-		"Content-Type": "text/event-stream",
+		'Cache-Control': 'no-cache',
+		Connection: 'keep-alive',
+		'Content-Type': 'text/event-stream',
 	});
 	res.write(`retry: 33\ndata: ${sseData}\nid: ${Date.now()}\n\n`);
-	sseData = "";
+	sseData = '';
 }
 
 /** @type {(pathname: string) => string} */
 function getStaticDir(pathname) {
 	if (isDev) {
 		if (/^\/client\/.*\.(css|js|svg)$/.test(pathname)) {
-			return "./src";
+			return './src';
 		}
 
 		if (/^\/common|components\/.*\.js$/.test(pathname)) {
-			return "./app";
+			return './app';
 		}
 	}
 
-	return "./public";
+	return './public';
 }
 
 createApp(async (req, res, next) => {
-	if (isDev && req.url === "/dev/watch") {
+	if (isDev && req.url === '/dev/watch') {
 		sendReload(res);
 		return;
 	}
 
 	const { pathname } = new URL(`${host}${req.url}`);
-	if (pathname.includes(".well-known/appspecific/com.chrome.devtools.json")) {
-		res.setHeader("Content-Type", "application/json");
-		res.end("{}");
+	if (pathname.includes('.well-known/appspecific/com.chrome.devtools.json')) {
+		res.setHeader('Content-Type', 'application/json');
+		res.end('{}');
 		return;
 	}
 
@@ -56,18 +56,18 @@ createApp(async (req, res, next) => {
 		return;
 	}
 
-	if (pathname.includes("/pictures")) {
+	if (pathname.includes('/pictures')) {
 		try {
 			const filePath = path.join(cwd, pathname);
 			try {
 				await access(filePath);
-				res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
+				res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
 				createReadStream(filePath).pipe(res);
 			} catch {
 				const pictureRes = await fetch(`https://aromachef.ru${pathname}`);
 				if (pictureRes.ok) {
 					const arrayBuffer = await pictureRes.arrayBuffer();
-					res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
+					res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
 					res.end(Buffer.from(arrayBuffer));
 				}
 			}
@@ -81,7 +81,7 @@ createApp(async (req, res, next) => {
 	try {
 		const filePath = path.join(cwd, getStaticDir(pathname), pathname);
 		await access(filePath);
-		res.writeHead(200, { "Content-Type": STATIC_MIME_TYPES[ext] });
+		res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
 		createReadStream(filePath).pipe(res);
 	} catch (error) {
 		log.error(error);

@@ -2,7 +2,7 @@
 function renderStructureItem({ current, id, title }) {
 	return /* html */ `
 		<li class="structures__item">
-			<a class="structures__link" href="/structure/${id}" ${current ? 'aria-current="page"' : ""}>
+			<a class="structures__link" href="/structure/${id}" ${current ? 'aria-current="page"' : ''}>
 				${title}
 			</a>
 		</li>
@@ -13,10 +13,10 @@ function renderStructureItem({ current, id, title }) {
  * Генерирует HTML-шаблон списка тегов
  * @type {(data: { className?: string; structures: DbItem[] }) => string}
  */
-export function renderStructures({ className = "", structures }) {
+export function renderStructures({ className = '', structures }) {
 	return /* html */ `
 		<ul class="structures ${className}">
-			${structures.map(renderStructureItem).join("")}
+			${structures.map(renderStructureItem).join('')}
 		</ul>
 	`;
 }

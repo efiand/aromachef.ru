@@ -1,8 +1,8 @@
-import { access, mkdir, writeFile } from "node:fs/promises";
-import { STATIC_PAGES } from "#common/constants.js";
-import { host } from "#server/constants.js";
-import { closeApp, createApp } from "#server/lib/app.js";
-import { minifyHtml } from "#server/lib/minify-html.js";
+import { access, mkdir, writeFile } from 'node:fs/promises';
+import { STATIC_PAGES } from '#common/constants.js';
+import { host } from '#server/constants.js';
+import { closeApp, createApp } from '#server/lib/app.js';
+import { minifyHtml } from '#server/lib/minify-html.js';
 
 const server = createApp();
 let completedPages = 0;
@@ -11,7 +11,7 @@ try {
 	await Promise.all(
 		STATIC_PAGES.map(async (url) => {
 			const markup = await fetch(`${host}${url}`).then((res) => res.text());
-			const dir = `./${url.startsWith("/__") ? "app" : "public"}${url}`;
+			const dir = `./${url.startsWith('/__') ? 'app' : 'public'}${url}`;
 
 			try {
 				await access(dir);

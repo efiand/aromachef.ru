@@ -6,9 +6,9 @@ export function getCookies(req) {
 	}
 
 	return Object.fromEntries(
-		cookieHeader.split("; ").map((item) => {
-			const [name, ...rest] = item.split("=");
-			return [name, rest.join("=")];
+		cookieHeader.split('; ').map((item) => {
+			const [name, ...rest] = item.split('=');
+			return [name, rest.join('=')];
 		}),
 	);
 }
@@ -16,7 +16,7 @@ export function getCookies(req) {
 /** @type {(res: RouteResponse, body: CookieBody) => void} */
 export function setCookie(
 	res,
-	{ domain, expires, httpOnly = true, maxAge, name, path = "/", sameSite = "Strict", secure = true, value },
+	{ domain, expires, httpOnly = true, maxAge, name, path = '/', sameSite = 'Strict', secure = true, value },
 ) {
 	const parts = [`${name}=${value}`];
 
@@ -42,18 +42,18 @@ export function setCookie(
 		parts.push(`SameSite=${sameSite}`);
 	}
 
-	const cookieString = parts.join("; ");
+	const cookieString = parts.join('; ');
 
 	// Поддержка нескольких Set-Cookie
-	const existing = /** @type {number | string | readonly string[]}*/ (res.getHeader("Set-Cookie"));
+	const existing = /** @type {number | string | readonly string[]}*/ (res.getHeader('Set-Cookie'));
 	if (existing) {
-		res.setHeader("Set-Cookie", Array.isArray(existing) ? [...existing, cookieString] : [existing, cookieString]);
+		res.setHeader('Set-Cookie', Array.isArray(existing) ? [...existing, cookieString] : [existing, cookieString]);
 	} else {
-		res.setHeader("Set-Cookie", cookieString);
+		res.setHeader('Set-Cookie', cookieString);
 	}
 }
 
 /** @type {(res: RouteResponse, name: string, path?: string) => void} */
-export function deleteCookie(res, name, path = "/") {
-	setCookie(res, { maxAge: 0, name, path, value: "" });
+export function deleteCookie(res, name, path = '/') {
+	setCookie(res, { maxAge: 0, name, path, value: '' });
 }

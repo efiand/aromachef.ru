@@ -1,4 +1,4 @@
-import { YANDEX_METRIKA_ID } from "#common/constants.js";
+import { YANDEX_METRIKA_ID } from '#common/constants.js';
 
 export const YANDEX_METRIKA_TEMPLATE = /* html */ `
 	<!-- Yandex.Metrika counter -->

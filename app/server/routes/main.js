@@ -1,11 +1,11 @@
-import { PROJECT_DESCRIPTION } from "#common/constants.js";
-import { renderCards } from "#common/templates/cards.js";
-import { renderPageSection } from "#common/templates/page-section.js";
-import { isDev } from "#server/constants.js";
-import { processDb } from "#server/lib/db.js";
+import { PROJECT_DESCRIPTION } from '#common/constants.js';
+import { renderCards } from '#common/templates/cards.js';
+import { renderPageSection } from '#common/templates/page-section.js';
+import { isDev } from '#server/constants.js';
+import { processDb } from '#server/lib/db.js';
 
 const recipesQuery = /* sql */ `
-	SELECT id, title FROM recipes ${isDev ? "" : /* sql */ `WHERE published = 1`} ORDER BY id DESC LIMIT 12;
+	SELECT id, title FROM recipes ${isDev ? '' : /* sql */ `WHERE published = 1`} ORDER BY id DESC LIMIT 12;
 `;
 
 const MAIN_FOOTER_TEMPLATE = /* html */ `
@@ -42,11 +42,11 @@ export const mainRoute = {
 					PREAMBLE_TEMPLATE +
 					renderPageSection({
 						footerTemplate: renderCards({
-							alt: "На фото изображено готовое блюдо [title] в миниатюре.",
+							alt: 'На фото изображено готовое блюдо [title] в миниатюре.',
 							cards,
 							isAmp,
 						}),
-						title: "Новые рецепты с эфирными маслами",
+						title: 'Новые рецепты с эфирными маслами',
 					}) +
 					MAIN_FOOTER_TEMPLATE,
 			},

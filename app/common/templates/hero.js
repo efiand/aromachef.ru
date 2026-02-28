@@ -1,4 +1,4 @@
-import { PROJECT_TITLE } from "#common/constants.js";
+import { PROJECT_TITLE } from '#common/constants.js';
 
 export const HERO_TEMPLATE = /* html */ `
 	<div class="hero">

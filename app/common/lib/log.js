@@ -10,7 +10,7 @@ function executeLog(log, levelTitle, ...args) {
 	log(`${separator} [${levelTitle} | ${new Date().toISOString()}]`);
 
 	args.forEach((arg) => {
-		if ((levelTitle === "ERROR" || levelTitle === "WARN") && arg instanceof Error) {
+		if ((levelTitle === 'ERROR' || levelTitle === 'WARN') && arg instanceof Error) {
 			log(arg.stack || arg.message);
 		} else {
 			log(arg);
@@ -22,7 +22,7 @@ function executeLog(log, levelTitle, ...args) {
 
 /** @type {Record<LogLevel, (...args: unknown[]) => void>} */
 export const log = {
-	error: (...args) => executeLog(console.error, "ERROR", ...args),
-	info: (...args) => executeLog(console.info, "INFO", ...args),
-	warn: (...args) => executeLog(console.warn, "WARN", ...args),
+	error: (...args) => executeLog(console.error, 'ERROR', ...args),
+	info: (...args) => executeLog(console.info, 'INFO', ...args),
+	warn: (...args) => executeLog(console.warn, 'WARN', ...args),
 };

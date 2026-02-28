@@ -1,4 +1,4 @@
-import htmlMinifier from "html-minifier-terser";
+import htmlMinifier from 'html-minifier-terser';
 
 /** @type {import("html-minifier-terser").Options} */
 const MINIFIER_CONFIG = {

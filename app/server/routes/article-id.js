@@ -1,7 +1,7 @@
-import { renderArticleFooter } from "#common/templates/article-footer.js";
-import { renderPageSection } from "#common/templates/page-section.js";
-import { isDev } from "#server/constants.js";
-import { processDb } from "#server/lib/db.js";
+import { renderArticleFooter } from '#common/templates/article-footer.js';
+import { renderPageSection } from '#common/templates/page-section.js';
+import { isDev } from '#server/constants.js';
+import { processDb } from '#server/lib/db.js';
 
 const RECIPES_QUERY = /* sql */ `
 	SELECT r.id, r.title FROM recipes r JOIN articlesRecipes ar
@@ -21,7 +21,7 @@ const relatedArticlesQueryWithPublishedOnly = getRelatedArticlesQuery(/* sql */ 
 export const articleIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ authorized, id, isAmp, body }) {
-		const needUnpublished = isDev || (authorized && typeof body.preview !== "undefined");
+		const needUnpublished = isDev || (authorized && typeof body.preview !== 'undefined');
 
 		/** @type {[[{ length: number }], [Article], DbItem[], DbItem[]]} */
 		const [[{ length }], [article], relatedArticles, recipes] = await Promise.all([
@@ -32,7 +32,7 @@ export const articleIdRoute = {
 		]);
 
 		if (!article) {
-			throw new Error("Статья не существует.", { cause: 404 });
+			throw new Error('Статья не существует.', { cause: 404 });
 		}
 
 		const { content, description, title } = article;
@@ -44,7 +44,7 @@ export const articleIdRoute = {
 				heading: `${title} | Блог`,
 				ogImage: `${imageAlias}@2x.webp`,
 				pageTemplate: renderPageSection({
-					alt: "Изображение к статье",
+					alt: 'Изображение к статье',
 					content,
 					footerTemplate: renderArticleFooter({ isAmp, recipes, relatedArticles }),
 					imageAlias: `${imageAlias}-content`,
@@ -58,14 +58,14 @@ export const articleIdRoute = {
 	},
 };
 
-function getArticlesQuery(queryCondition = "") {
+function getArticlesQuery(queryCondition = '') {
 	return /* sql */ `
 		SELECT content, description, title FROM articles
 		WHERE id = ? ${queryCondition};
 	`;
 }
 
-function getRelatedArticlesQuery(queryCondition = "") {
+function getRelatedArticlesQuery(queryCondition = '') {
 	return /* sql */ `
 		SELECT a.id, a.title FROM articles a JOIN articlesArticles aa
 		WHERE aa.articleId = ? AND aa.relatedArticleId = a.id ${queryCondition}

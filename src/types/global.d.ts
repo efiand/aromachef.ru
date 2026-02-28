@@ -1,4 +1,4 @@
-import type { TinyMCE } from "tinymce";
+import type { TinyMCE } from 'tinymce';
 
 type MetrikaInitOptions = {
 	clickmap?: boolean;
@@ -13,8 +13,8 @@ type MetrikaHitOptions = {
 };
 
 type YandexMetrika = {
-	(counterId: number, method: "init", options: MetrikaInitOptions): void;
-	(counterId: number, method: "hit", url: string, options?: MetrikaHitOptions): void;
+	(counterId: number, method: 'init', options: MetrikaInitOptions): void;
+	(counterId: number, method: 'hit', url: string, options?: MetrikaHitOptions): void;
 	// fallback на любые другие команды, если появятся
 	(counterId: number, method: string, ...args: unknown[]): void;
 };

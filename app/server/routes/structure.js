@@ -1,8 +1,8 @@
-import { renderStructure } from "#common/templates/structure.js";
-import { isDev } from "#server/constants.js";
-import { processDb } from "#server/lib/db.js";
+import { renderStructure } from '#common/templates/structure.js';
+import { isDev } from '#server/constants.js';
+import { processDb } from '#server/lib/db.js';
 
-const queryCondition = isDev ? "" : /* sql */ `AND published = 1`;
+const queryCondition = isDev ? '' : /* sql */ `AND published = 1`;
 
 const QUERY = /* sql */ `
 	SELECT id, title, 0 AS tag FROM structures s
@@ -42,16 +42,16 @@ export const structureRoute = {
 
 		return {
 			page: {
-				description: "Интересующие Вас рецепты Вы можете найти в соответствующих разделах или воспользоваться тегами.",
-				heading: "Разделы и теги",
+				description: 'Интересующие Вас рецепты Вы можете найти в соответствующих разделах или воспользоваться тегами.',
+				heading: 'Разделы и теги',
 				pageTemplate: renderStructure({
-					alt: "На фото изображено готовое блюдо из раздела [title] в миниатюре.",
-					asideHeading: "Теги",
-					asideId: "tags",
+					alt: 'На фото изображено готовое блюдо из раздела [title] в миниатюре.',
+					asideHeading: 'Теги',
+					asideId: 'tags',
 					cards: structures,
-					heading: "Разделы",
+					heading: 'Разделы',
 					isAmp,
-					route: "/structure",
+					route: '/structure',
 					tags,
 				}),
 			},

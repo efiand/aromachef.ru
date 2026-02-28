@@ -1,7 +1,7 @@
 /** @type {Record<string, Set<string>>} */
 const allowedAttributes = {
-	a: new Set(["href", "target", "rel"]),
-	p: new Set(["class"]),
+	a: new Set(['href', 'target', 'rel']),
+	p: new Set(['class']),
 };
 
 /**
@@ -33,7 +33,7 @@ export function cleanChildren(childElement, allowedTags, allowedClassNames) {
 		}
 	}
 
-	if (tag === "p") {
+	if (tag === 'p') {
 		// Очистка class для p
 		for (const className of [...childElement.classList]) {
 			if (!allowedClassNames.has(className)) {
@@ -50,7 +50,7 @@ export function cleanChildren(childElement, allowedTags, allowedClassNames) {
  * @type {(html: string, allowedTags: Set<string>, allowedClassNames: Set<string>) => string}
  */
 export function sanitizeHTML(html, allowedTags, allowedClassNames) {
-	const wrapperElement = document.createElement("div");
+	const wrapperElement = document.createElement('div');
 	wrapperElement.innerHTML = html;
 
 	clean(wrapperElement, allowedTags, allowedClassNames);

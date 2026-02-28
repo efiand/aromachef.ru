@@ -1,6 +1,6 @@
 /** @type {(tag: DbItem) => string} */
 function renderTagForm({ id, title }) {
-	const label = id ? "Изменить" : "Добавить";
+	const label = id ? 'Изменить' : 'Добавить';
 
 	return /* html */ `
 		<li>
@@ -21,12 +21,12 @@ function renderTagForm({ id, title }) {
 }
 
 /** @type {(tags: DbItem[], error?: string) => string} */
-export function renderTagForms(tags, error = "") {
+export function renderTagForms(tags, error = '') {
 	return /* html */ `
 		<div class="tag-forms">
-			${error ? /* html */ `<p class="_error">${error}</p>` : ""}
+			${error ? /* html */ `<p class="_error">${error}</p>` : ''}
 			<ul class="tag-forms__list">
-				${tags.map(renderTagForm).join("")}
+				${tags.map(renderTagForm).join('')}
 			</ul>
 		</div>
 	`;

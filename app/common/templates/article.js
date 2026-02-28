@@ -1,28 +1,28 @@
-import { renderImage } from "#common/templates/image.js";
+import { renderImage } from '#common/templates/image.js';
 
 /** @type {(article: ArticleData) => string} */
 export function renderArticle({
-	alt = "",
-	content = "",
+	alt = '',
+	content = '',
 	imageAlias,
 	isAmp,
 	isSchemaSupport = false,
-	itemprop = "",
+	itemprop = '',
 	reverse = false,
-	title = "",
+	title = '',
 }) {
-	const modifier = reverse ? "article--reverse" : "";
+	const modifier = reverse ? 'article--reverse' : '';
 
 	return /* html */ `
-		<div class="article ${modifier}" ${itemprop ? `itemprop="${itemprop}"` : ""}>
+		<div class="article ${modifier}" ${itemprop ? `itemprop="${itemprop}"` : ''}>
 			<div class="content">
-				${title ? /* html */ `<h2>${title}</h2>` : ""}
+				${title ? /* html */ `<h2>${title}</h2>` : ''}
 				${content}
 			</div>
 
 			<div class="article__image">
 				${renderImage({
-					alt: alt.replace("[title]", `«${title}»`),
+					alt: alt.replace('[title]', `«${title}»`),
 					height: 672,
 					imageAlias,
 					isAmp,

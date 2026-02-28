@@ -1,7 +1,7 @@
 /** @type {Record<string, () => void>} */
 const closeByModalId = {};
 
-const layoutElement = /** @type {HTMLElement} */ (document.querySelector("[data-layout]"));
+const layoutElement = /** @type {HTMLElement} */ (document.querySelector('[data-layout]'));
 
 /** @type {HTMLElement | null} */
 let modalElement = null;
@@ -10,19 +10,19 @@ let modalElement = null;
 let innerElement = null;
 
 function close() {
-	modalElement?.classList.remove("modal--opened");
-	innerElement?.classList.remove("modal__inner--full-width");
+	modalElement?.classList.remove('modal--opened');
+	innerElement?.classList.remove('modal__inner--full-width');
 
 	if (innerElement?.lastElementChild) {
 		const {
-			dataset: { modalId = "" },
+			dataset: { modalId = '' },
 		} = /** @type {HTMLElement} */ (innerElement.lastElementChild);
 
 		innerElement.lastElementChild.remove();
 		closeByModalId[modalId]?.();
 	}
 
-	document.removeEventListener("keydown", onKeydown);
+	document.removeEventListener('keydown', onKeydown);
 	layoutElement.inert = false;
 }
 
@@ -31,22 +31,22 @@ function onModalClick({ target }) {
 	if (!(target instanceof HTMLElement)) {
 		return;
 	}
-	if (target.classList.contains("modal") || target.classList.contains("modal__close")) {
+	if (target.classList.contains('modal') || target.classList.contains('modal__close')) {
 		close();
 	}
 }
 
 function init() {
-	document.body.insertAdjacentHTML("beforeend", renderModal());
+	document.body.insertAdjacentHTML('beforeend', renderModal());
 
-	modalElement = /** @type {HTMLElement} */ (document.querySelector(".modal"));
-	innerElement = /** @type {HTMLElement} */ (modalElement?.querySelector(".modal__inner"));
-	modalElement.addEventListener("click", onModalClick);
+	modalElement = /** @type {HTMLElement} */ (document.querySelector('.modal'));
+	innerElement = /** @type {HTMLElement} */ (modalElement?.querySelector('.modal__inner'));
+	modalElement.addEventListener('click', onModalClick);
 }
 
 /** @param {KeyboardEvent} event */
 function onKeydown(event) {
-	if (event.key.startsWith("Esc")) {
+	if (event.key.startsWith('Esc')) {
 		event.preventDefault();
 		close();
 	}
@@ -58,7 +58,7 @@ export function openModal(element, fullWidth = false, onClose) {
 		init();
 	}
 
-	const { modalId = "" } = element.dataset;
+	const { modalId = '' } = element.dataset;
 	if (modalId && onClose && !closeByModalId[modalId]) {
 		closeByModalId[modalId] = onClose;
 	}
@@ -66,10 +66,10 @@ export function openModal(element, fullWidth = false, onClose) {
 	layoutElement.inert = true;
 	innerElement?.append(element);
 	if (fullWidth) {
-		innerElement?.classList.add("modal__inner--full-width");
+		innerElement?.classList.add('modal__inner--full-width');
 	}
-	document.addEventListener("keydown", onKeydown);
-	modalElement?.classList.add("modal--opened");
+	document.addEventListener('keydown', onKeydown);
+	modalElement?.classList.add('modal--opened');
 }
 
 function renderModal() {

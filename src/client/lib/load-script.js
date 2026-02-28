@@ -1,5 +1,5 @@
-import { dir } from "#client/constants.js";
-import { version } from "#common/constants.js";
+import { dir } from '#client/constants.js';
+import { version } from '#common/constants.js';
 
 /** @type {Map<string, Promise<HTMLScriptElement>>} */
 const cache = new Map();
@@ -9,7 +9,7 @@ const cache = new Map();
  * Возвращает Promise, который резолвится, когда скрипт готов.
  * @type {(src: string, options?: { async?: boolean; defer?: boolean; type?: string }) => Promise<HTMLScriptElement>}
  */
-export function loadScript(src, { async = true, defer = true, type = "" } = {}) {
+export function loadScript(src, { async = true, defer = true, type = '' } = {}) {
 	// Если уже загружали — вернуть тот же промис
 	if (cache.has(src)) {
 		const promise = cache.get(src);
@@ -19,14 +19,14 @@ export function loadScript(src, { async = true, defer = true, type = "" } = {}) 
 	}
 
 	const promise = new Promise((resolve, reject) => {
-		const element = document.createElement("script");
+		const element = document.createElement('script');
 
 		element.src = src;
 		element.async = async;
 		element.defer = defer;
 		if (type) {
 			element.type = type;
-			if (type === "module") {
+			if (type === 'module') {
 				element.defer = false;
 			}
 		}
@@ -46,7 +46,7 @@ export async function loadScriptEntry(entryName) {
 	const fileName = `${dir.JS}/${entryName}.js`;
 
 	if (window.isDev) {
-		return await loadScript(fileName, { type: "module" });
+		return await loadScript(fileName, { type: 'module' });
 	}
 	return await loadScript(`${fileName}?v${version.JS}`);
 }

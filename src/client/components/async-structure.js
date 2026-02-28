@@ -1,4 +1,4 @@
-import { trackPageView } from "#client/lib/yandex-metrika.js";
+import { trackPageView } from '#client/lib/yandex-metrika.js';
 
 /** @type {Record<string, string>} */
 const cache = {};
@@ -25,17 +25,17 @@ async function updateView(linkElement, linkElements, cardsElement, element) {
 	element.scrollIntoView();
 	document.title = document.title.replace(/^.*?(?=\s\|)/, textContent);
 	linkElements.forEach((itemElement) => {
-		itemElement.ariaCurrent = itemElement === linkElement ? "page" : null;
+		itemElement.ariaCurrent = itemElement === linkElement ? 'page' : null;
 	});
 }
 
 /** @type {ComponentInitiator} */
 export function initAsyncStructure(element) {
-	const cardsElement = /** @type {HTMLElement} */ (element.querySelector("[data-cards]"));
-	const linkElements = /** @type {NodeListOf<HTMLAnchorElement>}*/ (element.querySelectorAll("[data-aside] a"));
+	const cardsElement = /** @type {HTMLElement} */ (element.querySelector('[data-cards]'));
+	const linkElements = /** @type {NodeListOf<HTMLAnchorElement>}*/ (element.querySelectorAll('[data-aside] a'));
 
 	linkElements.forEach((linkElement, i) => {
-		linkElement.addEventListener("click", async (event) => {
+		linkElement.addEventListener('click', async (event) => {
 			if (event.ctrlKey) {
 				return;
 			}
@@ -45,12 +45,12 @@ export function initAsyncStructure(element) {
 			}
 
 			updateView(linkElement, linkElements, cardsElement, element);
-			window.history.pushState({ i, id: "structure" }, "", linkElement.href);
+			window.history.pushState({ i, id: 'structure' }, '', linkElement.href);
 			trackPageView(linkElement.href, document.title);
 		});
 	});
 
-	window.addEventListener("popstate", async (event) => {
+	window.addEventListener('popstate', async (event) => {
 		/** @type {{ i: number }} */
 		const { i = 0 } = event.state || {};
 

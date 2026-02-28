@@ -28,16 +28,16 @@ declare global {
 	};
 
 	type DbTable =
-		| "articles"
-		| "articlesArticles"
-		| "articlesRecipes"
-		| "comments"
-		| "recipes"
-		| "recipesRecipes"
-		| "recipesTags"
-		| "staticPages"
-		| "structures"
-		| "tags";
+		| 'articles'
+		| 'articlesArticles'
+		| 'articlesRecipes'
+		| 'comments'
+		| 'recipes'
+		| 'recipesRecipes'
+		| 'recipesTags'
+		| 'staticPages'
+		| 'structures'
+		| 'tags';
 
 	type PostedArticle = {
 		/** Сериализованные данные о предыдущих связях с рецептами и статьями и рецептами */
@@ -48,8 +48,8 @@ declare global {
 		description: string;
 		id: string;
 		published: string;
-		"recipeIds[]": string[];
-		"relatedIds[]": string[];
+		'recipeIds[]': string[];
+		'relatedIds[]': string[];
 		title: string;
 	};
 
@@ -70,9 +70,9 @@ declare global {
 		ingredientsExtra: string;
 		ingredientsImage?: string;
 		published: string;
-		"relatedIds[]": string[];
+		'relatedIds[]': string[];
 		structureId: string;
-		"tagIds[]": string[];
+		'tagIds[]': string[];
 		telegramId: string;
 		title: string;
 	};
@@ -101,14 +101,14 @@ declare global {
 		answer: string | null;
 	};
 
-	type RecipeCommentInForm = Omit<RecipeComment, "id"> & {
+	type RecipeCommentInForm = Omit<RecipeComment, 'id'> & {
 		action?: string;
 		published: boolean;
 		recipeId: number | string;
 		recipeTitle: string;
 	};
 
-	type RecipeInForm = Omit<Recipe, "structureTitle"> & { published: boolean };
+	type RecipeInForm = Omit<Recipe, 'structureTitle'> & { published: boolean };
 
 	type RecipeInAdmin = RecipeInForm & {
 		id: number;

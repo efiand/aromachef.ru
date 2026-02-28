@@ -1,5 +1,5 @@
 /** @type {(data: ImageParams) => string} */
-export function renderImage({ alt = "", className = "", imageAlias, isAmp, isSchemaSupport, height, width }) {
+export function renderImage({ alt = '', className = '', imageAlias, isAmp, isSchemaSupport, height, width }) {
 	const imageTemplate = /* html */ `
 		<img
 			class="image ${className}"
@@ -8,7 +8,7 @@ export function renderImage({ alt = "", className = "", imageAlias, isAmp, isSch
 			width="${width}"
 			height="${height}"
 			alt="${alt}"
-			${isSchemaSupport ? ' itemprop="image"' : ""}
+			${isSchemaSupport ? ' itemprop="image"' : ''}
 			loading="lazy"
 		>
 	`;

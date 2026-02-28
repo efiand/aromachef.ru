@@ -1,11 +1,11 @@
 /** @type {(data: RecipeCommentInForm, error?: string) => string} */
-export function renderCommentForm({ answer, name, published, recipeId, recipeTitle, text }, error = "") {
+export function renderCommentForm({ answer, name, published, recipeId, recipeTitle, text }, error = '') {
 	return /* html */ `
 		<form class="form" method="post">
 			<p>Рецепт: <a href="/recipe/${recipeId}" target="_blank">${recipeTitle}</a></p>
 			<p><a href="/admin/comments/${recipeId}">Список комментариев</a></p>
 
-			${error ? /* html */ `<p class="_error">${error}</p>` : ""}
+			${error ? /* html */ `<p class="_error">${error}</p>` : ''}
 
 			<div class="form__group form-group">
 				<label for="name">Имя</label>
@@ -38,11 +38,11 @@ export function renderCommentForm({ answer, name, published, recipeId, recipeTit
 					rows="5"
 					maxlength="3000"
 					data-component="editor"
-				>${answer || ""}</textarea>
+				>${answer || ''}</textarea>
 			</div>
 
 			<label class="form__checker checker">
-				<input name="published" type="checkbox" ${published ? "checked" : ""}>
+				<input name="published" type="checkbox" ${published ? 'checked' : ''}>
 				Опубликован
 			</label>
 

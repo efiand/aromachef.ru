@@ -1,5 +1,5 @@
-import { HERO_TEMPLATE } from "#common/templates/hero.js";
-import { YANDEX_METRIKA_TEMPLATE } from "#common/templates/yandex-metrika.js";
+import { HERO_TEMPLATE } from '#common/templates/hero.js';
+import { YANDEX_METRIKA_TEMPLATE } from '#common/templates/yandex-metrika.js';
 
 const SEARCH_TEMPLATE = /* html */ `
 	<li class="header__item">
@@ -19,10 +19,10 @@ function renderAboutTemplate(ampPrefix) {
 }
 
 /** @type {(pathname?: string) => string} */
-function renderAdminTemplate(pathname = "") {
+function renderAdminTemplate(pathname = '') {
 	const editTemplate = /^\/(recipe|blog)\/.+$/.test(pathname)
 		? /* html */ `<li class="footer__item"><a href="/admin${pathname}">Редактировать</a></li>`
-		: "";
+		: '';
 
 	return /* html */ `<li class="footer__item"><a href="/admin">Панель управления</a></li>${editTemplate}`;
 }
@@ -38,25 +38,25 @@ function renderImportantTemplate(ampPrefix) {
 
 /** @type {(data: LayoutData) => string} */
 function renderLayoutInner({ authorized, isAmp, pathname, pageTemplate }) {
-	const ampPrefix = isAmp ? "/amp" : "";
-	const isIndex = pathname === "/";
-	const ariaCurrentIndex = isIndex ? 'aria-current="page"' : "";
+	const ampPrefix = isAmp ? '/amp' : '';
+	const isIndex = pathname === '/';
+	const ariaCurrentIndex = isIndex ? 'aria-current="page"' : '';
 
 	return /* html */ `
 		<header class="header layout__header _container">
-			<a class="header__logo" href="${isAmp ? "/amp" : "/"}" aria-label="На главную" ${ariaCurrentIndex}>
+			<a class="header__logo" href="${isAmp ? '/amp' : '/'}" aria-label="На главную" ${ariaCurrentIndex}>
 				<img src="/images/aromachef-logo.svg?v2" width="30" height="30" alt="">
 			</a>
 			<ul class="header__list">
 				<li class="header__item">
 					<a class="header__structure" href="/structure">Разделы <span>и #теги</span></a>
 				</li>
-				${pathname === "/important" ? "" : renderImportantTemplate(ampPrefix)}
-				${pathname === "/search" ? "" : SEARCH_TEMPLATE}
+				${pathname === '/important' ? '' : renderImportantTemplate(ampPrefix)}
+				${pathname === '/search' ? '' : SEARCH_TEMPLATE}
 			</ul>
 		</header>
 
-		${isIndex ? HERO_TEMPLATE : ""}
+		${isIndex ? HERO_TEMPLATE : ''}
 
 		<main class="layout__main _container">${pageTemplate}</main>
 
@@ -65,8 +65,8 @@ function renderLayoutInner({ authorized, isAmp, pathname, pageTemplate }) {
 				<li class="footer__item">
 					<a class="footer__tg" href="https://t.me/aroma_chef" target="_blank">@aroma_chef</a>
 				</li>
-				${pathname === "/about" ? "" : renderAboutTemplate(ampPrefix)}
-				${authorized ? renderAdminTemplate(pathname) : ""}
+				${pathname === '/about' ? '' : renderAboutTemplate(ampPrefix)}
+				${authorized ? renderAdminTemplate(pathname) : ''}
 				<li class="footer__item footer__item--last">
 					<a href="https://efiand.ru" target="_blank" rel="nofollow">Разработано efiand</a>
 				</li>
@@ -76,10 +76,10 @@ function renderLayoutInner({ authorized, isAmp, pathname, pageTemplate }) {
 }
 
 /** @type {(data: LayoutData) => string} */
-export function renderLayout({ authorized, isAmp, isDev, pathname = "", pageTemplate }) {
+export function renderLayout({ authorized, isAmp, isDev, pathname = '', pageTemplate }) {
 	return /* html */ `
 		<body>
-			${isDev || isAmp || pathname.startsWith("/__") ? "" : YANDEX_METRIKA_TEMPLATE}
+			${isDev || isAmp || pathname.startsWith('/__') ? '' : YANDEX_METRIKA_TEMPLATE}
 			<div class="layout" data-layout>
 				${renderLayoutInner({ authorized, isAmp, pageTemplate, pathname })}
 			</div>

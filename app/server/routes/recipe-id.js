@@ -1,8 +1,8 @@
-import { renderPageSection } from "#common/templates/page-section.js";
-import { renderRecipeDescription } from "#common/templates/recipe-description.js";
-import { renderRecipeFooter } from "#common/templates/recipe-footer.js";
-import { isDev } from "#server/constants.js";
-import { processDb } from "#server/lib/db.js";
+import { renderPageSection } from '#common/templates/page-section.js';
+import { renderRecipeDescription } from '#common/templates/recipe-description.js';
+import { renderRecipeFooter } from '#common/templates/recipe-footer.js';
+import { isDev } from '#server/constants.js';
+import { processDb } from '#server/lib/db.js';
 
 const TAGS_QUERY = /* sql */ `
 	SELECT t.id, t.title FROM tags t JOIN recipesTags rt
@@ -22,7 +22,7 @@ const relatedRecipesQueryWithPublishedOnly = getRelatedRecipesQuery(/* sql */ `A
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
 	async GET({ authorized, id, isAmp, body }) {
-		const needUnpublished = isDev || (authorized && typeof body.preview !== "undefined");
+		const needUnpublished = isDev || (authorized && typeof body.preview !== 'undefined');
 
 		/** @type {[[{ length: number }], [Recipe], DbItem[], DbItem[]]} */
 		const [[{ length }], [recipe], relatedRecipes, tags] = await Promise.all([
@@ -33,7 +33,7 @@ export const recipeIdRoute = {
 		]);
 
 		if (!recipe) {
-			throw new Error("Рецепт не существует.", { cause: 404 });
+			throw new Error('Рецепт не существует.', { cause: 404 });
 		}
 
 		const {
@@ -51,12 +51,12 @@ export const recipeIdRoute = {
 
 		const ingredientsExtraTemplate = ingredientsExtra
 			? /* html */ `<p><strong>По желанию:</strong></p>${ingredientsExtra}`
-			: "";
+			: '';
 
 		return {
 			page: {
 				description: description
-					? description.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, "")
+					? description.replace(/<(\/?)([a-z]+)[^>]*(>|$)/gi, '')
 					: `Страница содержит описание рецепта «${title}».`,
 				heading: `${title} | Рецепты`,
 				ogImage: `${imageAlias}@2x.webp`,
@@ -73,7 +73,7 @@ export const recipeIdRoute = {
 							imageAlias: `${imageAlias}-cooking`,
 							isAmp,
 							isSchemaSupport: true,
-							itemprop: "recipeInstructions",
+							itemprop: 'recipeInstructions',
 						},
 					],
 					content: renderRecipeDescription({ description, telegramId }),
@@ -83,7 +83,7 @@ export const recipeIdRoute = {
 						structure: { id: structureId, title: structureTitle },
 						tags,
 					}),
-					itemtype: "Recipe",
+					itemtype: 'Recipe',
 					next: `/recipe/${id === length ? 1 : id + 1}`,
 					prev: `/recipe/${id === 1 ? length : id - 1}`,
 					publishedAt,
@@ -94,7 +94,7 @@ export const recipeIdRoute = {
 	},
 };
 
-function getRecipesQuery(queryCondition = "") {
+function getRecipesQuery(queryCondition = '') {
 	return /* sql */ `
 		SELECT cooking, description, ingredients, ingredientsExtra, publishedAt, structureId, telegramId, r.title,
 		s.title AS structureTitle FROM recipes r JOIN structures s
@@ -102,7 +102,7 @@ function getRecipesQuery(queryCondition = "") {
 	`;
 }
 
-function getRelatedRecipesQuery(queryCondition = "") {
+function getRelatedRecipesQuery(queryCondition = '') {
 	return /* sql */ `
 		SELECT r.id, r.title FROM recipes r JOIN recipesRecipes rr
 		WHERE rr.recipeId = ? AND rr.relatedRecipeId = r.id ${queryCondition}
@@ -110,6 +110,6 @@ function getRelatedRecipesQuery(queryCondition = "") {
 	`;
 }
 
-function getIngredientsTemplate(text = "") {
-	return text.replaceAll("<li", '<li itemprop="recipeIngredient"');
+function getIngredientsTemplate(text = '') {
+	return text.replaceAll('<li', '<li itemprop="recipeIngredient"');
 }

@@ -1,5 +1,5 @@
-import formidable from "formidable";
-import { BASE_URL } from "#common/constants.js";
+import formidable from 'formidable';
+import { BASE_URL } from '#common/constants.js';
 
 const FORMIDABLE_OPTIONS = {
 	allowEmptyFiles: true,
@@ -11,7 +11,7 @@ export async function getRequestBody(req) {
 	/** @type {ReqBody} */
 	const data = {};
 
-	if (req.method === "GET") {
+	if (req.method === 'GET') {
 		const { searchParams } = new URL(`${BASE_URL}${req.url}`);
 
 		searchParams.forEach((value, key) => {
@@ -38,12 +38,12 @@ export async function getRequestBody(req) {
 		});
 
 		if (items.length > 0) {
-			data[name] = items.length === 1 && !name.includes("[]") ? items[0] : items;
+			data[name] = items.length === 1 && !name.includes('[]') ? items[0] : items;
 		}
 	});
 
 	Object.entries(fields).forEach(([name, value]) => {
-		data[name] = Array.isArray(value) && value.length === 1 && !name.includes("[]") ? value[0] : value;
+		data[name] = Array.isArray(value) && value.length === 1 && !name.includes('[]') ? value[0] : value;
 	});
 
 	return data;

@@ -1,5 +1,5 @@
-import mysql from "mysql2/promise";
-import { log } from "#common/lib/log.js";
+import mysql from 'mysql2/promise';
+import { log } from '#common/lib/log.js';
 
 const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
 
@@ -22,7 +22,7 @@ export async function closeDbPool() {
 
 /** @type {(error: unknown) => string} */
 export function getDbError(error) {
-	const { sqlMessage = "" } = /** @type {{ sqlMessage?: string }} */ (error || {});
+	const { sqlMessage = '' } = /** @type {{ sqlMessage?: string }} */ (error || {});
 	return sqlMessage;
 }
 
@@ -39,7 +39,7 @@ function getPlaceholders(query, payload) {
 /** @type {(error: unknown, context: { query?: string, payload?: unknown }) => void} */
 function logDbError(error, context = {}) {
 	const err = /** @type {any} */ (error || {});
-	log.error("❌ [DB ERROR]", {
+	log.error('❌ [DB ERROR]', {
 		code: err.code,
 		errno: err.errno,
 		message: err.message,

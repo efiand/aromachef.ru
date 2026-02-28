@@ -1,16 +1,16 @@
-import { renderFormErrors } from "#common/templates/form-errors.js";
-import { renderImagePicker } from "#common/templates/image-picker.js";
+import { renderFormErrors } from '#common/templates/form-errors.js';
+import { renderImagePicker } from '#common/templates/image-picker.js';
 
 /** @type {(tag: DbItem) => string} */
 function renderStructureForm({ id, title }) {
-	const label = id ? "Изменить" : "Добавить";
+	const label = id ? 'Изменить' : 'Добавить';
 
 	return /* html */ `
 		<li>
 			<form class="structure-forms__form" method="post" enctype="multipart/form-data">
 				<input name="id" type="hidden" value='${id}'>
 
-				${renderImagePicker(id, "", "Изображение", "structure")}
+				${renderImagePicker(id, '', 'Изображение', 'structure')}
 
 				<input
 					name="title"
@@ -31,10 +31,10 @@ function renderStructureForm({ id, title }) {
 export function renderStructureForms(tags, errors = []) {
 	return /* html */ `
 		<div class="structure-forms">
-			${errors.length ? /* html */ renderFormErrors(errors) : ""}
+			${errors.length ? /* html */ renderFormErrors(errors) : ''}
 
 			<ul class="structure-forms__list">
-				${tags.map(renderStructureForm).join("")}
+				${tags.map(renderStructureForm).join('')}
 			</ul>
 		</div>
 	`;

@@ -1,8 +1,8 @@
-import { renderArticleForm } from "#common/templates/article-form.js";
-import { getDbError, processDb } from "#server/lib/db.js";
-import { processImage } from "#server/lib/image.js";
-import { resetPageCache } from "#server/lib/pages-cache.js";
-import { prepareAndMinifyHtml, prepareText } from "#server/lib/prepare-text.js";
+import { renderArticleForm } from '#common/templates/article-form.js';
+import { getDbError, processDb } from '#server/lib/db.js';
+import { processImage } from '#server/lib/image.js';
+import { resetPageCache } from '#server/lib/pages-cache.js';
+import { prepareAndMinifyHtml, prepareText } from '#server/lib/prepare-text.js';
 
 const CREATE_ARTICLE_QUERY = /* sql */ `
 	INSERT INTO articles (title, description, content, published)
@@ -31,7 +31,7 @@ export const articleIdAdminRoute = {
 	/** @type {RouteMethod} */
 	async GET({ id }) {
 		return getView({
-			articleData: id ? undefined : { content: "", description: "", published: false, title: "" },
+			articleData: id ? undefined : { content: '', description: '', published: false, title: '' },
 			id,
 		});
 	},
@@ -45,8 +45,8 @@ export const articleIdAdminRoute = {
 			id,
 			contentImage,
 			published,
-			"relatedIds[]": rawRelatedIds = [],
-			"recipeIds[]": rawTRecipeIds = [],
+			'relatedIds[]': rawRelatedIds = [],
+			'recipeIds[]': rawTRecipeIds = [],
 			title,
 		} = /** @type {PostedArticle} */ (body);
 		const errors = /** @type {string[]} */ ([]);
@@ -96,7 +96,7 @@ export const articleIdAdminRoute = {
 		if (creatingRelatedIds.length) {
 			try {
 				const rows = creatingRelatedIds.map((articleId) => [newId, articleId]);
-				const placeholders = rows.map(() => "(?, ?)").join(", ");
+				const placeholders = rows.map(() => '(?, ?)').join(', ');
 				await processDb(
 					/* sql */ `INSERT INTO articlesArticles (articleId, relatedArticleId) VALUES ${placeholders}`,
 					rows.flat(),
@@ -107,7 +107,7 @@ export const articleIdAdminRoute = {
 		}
 		if (deletingRelatedIds.length) {
 			try {
-				const placeholders = deletingRelatedIds.map(() => "?").join(", ");
+				const placeholders = deletingRelatedIds.map(() => '?').join(', ');
 				await processDb(
 					/* sql */ `DELETE FROM articlesArticles WHERE articleId = ? AND relatedArticleId IN (${placeholders})`,
 					[newId, ...deletingRelatedIds],
@@ -130,7 +130,7 @@ export const articleIdAdminRoute = {
 		if (creatingRecipeIds.length) {
 			try {
 				const rows = creatingRecipeIds.map((recipeId) => [newId, recipeId]);
-				const placeholders = rows.map(() => "(?, ?)").join(", ");
+				const placeholders = rows.map(() => '(?, ?)').join(', ');
 
 				await processDb(
 					/* sql */ `INSERT INTO articlesRecipes (articleId, recipeId) VALUES ${placeholders}`,
@@ -142,7 +142,7 @@ export const articleIdAdminRoute = {
 		}
 		if (deletingRecipeIds.length) {
 			try {
-				const placeholders = deletingRecipeIds.map(() => "?").join(", ");
+				const placeholders = deletingRecipeIds.map(() => '?').join(', ');
 				await processDb(/* sql */ `DELETE FROM articlesRecipes WHERE articleId = ? AND recipeId IN (${placeholders})`, [
 					newId,
 					...deletingRecipeIds,
@@ -154,7 +154,7 @@ export const articleIdAdminRoute = {
 
 		if (contentImage) {
 			try {
-				await processImage(contentImage, `${newId}-content`, "blog");
+				await processImage(contentImage, `${newId}-content`, 'blog');
 			} catch (error) {
 				errors.push(/* html */ `<b>Ошибка добавления изображения:</b> ${error}`);
 			}
@@ -176,7 +176,7 @@ export const articleIdAdminRoute = {
 		if (published) {
 			resetPageCache();
 		}
-		return { redirect: `/blog/${newId}${published ? "" : "?preview"}` };
+		return { redirect: `/blog/${newId}${published ? '' : '?preview'}` };
 	},
 };
 
@@ -193,7 +193,7 @@ async function getView({ errors = [], id, articleData }) {
 
 	return {
 		page: {
-			heading: id ? `Редактировать статью № ${id}` : "Добавить статью",
+			heading: id ? `Редактировать статью № ${id}` : 'Добавить статью',
 			pageTemplate: renderArticleForm(
 				{
 					...article,

@@ -1,5 +1,5 @@
 declare global {
-	import type { IncomingMessage, ServerResponse } from "node:http";
+	import type { IncomingMessage, ServerResponse } from 'node:http';
 
 	type CookieBody = {
 		name: string;
@@ -10,7 +10,7 @@ declare global {
 		path?: string;
 		httpOnly?: boolean;
 		secure?: boolean;
-		sameSite?: "Lax" | "None" | "Strict";
+		sameSite?: 'Lax' | 'None' | 'Strict';
 	};
 
 	type DbPlaceholder = DbPlaceholder[] | null | number | string;
@@ -23,7 +23,7 @@ declare global {
 	type ReqBody = Record<string, unknown>;
 
 	type Route = {
-		[method: IncomingMessage["method"]]: RouteMethod;
+		[method: IncomingMessage['method']]: RouteMethod;
 	};
 
 	type RouteData = {

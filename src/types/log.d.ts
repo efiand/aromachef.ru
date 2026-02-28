@@ -8,7 +8,7 @@ declare global {
 		cause?: ErrorCause | number | string;
 	}
 
-	type LogLevel = "error" | "info" | "warn";
+	type LogLevel = 'error' | 'info' | 'warn';
 }
 
 export {};

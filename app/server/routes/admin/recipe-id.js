@@ -1,8 +1,8 @@
-import { renderRecipeForm } from "#common/templates/recipe-form.js";
-import { getDbError, processDb } from "#server/lib/db.js";
-import { processImage } from "#server/lib/image.js";
-import { resetPageCache } from "#server/lib/pages-cache.js";
-import { prepareAndMinifyHtml, prepareText } from "#server/lib/prepare-text.js";
+import { renderRecipeForm } from '#common/templates/recipe-form.js';
+import { getDbError, processDb } from '#server/lib/db.js';
+import { processImage } from '#server/lib/image.js';
+import { resetPageCache } from '#server/lib/pages-cache.js';
+import { prepareAndMinifyHtml, prepareText } from '#server/lib/prepare-text.js';
 
 const CREATE_RECIPE_QUERY = /* sql */ `
 	INSERT INTO recipes
@@ -41,14 +41,14 @@ export const recipeIdAdminRoute = {
 			recipeData: id
 				? undefined
 				: {
-						cooking: "",
-						description: "",
-						ingredients: "",
-						ingredientsExtra: "",
+						cooking: '',
+						description: '',
+						ingredients: '',
+						ingredientsExtra: '',
 						published: false,
 						structureId: 0,
 						telegramId: null,
-						title: "",
+						title: '',
 					},
 		});
 	},
@@ -65,9 +65,9 @@ export const recipeIdAdminRoute = {
 			ingredientsExtra,
 			ingredientsImage,
 			published,
-			"relatedIds[]": rawRelatedIds = [],
+			'relatedIds[]': rawRelatedIds = [],
 			structureId: rawStructureId,
-			"tagIds[]": rawTagIds = [],
+			'tagIds[]': rawTagIds = [],
 			telegramId: rawTelegramId,
 			title,
 		} = /** @type {PostedRecipe} */ (body);
@@ -131,7 +131,7 @@ export const recipeIdAdminRoute = {
 		if (creatingRelatedIds.length) {
 			try {
 				const rows = creatingRelatedIds.map((recipeId) => [newId, recipeId]);
-				const placeholders = rows.map(() => "(?, ?)").join(", ");
+				const placeholders = rows.map(() => '(?, ?)').join(', ');
 				await processDb(
 					/* sql */ `INSERT INTO recipesRecipes (recipeId, relatedRecipeId) VALUES ${placeholders}`,
 					rows.flat(),
@@ -142,7 +142,7 @@ export const recipeIdAdminRoute = {
 		}
 		if (deletingRelatedIds.length) {
 			try {
-				const placeholders = deletingRelatedIds.map(() => "?").join(", ");
+				const placeholders = deletingRelatedIds.map(() => '?').join(', ');
 				await processDb(
 					/* sql */ `DELETE FROM recipesRecipes WHERE recipeId = ? AND relatedRecipeId IN (${placeholders})`,
 					[newId, ...deletingRelatedIds],
@@ -165,7 +165,7 @@ export const recipeIdAdminRoute = {
 		if (creatingTagIds.length) {
 			try {
 				const rows = creatingTagIds.map((tagId) => [newId, tagId]);
-				const placeholders = rows.map(() => "(?, ?)").join(", ");
+				const placeholders = rows.map(() => '(?, ?)').join(', ');
 
 				await processDb(/* sql */ `INSERT INTO recipesTags (recipeId, tagId) VALUES ${placeholders}`, rows.flat());
 			} catch (error) {
@@ -174,7 +174,7 @@ export const recipeIdAdminRoute = {
 		}
 		if (deletingTagIds.length) {
 			try {
-				const placeholders = deletingTagIds.map(() => "?").join(", ");
+				const placeholders = deletingTagIds.map(() => '?').join(', ');
 				await processDb(/* sql */ `DELETE FROM recipesTags WHERE recipeId = ? AND tagId IN (${placeholders})`, [
 					newId,
 					...deletingTagIds,
@@ -220,7 +220,7 @@ export const recipeIdAdminRoute = {
 		if (published) {
 			resetPageCache();
 		}
-		return { redirect: `/recipe/${newId}${published ? "" : "?preview"}` };
+		return { redirect: `/recipe/${newId}${published ? '' : '?preview'}` };
 	},
 };
 
@@ -238,7 +238,7 @@ async function getView({ errors = [], id, recipeData }) {
 
 	return {
 		page: {
-			heading: id ? `Редактировать рецепт № ${id}` : "Добавить рецепт",
+			heading: id ? `Редактировать рецепт № ${id}` : 'Добавить рецепт',
 			pageTemplate: renderRecipeForm(
 				{
 					...recipe,

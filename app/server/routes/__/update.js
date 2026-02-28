@@ -1,7 +1,7 @@
-import { PROJECT_DESCRIPTION } from "#common/constants.js";
-import { renderErrorPage } from "#common/templates/error-page.js";
+import { PROJECT_DESCRIPTION } from '#common/constants.js';
+import { renderErrorPage } from '#common/templates/error-page.js';
 
-const heading = "Сайт обновляется";
+const heading = 'Сайт обновляется';
 
 export const updateRoute = {
 	/** @type {RouteMethod} */
@@ -10,7 +10,7 @@ export const updateRoute = {
 			page: {
 				description: PROJECT_DESCRIPTION,
 				heading,
-				pageTemplate: renderErrorPage(heading, "Попробуйте обновить страницу."),
+				pageTemplate: renderErrorPage(heading, 'Попробуйте обновить страницу.'),
 			},
 		};
 	},

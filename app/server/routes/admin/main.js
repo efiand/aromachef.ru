@@ -1,5 +1,5 @@
-import { renderSelect } from "#common/templates/select.js";
-import { processDb } from "#server/lib/db.js";
+import { renderSelect } from '#common/templates/select.js';
+import { processDb } from '#server/lib/db.js';
 
 const ARTICLES_QUERY = /* sql */ `SELECT id, title FROM articles ORDER BY id;`;
 const RECIPES_QUERY = /* sql */ `
@@ -15,35 +15,35 @@ export const adminRoute = {
 
 		return {
 			page: {
-				heading: "Панель управления",
+				heading: 'Панель управления',
 				pageTemplate: /* html */ `
 					<div class="structure">
 						<div class="page-section">
 							${renderSelect({
-								endpoint: "/admin/recipe",
+								endpoint: '/admin/recipe',
 								isAddingSupport: true,
 								isEmptySupport: true,
-								label: "Рецепты",
-								name: "recipes",
+								label: 'Рецепты',
+								name: 'recipes',
 								options: recipes.map((item) => mapOption(item)),
 							})}
 
 							${renderSelect({
-								endpoint: "/admin/comments",
+								endpoint: '/admin/comments',
 								isEmptySupport: true,
-								label: "Комментарии",
-								name: "comments",
+								label: 'Комментарии',
+								name: 'comments',
 								options: recipes
 									.filter(({ commentsCount }) => commentsCount)
-									.map((item) => mapOption(item, "comments")),
+									.map((item) => mapOption(item, 'comments')),
 							})}
 
 							${renderSelect({
-								endpoint: "/admin/blog",
+								endpoint: '/admin/blog',
 								isAddingSupport: true,
 								isEmptySupport: true,
-								label: "Статьи",
-								name: "articles",
+								label: 'Статьи',
+								name: 'articles',
 								options: articles.map((item) => mapOption(item)),
 							})}
 
@@ -77,9 +77,9 @@ export const adminRoute = {
 };
 
 /** @type {(item: DbItem, mode?: string) => DbItem} */
-function mapOption({ commentsCount, id, title }, mode = "") {
+function mapOption({ commentsCount, id, title }, mode = '') {
 	return {
 		id,
-		title: `${id} – ${title}${mode === "comments" ? ` (${commentsCount})` : ""}`,
+		title: `${id} – ${title}${mode === 'comments' ? ` (${commentsCount})` : ''}`,
 	};
 }

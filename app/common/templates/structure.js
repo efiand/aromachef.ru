@@ -1,6 +1,6 @@
-import { renderCards } from "#common/templates/cards.js";
-import { renderStructures } from "#common/templates/structures.js";
-import { renderTags } from "#common/templates/tags.js";
+import { renderCards } from '#common/templates/cards.js';
+import { renderStructures } from '#common/templates/structures.js';
+import { renderTags } from '#common/templates/tags.js';
 
 /**
  * Генерирует HTML-шаблон списка карточек с боковым меню
@@ -9,26 +9,26 @@ import { renderTags } from "#common/templates/tags.js";
 export function renderStructure({
 	alt,
 	asideHeading,
-	asideId = "",
+	asideId = '',
 	cards,
 	heading,
 	isAmp,
 	asyncSupport,
-	route = "/recipe",
+	route = '/recipe',
 	structures = [],
 	tags = [],
 }) {
-	let asideTemplate = "";
+	let asideTemplate = '';
 	if (tags.length) {
-		asideTemplate = renderTags({ className: "structure__menu", column: true, tags });
+		asideTemplate = renderTags({ className: 'structure__menu', column: true, tags });
 	} else if (structures.length) {
-		asideTemplate = renderStructures({ className: "structure__menu", structures });
+		asideTemplate = renderStructures({ className: 'structure__menu', structures });
 	}
 
-	const id = asideId ? `id="${asideId}"` : "";
+	const id = asideId ? `id="${asideId}"` : '';
 
 	return /* html */ `
-		<section class="structure" ${asyncSupport ? `data-component="asyncStructure"` : ""}>
+		<section class="structure" ${asyncSupport ? `data-component="asyncStructure"` : ''}>
 			<div class="structure__cards" data-cards>
 				<h1>${heading}</h1>
 				${renderCards({ alt, cards, isAmp, route })}

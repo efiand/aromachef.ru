@@ -1,28 +1,28 @@
-import { openModal } from "#client/components/modal.js";
-import { renderFromTemplate } from "#client/lib/render-from-template.js";
+import { openModal } from '#client/components/modal.js';
+import { renderFromTemplate } from '#client/lib/render-from-template.js';
 
-const text = document.querySelector(`[name="description"]`)?.getAttribute("content") || "";
+const text = document.querySelector(`[name="description"]`)?.getAttribute('content') || '';
 
 /** @type {ShareItem[]} */
 const ITEMS = [
 	{
-		id: "vk",
-		title: "ВКонтакте",
+		id: 'vk',
+		title: 'ВКонтакте',
 		url: `https://vk.com/share.php?url=${window.location}`,
 	},
 	{
-		id: "tg",
-		title: "Telegram",
+		id: 'tg',
+		title: 'Telegram',
 		url: `https://t.me/share/url?url=${window.location}`,
 	},
 	{
-		id: "wa",
-		title: "WhatsApp",
+		id: 'wa',
+		title: 'WhatsApp',
 		url: `https://api.whatsapp.com/send?text=${encodeURI(`${text} Подробнее: ${window.location}`)}`,
 	},
 	{
-		id: "ok",
-		title: "Одноклассники",
+		id: 'ok',
+		title: 'Одноклассники',
 		url: `https://connect.ok.ru/offer?url=${window.location}`,
 	},
 ];
@@ -37,7 +37,7 @@ const sharedElement = renderFromTemplate(/* html */ `
 	<div class="share">
 		<h2>Поделиться:</h2>
 
-		<ul class="share__list">${ITEMS.map(renderItem).join("")}</ul>
+		<ul class="share__list">${ITEMS.map(renderItem).join('')}</ul>
 
 		<div class="share__copy">
 			<input readonly>
@@ -48,24 +48,24 @@ const sharedElement = renderFromTemplate(/* html */ `
 	</div>
 `);
 
-const copyInputElement = /** @type {HTMLInputElement} */ (sharedElement.querySelector(".share__copy input"));
+const copyInputElement = /** @type {HTMLInputElement} */ (sharedElement.querySelector('.share__copy input'));
 
-const copyStatusElement = /** @type {HTMLElement} */ (sharedElement.querySelector(".share__copy-message"));
+const copyStatusElement = /** @type {HTMLElement} */ (sharedElement.querySelector('.share__copy-message'));
 
-sharedElement.querySelector("button")?.addEventListener("click", () => {
+sharedElement.querySelector('button')?.addEventListener('click', () => {
 	navigator.clipboard.writeText(`${window.location}`);
-	copyStatusElement.classList.add("share__copy-message--shown");
+	copyStatusElement.classList.add('share__copy-message--shown');
 
 	setTimeout(() => {
-		copyStatusElement.classList.remove("share__copy-message--shown");
+		copyStatusElement.classList.remove('share__copy-message--shown');
 	}, 1000);
 });
 
 /** @param {string} wrapperClassName */
 export function initShare(wrapperClassName) {
-	shareOpenerElement.addEventListener("click", onClickOpener);
+	shareOpenerElement.addEventListener('click', onClickOpener);
 
-	const [blockClassName] = wrapperClassName.split("__");
+	const [blockClassName] = wrapperClassName.split('__');
 	shareOpenerElement.classList.add(`${blockClassName}__share`);
 
 	document.querySelector(`.${wrapperClassName}`)?.append(shareOpenerElement);
