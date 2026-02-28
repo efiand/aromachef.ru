@@ -21,6 +21,7 @@ declare global {
 	type ArticleInForm = Article & { published: boolean };
 
 	type DbItem = {
+		commentsCount?: number;
 		current?: boolean;
 		id: number;
 		title: string;

@@ -7,7 +7,7 @@ export const PROJECT_DESCRIPTION = "Быстрые, вкусные и поле�
 export const YANDEX_METRIKA_ID = 99498629;
 
 export const version = {
-	CSS: 29,
+	CSS: 31,
 	JS: 24,
 };
 

@@ -74,6 +74,17 @@ declare global {
 		tags: DbItem[];
 	};
 
+	type SelectParams = {
+		endpoint?: string;
+		isAddingSupport?: boolean;
+		isEmptySupport?: boolean;
+		label?: string;
+		name: string;
+		options: DbItem[];
+		required?: boolean;
+		selectedValues?: (number | string)[];
+	};
+
 	type StaticPageData = {
 		content: string;
 		description: string;

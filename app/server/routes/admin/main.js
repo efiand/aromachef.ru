@@ -1,3 +1,4 @@
+import { renderSelect } from "#common/templates/select.js";
 import { processDb } from "#server/lib/db.js";
 
 const ARTICLES_QUERY = /* sql */ `SELECT id, title FROM articles ORDER BY id;`;
@@ -18,34 +19,33 @@ export const adminRoute = {
 				pageTemplate: /* html */ `
 					<div class="structure">
 						<div class="page-section">
-							<div class="form-group">
-								<label for="recipes">Рецепты</label>
-								<select id="recipes" data-component="selectMenu" data-endpoint="/admin/recipe">
-									<option value="" hidden></option>
-									<option value="0">ДОБАВИТЬ</option>
-									${recipes.map((item) => renderOption(item)).join("")}
-								</select>
-							</div>
+							${renderSelect({
+								endpoint: "/admin/recipe",
+								isAddingSupport: true,
+								isEmptySupport: true,
+								label: "Рецепты",
+								name: "recipes",
+								options: recipes.map((item) => mapOption(item)),
+							})}
 
-							<div class="form-group">
-								<label for="recipes">Комментарии</label>
-								<select id="recipes" data-component="selectMenu" data-endpoint="/admin/comments">
-									<option value="" hidden></option>
-									${recipes
-										.filter(({ commentsCount }) => commentsCount)
-										.map((item) => renderOption(item, "comments"))
-										.join("")}
-								</select>
-							</div>
+							${renderSelect({
+								endpoint: "/admin/comments",
+								isEmptySupport: true,
+								label: "Комментарии",
+								name: "comments",
+								options: recipes
+									.filter(({ commentsCount }) => commentsCount)
+									.map((item) => mapOption(item, "comments")),
+							})}
 
-							<div class="form-group">
-								<label for="articles">Статьи</label>
-								<select id="articles" data-component="selectMenu" data-endpoint="/admin/blog">
-									<option value="" hidden></option>
-									<option value="0">ДОБАВИТЬ</option>
-									${articles.map((item) => renderOption(item)).join("")}
-								</select>
-							</div>
+							${renderSelect({
+								endpoint: "/admin/blog",
+								isAddingSupport: true,
+								isEmptySupport: true,
+								label: "Статьи",
+								name: "articles",
+								options: articles.map((item) => mapOption(item)),
+							})}
 
 							<form action="/admin/dump">
 								<button class="button" type="submit" data-component="submitter">Резервное копирование</button>
@@ -76,9 +76,10 @@ export const adminRoute = {
 	},
 };
 
-/** @type {(item: DbItem & { commentsCount?: number; }, mode?: string) => string} */
-function renderOption({ commentsCount, id, title }, mode = "") {
-	return /* html */ `
-		<option value="${id}">${id} – ${title}${mode === "comments" ? ` (${commentsCount})` : ""}</option>
-	`;
+/** @type {(item: DbItem, mode?: string) => DbItem} */
+function mapOption({ commentsCount, id, title }, mode = "") {
+	return {
+		id,
+		title: `${id} – ${title}${mode === "comments" ? ` (${commentsCount})` : ""}`,
+	};
 }

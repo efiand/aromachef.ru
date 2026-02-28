@@ -1,6 +1,7 @@
 import { renderCheckers } from "#common/templates/checkers.js";
 import { renderFormErrors } from "#common/templates/form-errors.js";
 import { renderImagePicker } from "#common/templates/image-picker.js";
+import { renderSelect } from "#common/templates/select.js";
 
 /** @type {(data: RecipeInAdmin, errors?: string[]) => string} */
 export function renderRecipeForm(
@@ -120,17 +121,14 @@ export function renderRecipeForm(
 					<button class="button" type="button" data-checkers-open="recipes">Связанные рецепты</button>
 				</div>
 
-				<div class="form-group">
-					<label class="_required" for="structureId">Раздел</label>
-					<select
-						id="structureId"
-						name="structureId"
-						required
-					>
-						<option value="" hidden></option>
-						${structures.map((item) => renderOptionFromDbItem(item, [structureId]))}
-					</select>
-				</div>
+				${renderSelect({
+					isEmptySupport: true,
+					label: "Раздел",
+					name: "structureId",
+					options: structures,
+					required: true,
+					selectedValues: [structureId],
+				})}
 			</div>
 
 			<label class="form__checker checker">
@@ -163,17 +161,5 @@ export function renderRecipeForm(
 			<input name="id" type="hidden" value='${id}'>
 			<input name="cache" type="hidden" value='${JSON.stringify(cache)}'>
 		</form>
-	`;
-}
-
-/** @type {(item: DbItem, selectedIds: number[]) => string} */
-function renderOptionFromDbItem({ id, title }, selectedIds) {
-	return /* html */ `
-		<option
-			value="${id}"
-			${selectedIds.includes(id) ? "selected" : ""}
-		>
-			${title}
-		</option>
 	`;
 }
