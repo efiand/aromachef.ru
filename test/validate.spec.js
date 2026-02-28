@@ -8,19 +8,26 @@ import { STATIC_PAGES } from '#common/constants.js';
 import { log } from '#common/lib/log.js';
 import { host } from '#server/constants.js';
 import { closeApp, createApp } from '#server/lib/app.js';
+import validatorConfig from '../.htmlvalidate.js';
 
 const { AUTH_LOGIN, AUTH_PASSWORD } = process.env;
 
-const htmlvalidate = new HtmlValidate({
-	extends: ['html-validate:recommended'],
-	rules: {
-		'long-title': 'off',
-		'no-trailing-whitespace': 'off',
-	},
-});
+const htmlvalidate = new HtmlValidate(validatorConfig);
 
-const adminPages = ['/admin', '/admin/blog/0', '/admin/recipe/0'];
+const adminPages = [
+	'/admin',
+	'/admin/blog/0',
+	'/admin/comment/18',
+	'/admin/comments/17',
+	'/admin/recipe/0',
+	'/admin/recipe/1',
+	'/admin/structures',
+	'/admin/tags',
+];
 const pages = [...STATIC_PAGES, '/search', '/admin/auth'];
+
+/** @type {string?} */
+let adminCookie = null;
 
 /** @type {amphtmlValidator.Validator | undefined} */
 let ampValidator;
@@ -37,7 +44,9 @@ let markups = [];
 let server;
 
 async function getMarkup(page = '') {
-	return await fetch(`${host}${page}`).then((res) => res.text());
+	return await fetch(`${host}${page}`, {
+		headers: adminCookie && page !== '/admin/auth' ? { Cookie: adminCookie } : undefined,
+	}).then((res) => res.text());
 }
 
 before(async () => {
@@ -50,20 +59,23 @@ before(async () => {
 		pages.push(...ampPages);
 	}
 
-	if (!markups.length) {
-		markups = await Promise.all(pages.map(getMarkup));
-	}
-
-	({ ok: authorized } = await fetch(`${host}/admin/auth`, {
+	const authResponse = await fetch(`${host}/admin/auth`, {
 		body: `login=${AUTH_LOGIN}&password=${AUTH_PASSWORD}`,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 		method: 'POST',
-	}));
+		redirect: 'manual',
+	});
+	if (authResponse.status === 302) {
+		authorized = true;
+		adminCookie = authResponse.headers.get('set-cookie');
+		pages.push(...adminPages);
+	}
 
-	const adminMarkups = await Promise.all(adminPages.map(getMarkup));
-	markups.push(...adminMarkups);
+	if (!markups.length) {
+		markups = await Promise.all(pages.map(getMarkup));
+	}
 });
 
 test('Success authorization', async () => {
@@ -79,8 +91,10 @@ test('All pages have valid HTML markup', async () => {
 			if (!report.valid) {
 				errorsCount++;
 				report.results.forEach(({ messages }) => {
-					messages.forEach(({ column, line, message, ruleUrl }) => {
-						log.error(`${page} [${line}:${column}] ${message} (${ruleUrl})`);
+					messages.forEach(({ column, line, message, ruleUrl, severity }) => {
+						const output = severity === 2 ? log.error : log.warn;
+						const icon = severity === 2 ? '❌' : '⚠';
+						output(`${icon} ${page} [${line}:${column}] ${message} (${ruleUrl})`);
 					});
 				});
 			}
@@ -127,7 +141,8 @@ test('All AMP versions have valid AMP markup', async () => {
 
 			result?.errors.forEach(({ col, line, message, severity, specUrl }) => {
 				const output = severity === 'ERROR' ? log.error : log.warn;
-				output(`${url} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ''})`);
+				const icon = severity === 'ERROR' ? '❌' : '⚠';
+				output(`${icon} ${url} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ''})`);
 			});
 		}),
 	);
@@ -142,7 +157,7 @@ test('sitemap.xml is valid', async () => {
 
 	if (!valid) {
 		const { msg, line, col } = result.err;
-		log.error(`sitemap.xml [${line}:${col}] ${msg}`);
+		log.error(`❌ sitemap.xml [${line}:${col}] ${msg}`);
 	}
 
 	assert.strictEqual(valid, true);

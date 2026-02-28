@@ -5,7 +5,7 @@ function renderTagForm({ id, title }) {
 	return /* html */ `
 		<li>
 			<form class="tag-forms__form" method="post">
-				<input name="id" type="hidden" value='${id}'>
+				<input name="id" type="hidden" value="${id}">
 				<input
 					name="title"
 					value="${title}"

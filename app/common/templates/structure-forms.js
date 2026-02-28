@@ -8,7 +8,7 @@ function renderStructureForm({ id, title }) {
 	return /* html */ `
 		<li>
 			<form class="structure-forms__form" method="post" enctype="multipart/form-data">
-				<input name="id" type="hidden" value='${id}'>
+				<input name="id" type="hidden" value="${id}">
 
 				${renderImagePicker(id, '', 'Изображение', 'structure')}
 

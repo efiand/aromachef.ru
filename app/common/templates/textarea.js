@@ -21,7 +21,7 @@ export function renderTextarea({
 					`
 					: ''
 			}
-			<!-- html-validate-disable-next no-raw-characters: HTML in textarea -->
+			${value ? /* html */ `<!-- html-validate-disable-next no-raw-characters: HTML in textarea -->` : ''}
 			<textarea
 				${label ? `id="${name}"` : ''}
 				name="${name}"

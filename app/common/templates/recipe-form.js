@@ -148,7 +148,7 @@ export function renderRecipeForm(
 				</div>
 			</div>
 
-			<input name="id" type="hidden" value='${id}'>
+			<input name="id" type="hidden" value="${id}">
 			<input name="cache" type="hidden" value='${JSON.stringify(cache)}'>
 		</form>
 	`;
