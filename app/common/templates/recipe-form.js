@@ -2,6 +2,7 @@ import { renderCheckers } from '#common/templates/checkers.js';
 import { renderFormErrors } from '#common/templates/form-errors.js';
 import { renderImagePicker } from '#common/templates/image-picker.js';
 import { renderSelect } from '#common/templates/select.js';
+import { renderTextarea } from '#common/templates/textarea.js';
 
 /** @type {(data: RecipeInAdmin, errors?: string[]) => string} */
 export function renderRecipeForm(
@@ -41,17 +42,14 @@ export function renderRecipeForm(
 				>
 			</div>
 
-			<div class="form__group form-group">
-				<label class="_required" for="description">Описание</label>
-				<textarea
-					id="description"
-					name="description"
-					rows="5"
-					maxlength="1000"
-					required
-					data-component="editor"
-				>${description}</textarea>
-			</div>
+			${renderTextarea({
+				className: 'form__group',
+				isRequired: true,
+				label: 'Описание',
+				maxlength: 1000,
+				name: 'description',
+				value: description,
+			})}
 
 			<div class="form__group form-group">
 				<label for="telegramId">Номер видеоинструкции</label>
@@ -66,28 +64,23 @@ export function renderRecipeForm(
 
 			<div class="form__article article">
 				<div>
-					<div class="form__group form-group">
-						<label class="_required" for="ingredients">Состав</label>
-						<textarea
-							id="ingredients"
-							name="ingredients"
-							rows="18"
-							maxlength="3000"
-							required
-							data-component="editor"
-						>${ingredients}</textarea>
-					</div>
+					${renderTextarea({
+						className: 'form__group',
+						isRequired: true,
+						label: 'Состав',
+						name: 'ingredients',
+						rows: 18,
+						value: ingredients,
+					})}
 
-					<div class="form__group form-group">
-						<label for="ingredientsExtra">По желанию</label>
-						<textarea
-							id="ingredientsExtra"
-							name="ingredientsExtra"
-							rows="3"
-							maxlength="1000"
-							data-component="editor"
-						>${ingredientsExtra || ''}</textarea>
-					</div>
+					${renderTextarea({
+						className: 'form__group',
+						label: 'По желанию',
+						maxlength: 1000,
+						name: 'ingredientsExtra',
+						rows: 3,
+						value: ingredientsExtra,
+					})}
 				</div>
 
 				<div class="article__image">
@@ -97,17 +90,14 @@ export function renderRecipeForm(
 
 			<div class="form__article article article--reverse">
 				<div>
-					<div class="form__group form-group">
-						<label class="_required" for="cooking">Приготовление</label>
-						<textarea
-							id="cooking"
-							name="cooking"
-							rows="25"
-							maxlength="3000"
-							required
-							data-component="editor"
-						>${cooking}</textarea>
-					</div>
+					${renderTextarea({
+						className: 'form__group',
+						isRequired: true,
+						label: 'Приготовление',
+						name: 'cooking',
+						rows: 25,
+						value: cooking,
+					})}
 				</div>
 
 				<div class="article__image">
@@ -123,10 +113,10 @@ export function renderRecipeForm(
 
 				${renderSelect({
 					isEmptySupport: true,
+					isRequired: true,
 					label: 'Раздел',
 					name: 'structureId',
 					options: structures,
-					required: true,
 					selectedValues: [structureId],
 				})}
 			</div>

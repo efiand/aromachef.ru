@@ -78,10 +78,10 @@ declare global {
 		endpoint?: string;
 		isAddingSupport?: boolean;
 		isEmptySupport?: boolean;
+		isRequired?: boolean;
 		label?: string;
 		name: string;
 		options: DbItem[];
-		required?: boolean;
 		selectedValues?: (number | string)[];
 	};
 
@@ -108,6 +108,18 @@ declare global {
 		className?: string;
 		column?: boolean;
 		tags: DbItem[];
+	};
+
+	type TextareaParams = {
+		className?: string;
+		isArticle?: boolean;
+		isEditor?: boolean;
+		isRequired?: boolean;
+		label?: string;
+		maxlength?: number;
+		rows?: number;
+		name: string;
+		value?: string | null;
 	};
 }
 

@@ -15,10 +15,10 @@ export function renderSelect({
 	endpoint,
 	isAddingSupport,
 	isEmptySupport,
+	isRequired,
 	label,
 	name,
 	options,
-	required,
 	selectedValues,
 }) {
 	return /* html */ `
@@ -26,7 +26,7 @@ export function renderSelect({
 			${
 				label
 					? /* html */ `
-						<label ${required ? 'class="_required"' : ''} for="${name}">
+						<label ${isRequired ? 'class="_required"' : ''} for="${name}">
 							${label}
 						</label>
 					`
@@ -34,10 +34,10 @@ export function renderSelect({
 			}
 			<div class="select">
 				<select
-					id="${name}"
+					${label ? `id="${name}"` : ''}
 					name="${name}"
 					${endpoint ? `data-component="selectMenu" data-endpoint="${endpoint}"` : ''}
-					${required ? 'required' : ''}
+					${isRequired ? 'required' : ''}
 				>
 					${isEmptySupport ? /* html */ `<option value="" hidden></option>` : ''}
 					${isAddingSupport ? /* html */ `<option value="0">ДОБАВИТЬ</option>` : ''}

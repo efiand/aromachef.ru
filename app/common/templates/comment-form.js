@@ -1,3 +1,5 @@
+import { renderTextarea } from '#common/templates/textarea.js';
+
 /** @type {(data: RecipeCommentInForm, error?: string) => string} */
 export function renderCommentForm({ answer, name, published, recipeId, recipeTitle, text }, error = '') {
 	return /* html */ `
@@ -18,28 +20,20 @@ export function renderCommentForm({ answer, name, published, recipeId, recipeTit
 				>
 			</div>
 
-			<div class="form__group form-group">
-				<label class="_required" for="description">Текст</label>
-				<textarea
-					id="text"
-					name="text"
-					rows="5"
-					maxlength="3000"
-					required
-					data-component="editor"
-				>${text}</textarea>
-			</div>
+			${renderTextarea({
+				className: 'form__group',
+				isRequired: true,
+				label: 'Текст',
+				name: 'text',
+				value: text,
+			})}
 
-			<div class="form__group form__group--indented form-group">
-				<label for="answer">Ответ</label>
-				<textarea
-					id="answer"
-					name="answer"
-					rows="5"
-					maxlength="3000"
-					data-component="editor"
-				>${answer || ''}</textarea>
-			</div>
+			${renderTextarea({
+				className: 'form__group form__group--indented',
+				label: 'Ответ',
+				name: 'answer',
+				value: answer,
+			})}
 
 			<label class="form__checker checker">
 				<input name="published" type="checkbox" ${published ? 'checked' : ''}>

@@ -1,6 +1,7 @@
 import { renderCheckers } from '#common/templates/checkers.js';
 import { renderFormErrors } from '#common/templates/form-errors.js';
 import { renderImagePicker } from '#common/templates/image-picker.js';
+import { renderTextarea } from '#common/templates/textarea.js';
 
 /** @type {(data: ArticleInAdmin, errors?: string[]) => string} */
 export function renderArticleForm(
@@ -27,16 +28,15 @@ export function renderArticleForm(
 						>
 					</div>
 
-					<div class="form__group form-group">
-						<label class="_required" for="description">Описание</label>
-						<textarea
-							id="description"
-							name="description"
-							rows="5"
-							maxlength="1000"
-							required
-						>${description}</textarea>
-					</div>
+					${renderTextarea({
+						className: 'form__group',
+						isEditor: false,
+						isRequired: true,
+						label: 'Описание',
+						maxlength: 1000,
+						name: 'description',
+						value: description,
+					})}
 				</div>
 
 				<div class="article__image">
@@ -44,18 +44,16 @@ export function renderArticleForm(
 				</div>
 			</div>
 
-			<div class="form__group form-group">
-				<label class="_required" for="content">Текст</label>
-				<textarea
-					id="content"
-					name="content"
-					rows="25"
-					maxlength="30000"
-					required
-					data-component="editor"
-					data-article
-				>${content}</textarea>
-			</div>
+			${renderTextarea({
+				className: 'form__group',
+				isArticle: true,
+				isRequired: true,
+				label: 'Текст',
+				maxlength: 30_000,
+				name: 'content',
+				rows: 25,
+				value: content,
+			})}
 
 			<div class="form__groups form__groups--equals">
 				<div class="form-group">
@@ -94,7 +92,7 @@ export function renderArticleForm(
 				</div>
 			</div>
 
-			<input name="id" type="hidden" value='${id}'>
+			<input name="id" type="hidden" value="${id}">
 			<input name="cache" type="hidden" value='${JSON.stringify(cache)}'>
 		</form>
 	`;
