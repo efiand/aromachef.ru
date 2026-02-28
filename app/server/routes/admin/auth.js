@@ -7,8 +7,8 @@ const maxAge = 86_400;
 
 export const authRoute = {
 	/** @type {RouteMethod} */
-	async GET({ authorized }) {
-		return authorized ? { redirect: '/admin' } : getView();
+	async GET({ isAuthorized }) {
+		return isAuthorized ? { redirect: '/admin' } : getView();
 	},
 
 	/** @type {RouteMethod} */

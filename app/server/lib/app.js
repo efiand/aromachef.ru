@@ -11,8 +11,8 @@ import { getPageFromCache, recordPagesCache } from '#server/lib/pages-cache.js';
 import { getRequestBody } from '#server/lib/request.js';
 import { routes } from '#server/routes/index.js';
 
-/** @type {(error: unknown, url: URL, authorized?: boolean) => Promise<{ statusCode: number; template: string }>} */
-async function handleError(error, { href, pathname }, authorized = false) {
+/** @type {ErrorHandler} */
+async function handleError({ error, isAdmin, isAuthorized, url: { href, pathname } }) {
 	let message = 'На сервере произошла ошибка.';
 	let statusCode = 500;
 	if (error instanceof Error) {
@@ -30,10 +30,10 @@ async function handleError(error, { href, pathname }, authorized = false) {
 
 	const heading = `Ошибка ${statusCode}`;
 	const template = await renderPage({
-		authorized,
 		description: 'Страница ошибок.',
 		heading,
-		pageTemplate: renderErrorPage(heading, message),
+		isAuthorized,
+		pageTemplate: renderErrorPage(isAdmin ? '' : heading, message),
 		pathname,
 	});
 
@@ -62,14 +62,14 @@ async function next(req, res) {
 	const route = routes[routeKey];
 
 	let contentType = 'text/html; charset=utf-8';
-	let template = '';
+	let isAuthorized = false;
 	let redirect = '';
 	let statusCode = 200;
-	let authorized = false;
+	let template = '';
 
 	try {
 		const { authToken } = getCookies(req);
-		authorized = Boolean(authToken && jwt.verify(authToken, process.env.AUTH_SECRET));
+		isAuthorized = Boolean(authToken && jwt.verify(authToken, process.env.AUTH_SECRET));
 
 		if (!route) {
 			throw new Error('Страница не найдена.', { cause: 404 });
@@ -87,7 +87,7 @@ async function next(req, res) {
 			}
 		}
 
-		if (isAdmin && pathname !== '/admin/auth' && !authorized) {
+		if (isAdmin && pathname !== '/admin/auth' && !isAuthorized) {
 			res.statusCode = 302;
 			res.setHeader('Location', '/admin/auth');
 			res.end();
@@ -97,7 +97,7 @@ async function next(req, res) {
 		const body = await getRequestBody(req);
 		const isCanonical = Object.keys(body).length === 0;
 		const isFragment = Object.keys(body).length === 1 && body.fragment !== undefined;
-		const needCache = !authorized && !isAdmin && (isCanonical || isFragment);
+		const needCache = !isAuthorized && !isAdmin && (isCanonical || isFragment);
 
 		/** @type {PageCache | null} */
 		let cache = null;
@@ -112,11 +112,11 @@ async function next(req, res) {
 		if (cache) {
 			({ contentType, template } = cache);
 		} else {
-			const routeData = await route[method]({ authorized, body, id, isAmp, req, res });
+			const routeData = await route[method]({ body, id, isAmp, isAuthorized, req, res });
 			({ contentType = 'text/html; charset=utf-8', redirect = '', statusCode = 200, template = '' } = routeData);
 
 			if (routeData.page) {
-				template = await renderPage({ ...routeData.page, authorized, isAmp, pathname });
+				template = await renderPage({ ...routeData.page, isAmp, isAuthorized, pathname });
 			}
 
 			if (needCache) {
@@ -124,7 +124,7 @@ async function next(req, res) {
 			}
 		}
 	} catch (error) {
-		({ statusCode, template } = await handleError(error, url, authorized));
+		({ statusCode, template } = await handleError({ error, isAdmin, isAuthorized, url }));
 	}
 
 	if (redirect) {

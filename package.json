@@ -64,6 +64,7 @@
 		"postinstall": "npm run build:vendors",
 		"preview": "dotenvx run -- node ./src/server/main.js",
 		"test": "npm run build && dotenvx run -- node --test",
+		"test:ci": "npm run build && node --test",
 		"type-check": "tsc -p ./tsconfig.json",
 		"upgrade": "dotenvx run -- node ./tools/upgrade.js"
 	},

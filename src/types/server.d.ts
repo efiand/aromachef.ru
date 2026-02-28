@@ -15,6 +15,13 @@ declare global {
 
 	type DbPlaceholder = DbPlaceholder[] | null | number | string;
 
+	type ErrorHandler = (params: {
+		error: unknown;
+		isAdmin?: boolean;
+		isAuthorized?: boolean;
+		url: URL;
+	}) => Promise<{ statusCode: number; template: string }>;
+
 	type PageCache = {
 		contentType: string;
 		template: string;
@@ -37,10 +44,10 @@ declare global {
 	type RouteMethod = (params: RouteParams) => Promise<RouteData>;
 
 	type RouteParams = {
-		authorized: boolean;
 		body: ReqBody;
 		id: number;
 		isAmp: boolean;
+		isAuthorized: boolean;
 		req: RouteRequest;
 		res: RouteResponse;
 	};

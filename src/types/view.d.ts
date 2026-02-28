@@ -38,11 +38,11 @@ declare global {
 	};
 
 	type LayoutData = {
-		authorized?: boolean;
 		description?: string;
 		headTemplate?: string;
 		heading?: string;
 		isAmp?: boolean;
+		isAuthorized?: boolean;
 		isDev?: boolean;
 		ogImage?: string;
 		ogImageHeight?: string | number;

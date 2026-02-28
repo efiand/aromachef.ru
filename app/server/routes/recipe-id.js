@@ -21,8 +21,8 @@ const relatedRecipesQueryWithPublishedOnly = getRelatedRecipesQuery(/* sql */ `A
 
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ authorized, id, isAmp, body }) {
-		const needUnpublished = isDev || (authorized && typeof body.preview !== 'undefined');
+	async GET({ id, isAuthorized, isAmp, body }) {
+		const needUnpublished = isDev || (isAuthorized && typeof body.preview !== 'undefined');
 
 		/** @type {[[{ length: number }], [Recipe], DbItem[], DbItem[]]} */
 		const [[{ length }], [recipe], relatedRecipes, tags] = await Promise.all([

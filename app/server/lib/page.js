@@ -51,11 +51,11 @@ function renderUrlMeta(pathname, isAmp) {
 
 /** @type {(data: LayoutData) => Promise<string>} */
 export async function renderPage({
-	authorized,
 	description,
 	headTemplate = '',
 	heading = '',
 	isAmp = false,
+	isAuthorized,
 	ogImage = '/images/og.webp',
 	ogImageWidth = 544,
 	ogImageHeight = 408,
@@ -74,7 +74,7 @@ export async function renderPage({
 
 	const layoutTemplate = isAdmin
 		? renderLayoutAdmin({ heading, pageTemplate, pathname })
-		: renderLayout({ authorized, isAmp, isDev, pageTemplate, pathname });
+		: renderLayout({ isAmp, isAuthorized, isDev, pageTemplate, pathname });
 
 	const template = /* html */ `
 		<!DOCTYPE html>

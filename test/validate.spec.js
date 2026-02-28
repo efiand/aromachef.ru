@@ -35,7 +35,7 @@ let ampValidator;
 /** @type {string[]} */
 let ampPages = [];
 
-let authorized = false;
+let isAuthorized = false;
 
 /** @type {string[]} */
 let markups = [];
@@ -68,8 +68,8 @@ before(async () => {
 		redirect: 'manual',
 	});
 	if (authResponse.status === 302) {
-		authorized = true;
 		adminCookie = authResponse.headers.get('set-cookie');
+		isAuthorized = true;
 		pages.push(...adminPages);
 	}
 
@@ -79,7 +79,7 @@ before(async () => {
 });
 
 test('Success authorization', async () => {
-	assert.strictEqual(authorized, true);
+	assert.strictEqual(isAuthorized, true);
 });
 
 test('All pages have valid HTML markup', async () => {
