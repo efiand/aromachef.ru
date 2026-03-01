@@ -71,6 +71,7 @@ const TEMPLATE = /* html */ `
 					itemprop="comment"
 					itemscope
 					itemtype="https://schema.org/Comment"
+					:itemid="'#comment-' + id"
 				>
 					<figure class="comments__item">
 						<cite class="comments__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -86,6 +87,7 @@ const TEMPLATE = /* html */ `
 						itemscope
 						itemtype="https://schema.org/Comment"
 					>
+						<link itemprop="parentItem" :href="'#comment-' + id">
 						<link itemprop="author" href="https://aromachef.ru/#author">
 						<cite class="comments__author">
 							<a href="/about" rel="author">АромаШеф</a>
