@@ -1,7 +1,6 @@
 {
 	"compilerOptions": {
 		"allowJs": true,
-		"baseUrl": "./",
 		"checkJs": true,
 		"lib": ["DOM", "ES2022"],
 		"module": "nodenext",
