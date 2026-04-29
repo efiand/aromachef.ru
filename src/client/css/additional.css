@@ -2,6 +2,7 @@
 @import url("common/keyframes.css");
 
 @import url("blocks/async-search.css");
+@import url("blocks/checker.css");
 @import url("blocks/comments.css");
 @import url("blocks/icon-button.css");
 @import url("blocks/modal.css");

@@ -65,7 +65,7 @@ const config = {
 /** @type {(target: HTMLElement) => Promise<void>} */
 export async function initEditor(target) {
 	if (!window.tinymce) {
-		await loadScript('/vendors/tinymce.js?v8.2.2');
+		await loadScript('/vendors/tinymce.js?v8.5.0');
 	}
 
 	const options = { ...config, target };

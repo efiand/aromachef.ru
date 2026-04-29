@@ -80,9 +80,27 @@
 	max-width: 27rem;
 }
 
+.comments__submit {
+	display: grid;
+	gap: 0.5rem;
+}
+
 .comments__button {
 	justify-self: start;
 	margin-top: 0.5rem;
+}
+
+.comments__text {
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+}
+
+@media (min-width: 768px) {
+	.comments__submit {
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 1rem;
+	}
 }
 
 @media (max-width: 359px) {

@@ -113,14 +113,14 @@ const TEMPLATE = /* html */ `
 					maxlength="3000"
 					required
 				></textarea>
-				<button
-					class="comments__button button"
-					type="submit"
-					:data-loading="posting ? '' : undefined"
-				>
-					Отправить
-				</button>
-				<p class="comments__error _error" v-if="hasError">Произошла ошибка.</p>
+				<div class="comments__submit">
+					<button class="button" type="submit" :data-loading="posting ? '' : undefined">Отправить</button>
+					<label class="comments__text checker">
+						<input type="checkbox" required>
+						Я согласен с <a href="/privacy" target="_blank">политикой обработки персональных данных</a>.
+					</label>
+				</div>
+				<p class="comments__text _error" v-if="hasError">Произошла ошибка.</p>
 			</form>
 		</div>
 	</div>

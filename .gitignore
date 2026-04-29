@@ -9,6 +9,7 @@
 Thumbs.db
 app/__
 bundles
+dump.sql
 logs
 node_modules
 pictures

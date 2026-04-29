@@ -24,7 +24,7 @@ const adminPages = [
 	'/admin/structures',
 	'/admin/tags',
 ];
-const pages = [...STATIC_PAGES, '/search', '/admin/auth'];
+const pages = [...STATIC_PAGES, '/privacy', '/search', '/admin/auth'];
 
 /** @type {string?} */
 let adminCookie = null;

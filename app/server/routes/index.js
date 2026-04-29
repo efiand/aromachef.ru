@@ -24,6 +24,7 @@ import { sitemapXmlRoute } from '#server/routes/sitemap-xml.js';
 import { structureRoute } from '#server/routes/structure.js';
 import { structureIdRoute } from '#server/routes/structure-id.js';
 import { tagIdRoute } from '#server/routes/tag-id.js';
+import { privacyRoute } from './privacy.js';
 
 /** @type {{ [name: string]: Route }} */
 export const routes = {
@@ -47,6 +48,7 @@ export const routes = {
 	'/blog/:id': articleIdRoute,
 	'/comments/:id': commentsIdRoute,
 	'/important': importantRoute,
+	'/privacy': privacyRoute,
 	'/recipe/:id': recipeIdRoute,
 	'/search': searchRoute,
 	'/sitemap.xml': sitemapXmlRoute,

@@ -1,7 +1,7 @@
 import { BASE_URL } from '#common/constants.js';
 import { processDb } from '#server/lib/db.js';
 
-const SERVICE_PAGES = ['', '/structure'];
+const SERVICE_PAGES = ['', '/privacy', '/structure'];
 
 const query = /* sql */ `
 	SELECT
