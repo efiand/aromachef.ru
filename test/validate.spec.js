@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import { after, before, test } from 'node:test';
-import amphtmlValidator from 'amphtml-validator';
-import { XMLValidator } from 'fast-xml-parser';
+import * as amphtmlValidator from 'amphtml-validator';
+import { SyntaxValidator } from 'fast-xml-validator';
 import { HtmlValidate } from 'html-validate';
-import { lintBem } from 'posthtml-bem-linter';
+import * as bemLinter from 'posthtml-bem-linter';
 import { STATIC_PAGES } from '#common/constants.js';
 import { log } from '#common/lib/log.js';
 import { host } from '#server/constants.js';
@@ -108,7 +108,7 @@ test('All pages have valid BEM classes in markup', () => {
 	let errorsCount = 0;
 
 	pages.forEach((page, i) => {
-		const result = lintBem({ content: markups[i], log: log.error, name: page });
+		const result = bemLinter.lintBem({ content: markups[i], log: log.error, name: page });
 		if (result.warningCount) {
 			errorsCount++;
 		}
@@ -152,7 +152,7 @@ test('All AMP versions have valid AMP markup', async () => {
 
 test('sitemap.xml is valid', async () => {
 	const markup = await fetch(`${host}/sitemap.xml`).then((res) => res.text());
-	const result = XMLValidator.validate(markup);
+	const result = SyntaxValidator.validate(markup);
 	const valid = result === true;
 
 	if (!valid) {

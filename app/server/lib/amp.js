@@ -12,9 +12,9 @@ let cssCache = '';
 export async function renderAmpAssets(hasForms = false) {
 	if (!cssCache) {
 		if (isDev) {
-			cssCache = await (await import('../../../src/server/css.js')).getCss('critical.css');
+			cssCache = await (await import('../../../src/server/css.js')).getCss('main.css');
 		} else {
-			cssCache = await readFile(`${cwd}/public/bundles/critical.css`, 'utf-8');
+			cssCache = await readFile(`${cwd}/public/bundles/main.css`, 'utf-8');
 		}
 	}
 

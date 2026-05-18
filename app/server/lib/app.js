@@ -1,11 +1,11 @@
 import { createServer } from 'node:http';
-import jwt from 'jsonwebtoken';
 import { log } from '#common/lib/log.js';
 import { noAmp } from '#common/lib/no-amp.js';
 import { renderErrorPage } from '#common/templates/error-page.js';
 import { host, isDev, port } from '#server/constants.js';
 import { getCookies } from '#server/lib/cookies.js';
 import { closeDbPool } from '#server/lib/db.js';
+import jwt from '#server/lib/jwt.js';
 import { renderPage } from '#server/lib/page.js';
 import { getPageFromCache, recordPagesCache } from '#server/lib/pages-cache.js';
 import { getRequestBody } from '#server/lib/request.js';

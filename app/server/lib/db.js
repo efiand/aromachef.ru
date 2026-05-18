@@ -1,9 +1,8 @@
-import mysql from 'mysql2/promise';
+import * as mysql from 'mysql2/promise';
 import { log } from '#common/lib/log.js';
 
 const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
 
-/** @type {mysql.Pool} */
 const pool = mysql.createPool({
 	connectionLimit: 5,
 	database: DB_NAME,

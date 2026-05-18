@@ -13,7 +13,6 @@ import { resetCacheRoute } from '#server/routes/admin/reset-cache.js';
 import { structuresAdminRoute } from '#server/routes/admin/structures.js';
 import { tagsAdminRoute } from '#server/routes/admin/tags.js';
 import { pagesApiRoute } from '#server/routes/api/pages.js';
-import { telegramRoute } from '#server/routes/api/telegram.js';
 import { articleIdRoute } from '#server/routes/article-id.js';
 import { commentsIdRoute } from '#server/routes/comments-id.js';
 import { importantRoute } from '#server/routes/important.js';
@@ -44,7 +43,6 @@ export const routes = {
 	'/admin/structures': structuresAdminRoute,
 	'/admin/tags': tagsAdminRoute,
 	'/api/pages': pagesApiRoute,
-	'/api/telegram': telegramRoute,
 	'/blog/:id': articleIdRoute,
 	'/comments/:id': commentsIdRoute,
 	'/important': importantRoute,

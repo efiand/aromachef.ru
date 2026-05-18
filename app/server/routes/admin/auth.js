@@ -1,6 +1,6 @@
 import { compare } from 'bcrypt-ts';
-import jwt from 'jsonwebtoken';
 import { setCookie } from '#server/lib/cookies.js';
+import jwt from '#server/lib/jwt.js';
 
 const { AUTH_HASH, AUTH_LOGIN, AUTH_SECRET } = process.env;
 const maxAge = 86_400;

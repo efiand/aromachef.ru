@@ -12,7 +12,7 @@ const config = {
 	body_class: 'content',
 	branding: false,
 	browser_spellcheck: true,
-	content_css: window.isDev ? '/client/css/critical.css' : `/bundles/critical.css?v${version.CSS}`,
+	content_css: window.isDev ? '/client/css/main.css' : `/bundles/main.css?v${version.CSS}`,
 	contextmenu: false,
 	convert_urls: false,
 	entity_encoding: 'raw',

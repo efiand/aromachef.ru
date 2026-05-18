@@ -18,14 +18,14 @@ function renderAssets(isAdmin = false) {
 
 	return isDev
 		? /* html */ `
-			<link rel="stylesheet" href="/client/css/critical.css">
+			<link rel="stylesheet" href="/client/css/main.css">
 			${isAdmin ? /* html */ `<link rel="stylesheet" href="/client/css/admin.css">` : ''}
 			<script type="importmap">${JSON.stringify(IMPORTMAP)}</script>
 			<script src="/client/entries/dev.js" type="module"></script>
 			<script src="/client/entries/${bundleName}.js" type="module"></script>
 		`
 		: /* html */ `
-			<link rel="stylesheet" href="/bundles/critical.css?v${version.CSS}">
+			<link rel="stylesheet" href="/bundles/main.css?v${version.CSS}">
 			${isAdmin ? /* html */ `<link rel="stylesheet" href="/bundles/admin.css?v${version.CSS}">` : ''}
 			<script src="/bundles/${bundleName}.js?v${version.JS}" defer></script>
 		`;
