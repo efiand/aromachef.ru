@@ -1,0 +1,27 @@
+.select {
+	--padding: 0.75rem 2.5rem 0.75rem 1rem;
+	--color-icon: var(--color-green);
+
+	position: relative;
+}
+
+.select:has(:focus) {
+	--color-icon: var(--color-eggplant);
+}
+
+.select:has(:user-invalid) {
+	--color-icon: var(--color-red);
+}
+
+.select::after {
+	content: "";
+	position: absolute;
+	top: 0.75rem;
+	right: 0.5rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	background-color: var(--color-icon);
+	mask-image: var(--icon-chevron);
+	mask-size: 100%;
+	pointer-events: none;
+}

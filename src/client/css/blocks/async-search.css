@@ -1,0 +1,12 @@
+.async-search {
+	display: grid;
+	gap: 2rem;
+}
+
+.async-search__result {
+	display: contents;
+}
+
+.async-search__result [data-goto] {
+	justify-self: center;
+}

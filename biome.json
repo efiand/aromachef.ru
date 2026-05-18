@@ -1,0 +1,71 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedKeys": "on"
+			}
+		},
+		"enabled": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": ["**", "!public"]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"lineWidth": 120
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"domains": { "project": "all" },
+		"enabled": true,
+		"rules": {
+			"complexity": { "noUselessStringConcat": "error" },
+			"correctness": {
+				"noUnusedFunctionParameters": "error",
+				"noUnusedImports": "error",
+				"noUnusedVariables": "error"
+			},
+			"performance": { "noAccumulatingSpread": "error" },
+			"recommended": true,
+			"style": {
+				"useBlockStatements": "error",
+				"useConst": {
+					"fix": "none",
+					"level": "error",
+					"options": {}
+				}
+			},
+			"suspicious": {
+				"noConsole": {
+					"fix": "none",
+					"level": "error",
+					"options": { "allow": ["assert", "error", "info", "warn"] }
+				},
+				"noGlobalIsNan": "error"
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/vendors/**"],
+			"linter": {
+				"rules": {
+					"complexity": { "noImportantStyles": "off" }
+				}
+			}
+		}
+	],
+	"vcs": {
+		"clientKind": "git",
+		"enabled": true,
+		"useIgnoreFile": true
+	}
+}

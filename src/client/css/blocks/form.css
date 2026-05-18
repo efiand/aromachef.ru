@@ -1,0 +1,53 @@
+.form__groups {
+	display: grid;
+	gap: 2rem;
+	margin-top: 2rem;
+}
+
+.form__subtitle {
+	margin-bottom: 2rem;
+}
+
+.form__group--indented {
+	margin-left: 2rem;
+}
+
+.form__group:not(:first-child) {
+	margin-top: 2rem;
+}
+
+.form__article {
+	--article-margin-top: 0;
+	--article-image-margin-inline-mobile: 0;
+}
+
+.form__article:not(:first-child) {
+	margin-top: 3rem;
+}
+
+.form__checker {
+	margin-top: 2rem;
+}
+
+.form__footer {
+	display: grid;
+	gap: 1rem;
+	margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+	.form__groups {
+		grid-template-columns: 1fr 384px;
+		align-items: start;
+	}
+
+	.form__groups--equals {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.form__footer {
+		grid-template-columns: repeat(2, auto);
+		justify-content: space-between;
+		align-items: center;
+	}
+}

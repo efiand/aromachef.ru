@@ -1,0 +1,91 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    if: ${{ ! contains(github.event.head_commit.message, '[skip') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build & Test
+        run: npm run test:ci
+        env:
+          AUTH_HASH: ${{ secrets.AUTH_HASH }}
+          AUTH_LOGIN: ${{ secrets.AUTH_LOGIN }}
+          AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USER: ${{ secrets.DB_USER }}
+
+      - name: Copy to server
+        if: ${{ contains(github.event.head_commit.message, '[deploy]') }}
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+          password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
+          source: app/*,public/*,tools/prod/*,package*.json
+          target: ${{ secrets.DEPLOY_SERVER_TARGET }}/new
+
+      - name: Modify server
+        if: ${{ contains(github.event.head_commit.message, '[deploy]') }}
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+          password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
+          script: |
+            set -euo pipefail
+            BASE_DIR=${{ secrets.DEPLOY_SERVER_TARGET }}
+            RELEASES_DIR=$BASE_DIR/releases
+            NEW_RELEASE_DIR=$RELEASES_DIR/$(date +%s)
+
+            mkdir -p $RELEASES_DIR
+
+            if [ ! -d "$BASE_DIR/new" ]; then
+              echo "ERROR: $BASE_DIR/new not found"
+              exit 1
+            fi
+
+            mv $BASE_DIR/new $NEW_RELEASE_DIR
+
+            # помечаем как "в процессе"
+            touch "$NEW_RELEASE_DIR/.deploying"
+
+            cd $NEW_RELEASE_DIR
+            npm ci --omit=dev --ignore-scripts
+
+            # если дошли сюда — всё ок
+            rm -f "$NEW_RELEASE_DIR/.deploying"
+
+            # переключаем только ПОСЛЕ успеха
+            ln -sfn $NEW_RELEASE_DIR $BASE_DIR/current
+
+            systemctl restart ${{ secrets.APP_NAME }} || {
+              echo "Restart failed, rolling back"
+              PREV=$(readlink -f "$BASE_DIR/current")
+              ln -sfn $PREV $BASE_DIR/current
+              systemctl restart ${{ secrets.APP_NAME }}
+              exit 1
+            }
+
+            # cleanup старых релизов (кроме текущего и последних 2)
+            cd $RELEASES_DIR
+            ls -dt */ | tail -n +4 | xargs -r rm -rf

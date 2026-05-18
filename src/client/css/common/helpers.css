@@ -1,0 +1,37 @@
+._centered {
+	display: table;
+	margin-inline: auto;
+}
+
+._container {
+	padding-inline: 1.5rem;
+}
+
+._error {
+	color: var(--color-red);
+}
+
+._hidden {
+	display: none;
+}
+
+._required::after {
+	content: " *";
+	color: var(--color-red);
+}
+
+._small {
+	font-size: 0.85rem;
+	line-height: 1.5294;
+}
+
+._visually-hidden {
+	position: fixed;
+	transform: scale(0);
+}
+
+@media (min-width: 1280px) {
+	._container {
+		padding-inline: calc(50% - 608px);
+	}
+}

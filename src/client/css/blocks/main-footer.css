@@ -1,0 +1,20 @@
+.main-footer {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.main-footer__share {
+	display: flex;
+}
+
+.main-footer__button {
+	margin-left: auto;
+}
+
+@media (max-width: 359px) {
+	.main-footer__share span {
+		position: fixed;
+		transform: scale(0);
+	}
+}

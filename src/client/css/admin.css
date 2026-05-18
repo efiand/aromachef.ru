@@ -1,0 +1,15 @@
+@import url("common/global-admin.css");
+@import url("common/keyframes.css");
+
+@import url("blocks/auth.css");
+@import url("blocks/checker.css");
+@import url("blocks/checkers.css");
+@import url("blocks/form.css");
+@import url("blocks/form-group.css");
+@import url("blocks/image-picker.css");
+@import url("blocks/modal.css");
+@import url("blocks/operation-status.css");
+@import url("blocks/password-input.css");
+@import url("blocks/select.css");
+@import url("blocks/structure-forms.css");
+@import url("blocks/tag-forms.css");

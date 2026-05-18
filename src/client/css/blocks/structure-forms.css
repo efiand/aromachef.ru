@@ -1,0 +1,20 @@
+.structure-forms {
+	display: grid;
+	gap: 2rem;
+}
+
+.structure-forms__list {
+	display: contents;
+}
+
+.structure-forms__form {
+	display: grid;
+	gap: 1rem;
+}
+
+@media (min-width: 888px) {
+	.structure-forms__form {
+		grid-template-columns: 272px 1fr auto;
+		align-items: start;
+	}
+}

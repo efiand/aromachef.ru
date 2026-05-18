@@ -1,0 +1,19 @@
+.article-footer {
+	display: grid;
+	gap: 2rem;
+}
+
+.article-footer__cards {
+	margin-inline: auto;
+}
+
+.article-footer__text {
+	margin-top: 1rem;
+	text-align: center;
+}
+
+@media (min-width: 888px) {
+	.article-footer__text {
+		margin-top: 2rem;
+	}
+}

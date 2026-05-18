@@ -1,0 +1,37 @@
+.recipe-footer {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	justify-content: space-between;
+	gap: 2rem;
+}
+
+.recipe-footer__cards {
+	grid-column: 1 / -1;
+	margin-inline: auto;
+}
+
+.recipe-footer__structure-link {
+	text-align: right;
+}
+
+.recipe-footer__text {
+	grid-column: 1 / -1;
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.recipe-footer__comments {
+	grid-column: 1 / -1;
+	min-height: 1.875rem;
+	margin-top: 1rem;
+}
+
+@media (min-width: 888px) {
+	.recipe-footer__text {
+		margin-top: 2rem;
+	}
+
+	.recipe-footer__comments {
+		min-height: 2.5rem;
+	}
+}

@@ -1,0 +1,33 @@
+.icon-button {
+	position: relative;
+	min-height: 1.5rem;
+	padding: 0 0 0 1.5rem;
+	color: var(--color-eggplant);
+	text-decoration: underline;
+	text-decoration-style: dashed;
+	text-decoration-skip-ink: none;
+	text-decoration-thickness: from-font;
+}
+
+.icon-button::before {
+	content: "";
+	position: absolute;
+	top: 0.15rem;
+	left: 0;
+	width: 1.2rem;
+	height: 1.2rem;
+	background-color: currentColor;
+	mask-size: 100%;
+}
+
+.icon-button--comment::before {
+	mask-image: var(--icon-comment);
+}
+
+.icon-button--share::before {
+	mask-image: var(--icon-share);
+}
+
+.icon-button:hover {
+	color: var(--color-green);
+}
