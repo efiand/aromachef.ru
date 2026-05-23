@@ -28,7 +28,7 @@ declare global {
 		}[];
 
 		PetiteVue: {
-			createApp: (data?: object | (() => object)) => { mount(HTMLElement): void };
+			createApp: (data?: object | (() => object)) => { mount(element: HTMLElement): void };
 			reactive?: <T extends object>(obj: T) => T;
 			nextTick?: (cb: () => void) => void;
 		};

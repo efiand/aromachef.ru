@@ -20,7 +20,7 @@
 - Перезагрузка страницы в браузере при перезагрузке сервера с помощью Server Sent Events.
 - CLI-инструмент [автогенерации изображений](tools/images.js).
 - Инструмент [aвтообновления зависимостей](tools/upgrade.js).
-- Инструмент [бэкапа данных](tools/dump.js).
+- Инструмент [бэкапа данных](tools/prod/dump.js).
 - [Biome](https://biomejs.dev/) для проверки кода.
 - Node.js Test Runner для тестирования.
 - Автодеплой при пуше через [github action](.github/workflows/ci.yml) по наличию фразы `[deploy]` в заголовке коммита.

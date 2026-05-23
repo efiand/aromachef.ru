@@ -10,8 +10,10 @@ let completedPages = 0;
 try {
 	await Promise.all(
 		STATIC_PAGES.map(async (url) => {
+			const publicDir = url.startsWith('/__') ? 'app' : 'public';
+			const dir = `./${publicDir}${url}`;
+
 			const markup = await fetch(`${host}${url}`).then((res) => res.text());
-			const dir = `./${url.startsWith('/__') ? 'app' : 'public'}${url}`;
 
 			try {
 				await access(dir);

@@ -1,6 +1,6 @@
-declare global {
-	import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
+declare global {
 	type CookieBody = {
 		name: string;
 		value: string;
@@ -29,9 +29,7 @@ declare global {
 
 	type ReqBody = Record<string, unknown>;
 
-	type Route = {
-		[method: IncomingMessage['method']]: RouteMethod;
-	};
+	type Route = Record<string, RouteMethod>;
 
 	type RouteData = {
 		redirect?: string;
@@ -58,5 +56,3 @@ declare global {
 
 	type ServerMiddleware = (req: IncomingMessage, res: RouteResponse, next?: ServerMiddleware) => Promise<void>;
 }
-
-export {};

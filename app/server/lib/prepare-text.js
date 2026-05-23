@@ -19,6 +19,9 @@ purify.addHook('afterSanitizeAttributes', (node) => {
 	}
 });
 
+// Включаем неразрывный пробел между числом и словом
+typograf.enableRule('common/nbsp/afterNumber');
+
 // Отключаем перенос кавычек вокруг ссылок
 typograf.disableRule('common/punctuation/quoteLink');
 

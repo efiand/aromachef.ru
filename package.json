@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@dotenvx/dotenvx": "1.66.0",
+		"@dotenvx/dotenvx": "1.67.0",
 		"bcrypt-ts": "8.0.1",
 		"dompurify": "3.4.5",
 		"formidable": "3.5.4",
@@ -19,7 +19,7 @@
 		"@types/html-minifier-terser": "7.0.2",
 		"@types/jsdom": "28.0.3",
 		"@types/jsonwebtoken": "9.0.10",
-		"@types/node": "25.9.0",
+		"@types/node": "25.9.1",
 		"@types/postcss-import": "14.0.3",
 		"@types/postcss-url": "10.0.4",
 		"amphtml-validator": "1.0.38",
@@ -29,14 +29,14 @@
 		"html-validate": "11.2.0",
 		"nodemon": "3.1.14",
 		"petite-vue": "0.4.1",
-		"postcss": "8.5.14",
+		"postcss": "8.5.15",
 		"postcss-cli": "11.0.1",
 		"postcss-import": "16.1.1",
 		"postcss-sort-media-queries": "6.6.1",
-		"postcss-url": "10.1.3",
+		"postcss-url": "10.1.4",
 		"posthtml-bem-linter": "0.1.8",
-		"rolldown": "1.0.1",
-		"tinymce": "8.5.0",
+		"rolldown": "1.0.2",
+		"tinymce": "8.5.1",
 		"typescript": "6.0.3"
 	},
 	"imports": {
