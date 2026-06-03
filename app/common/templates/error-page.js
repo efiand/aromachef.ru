@@ -1,3 +1,7 @@
+import { getEmailLink } from '#common/lib/get-email-link.js';
+
+const emailLink = getEmailLink({ subject: 'Ошибка на сайте «АромаШеф»' });
+
 /** @type {(heading: string, message: string) => string} */
 export function renderErrorPage(heading, message) {
 	return /* html */ `
@@ -5,7 +9,7 @@ export function renderErrorPage(heading, message) {
 			${heading ? /* html */ `<h1>${heading}</h1>` : ''}
 			<p>${message}</p>
 			<p>
-				<a href="mailto:efiand@ya.ru?subject=aromachef">Свяжитесь с разработчиком</a>.
+				<a href="${emailLink}">Свяжитесь с разработчиком</a>.
 			</p>
 		</div>
 	`;

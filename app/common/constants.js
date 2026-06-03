@@ -1,5 +1,7 @@
 export const BASE_URL = 'https://aromachef.ru';
 
+export const EMAIL = 'efiand@ya.ru';
+
 export const PROJECT_TITLE = 'АромаШеф';
 
 export const PROJECT_DESCRIPTION = 'Быстрые, вкусные и полезные рецепты с эфирными маслами.';
