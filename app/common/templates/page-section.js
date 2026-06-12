@@ -1,5 +1,5 @@
 import { renderArticle } from '#common/templates/article.js';
-import { renderAuthorMeta } from '#common/templates/authorMeta.js';
+import { renderAuthorMeta } from '#common/templates/author-meta.js';
 import { renderImage } from '#common/templates/image.js';
 
 /** @type {(article: ArticleData, i: number) => string} */

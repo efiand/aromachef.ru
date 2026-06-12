@@ -1,16 +1,28 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
 declare global {
+	type AppDispatch = (req?: IncomingMessage, res?: RouteResponse) => void | Promise<void>;
+
+	type AppNextOptions = {
+		isQuiet?: boolean;
+	};
+
+	type CreateAppOptions = {
+		isQuiet?: boolean;
+		middleware?: ServerMiddleware;
+		port?: number;
+	};
+
 	type CookieBody = {
-		name: string;
-		value: string;
 		domain?: string;
 		expires?: Date;
-		maxAge?: string | number;
-		path?: string;
 		httpOnly?: boolean;
-		secure?: boolean;
+		maxAge?: string | number;
+		name: string;
+		path?: string;
 		sameSite?: 'Lax' | 'None' | 'Strict';
+		secure?: boolean;
+		value: string;
 	};
 
 	type DbPlaceholder = DbPlaceholder[] | null | number | string;
@@ -19,6 +31,7 @@ declare global {
 		error: unknown;
 		isAdmin?: boolean;
 		isAuthorized?: boolean;
+		isQuiet?: boolean;
 		url: URL;
 	}) => Promise<{ statusCode: number; template: string }>;
 
@@ -32,10 +45,10 @@ declare global {
 	type Route = Record<string, RouteMethod>;
 
 	type RouteData = {
-		redirect?: string;
-		statusCode?: number;
 		contentType?: string;
 		page?: LayoutData;
+		redirect?: string;
+		statusCode?: number;
 		template?: string;
 	};
 
@@ -53,5 +66,5 @@ declare global {
 
 	type RouteResponse = ServerResponse<IncomingMessage> & { req: IncomingMessage };
 
-	type ServerMiddleware = (req: IncomingMessage, res: RouteResponse, next?: ServerMiddleware) => Promise<void>;
+	type ServerMiddleware = (req: IncomingMessage, res: RouteResponse, next?: AppDispatch) => Promise<void>;
 }

@@ -37,54 +37,56 @@ function getStaticDir(pathname) {
 	return './public';
 }
 
-createApp(async (req, res, next) => {
-	if (isDev && req.url === '/dev/watch') {
-		sendReload(res);
-		return;
-	}
+createApp({
+	middleware: async (req, res, next) => {
+		if (isDev && req.url === '/dev/watch') {
+			sendReload(res);
+			return;
+		}
 
-	const { pathname } = new URL(`${host}${req.url}`);
-	if (pathname.includes('.well-known/appspecific/com.chrome.devtools.json')) {
-		res.setHeader('Content-Type', 'application/json');
-		res.end('{}');
-		return;
-	}
+		const { pathname } = new URL(`${host}${req.url}`);
+		if (pathname.includes('.well-known/appspecific/com.chrome.devtools.json')) {
+			res.setHeader('Content-Type', 'application/json');
+			res.end('{}');
+			return;
+		}
 
-	const ext = path.extname(pathname);
-	if (!staticExtensions.has(ext)) {
-		next?.(req, res);
-		return;
-	}
+		const ext = path.extname(pathname);
+		if (!staticExtensions.has(ext)) {
+			next?.(req, res);
+			return;
+		}
 
-	if (pathname.includes('/pictures')) {
-		try {
-			const filePath = path.join(cwd, pathname);
+		if (pathname.includes('/pictures')) {
 			try {
-				await access(filePath);
-				res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
-				createReadStream(filePath).pipe(res);
-			} catch {
-				const pictureRes = await fetch(`https://aromachef.ru${pathname}`);
-				if (pictureRes.ok) {
-					const arrayBuffer = await pictureRes.arrayBuffer();
+				const filePath = path.join(cwd, pathname);
+				try {
+					await access(filePath);
 					res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
-					res.end(Buffer.from(arrayBuffer));
+					createReadStream(filePath).pipe(res);
+				} catch {
+					const pictureRes = await fetch(`https://aromachef.ru${pathname}`);
+					if (pictureRes.ok) {
+						const arrayBuffer = await pictureRes.arrayBuffer();
+						res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
+						res.end(Buffer.from(arrayBuffer));
+					}
 				}
+			} catch (error) {
+				log.error(error);
+				next?.(req, res);
 			}
+			return;
+		}
+
+		try {
+			const filePath = path.join(cwd, getStaticDir(pathname), pathname);
+			await access(filePath);
+			res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
+			createReadStream(filePath).pipe(res);
 		} catch (error) {
 			log.error(error);
 			next?.(req, res);
 		}
-		return;
-	}
-
-	try {
-		const filePath = path.join(cwd, getStaticDir(pathname), pathname);
-		await access(filePath);
-		res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
-		createReadStream(filePath).pipe(res);
-	} catch (error) {
-		log.error(error);
-		next?.(req, res);
-	}
+	},
 });

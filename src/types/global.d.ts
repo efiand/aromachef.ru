@@ -1,15 +1,15 @@
 import type { TinyMCE } from 'tinymce';
 
-type MetrikaInitOptions = {
-	clickmap?: boolean;
-	trackLinks?: boolean;
-	accurateTrackBounce?: boolean;
-	webvisor?: boolean;
+type MetrikaHitOptions = {
+	referer?: string;
+	title?: string;
 };
 
-type MetrikaHitOptions = {
-	title?: string;
-	referer?: string;
+type MetrikaInitOptions = {
+	accurateTrackBounce?: boolean;
+	clickmap?: boolean;
+	trackLinks?: boolean;
+	webvisor?: boolean;
 };
 
 type YandexMetrika = {

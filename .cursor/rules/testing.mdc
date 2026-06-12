@@ -1,0 +1,17 @@
+---
+description: Организация и написание тестов
+alwaysApply: true
+---
+
+# Тестирование
+
+- Runner: `node --test --test-isolation=process --test-force-exit "test/**/*.spec.js"`, перед тестами — `npm run build`. Локально — `npm test` (`dotenvx run` для env); в CI — `npm run test:ci`.
+- Spec-файлы зеркалят слои приложения: `test/lib/` → `app/common/lib/`, `test/server/` → `app/server/lib/`, `test/templates/`, `test/routes/`, `test/integration/`.
+- Каждый слой проверяет свой уровень: утилиты и шаблоны — напрямую, маршруты — через `GET` хендлера, integration — сквозно через HTTP (BEM, HTML, контент страниц).
+- Одна и та же проверка не дублируется в разных spec-файлах: например, валидность sitemap — только в `test/routes/`, не в integration; политика — только в `test/routes/privacy.spec.js`.
+- Integration [`validate.spec.js`](test/integration/validate.spec.js): список страниц = `STATIC_PAGES` + `/search` + `/admin/auth` + `/api/pages` + admin-страницы после авторизации; sitemap в integration не проверяется. Блок `Pages` — ключевые маркеры контента (`/`, `/structure`, `/search`), без дублирования route-spec.
+- Хелпер [`test/_helpers/route-params.js`](test/_helpers/route-params.js) — параметры для вызова роут-хендлеров (включая `isAuthorized`).
+- Повторяющийся доступ к разметке роута (`page?.pageTemplate ?? ''` и т.п.) — в локальную константу (`const markup = …`); правило «два и более раз» — в [`code-style.mdc`](code-style.mdc), пример — [`privacy.spec.js`](test/routes/privacy.spec.js).
+- Spec-файлы с MySQL — [`useDbTeardown()`](test/_helpers/db-teardown.js) в `after`, чтобы пул не держал процесс (в т.ч. [`index.spec.js`](test/routes/index.spec.js), т.к. импорт `#server/routes/index.js` поднимает пул).
+- Внутри `describe`: пустая строка после хуков (`before`, `after`, `beforeEach`, `afterEach`, `useDbTeardown()`) перед первым `test` или вложенным `describe`; между соседними `test` и между соседними вложенными `describe`. Если `describe` сразу начинается с `test` — лишней строки после `{` нет (пример — [`app.spec.js`](test/server/app.spec.js), [`sitemap-xml.spec.js`](test/routes/sitemap-xml.spec.js)).
+- Сервер в integration-тестах: `createApp({ isQuiet: true, port: 0 })`, `waitForApp(server)` в `before`, `closeApp(server)` в `after`; URL — `getAppHost(server)`. `isQuiet` отключает стартовое сообщение и логи HTTP-ошибок (ожидаемые 404 в тестах не засоряют вывод).

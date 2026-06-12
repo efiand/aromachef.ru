@@ -88,9 +88,9 @@ declare global {
 		alt?: string;
 		asideHeading: string;
 		asideId?: string;
+		asyncSupport?: boolean;
 		cards: DbItem[];
 		heading: string;
-		asyncSupport?: boolean;
 		route?: string;
 		structures?: DbItem[];
 		tags?: DbItem[];
@@ -109,8 +109,8 @@ declare global {
 		isRequired?: boolean;
 		label?: string;
 		maxlength?: number;
-		rows?: number;
 		name: string;
+		rows?: number;
 		value?: string | null;
 	};
 }

@@ -1,0 +1,51 @@
+---
+description: Специфика проекта aromachef.ru — контент, БД, админка, SPA и окружение
+alwaysApply: true
+---
+
+# Контент и маршруты
+
+- Сайт рецептов с эфирными маслами doTERRA: главная, `/structure`, `/tag/:id`, `/recipe/:id`, `/blog/:id`, `/important`, `/about`, `/search`, `/privacy`.
+- **Главная (`/`) и `/sitemap.xml` — динамические** (контент из MySQL), в статическую сборку не попадают.
+- `STATIC_PAGES` в [`constants.js`](app/common/constants.js) — только служебные страницы ошибок (`/__/404`, `/__/update`); их HTML генерирует [`tools/build-static-pages.js`](tools/build-static-pages.js) для nginx `error_page`.
+- Список публичных URL для integration-тестов дополняется из [`/api/pages`](app/server/routes/api/pages.js).
+- Карта сайта [`sitemap-xml.js`](app/server/routes/sitemap-xml.js) строится из MySQL (рецепты, статьи, разделы, теги, `staticPages`) + сервисные URL; отдаётся только через роут `/sitemap.xml`.
+- AMP удалён; канонические HTML-страницы без AMP-версий.
+
+# База данных и окружение
+
+- MySQL через [`processDb`](app/server/lib/db.js); локально — Podman (`podman/`).
+- Секреты и конфиг — через dotenvx: `AUTH_*`, `DB_*`, `DEV`, `PORT`. Локальные команды `dev`, `test`, `dump`, `images` — с `dotenvx run`; CI (`test:ci`) — переменные из GitHub Secrets без dotenvx.
+- В dev-режиме (`DEV=1`) на главной показываются неопубликованные рецепты; в production — только `published = 1`.
+
+# Админка и авторизация
+
+- Панель `/admin/*` — JWT в cookie (`authToken`), проверка в [`app.js`](app/server/lib/app.js); неавторизованных редиректит на `/admin/auth`.
+- Админ-страницы — [`renderLayoutAdmin`](app/common/templates/layout-admin.js), отдельные CSS/JS-бандлы (`admin.css`, `admin.js` через Rolldown).
+- В футере публичного [`renderLayout`](app/common/templates/layout.js): для авторизованного — ссылки админки; иначе — `PRIVACY_TEMPLATE`.
+
+# Кеш страниц
+
+- Публичные канонические GET и fragment-запросы (`body.fragment`) кешируются в [`pages-cache.js`](app/server/lib/pages-cache.js); админка и авторизованные запросы — без кеша.
+- Сброс кеша — `/admin/reset-cache`.
+
+# Клиент и SPA
+
+- Частичная навигация — [`async-structure.js`](src/client/components/async-structure.js); виртуальные просмотры — [`trackPageView`](src/client/lib/yandex-metrika.js).
+- До загрузки Metrika хиты складываются в `window.__metrikaHitsQueue`; шаблон [`yandex-metrika.js`](app/common/templates/yandex-metrika.js) сбрасывает очередь после `ym(..., "init", ...)`.
+- Metrika: отложенная загрузка 3 с, `clickmap` и `webvisor` включены; формулировки в политике должны им соответствовать.
+
+# Dev-сервер
+
+- [`src/server/main.js`](src/server/main.js): статика, SSE `/dev/watch`, proxy картинок `/pictures/*` с production при отсутствии локального файла.
+- `createApp({ middleware })` — middleware первым; для тестов — `{ isQuiet: true, port: 0 }`, URL через `getAppHost(server)`.
+
+# Политика конфиденциальности
+
+- Сбор ПДн через форму комментариев (имя/псевдоним, текст); не через mailto-заказы как на efiand.ru.
+- Текст — [`privacy.js`](app/server/routes/privacy.js); тесты — `test/routes/privacy.spec.js` (без дублирования в integration).
+
+# Сборка и деплой
+
+- `npm run build`: Rolldown → `public/bundles`, PostCSS, HTML только для `STATIC_PAGES` (`tools/build-static-pages.js`).
+- Деплой по `[deploy]` в CI: scp + symlink releases (см. [`workflow.mdc`](workflow.mdc)).

@@ -108,8 +108,6 @@ declare global {
 		recipeTitle: string;
 	};
 
-	type RecipeInForm = Omit<Recipe, 'structureTitle'> & { published: boolean };
-
 	type RecipeInAdmin = RecipeInForm & {
 		id: number;
 		recipes: DbItem[];
@@ -118,6 +116,8 @@ declare global {
 		tagIds: number[];
 		tags: DbItem[];
 	};
+
+	type RecipeInForm = Omit<Recipe, 'structureTitle'> & { published: boolean };
 }
 
 export {};

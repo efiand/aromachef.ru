@@ -10,6 +10,7 @@ export function renderErrorPage(heading, message) {
 			<p>${message}</p>
 			<p>
 				<a href="${emailLink}">Свяжитесь с разработчиком</a>.
+				Отправляя письмо, вы соглашаетесь с <a href="/privacy">Политикой обработки персональных данных</a>.
 			</p>
 		</div>
 	`;

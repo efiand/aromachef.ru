@@ -1,5 +1,5 @@
 declare global {
-	type Changefreq = 'daily' | 'weekly' | 'monthly' | 'yearly' | undefined;
+	type Changefreq = 'daily' | 'monthly' | 'weekly' | 'yearly' | undefined;
 
 	type SitemapPage = {
 		lastmod?: string;
