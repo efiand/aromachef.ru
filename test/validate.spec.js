@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { after, before, test } from 'node:test';
-import * as amphtmlValidator from 'amphtml-validator';
 import { SyntaxValidator } from 'fast-xml-validator';
 import { HtmlValidate } from 'html-validate';
 import * as bemLinter from 'posthtml-bem-linter';
@@ -29,12 +28,6 @@ const pages = [...STATIC_PAGES, '/search', '/admin/auth'];
 /** @type {string?} */
 let adminCookie = null;
 
-/** @type {amphtmlValidator.Validator | undefined} */
-let ampValidator;
-
-/** @type {string[]} */
-let ampPages = [];
-
 let isAuthorized = false;
 
 /** @type {string[]} */
@@ -54,10 +47,8 @@ before(async () => {
 		server = createApp();
 	}
 
-	if (!ampPages.length) {
-		ampPages = await fetch(`${host}/api/pages`).then((res) => res.json());
-		pages.push(...ampPages);
-	}
+	const dynamicPages = await fetch(`${host}/api/pages`).then((res) => res.json());
+	pages.push(...dynamicPages);
 
 	const authResponse = await fetch(`${host}/admin/auth`, {
 		body: `login=${AUTH_LOGIN}&password=${AUTH_PASSWORD}`,
@@ -113,39 +104,6 @@ test('All pages have valid BEM classes in markup', () => {
 			errorsCount++;
 		}
 	});
-
-	assert.strictEqual(errorsCount, 0);
-});
-
-test('All AMP versions have valid AMP markup', async () => {
-	let errorsCount = 0;
-
-	if (!ampValidator) {
-		ampValidator = await amphtmlValidator.getInstance();
-	}
-
-	await Promise.all(
-		ampPages.map(async (page) => {
-			if (page.endsWith('.html')) {
-				return;
-			}
-
-			const url = page === '/' ? '/amp' : `/amp${page}`;
-			const markup = await fetch(`${host}${url}`).then((res) => res.text());
-
-			/** @type {amphtmlValidator.ValidationResult | undefined} */
-			const result = ampValidator?.validateString(markup);
-			if (result?.status === 'FAIL') {
-				errorsCount++;
-			}
-
-			result?.errors.forEach(({ col, line, message, severity, specUrl }) => {
-				const output = severity === 'ERROR' ? log.error : log.warn;
-				const icon = severity === 'ERROR' ? '❌' : '⚠';
-				output(`${icon} ${url} [${line}:${col}] ${message} ${specUrl ? `\n(${specUrl})` : ''})`);
-			});
-		}),
-	);
 
 	assert.strictEqual(errorsCount, 0);
 });

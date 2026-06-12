@@ -12,7 +12,6 @@ export function renderStructure({
 	asideId = '',
 	cards,
 	heading,
-	isAmp,
 	asyncSupport,
 	route = '/recipe',
 	structures = [],
@@ -31,7 +30,7 @@ export function renderStructure({
 		<section class="structure" ${asyncSupport ? `data-component="asyncStructure"` : ''}>
 			<div class="structure__cards" data-cards>
 				<h1>${heading}</h1>
-				${renderCards({ alt, cards, isAmp, route })}
+				${renderCards({ alt, cards, route })}
 			</div>
 
 			<div class="structure__aside" ${id} data-aside>

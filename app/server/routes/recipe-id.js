@@ -21,7 +21,7 @@ const relatedRecipesQueryWithPublishedOnly = getRelatedRecipesQuery(/* sql */ `A
 
 export const recipeIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id, isAuthorized, isAmp, body }) {
+	async GET({ id, isAuthorized, body }) {
 		const needUnpublished = isDev || (isAuthorized && typeof body.preview !== 'undefined');
 
 		/** @type {[[{ length: number }], [Recipe], DbItem[], DbItem[]]} */
@@ -65,20 +65,17 @@ export const recipeIdRoute = {
 						{
 							content: /* html */ `<h2>Состав</h2>${getIngredientsTemplate(ingredients + ingredientsExtraTemplate)}`,
 							imageAlias: `${imageAlias}-ingredients`,
-							isAmp,
 							isSchemaSupport: true,
 						},
 						{
 							content: /* html */ `<h2>Приготовление</h2>${cooking}`,
 							imageAlias: `${imageAlias}-cooking`,
-							isAmp,
 							isSchemaSupport: true,
 							itemprop: 'recipeInstructions',
 						},
 					],
 					content: renderRecipeDescription({ description, telegramId }),
 					footerTemplate: renderRecipeFooter({
-						isAmp,
 						relatedRecipes,
 						structure: { id: structureId, title: structureTitle },
 						tags,

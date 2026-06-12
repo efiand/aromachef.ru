@@ -9,14 +9,11 @@ const SEARCH_TEMPLATE = /* html */ `
 	</li>
 `;
 
-/** @type {(ampPrefix: string) => string} */
-function renderAboutTemplate(ampPrefix) {
-	return /* html */ `
-		<li class="footer__item">
-			<a href="${ampPrefix}/about" rel="author">Обо мне</a>
-		</li>
-	`;
-}
+const ABOUT_TEMPLATE = /* html */ `
+	<li class="footer__item">
+		<a href="/about" rel="author">Обо мне</a>
+	</li>
+`;
 
 /** @type {(pathname?: string) => string} */
 function renderAdminTemplate(pathname = '') {
@@ -27,41 +24,34 @@ function renderAdminTemplate(pathname = '') {
 	return /* html */ `<li class="footer__item"><a href="/admin">Панель управления</a></li>${editTemplate}`;
 }
 
-/** @type {(ampPrefix: string) => string} */
-function renderImportantTemplate(ampPrefix) {
-	return /* html */ `
-		<li class="header__item">
-			<a href="${ampPrefix}/important"><strong>Важно!</strong></a>
-		</li>
-	`;
-}
-
-/** @type {(ampPrefix: string) => string} */
-function renderPrivacyTemplate(ampPrefix) {
-	return /* html */ `
-	<li class="footer__item">
-		<a href="${ampPrefix}/privacy">Политика конфиденциальности</a>
+const IMPORTANT_TEMPLATE = /* html */ `
+	<li class="header__item">
+		<a href="/important"><strong>Важно!</strong></a>
 	</li>
-	`;
-}
+`;
+
+const PRIVACY_TEMPLATE = /* html */ `
+	<li class="footer__item">
+		<a href="/privacy">Политика конфиденциальности</a>
+	</li>
+`;
 
 /** @type {(data: LayoutData) => string} */
-function renderLayoutInner({ isAmp, isAuthorized, pathname, pageTemplate }) {
-	const ampPrefix = isAmp ? '/amp' : '';
+function renderLayoutInner({ isAuthorized, pathname, pageTemplate }) {
 	const isIndex = pathname === '/';
 	const ariaCurrentIndex = isIndex ? 'aria-current="page"' : '';
 
 	return /* html */ `
 		<header class="header layout__header _container">
-			<a class="header__logo" href="${isAmp ? '/amp' : '/'}" aria-label="На главную" ${ariaCurrentIndex}>
+			<a class="header__logo" href="/" aria-label="На главную" ${ariaCurrentIndex}>
 				<img src="/images/aromachef-logo.svg?v2" width="30" height="30" alt="">
 			</a>
 			<ul class="header__list">
 				<li class="header__item">
 					<a class="header__structure" href="/structure">Разделы <span>и #теги</span></a>
 				</li>
-				${pathname === '/important' ? '' : renderImportantTemplate(ampPrefix)}
-				${isAmp || pathname === '/search' ? '' : SEARCH_TEMPLATE}
+				${pathname === '/important' ? '' : IMPORTANT_TEMPLATE}
+				${pathname === '/search' ? '' : SEARCH_TEMPLATE}
 			</ul>
 		</header>
 
@@ -74,8 +64,8 @@ function renderLayoutInner({ isAmp, isAuthorized, pathname, pageTemplate }) {
 				<li class="footer__item">
 					<a class="footer__tg" href="https://t.me/aroma_chef" target="_blank">@aroma_chef</a>
 				</li>
-				${pathname === '/about' ? '' : renderAboutTemplate(ampPrefix)}
-				${isAuthorized ? renderAdminTemplate(pathname) : renderPrivacyTemplate(ampPrefix)}
+				${pathname === '/about' ? '' : ABOUT_TEMPLATE}
+				${isAuthorized ? renderAdminTemplate(pathname) : PRIVACY_TEMPLATE}
 				<li class="footer__item footer__item--last">
 					<a href="https://efiand.ru" target="_blank" rel="nofollow">Разработано efiand</a>
 				</li>
@@ -85,12 +75,12 @@ function renderLayoutInner({ isAmp, isAuthorized, pathname, pageTemplate }) {
 }
 
 /** @type {(data: LayoutData) => string} */
-export function renderLayout({ isAmp, isAuthorized, isDev, pathname = '', pageTemplate }) {
+export function renderLayout({ isAuthorized, isDev, pathname = '', pageTemplate }) {
 	return /* html */ `
 		<body>
-			${isDev || isAmp || pathname.startsWith('/__') ? '' : YANDEX_METRIKA_TEMPLATE}
+			${isDev || pathname.startsWith('/__') ? '' : YANDEX_METRIKA_TEMPLATE}
 			<div class="layout" data-layout>
-				${renderLayoutInner({ isAmp, isAuthorized, pageTemplate, pathname })}
+				${renderLayoutInner({ isAuthorized, pageTemplate, pathname })}
 			</div>
 		</body>
 	`;

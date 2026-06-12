@@ -3,7 +3,6 @@ declare global {
 		alt?: string;
 		content?: string;
 		imageAlias: string;
-		isAmp?: boolean;
 		isSchemaSupport?: boolean;
 		itemprop?: string;
 		reverse?: boolean;
@@ -11,14 +10,12 @@ declare global {
 	};
 
 	type ArticleFooter = {
-		isAmp?: boolean;
 		recipes?: DbItem[];
 		relatedArticles?: DbItem[];
 	};
 
 	type CardAdditionals = {
 		alt?: string;
-		isAmp?: boolean;
 		route?: string;
 	};
 
@@ -32,7 +29,6 @@ declare global {
 		className?: string;
 		height: number;
 		imageAlias: string;
-		isAmp?: boolean;
 		isSchemaSupport?: boolean;
 		width: number;
 	};
@@ -41,7 +37,6 @@ declare global {
 		description?: string;
 		headTemplate?: string;
 		heading?: string;
-		isAmp?: boolean;
 		isAuthorized?: boolean;
 		isDev?: boolean;
 		ogImage?: string;
@@ -58,7 +53,6 @@ declare global {
 		content?: string;
 		footerTemplate?: string;
 		imageAlias?: string;
-		isAmp?: boolean;
 		itempropMeta?: string;
 		itemtype?: string;
 		next?: string;
@@ -68,7 +62,6 @@ declare global {
 	};
 
 	type RecipeFooter = {
-		isAmp?: boolean;
 		relatedRecipes?: DbItem[];
 		structure: DbItem;
 		tags: DbItem[];
@@ -97,7 +90,6 @@ declare global {
 		asideId?: string;
 		cards: DbItem[];
 		heading: string;
-		isAmp?: boolean;
 		asyncSupport?: boolean;
 		route?: string;
 		structures?: DbItem[];

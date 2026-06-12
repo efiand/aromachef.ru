@@ -1,10 +1,8 @@
 import { BASE_URL, PROJECT_TITLE, version } from '#common/constants.js';
-import { noAmp } from '#common/lib/no-amp.js';
 import { renderLayout } from '#common/templates/layout.js';
 import { renderLayoutAdmin } from '#common/templates/layout-admin.js';
 import { renderDocumentTitle } from '#common/templates/title.js';
 import { isDev } from '#server/constants.js';
-import { renderAmpAssets } from '#server/lib/amp.js';
 
 const IMPORTMAP = {
 	imports: {
@@ -31,17 +29,13 @@ function renderAssets(isAdmin = false) {
 		`;
 }
 
-/** @type {(pathname: string, isAmp: boolean) => string} */
-function renderUrlMeta(pathname, isAmp) {
+/** @type {(pathname: string) => string} */
+function renderUrlMeta(pathname) {
 	if (!pathname) {
 		return /* html */ `<meta name="robots" content="noindex, nofollow">`;
 	}
 
-	const ampUrl = pathname === '/' ? '/amp' : `/amp${pathname}`;
-	let template = /* html */ `<meta property="og:url" content="${BASE_URL}${isAmp ? ampUrl : pathname}">`;
-	if (!isAmp && !noAmp(pathname)) {
-		template += /* html */ `<link rel="ampurl" href="${BASE_URL}${ampUrl}">`;
-	}
+	let template = /* html */ `<meta property="og:url" content="${BASE_URL}${pathname}">`;
 	if (!pathname.startsWith('/__')) {
 		template += /* html */ `<link rel="canonical" href="${BASE_URL}${pathname}">`;
 	}
@@ -54,7 +48,6 @@ export async function renderPage({
 	description,
 	headTemplate = '',
 	heading = '',
-	isAmp = false,
 	isAuthorized,
 	ogImage = '/images/og.webp',
 	ogImageWidth = 544,
@@ -64,7 +57,7 @@ export async function renderPage({
 }) {
 	const isAdmin = pathname === '/admin' || pathname.startsWith('/admin/');
 	const title = renderDocumentTitle(heading);
-	const assetsTemplate = isAmp ? await renderAmpAssets(pageTemplate.includes('<form')) : renderAssets(isAdmin);
+	const assetsTemplate = renderAssets(isAdmin);
 	const descriptionTemplate = description
 		? /* html */ `
 			<meta name="description" content="${description}">
@@ -74,11 +67,11 @@ export async function renderPage({
 
 	const layoutTemplate = isAdmin
 		? renderLayoutAdmin({ heading, pageTemplate, pathname })
-		: renderLayout({ isAmp, isAuthorized, isDev, pageTemplate, pathname });
+		: renderLayout({ isAuthorized, isDev, pageTemplate, pathname });
 
-	const template = /* html */ `
+	return /* html */ `
 		<!DOCTYPE html>
-		<html lang="ru" prefix="og: http://ogp.me/ns#" ${isAmp ? '⚡' : ''}>
+		<html lang="ru" prefix="og: http://ogp.me/ns#">
 		<head>
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -87,7 +80,7 @@ export async function renderPage({
 			<meta name="mobile-web-app-capable" content="yes">
 
 			<title>${title}</title>
-			${renderUrlMeta(pathname, isAmp)}
+			${renderUrlMeta(pathname)}
 			<meta property="og:title" content="${title}">
 			<meta property="og:locale" content="ru_RU">
 			<meta property="og:type" content="website">
@@ -117,6 +110,4 @@ export async function renderPage({
 
 		</html>
 	`;
-
-	return isAmp ? template.replace(/="\/(blog|recipe|search|structure|tag)/g, '="/amp/$1') : template;
 }

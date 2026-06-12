@@ -5,7 +5,6 @@ export function renderArticle({
 	alt = '',
 	content = '',
 	imageAlias,
-	isAmp,
 	isSchemaSupport = false,
 	itemprop = '',
 	reverse = false,
@@ -25,7 +24,6 @@ export function renderArticle({
 					alt: alt.replace('[title]', `«${title}»`),
 					height: 672,
 					imageAlias,
-					isAmp,
 					isSchemaSupport,
 					width: 384,
 				})}

@@ -30,7 +30,7 @@ const PREAMBLE_TEMPLATE = /* html */ `
 
 export const mainRoute = {
 	/** @type {RouteMethod} */
-	async GET({ isAmp }) {
+	async GET() {
 		/** @type {DbItem[]} */
 		const cards = await processDb(recipesQuery);
 
@@ -44,7 +44,6 @@ export const mainRoute = {
 						footerTemplate: renderCards({
 							alt: 'На фото изображено готовое блюдо [title] в миниатюре.',
 							cards,
-							isAmp,
 						}),
 						title: 'Новые рецепты с эфирными маслами',
 					}) +

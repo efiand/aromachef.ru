@@ -20,7 +20,7 @@ const relatedArticlesQueryWithPublishedOnly = getRelatedArticlesQuery(/* sql */ 
 
 export const articleIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ id, isAuthorized, isAmp, body }) {
+	async GET({ id, isAuthorized, body }) {
 		const needUnpublished = isDev || (isAuthorized && typeof body.preview !== 'undefined');
 
 		/** @type {[[{ length: number }], [Article], DbItem[], DbItem[]]} */
@@ -46,9 +46,8 @@ export const articleIdRoute = {
 				pageTemplate: renderPageSection({
 					alt: 'Изображение к статье',
 					content,
-					footerTemplate: renderArticleFooter({ isAmp, recipes, relatedArticles }),
+					footerTemplate: renderArticleFooter({ recipes, relatedArticles }),
 					imageAlias: `${imageAlias}-content`,
-					isAmp,
 					next: `/blog/${id === length ? 1 : id + 1}`,
 					prev: `/blog/${id === 1 ? length : id - 1}`,
 					title,

@@ -1,6 +1,5 @@
 import { createServer } from 'node:http';
 import { log } from '#common/lib/log.js';
-import { noAmp } from '#common/lib/no-amp.js';
 import { renderErrorPage } from '#common/templates/error-page.js';
 import { host, isDev, port } from '#server/constants.js';
 import { getCookies } from '#server/lib/cookies.js';
@@ -44,10 +43,9 @@ async function handleError({ error, isAdmin, isAuthorized, url: { href, pathname
 async function next(req, res) {
 	const { method = 'GET' } = req;
 	const url = new URL(`${host}${req.url}`);
-	const isAmp = url.pathname === '/amp' || url.pathname.startsWith('/amp/');
 	const isAdmin = url.pathname === '/admin' || url.pathname.startsWith('/admin/');
 	const isApi = url.pathname.startsWith('/api/');
-	const pathname = url.pathname === '/amp' ? '/' : url.pathname.replace(/^\/amp\//, '/');
+	const pathname = url.pathname;
 	const [, rawRouteName = '', rawId, rawIdInApi] = pathname.split('/');
 	const id = Number(isApi || isAdmin ? rawIdInApi : rawId);
 
@@ -73,10 +71,6 @@ async function next(req, res) {
 
 		if (!route) {
 			throw new Error('Страница не найдена.', { cause: 404 });
-		}
-
-		if (isAmp && noAmp(routeKey)) {
-			throw new Error('Страница не имеет AMP-версии.', { cause: 404 });
 		}
 
 		if (!route[method]) {
@@ -112,11 +106,11 @@ async function next(req, res) {
 		if (cache) {
 			({ contentType, template } = cache);
 		} else {
-			const routeData = await route[method]({ body, id, isAmp, isAuthorized, req, res });
+			const routeData = await route[method]({ body, id, isAuthorized, req, res });
 			({ contentType = 'text/html; charset=utf-8', redirect = '', statusCode = 200, template = '' } = routeData);
 
 			if (routeData.page) {
-				template = await renderPage({ ...routeData.page, isAmp, isAuthorized, pathname });
+				template = await renderPage({ ...routeData.page, isAuthorized, pathname });
 			}
 
 			if (needCache) {

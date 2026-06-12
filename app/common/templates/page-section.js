@@ -21,7 +21,6 @@ export function renderPageSection({
 	content = '',
 	footerTemplate = '',
 	imageAlias,
-	isAmp,
 	itemtype = '',
 	next,
 	prev,
@@ -49,7 +48,6 @@ export function renderPageSection({
 										className: 'page-section__image',
 										height: 672,
 										imageAlias,
-										isAmp,
 										width: 384,
 									})
 								: ''

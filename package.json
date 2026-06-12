@@ -14,7 +14,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.4.16",
 		"@fastify/pre-commit": "2.2.1",
-		"@types/amphtml-validator": "1.0.4",
 		"@types/formidable": "3.5.1",
 		"@types/html-minifier-terser": "7.0.2",
 		"@types/jsdom": "28.0.3",
@@ -22,7 +21,6 @@
 		"@types/node": "25.9.1",
 		"@types/postcss-import": "14.0.3",
 		"@types/postcss-url": "10.0.4",
-		"amphtml-validator": "1.0.38",
 		"cssnano": "8.0.1",
 		"fast-xml-parser": "5.8.0",
 		"fast-xml-validator": "1.1.0",

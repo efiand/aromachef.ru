@@ -17,7 +17,7 @@ const structuresQuery = /* sql */ `
 
 export const structureIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ body, id, isAmp }) {
+	async GET({ body, id }) {
 		/** @type {Promise<DbItem[]>[]} */
 		const promises = [processDb(recipesQuery, id)];
 		if (body.fragment === undefined) {
@@ -27,7 +27,7 @@ export const structureIdRoute = {
 		const [cards, structures = []] = await Promise.all(promises);
 
 		if (body.fragment !== undefined) {
-			return { template: renderCards({ cards, isAmp }) };
+			return { template: renderCards({ cards }) };
 		}
 
 		if (!cards.length) {
@@ -46,7 +46,6 @@ export const structureIdRoute = {
 					asyncSupport: true,
 					cards,
 					heading,
-					isAmp,
 					structures,
 				}),
 			},

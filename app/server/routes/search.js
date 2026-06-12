@@ -18,7 +18,7 @@ const recipesQuery = /* sql */ `
 
 export const searchRoute = {
 	/** @type {RouteMethod} */
-	async GET({ body, isAmp }) {
+	async GET({ body }) {
 		const { q = '' } = /** @type {{ q?: string; }} */ (body);
 		const pattern = q.trim();
 
@@ -32,7 +32,7 @@ export const searchRoute = {
 
 		if (body.fragment !== undefined) {
 			const cardsTemplate = nof
-				? renderHighlightedCards(cards.slice(0, 4), pattern, isAmp)
+				? renderHighlightedCards(cards.slice(0, 4), pattern)
 				: /* html */ `<p>Ничего не найдено.</p>`;
 			const buttonTemplate =
 				nof && nof > 4
@@ -49,7 +49,7 @@ export const searchRoute = {
 				heading: 'Поиск рецептов',
 				pageTemplate: renderPageSection({
 					footerTemplate:
-						renderSearchForm({ nof, value: pattern }) + (nof ? renderHighlightedCards(cards, pattern, isAmp) : ''),
+						renderSearchForm({ nof, value: pattern }) + (nof ? renderHighlightedCards(cards, pattern) : ''),
 					title: 'Поиск рецептов',
 				}),
 			},
@@ -57,13 +57,12 @@ export const searchRoute = {
 	},
 };
 
-/** @type {(cards: DbItem[], pattern: string, isAmp: boolean) => string} */
-function renderHighlightedCards(cards, pattern, isAmp) {
+/** @type {(cards: DbItem[], pattern: string) => string} */
+function renderHighlightedCards(cards, pattern) {
 	return renderCards({
 		cards: cards.map((card) => ({
 			...card,
 			title: highlight(card.title, pattern),
 		})),
-		isAmp,
 	});
 }

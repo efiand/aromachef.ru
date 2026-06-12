@@ -23,7 +23,7 @@ const tagsQuery = /* sql */ `
 
 export const tagIdRoute = {
 	/** @type {RouteMethod} */
-	async GET({ body, id, isAmp }) {
+	async GET({ body, id }) {
 		/** @type {Promise<DbItem[]>[]} */
 		const promises = [processDb(recipesQuery, id)];
 		if (body.fragment === undefined) {
@@ -33,7 +33,7 @@ export const tagIdRoute = {
 		const [cards, tags = []] = await Promise.all(promises);
 
 		if (body.fragment !== undefined) {
-			return { template: renderCards({ cards, isAmp }) };
+			return { template: renderCards({ cards }) };
 		}
 
 		if (!cards.length) {
@@ -53,7 +53,6 @@ export const tagIdRoute = {
 					asyncSupport: true,
 					cards,
 					heading: `#${heading}`,
-					isAmp,
 					tags,
 				}),
 			},

@@ -44,7 +44,6 @@ declare global {
 	type RouteParams = {
 		body: ReqBody;
 		id: number;
-		isAmp: boolean;
 		isAuthorized: boolean;
 		req: RouteRequest;
 		res: RouteResponse;

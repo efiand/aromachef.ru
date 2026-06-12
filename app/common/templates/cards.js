@@ -1,7 +1,7 @@
 import { renderImage } from '#common/templates/image.js';
 
 /** @type {(data: DbItem & CardAdditionals) => string} */
-function renderCard({ alt = '', id, isAmp, route, title }) {
+function renderCard({ alt = '', id, route, title }) {
 	const url = `${route}/${id}`;
 	const imageAlias = `/pictures${url}`;
 
@@ -12,7 +12,6 @@ function renderCard({ alt = '', id, isAmp, route, title }) {
 					alt: alt.replace('[title]', `«${title}»`),
 					height: 204,
 					imageAlias,
-					isAmp,
 					width: 272,
 				})}
 				<span>${title}</span>
@@ -29,10 +28,9 @@ export function renderCards({
 	alt = 'На фото изображено готовое блюдо [title] в миниатюре.',
 	cards = [],
 	className = '',
-	isAmp,
 	route = '/recipe',
 } = {}) {
-	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, isAmp, route })).join('');
+	const cardsTemplate = cards.map((card) => renderCard({ ...card, alt, route })).join('');
 
 	return /* html */ `<ul class="cards ${className}">${cardsTemplate}</ul>`;
 }

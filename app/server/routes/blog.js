@@ -10,7 +10,7 @@ const articlesQuery = /* sql */ `
 
 export const blogRoute = {
 	/** @type {RouteMethod} */
-	async GET({ isAmp }) {
+	async GET() {
 		/** @type {DbItem[]} */
 		const cards = await processDb(articlesQuery);
 
@@ -23,7 +23,7 @@ export const blogRoute = {
 				ogImage: `/pictures/blog/${articleId}@2x.webp`,
 				pageTemplate: /* html */ `
 					<h1>Блог</h1>
-					${renderCards({ alt: 'Изображение к статье [title]', cards, isAmp, route: '/blog' })}
+					${renderCards({ alt: 'Изображение к статье [title]', cards, route: '/blog' })}
 				`,
 			},
 		};
